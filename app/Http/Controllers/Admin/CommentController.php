@@ -10,7 +10,7 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response|\Inertia\ResponseFactory
      */
     public function index(Request $request)
     {
@@ -21,10 +21,6 @@ class CommentController extends Controller
                 'name' => $comment->user->name,
                 'points' => $comment->points,
                 'created_at' => $comment->created_at,
-            ];
-        });
-        return Inertia('Comment/Index')->with(['comments'=>$comments]);
-                'created_at' => $comment->created_at
             ];
         });
         return Inertia('Comment/Index')->with(['comments'=>$comments]);
