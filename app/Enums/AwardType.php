@@ -2,9 +2,17 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class AwardType extends Enum
+/**
+ * @method static static AWARD()
+ * @method static static HONOR()
+ * @method static static FAVORITE()
+ * @method static static RECOMMENDATION()
+ * @method static static INTRODUCTION()
+ */
+final class AwardType extends Enum implements LocalizedEnum
 {
     const AWARD = 1;
     const HONOR = 2;

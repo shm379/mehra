@@ -17,18 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resources([
-    '/producers'=>\App\Http\Controllers\ProducerController::class,
-    '/award'=>\App\Http\Controllers\AwardController::class,
-    '/category'=>\App\Http\Controllers\CategoryController::class,
-    '/product'=>\App\Http\Controllers\ProductController::class,
-    '/creator'=>\App\Http\Controllers\CreatorController::class,
-    '/page'=>\App\Http\Controllers\PageController::class,
-    '/attributes'=>\App\Http\Controllers\AttributeController::class,
-]);
-
 Route::get('/dashboard', function () {
+//    OTP('+98939172790');
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('user-datatables', function () {
+    return view('admin.users.index');
+});
 require __DIR__.'/auth.php';

@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id');
+            $table->unsignedFloat('price_without_discount')->nullable();
             $table->unsignedFloat('price',10);
             $table->unsignedInteger('quantity');
+            $table->unsignedDouble('total_price_without_discount')->nullable();
             $table->unsignedDouble('total_price');
             $table->morphs('line_item');
             $table->unique(['order_id','line_item_id','line_item_type']);

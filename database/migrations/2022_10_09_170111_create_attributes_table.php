@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('en_name');
             $table->string('name');
-            $table->string('slug');
-            $table->enum('type',\App\Enums\AttributeType::getKeys());
+            $table->string('slug')->unique();
+            $table->unsignedInteger('type');
             $table->timestamps();
             $table->foreign('parent_id')
                 ->references('id')

@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('discount_id')->nullable();
+            $table->unsignedDouble('total_price_without_discount',10)->nullable();
             $table->unsignedDouble('total_price',10);
-            $table->unsignedDouble('vat',10);
-            $table->string('status');
+            $table->unsignedDouble('vat',10)->nullable();
+            $table->integer('status');
             $table->enum('gateway',\App\Enums\PaymentGateway::asArray());
             $table->timestamps();
 

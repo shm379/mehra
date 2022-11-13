@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ProductGroup extends Model
 {
     use HasFactory;
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class,'product_product_groups');
+    }
 }

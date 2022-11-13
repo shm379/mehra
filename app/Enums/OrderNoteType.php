@@ -2,10 +2,15 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class OrderNoteType extends Enum
+/**
+ * @method static static SYSTEM()
+ * @method static static ADMIN()
+ */
+final class OrderNoteType extends Enum implements LocalizedEnum
 {
-    const SYSTEM = 'SYSTEM';
-    const ADMIN = 'ADMIN';
+    const SYSTEM = 1;
+    const ADMIN = 2;
 }

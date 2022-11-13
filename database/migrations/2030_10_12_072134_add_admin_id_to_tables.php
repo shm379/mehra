@@ -13,10 +13,34 @@ return new class extends Migration
      */
     public function up()
     {
-        $tables = ['comments','attributes','attribute_values','categories','volumes','order_notes','questions','series'];
+        $tables = [
+            'announcements',
+            'category_templates',
+            'collections',
+            'creators',
+            'comment_rates',
+            'comments',
+            'products',
+            'users',
+            'discounts',
+            'producers',
+            'awards',
+            'sliders',
+            'questions',
+            'pages',
+            'attributes',
+            'attribute_values',
+            'categories',
+            'volumes',
+            'order_notes',
+            'product_related',
+            'wallet_histories',
+            'product_groups',
+            'messages',
+        ];
         foreach ($tables as $table) {
             Schema::table($table, function (Blueprint $table) {
-                $table->unsignedBigInteger('admin_id');
+                $table->unsignedBigInteger('admin_id')->nullable();
                 $table->foreign('admin_id')
                     ->references('id')
                     ->on('users')

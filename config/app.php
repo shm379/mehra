@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'fa_IR',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,9 +185,11 @@ return [
         /*
          * Package Service Providers...
          */
+        Kavenegar\Laravel\ServiceProvider::class,
         Tartan\Larapay\LarapayServiceProvider::class,
         \PhpMonsters\Log\XLogServiceProvider::class,
-        Jackiedo\Cart\CartServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -211,9 +213,13 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'Kavenegar' => Kavenegar\Laravel\Facade::class,
         'Larapay' => Tartan\Larapay\Facades\Larapay::class,
         'XLog'    => PhpMonsters\Log\XLogServiceProvider::class,
         'Cart' => Jackiedo\Cart\Facades\Cart::class,
+        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        'Helper' => App\Helpers\Helpers::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 

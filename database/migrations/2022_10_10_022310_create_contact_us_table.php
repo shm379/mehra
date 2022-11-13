@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('mobile');
@@ -23,6 +24,10 @@ return new class extends Migration
             $table->boolean('is_read')->default(0);
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

@@ -2,10 +2,15 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class OrderNoteStatus extends Enum
+/**
+ * @method static static SUCCESS()
+ * @method static static FAILURE()
+ */
+final class OrderNoteStatus extends Enum implements LocalizedEnum
 {
-    const SUCCESS = 'SUCCESS';
-    const FAILURE = 'FAILURE';
+    const SUCCESS = 1;
+    const FAILURE = 2;
 }

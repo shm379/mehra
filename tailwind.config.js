@@ -1,20 +1,36 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
-        './resources/views/**/*.blade.php',
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        "./resources/**/*.vue",
+        "./resources/**/**/*.vue",
+        "./resources/**/**/**/*.vue",
     ],
-
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                sans: ["Noto Sans Arabic", "sans"],
+                serif: ["Noto Sans Arabic", "sans-serif"],
+                display: ["Noto Sans Arabic", "sans-serif"],
+                body: ["Noto Sans Arabic", "sans-serif"],
             },
         },
     },
-
-    plugins: [require('@tailwindcss/forms')],
+    safelist: [
+        "bg-red-500",
+        "bg-green-500",
+        "bg-teal-500",
+        "bg-yellow-500",
+        "bg-indigo-500",
+        "bg-zinc-500",
+        "bg-blue-500",
+        "bg-sky-500",
+        "bg-slate-500",
+        "bg-gray-500",
+        "bg-orange-500",
+        "text-3xl",
+        "lg:text-4xl",
+    ],
+    plugins: [],
 };

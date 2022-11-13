@@ -2,10 +2,18 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class OrderStatus extends Enum
+/**
+ * @method static static PENDING()
+ * @method static static CANCELED()
+ * @method static static RETURNED()
+ * @method static static COMPLETED()
+ */
+final class OrderStatus extends Enum implements LocalizedEnum
 {
+    const CARD = 0;
     const PENDING = 1;
     const CANCELED = 2;
     const RETURNED = 3;

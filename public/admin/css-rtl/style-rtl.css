@@ -1,0 +1,59 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 900;
+  src: url("/fonts/IRANSansWeb(FaNum)_Black.eot?0c82357136706fe0b8496ac2321a5c69");
+  src: url("/fonts/IRANSansWeb(FaNum)_Black.eot?0c82357136706fe0b8496ac2321a5c69?#iefix") format("embedded-opentype"), url("/fonts/IRANSansWeb(FaNum)_Black.woff2?aca84f753ff041f9bbd6559f178b7677") format("woff2"), url("/fonts/IRANSansWeb(FaNum)_Black.woff?45f207ebaeda42d31740c696302c4c40") format("woff"), url("/fonts/IRANSansWeb(FaNum)_Black.ttf?cdee2dc6ef6187c370dc44f0c325f545") format("truetype");
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/IRANSansWeb(FaNum)_Bold.eot?51ba486fa50e8204665fa810cd319500");
+  src: url("/fonts/IRANSansWeb(FaNum)_Bold.eot?51ba486fa50e8204665fa810cd319500?#iefix") format("embedded-opentype"), url("/fonts/IRANSansWeb(FaNum)_Bold.woff2?424eca1112ae72643ee80830a522e8da") format("woff2"), url("/fonts/IRANSansWeb(FaNum)_Bold.woff?aa12a017cbd4a5f7358752f4e7e7f344") format("woff"), url("/fonts/IRANSansWeb(FaNum)_Bold.ttf?282f38380a6bd094a001e0afd24ece9e") format("truetype");
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/IRANSansWeb(FaNum)_Medium.eot?7fed925eed1fe5c4a633d0011d860b47");
+  src: url("/fonts/IRANSansWeb(FaNum)_Medium.eot?7fed925eed1fe5c4a633d0011d860b47?#iefix") format("embedded-opentype"), url("/fonts/IRANSansWeb(FaNum)_Medium.woff2?ed4ac452b05d496237b8652311e6b466") format("woff2"), url("/fonts/IRANSansWeb(FaNum)_Medium.woff?10d80bfa89985b74a634d157df3c1f70") format("woff"), url("/fonts/IRANSansWeb(FaNum)_Medium.ttf?f885eebbc714297156bbac2f5c4794a7") format("truetype");
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 300;
+  src: url("/fonts/IRANSansWeb(FaNum)_Light.eot?2dffffe3b22e33c7ec29c429aa909806");
+  src: url("/fonts/IRANSansWeb(FaNum)_Light.eot?2dffffe3b22e33c7ec29c429aa909806?#iefix") format("embedded-opentype"), url("/fonts/IRANSansWeb(FaNum)_Light.woff2?721eb7ab97005da7447ed61b3ecc32d7") format("woff2"), url("/fonts/IRANSansWeb(FaNum)_Light.woff?955f38e3e1aab0d034a9aed686a428ec") format("woff"), url("/fonts/IRANSansWeb(FaNum)_Light.ttf?cc2c043728adc25f924baa640408fd1e") format("truetype");
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 200;
+  src: url("/fonts/IRANSansWeb(FaNum)_UltraLight.eot?93a22db98bbe6a6fdef5d98af544d121");
+  src: url("/fonts/IRANSansWeb(FaNum)_UltraLight.eot?93a22db98bbe6a6fdef5d98af544d121?#iefix") format("embedded-opentype"), url("/fonts/IRANSansWeb(FaNum)_UltraLight.woff2?7f6c155499d3fd780868d8acf39a5d5d") format("woff2"), url("/fonts/IRANSansWeb(FaNum)_UltraLight.woff?e9c28ed76d8679566bd67dfb8d50e5f0") format("woff"), url("/fonts/IRANSansWeb(FaNum)_UltraLight.ttf?3a4474e9d8093ac7d0e877446d2af502") format("truetype");
+}
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/IRANSansWeb(FaNum).eot?1a6f8943e894fa4f861a0ac56a290dba");
+  src: url("/fonts/IRANSansWeb(FaNum).eot?1a6f8943e894fa4f861a0ac56a290dba?#iefix") format("embedded-opentype"), url("/fonts/IRANSansWeb(FaNum).woff2?8d649f69659e092cd2f977d6b8d95599") format("woff2"), url("/fonts/IRANSansWeb(FaNum).woff?337881a1246d3b51b420e1ce1ad35422") format("woff"), url("/fonts/IRANSansWeb(FaNum).ttf?732cabbff87f779b74d3ee5741eb933f") format("truetype");
+}
+:root, body, .navigation {
+  --bs-font-sans-serif: "IRANSans";
+  --bs-font-monospace: "IRANSans";
+  --bs-body-font-family: IRANSans;
+  font-family: IRANSans !important;
+}

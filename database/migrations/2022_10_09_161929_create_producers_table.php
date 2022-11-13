@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('producers', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('alternative_title');
-            $table->string('slug');
+            $table->string('sub_title')->nullable();
+            $table->string('slug')->unique();
             $table->string('description');
-            $table->string('site_url');
+            $table->string('site_url')->nullable();
             $table->integer('producer_type');
             $table->boolean('is_active');
             $table->timestamps();

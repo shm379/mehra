@@ -62,7 +62,7 @@ return [
      |
      */
     'token_table'      => 'otp_tokens',
-
+    'otp_token' => 1234567,
     /*
      |--------------------------------------------------------------------------
      | Verification Token Length
@@ -102,7 +102,7 @@ return [
      | for sending SMS to users. You may use your own sms channel, so this is not a required option anymore.
      |
      */
-    'sms_client'       => '',
+    'sms_client'       => \App\Services\OTP\KavenegarClient::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -115,7 +115,7 @@ return [
     | Supported drivers: "cache", "database"
     |
     */
-    'token_storage'    => env('OTP_TOKEN_STORAGE', 'cache'),
+    'token_storage'    => env('OTP_TOKEN_STORAGE', 'database'),
 
     /*
     |--------------------------------------------------------------------------
