@@ -19,6 +19,11 @@ class CommentController extends Controller
             return [
                 'id' => $comment->id,
                 'name' => $comment->user->name,
+                'points' => $comment->points,
+                'created_at' => $comment->created_at,
+            ];
+        });
+        return Inertia('Comment/Index')->with(['comments'=>$comments]);
                 'created_at' => $comment->created_at
             ];
         });

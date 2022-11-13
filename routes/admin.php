@@ -1,6 +1,10 @@
 <?php
 use Inertia\Inertia;
+<<<<<<< HEAD
+use \Illuminate\Support\Facades\Route;
+=======
 
+>>>>>>> 9a1469e443bee614da5c9fb14625c0bbc11e3a15
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -34,7 +38,11 @@ Route::prefix('/admin')
         Route::resource('awards', \App\Http\Controllers\Admin\AwardController::class);
         Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
         Route::resource('creators', \App\Http\Controllers\Admin\CreatorController::class);
+<<<<<<< HEAD
+        Route::resource('comments', \App\Http\Controllers\Admin\CommentController::class)->except(['create','store']);
+=======
         Route::resource('comments', \App\Http\Controllers\Admin\CommentController::class);
+>>>>>>> 9a1469e443bee614da5c9fb14625c0bbc11e3a15
         Route::get('notifications', [\App\Http\Controllers\Admin\NotificationController::class,'index'])->name('notifications.index');
         Route::resource('messages', \App\Http\Controllers\Admin\MessageController::class);
         Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);

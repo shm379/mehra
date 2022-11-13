@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Controller;
 use App\Models\Award;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use Inertia\Inertia;
 
 class AwardController extends Controller
 {
@@ -16,6 +16,7 @@ class AwardController extends Controller
      */
     public function index()
     {
+        $awards = Award::query()->with(['parent'])->paginate();
         $awards = Award::query()->with(['parent'])->get();
         if(\request()->ajax()){
             return DataTables::of($awards)
@@ -37,7 +38,7 @@ class AwardController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Award/Create');
     }
 
     /**
