@@ -19,7 +19,6 @@
             </a>
         </nav>
         <datagrid :columns="columns" :data="comments" :actions="actions" baseRoute="admin.comments.index">
-<<<<<<< HEAD
             <template v-slot:row-cell-points="{ item }">
                 <div class="py-2">
                     <ul>
@@ -34,8 +33,6 @@
                     </ul>
                 </div>
             </template>
-=======
->>>>>>> 9a1469e443bee614da5c9fb14625c0bbc11e3a15
             <template v-slot:row-cell-created_at="{ item }">
                 {{ jDate(item) }}
             </template>
@@ -68,15 +65,12 @@ const columns = [
         sortable: true,
     },
     {
-<<<<<<< HEAD
         name: "points",
         label: "امتیازها",
         field: "points",
         sortable: true,
     },
     {
-=======
->>>>>>> 9a1469e443bee614da5c9fb14625c0bbc11e3a15
         name: "created_at",
         label: "تاریخ ثبت نام",
         field: "created_at",
