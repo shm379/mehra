@@ -15,10 +15,15 @@ return new class extends Migration
     {
         Schema::create('awards', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('award_type');
             $table->timestamps();
+            $table->foreign('parent_id')
+                ->references('id')
+                ->on('awards')
+                ->onDelete('cascade');
         });
     }
 

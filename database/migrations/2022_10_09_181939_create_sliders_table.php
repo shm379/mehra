@@ -16,15 +16,10 @@ return new class extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('admin_id');
             $table->string('link');
             $table->boolean('is_active');
+            $table->string('color');
             $table->timestamps();
-
-            $table->foreign('admin_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

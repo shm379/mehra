@@ -2,39 +2,44 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\Media\HasMediaTrait;
 use Fouladgar\OTP\Concerns\HasOTPNotify;
+use Fouladgar\OTP\Contracts\OTPNotifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements OTPNotifiable, HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable, HasOTPNotify, LogsActivity;
-
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasPermissions;
+    use HasRoles;
+    use HasOTPNotify;
+    use HasMediaTrait;
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var string[]
      */
     protected $fillable = [
         'first_name',
         'last_name',
+        'mobile',
         'email',
         'password',
-        'mobile',
-        'type',
-        'gender',
-        'city',
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -42,36 +47,76 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be append to model.
+     * The attributes that should be cast.
      *
-     * @var array<int, string>
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'mobile_verified_at' => 'datetime',
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
      */
     protected $appends = [
         'name',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     public function getNameAttribute()
     {
-        return $this->attributes['first_name'].' '.$this->attributes['last_name'];
+        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 
-    public function getActivitylogOptions(): LogOptions
+    protected static function getValidCollections(): array
     {
-        return LogOptions::defaults()
-            ->setDescriptionForEvent(fn(string $eventName) => "This user has been {$eventName}");
-//            ->dontLogIfAttributesChangedOnly([]);
+        return [
+            'main_image',
+        ];
+    }
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('main_image')->singleFile();
     }
 
-    public function views(){
-        return $this->morphMany(UserView::class,'model');
+    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
+    {
+        $conversion = $this->addMediaConversion('thumbnail');
+
+        $crop = $media->getCustomProperty('crop');
+
+        if (!empty($crop)) {
+            $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
+        }
+
+        $conversion->nonQueued()->performOnCollections('main_image');
+    }
+
+
+    public function histories()
+    {
+        return $this->belongsToMany(UserSearchHistory::class);
+    }
+
+    public function views()
+    {
+        return $this->belongsToMany(UserView::class);
+    }
+
+    public function addresses()
+    {
+        return $this->belongsToMany(UserAddress::class);
+    }
+
+    public function wallet()
+    {
+        return $this->belongsTo(Wallet::class);
+    }
+
+    public function balance()
+    {
+        return $this->wallet()->balance;
     }
 }

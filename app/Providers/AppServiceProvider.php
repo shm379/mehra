@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+
     }
 
     /**
@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        dd(config('database.connections')[config('database.default')]);
         Relation::morphMap(config('morphmap'));
+
     }
 }

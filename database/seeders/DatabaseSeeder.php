@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Enums\UserCity;
 use App\Enums\UserGender;
 use App\Enums\UserType;
+use App\Models\ProductGroup;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
 //        \App\Models\User::factory(10)->create();
         DB::table('users')->insertGetId([
             'first_name'=>'سیدحسین',
@@ -31,9 +33,18 @@ class DatabaseSeeder extends Seeder
             'type' => UserType::PERSON,
             'city' => UserCity::getKey(UserCity::QOM),
         ]);
-        $this->call([
-            AttributeSeeder::class,
-        ]);
+//        $this->call([
+//
+//            AttributeSeeder::class,
+//            ProducerSeeder::class,
+//            ProductSeeder::class,
+//            ProductGroupSeeder::class,
+//            ProductProductGroupSeeder::class,
+//            CategoryTemplateSeeder::class,
+//            CategorySeeder::class,
+//            MediaSeeder::class,
+//
+//        ]);
 
 
     }

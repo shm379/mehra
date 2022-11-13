@@ -2,9 +2,14 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class CommentPointStatus extends Enum
+/**
+ * @method static static POSITIVE()
+ * @method static static NEGATIVE()
+ */
+final class CommentPointStatus extends Enum implements LocalizedEnum
 {
     const POSITIVE = 1;
     const NEGATIVE = 2;

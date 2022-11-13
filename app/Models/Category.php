@@ -15,4 +15,13 @@ class Category extends Model
         return 'slug';
     }
 
+    public function template()
+    {
+       return $this->belongsTo(CategoryTemplate::class,'category_template_id');
+    }
+    public function products()
+    {
+        return $this->belongsToMany(CategoryProduct::class);
+    }
+
 }

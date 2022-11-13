@@ -11,7 +11,7 @@ return [
     | do not specify a specific name.
     |
     */
-    'default_cart_name' => 'default',
+    'default_cart_name' => 'cart',
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ return [
     | taxing system or not every time you initialize the cart.
     |
     */
-    'use_builtin_tax' => true,
+    'use_builtin_tax' => false,
 
     /*
     |--------------------------------------------------------------------------

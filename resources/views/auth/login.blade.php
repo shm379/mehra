@@ -12,7 +12,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <!-- Email UserAddress -->
+            <!-- Email Address -->
             <div>
                 <x-input-label for="email" :value="__('Email')" />
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedFloat('price',10,2)->nullable();
             $table->unsignedFloat('sale_price',10,2)->nullable();
             $table->boolean('is_active');
+            $table->unsignedInteger('type')->default(\App\Enums\ProductGroupType::GROUPED);
             $table->timestamps();
         });
     }

@@ -22,7 +22,7 @@ class AttributeSeeder extends Seeder
             'Age' => [
                 'name'=>'رده سنی',
                 'slug'=> Str::slug('age'),
-                'type'=>AttributeType::getKey(AttributeType::MULTI_CHOICE),
+                'type'=> AttributeType::MULTI_CHOICE,
                 'values'=>[
                     'کودک',
                     'بزرگسال',
@@ -33,7 +33,7 @@ class AttributeSeeder extends Seeder
             'Volume Type' => [
                 'name'=>'نوع جلد',
                 'slug'=> Str::slug('volume type'),
-                'type'=>AttributeType::getKey(AttributeType::SINGLE_CHOICE),
+                'type'=> AttributeType::SINGLE_CHOICE,
                 'values'=>[
                     'مقوایی',
                     'کاغذی',
@@ -42,7 +42,7 @@ class AttributeSeeder extends Seeder
             'Page Count' => [
                 'name'=>'تعداد صفحه',
                 'slug'=> Str::slug('page count'),
-                'type'=> AttributeType::getKey(AttributeType::NUMBER),
+                'type'=> AttributeType::NUMBER,
                 'values'=>[
                     '1300',
                     '300',
@@ -52,7 +52,7 @@ class AttributeSeeder extends Seeder
             'Publish Year' => [
                 'name'=>'سال نشر',
                 'slug'=> Str::slug('publish year'),
-                'type'=>AttributeType::getKey(AttributeType::MULTI_CHOICE),
+                'type'=> AttributeType::MULTI_CHOICE,
                 'values'=>[
                     '1393',
                     '1401',
@@ -61,7 +61,7 @@ class AttributeSeeder extends Seeder
             'Language' => [
                 'name'=>'زبان',
                 'slug'=> Str::slug('language'),
-                'type'=>AttributeType::getKey(AttributeType::MULTI_CHOICE),
+                'type'=> AttributeType::MULTI_CHOICE,
                 'values'=>[
                     'فارسی',
                     'عربی',
@@ -72,7 +72,7 @@ class AttributeSeeder extends Seeder
             'ISBN' => [
                 'name'=>'شابک',
                 'slug'=> Str::slug('isbn'),
-                'type'=>AttributeType::getKey(AttributeType::INPUT),
+                'type'=> AttributeType::INPUT,
                 'values'=>[
                     '1234-111',
                     '1234-121',
@@ -81,7 +81,7 @@ class AttributeSeeder extends Seeder
             'Book Format' => [
                 'name'=>'قطع',
                 'slug'=> Str::slug('format'),
-                'type'=>AttributeType::getKey(AttributeType::SINGLE_CHOICE),
+                'type'=> AttributeType::SINGLE_CHOICE,
                 'values'=>[
                     'رقعی',
                 ]
@@ -89,7 +89,7 @@ class AttributeSeeder extends Seeder
             'Weight' => [
                 'name'=>'وزن',
                 'slug'=> Str::slug('weight'),
-                'type'=>AttributeType::getKey(AttributeType::WEIGHT),
+                'type'=> AttributeType::WEIGHT,
                 'values'=>[
                     '1300',
                     '30',
@@ -98,7 +98,7 @@ class AttributeSeeder extends Seeder
             'Printing Time' => [
                 'name'=>'نوبت چاپ',
                 'slug'=> Str::slug('printing time'),
-                'type'=>AttributeType::getKey(AttributeType::INPUT),
+                'type'=> AttributeType::INPUT,
                 'values'=>[
                     '21',
                     '20',
@@ -107,12 +107,12 @@ class AttributeSeeder extends Seeder
             'Dimensions' => [
                 'name'=>'ابعاد',
                 'slug'=> Str::slug('dimensions'),
-                'type'=>AttributeType::getKey(AttributeType::DIMENSIONS),
+                'type'=> AttributeType::DIMENSIONS,
                 'children'=>[
                     'Length' => [
                         'name'=>'طول',
                         'slug'=> Str::slug('length'),
-                        'type'=>AttributeType::getKey(AttributeType::INPUT),
+                        'type'=> AttributeType::INPUT,
                         'values'=>[
                             '21',
                             '20',
@@ -121,7 +121,7 @@ class AttributeSeeder extends Seeder
                     'Width' => [
                         'name'=>'عرض',
                         'slug'=> Str::slug('width'),
-                        'type'=> AttributeType::getKey(AttributeType::INPUT),
+                        'type'=> AttributeType::INPUT,
                         'values'=>[
                             '13',
                             '11',
@@ -130,7 +130,7 @@ class AttributeSeeder extends Seeder
                     'Height' => [
                         'name'=>'ارتفاع',
                         'slug'=> Str::slug('height'),
-                        'type'=>AttributeType::getKey(AttributeType::INPUT),
+                        'type'=> AttributeType::INPUT,
                         'values'=>[
                             '11',
                             '10',

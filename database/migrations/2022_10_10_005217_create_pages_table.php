@@ -15,16 +15,15 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->text('body');
-            $table->boolean('has_comment');
-            $table->unsignedBigInteger('admin_id');
+            $table->unsignedInteger('type')->default(\App\Enums\PageType::STANDARD);
             $table->timestamps();
-
-            $table->foreign('admin_id')
+            $table->foreign('parent_id')
                 ->references('id')
-                ->on('users')
+                ->on('pages')
                 ->onDelete('cascade');
         });
     }

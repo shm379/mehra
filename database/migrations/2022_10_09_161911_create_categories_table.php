@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
-            $table->string('slug');
-            $table->string('description');
+            $table->string('slug')->unique();
+            $table->text('description');
+            $table->string('path');
             $table->unsignedBigInteger('category_template_id');
             $table->boolean('is_active');
             $table->timestamps();
