@@ -24,10 +24,6 @@ class CommentController extends Controller
             ];
         });
         return Inertia('Comment/Index')->with(['comments'=>$comments]);
-                'created_at' => $comment->created_at
-            ];
-        });
-        return Inertia('Comment/Index')->with(['comments'=>$comments]);
     }
 
     /**
