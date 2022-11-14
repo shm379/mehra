@@ -11,11 +11,12 @@ module.exports = {
         "./resources/**/*.vue",
         "./resources/**/**/*.vue",
         "./resources/**/**/**/*.vue",
+        "./resources/js/Components/**/**/*.vue",
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./node_modules/flowbite/**/*.js",
-        './node_modules/@protonemedia/inertiajs-tables-laravel-query-builder/**/*.{js,vue}',
+        "./node_modules/@protonemedia/inertiajs-tables-laravel-query-builder/**/*.{js,vue}",
     ],
     theme: {
         extend: {

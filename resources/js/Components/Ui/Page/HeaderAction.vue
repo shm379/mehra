@@ -5,9 +5,10 @@
     :href="route(to)"
     ><slot></slot
   ></Link>
-</template>
+ </template>
 
 <script setup>
+import { Link } from '@inertiajs/inertia-vue3';
 const props = defineProps({
   to: String,
 });
