@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Builder\Sorts\NameSort;
 use App\Models\Collection;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class UserController extends Controller
             ->allowedSorts([
                 'email',
                 'created_at',
-                AllowedSort::custom('name', new NameSo, 'name'),
+                AllowedSort::custom('name', new NameSort(), 'name'),
             ])
             ->allowedFilters(['email', $globalSearch])
             ->paginate($per_page)
