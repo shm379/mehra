@@ -2,8 +2,8 @@
 
 return [
     'App\Enums\UserGender'=>[
-        1 => 'آقا',
-        2 => 'خانم',
+        2 => 'آقا',
+        1 => 'خانم',
     ],
     'App\Enums\AwardType'=>[
         1 => 'جایزه',
