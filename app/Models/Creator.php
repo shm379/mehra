@@ -29,38 +29,47 @@ class Creator extends Model
         return $this->belongsToMany(CreatorType::class,'creator_creator_types');
     }
 
-    public function scopeAuthors($query)
+    public function scopeAuthors($query,$q=null)
     {
         $query->whereHas('types',function ($query){
             $query->where('name', 'نویسنده');
         });
+        if(isset($q)){
+            $query->where('title',$q);
+        }
         return $query->get();
     }
 
     public function scopeTranslators($query,$q=null)
     {
-        if(isset($q)){
-            $query->where('title',$q);
-        }
         $query->whereHas('types',function ($query){
             $query->where('name', 'مترجم');
         });
+        if(isset($q)){
+            $query->where('title',$q);
+        }
         return $query->get();
     }
 
-    public function scopeNarrators($query)
+    public function scopeNarrators($query,$q=null)
     {
         $query->whereHas('types',function ($query){
             $query->where('name', 'گوینده');
         });
+        if(isset($q)){
+            $query->where('title',$q);
+        }
         return $query->get();
     }
 
-    public function scopeIllustrators($query)
+    public function scopeIllustrators($query,$q=null)
     {
         $query->whereHas('types',function ($query){
             $query->where('name', 'تصویرگر');
         });
+        if(isset($q)){
+            $query->where('title',$q);
+        }
         return $query->get();
     }
 }
