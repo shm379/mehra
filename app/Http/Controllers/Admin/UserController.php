@@ -29,6 +29,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // global input search
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
                 \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
@@ -39,23 +40,28 @@ class UserController extends Controller
                 });
             });
         });
+        // get per page number
         $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
 
+        // get users from query builder
         $users = QueryBuilder::for(User::class)
             ->with('wallet')
             ->withCount('comments')
             ->defaultSort('created_at')
+            ->join('wallets', 'users.id', '=', 'user_id')
             ->allowedSorts([
                 'email',
+                'mobile',
                 'comments_count',
                 'created_at',
                 AllowedSort::custom('name', new NameSort(), 'name'),
                 AllowedSort::custom('gender', new GenderSort(), 'gender'),
-                AllowedSort::custom('wallet', new WalletBalanceSort(), 'wallet'),
+                'wallets.balance',
             ])
             ->allowedIncludes(['comments','wallet'])
             ->allowedFilters([
                 AllowedFilter::custom('name', new FiltersName(),'name'),
+                'wallet',
                 'city',
                 'email',
                 'gender',
@@ -70,11 +76,12 @@ class UserController extends Controller
                     'email' => $user->email,
                     'email_verified_at' => $user->email_verified_at,
                     'comments_count' => $user->comments_count,
-                    'wallet' => number_format(optional($user->wallet)->balance),
+                    'wallets.balance' => number_format(optional($user->wallet)->balance),
                     'created_at' => $user->created_at
                 ];
             })
             ->withQueryString();
+        // return table in inertia with columns
         return Inertia::render('User/Index')
             ->with(['users' => $users])
             ->table(function (InertiaTable $table) {
@@ -87,7 +94,7 @@ class UserController extends Controller
                     ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
                     ->column(key: 'comments_count', label: 'تعداد دیدگاه ها', sortable: true, searchable: true)
-                    ->column(key: 'wallet', label: 'کیف پول', sortable: true, searchable: true)
+                    ->column(key: 'wallets.balance', label: 'کیف پول', sortable: true, searchable: true)
                     ->column(key:'actions', label: 'عملیات')
                     ->selectFilter(
                         key: 'email',

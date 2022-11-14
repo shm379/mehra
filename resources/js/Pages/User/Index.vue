@@ -19,10 +19,13 @@
       </a>
     </nav>
       <div class="py-12">
-        <Table :resource="users">
+        <Table :resource="users"
+               :striped="true"
+               :prevent-overlapping-requests="false"
+               :input-debounce-ms="1000"
+               preserve-scroll="table-top">
             <template #cell(name)="{ item: user }">
                 <div>
-                    <a>
                         <Link
                             as="button"
                             :href="route('admin.users.show', { id: user.id })"
@@ -31,21 +34,19 @@
                             {{user.name}}
 
                         </Link>
-                    </a>
-
                 </div>
             </template>
             <template #cell(actions)="{ item: user }">
                 <div>
-                    <a
+                    <Link
                         as="button"
                         v-for="(action, l) in actions"
                         :key="l"
                         :href="route(action.route, { id: user.id })"
                         :class="`bg-${action.color}-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs`"
                     >
-                        <a href="javascript:;">{{ action.title }}</a>
-                    </a>
+                       {{ action.title }}
+                    </Link>
                 </div>
             </template>
         </Table>
@@ -71,6 +72,7 @@ export default {
 </script>
 <script setup>
 import { ref } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
 import Datagrid from "@/Components/Datagrid.vue";
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
