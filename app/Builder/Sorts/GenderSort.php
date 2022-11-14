@@ -2,7 +2,6 @@
 
 namespace App\Builder\Sorts;
 
-use App\Enums\UserGender;
 use \Illuminate\Database\Eloquent\Builder;
 
 class GenderSort implements \Spatie\QueryBuilder\Sorts\Sort
@@ -10,7 +9,7 @@ class GenderSort implements \Spatie\QueryBuilder\Sorts\Sort
     public function __invoke(Builder $query, bool $descending, string $property)
     {
         $direction = $descending ? 'DESC' : 'ASC';
-        foreach (UserGender::asArray() as $gender) {
+        foreach (['1', '2'] as $gender) {
             $query->orderByRaw('gender = ? '.$direction, [$gender]);
         }
     }
