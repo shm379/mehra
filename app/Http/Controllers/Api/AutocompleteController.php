@@ -10,17 +10,42 @@ use Illuminate\Http\Request;
 
 class AutocompleteController extends Controller
 {
-    public function publisher($q, Request $request)
+    public function authors($q, Request $request)
     {
-        $result = Producer::where('title', 'LIKE', '%' . $q . '%')->get();
-        return $result;
+        return Creator::authors($q);
     }
-    public function creator($q, Request $request)
+
+    public function translators($q, Request $request)
     {
-        $result = Creator::where('title', 'LIKE', '%' . $q . '%')->get();
-        return $result;
+        return Creator::translators($q);
     }
-    public function category($q, Request $request)
+
+    public function narrators($q, Request $request)
+    {
+        return Creator::narrators($q);
+    }
+
+    public function illustrators($q, Request $request)
+    {
+        return Creator::illustrators($q);
+    }
+
+    public function publishers($q, Request $request)
+    {
+        return Producer::publishers($q);
+    }
+
+    public function brands($q, Request $request)
+    {
+        return Producer::brands($q);
+    }
+
+    public function producers($q, Request $request)
+    {
+        return Producer::producers($q);
+    }
+
+    public function categories($q, Request $request)
     {
         $result = Category::where('title', 'LIKE', '%' . $q . '%')->get();
         return $result;

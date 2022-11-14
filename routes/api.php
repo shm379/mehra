@@ -39,7 +39,12 @@ Route::prefix('/v1')->controller(\App\Http\Controllers\Api\Auth\AuthController::
     Route::middleware(['throttle:OTP'])->post('/send-otp', 'sendOTP');
     Route::post('/validate-otp', 'verifyOTPAndLogin');
     Route::post('/check-exists', 'checkExists');
-    Route::get('/ac/publishers/{q}', [AutocompleteController::class, 'publisher']);
-    Route::get('/ac/creators/{q}', [AutocompleteController::class, 'creator']);
-    Route::get('/ac/categories/{q}', [AutocompleteController::class, 'category']);
+    Route::get('/ac/producers/publishers/{q}', [AutocompleteController::class, 'publishers']);
+    Route::get('/ac/producers/brands/{q}', [AutocompleteController::class, 'brands']);
+    Route::get('/ac/producers/producers/{q}', [AutocompleteController::class, 'producers']);
+    Route::get('/ac/creators/authors/{q}', [AutocompleteController::class, 'authors']);
+    Route::get('/ac/creators/translators/{q}', [AutocompleteController::class, 'translators']);
+    Route::get('/ac/creators/narrators/{q}', [AutocompleteController::class, 'narrators']);
+    Route::get('/ac/creators/illustrators/{q}', [AutocompleteController::class, 'illustrators']);
+    Route::get('/ac/categories/{q}', [AutocompleteController::class, 'categories']);
 });

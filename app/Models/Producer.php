@@ -29,4 +29,31 @@ class Producer extends Model
     {
         return ProducerType::getDescription($this->attributes['producer_type']);
     }
+
+    public function scopePublishers($query,$q=null)
+    {
+        $query->where('producer_type',ProducerType::PUBLISHER);
+        if(isset($q)){
+            $query->where('title','LIKE', '%' . $q . '%');
+        }
+        return $query->get();
+    }
+
+    public function scopeBrands($query,$q=null)
+    {
+        $query->where('producer_type',ProducerType::BRAND);
+        if(isset($q)){
+            $query->where('title','LIKE', '%' . $q . '%');
+        }
+        return $query->get();
+    }
+
+    public function scopeProducers($query,$q=null)
+    {
+        $query->where('producer_type',ProducerType::PRODUCER);
+        if(isset($q)){
+            $query->where('title','LIKE', '%' . $q . '%');
+        }
+        return $query->get();
+    }
 }
