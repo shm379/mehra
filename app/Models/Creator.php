@@ -35,7 +35,7 @@ class Creator extends Model
             $query->where('name', 'نویسنده');
         });
         if(isset($q)){
-            $query->where('title',$q);
+            $query->where('title','LIKE', '%' . $q . '%');
         }
         return $query->get();
     }
@@ -46,7 +46,7 @@ class Creator extends Model
             $query->where('name', 'مترجم');
         });
         if(isset($q)){
-            $query->where('title',$q);
+            $query->where('title','LIKE', '%' . $q . '%');
         }
         return $query->get();
     }
@@ -57,7 +57,7 @@ class Creator extends Model
             $query->where('name', 'گوینده');
         });
         if(isset($q)){
-            $query->where('title',$q);
+            $query->where('title','LIKE', '%' . $q . '%');
         }
         return $query->get();
     }
@@ -68,7 +68,7 @@ class Creator extends Model
             $query->where('name', 'تصویرگر');
         });
         if(isset($q)){
-            $query->where('title',$q);
+            $query->where('title','LIKE', '%' . $q . '%');
         }
         return $query->get();
     }
