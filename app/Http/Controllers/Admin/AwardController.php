@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\AwardType;
 use App\Http\Controllers\Admin\Controller;
+use App\Http\Requests\StoreAwardRequest;
 use App\Models\Award;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -34,11 +36,12 @@ class AwardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        return Inertia::render('Award/Create');
+        $types = AwardType::asSelectArray();
+        return Inertia::render('Award/Create')->with(['types'=> $types]);
     }
 
     /**
@@ -47,7 +50,7 @@ class AwardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAwardRequest $request)
     {
         //
     }

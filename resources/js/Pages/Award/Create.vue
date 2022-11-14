@@ -77,9 +77,8 @@
                 :class="{ 'border-red-500 border bg-red-50': errors.type }"
                 class="max-w-sm bg-neutral-200/50 rounded-xl outline-0 w-full p-2 pe-10 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
               >
-                <option selected>نوع جایزه را انتخاب کنید</option>
-                <option value="award">جایزه</option>
-                <option value="competition">مسابقه</option>
+                <option selected disabled>نوع جایزه را انتخاب کنید</option>
+                <option :value="key" v-for="(value,key) in $page.props.types">{{ value }}</option>
               </select>
               <div class="text-xs text-red-600" v-if="errors.type">{{ errors.type }}</div>
             </div>
@@ -127,7 +126,6 @@ import { usePage, useForm } from "@inertiajs/inertia-vue3";
 import { computed, defineProps } from "vue";
 const props = defineProps({ errors: Object });
 const user = computed(() => usePage().props.value.auth.user);
-console.log(user.value);
 const form = useForm({
   title: null,
   description: null,

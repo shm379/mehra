@@ -1,0 +1,1 @@
+import{_ as e}from"./Sidebar.d48ffcb9.js";import{o as t,g as a,a as o,d as r,r as c}from"./app.411a74f6.js";const _={class:"flex gap-4 flex-row justify-start items-start",dir:"rtl",lang:"fa"},n={class:"grow px-10"},f={__name:"AdminLayout",setup(i){return(s,l)=>(t(),a("div",_,[o(e),r("section",n,[c(s.$slots,"default")])]))}};export{f as _};

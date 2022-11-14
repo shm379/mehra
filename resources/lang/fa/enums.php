@@ -1,6 +1,9 @@
 <?php declare(strict_types=1);
 
 return [
+    'App\Enums\AwardType'=>[
+        1 => 'جایزه',
+    ],
     'App\Enums\ProducerType'=>[
         1 => 'ناشر',
         2 => 'برند',

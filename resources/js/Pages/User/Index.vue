@@ -18,7 +18,10 @@
         لیست کاربری
       </a>
     </nav>
-    <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
+      <div class="py-12">
+        <Table :resource="users" />
+      </div>
+      <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
       <template v-slot:row-cell-email_verified_at="{ item }">
         <div class="py-2">
           <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1"
@@ -44,6 +47,19 @@ export default {
 <script setup>
 import { ref } from "vue";
 import Datagrid from "@/Components/Datagrid.vue";
+import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
+import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
+
+setTranslations({
+    next: "بعدی",
+    no_results_found: "یافت نشد!",
+    of: "از",
+    per_page: "",
+    previous: "قبلی",
+    results: "نتیجه",
+    to: "از",
+    reset: "ریست"
+});
 const props = defineProps({
   users: Array,
 });
@@ -95,4 +111,16 @@ function jDate(d) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+input.block.w-full.pl-9.text-sm.rounded-md.shadow-sm.focus\:ring-indigo-500.focus\:border-indigo-500.border-gray-300{
+    height:100%;
+}
+div[role=menu] button {
+    direction: ltr;
+}
+.absolute.inset-y-0.right-0.pr-3.flex.items-center {
+    left: 0;
+    right: auto;
+}
+
+</style>

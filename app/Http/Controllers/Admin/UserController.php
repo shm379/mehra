@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Collection;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
@@ -18,17 +22,49 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = abs($request->per_page) > 0 ? abs($request->per_page) : 15;
-        $users = User::paginate($per_page)->through(function ($user) {
-            return [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'email_verified_at' => $user->email_verified_at,
-                'created_at' => $user->created_at
-            ];
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                Collection::wrap($value)->each(function ($value) use ($query) {
+                    $query
+                        ->orWhere('mobile', 'LIKE', "%{$value}%")
+                        ->orWhere('email', 'LIKE', "%{$value}%");
+                });
+            });
         });
-        return Inertia::render('User/Index')->with(['users' => $users]);
+        $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
+
+        $users = QueryBuilder::for(User::class)
+            ->defaultSort('created_at')
+            ->allowedSorts(['email','name','created_at'])
+            ->allowedFilters(['email', $globalSearch])
+            ->paginate($per_page)
+            ->through(function ($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'mobile' => $user->mobile,
+                    'email' => $user->email,
+                    'email_verified_at' => $user->email_verified_at,
+                    'created_at' => $user->created_at
+                ];
+            })
+            ->withQueryString();
+        return Inertia::render('User/Index')
+            ->with(['users' => $users])
+            ->table(function (InertiaTable $table) {
+                $table
+                    ->withGlobalSearch('جستجو در لیست کاربران ...')
+                    ->defaultSort('created_at')
+                    ->column(key: 'name', label: 'نام و نام خانوادگی', canBeHidden: false, sortable: true, searchable: true)
+                    ->column(key: 'email', label: 'ایمیل', sortable: true, searchable: true)
+                    ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
+                    ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
+                    ->column(label: 'عملیات')
+                    ->selectFilter(key: 'email', options: [
+                        'gmail' => 'Gmail',
+                        'live' => 'Live',
+                    ], label: 'ایمیل');
+            });
     }
 
     /**

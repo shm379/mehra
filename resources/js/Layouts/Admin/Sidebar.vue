@@ -206,9 +206,6 @@ function toggle() {
 function openSubmenu(id) {
   submenu.value = !submenu.value;
 }
-function toggle() {
-  sidebar.value = !sidebar.value;
-}
 </script>
 
 <style lang="scss" scoped></style>

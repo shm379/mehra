@@ -6,6 +6,7 @@ module.exports = {
         "./resources/**/*.vue",
         "./resources/**/**/*.vue",
         "./resources/**/**/**/*.vue",
+        './node_modules/@protonemedia/inertiajs-tables-laravel-query-builder/**/*.{js,vue}',
     ],
     theme: {
         extend: {
