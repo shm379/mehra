@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
@@ -35,7 +36,11 @@ class UserController extends Controller
 
         $users = QueryBuilder::for(User::class)
             ->defaultSort('created_at')
-            ->allowedSorts(['email','name','created_at'])
+            ->allowedSorts([
+                'email',
+                'created_at',
+                AllowedSort::custom('name', new NameSo, 'name'),
+            ])
             ->allowedFilters(['email', $globalSearch])
             ->paginate($per_page)
             ->through(function ($user) {
