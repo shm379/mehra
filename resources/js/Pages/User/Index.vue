@@ -20,6 +20,21 @@
     </nav>
       <div class="py-12">
         <Table :resource="users">
+            <template #cell(name)="{ item: user }">
+                <div>
+                    <a>
+                        <Link
+                            as="button"
+                            :href="route('admin.users.show', { id: user.id })"
+                            class="bg-red-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs"
+                        >
+                            {{user.name}}
+
+                        </Link>
+                    </a>
+
+                </div>
+            </template>
             <template #cell(actions)="{ item: user }">
                 <div>
                     <a

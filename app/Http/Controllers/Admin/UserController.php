@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Builder\Filters\FiltersName;
 use App\Builder\Sorts\GenderSort;
 use App\Builder\Sorts\NameSort;
 use App\Builder\Sorts\WalletBalanceSort;
@@ -53,7 +54,12 @@ class UserController extends Controller
                 AllowedSort::custom('wallet', new WalletBalanceSort(), 'wallet'),
             ])
             ->allowedIncludes(['comments','wallet'])
-            ->allowedFilters(['city','email', 'gender', $globalSearch])
+            ->allowedFilters([
+                AllowedFilter::custom('name', new FiltersName(),'name'),
+                'city',
+                'email',
+                'gender',
+                $globalSearch])
             ->paginate($per_page)
             ->through(function ($user) {
                 return [
@@ -76,7 +82,7 @@ class UserController extends Controller
                     ->withGlobalSearch('جستجو در لیست کاربران ...')
                     ->defaultSort('created_at')
                     ->column(key: 'name', label: 'نام و نام خانوادگی', canBeHidden: false, sortable: true, searchable: true)
-                    ->column(key: 'gender', label: 'جنسیت', sortable: false, searchable: true)
+                    ->column(key: 'gender', label: 'جنسیت', sortable: true, searchable: true)
                     ->column(key: 'email', label: 'ایمیل', sortable: true, searchable: true)
                     ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)

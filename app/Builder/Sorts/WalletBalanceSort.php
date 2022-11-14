@@ -11,10 +11,8 @@ class WalletBalanceSort implements \Spatie\QueryBuilder\Sorts\Sort
     public function __invoke(Builder $query, bool $descending, string $property)
     {
         $direction = $descending ? 'DESC' : 'ASC';
-        $query->orderBy(
-            Wallet::select('balance')
-            ->whereColumn('wallets.user_id','user_id')
-            ->orderBy('balance',$direction)
-        );
+        $query->with(['wallet'=>function($wallet) use ($direction,$query){
+            $query->orderBy('wallet.balance',$direction);
+        }]);
     }
 }
