@@ -28,4 +28,36 @@ class Creator extends Model
     {
         return $this->belongsToMany(CreatorType::class,'creator_creator_types');
     }
+
+    public function scopeAuthors($query)
+    {
+        $query->whereHas('types',function ($query){
+            $query->where('name', 'نویسنده');
+        });
+        return $query->get();
+    }
+
+    public function scopeTranslators($query)
+    {
+        $query->whereHas('types',function ($query){
+            $query->where('name', 'مترجم');
+        });
+        return $query->get();
+    }
+
+    public function scopeSpeakers($query)
+    {
+        $query->whereHas('types',function ($query){
+            $query->where('name', 'گوینده');
+        });
+        return $query->get();
+    }
+
+    public function scopeIllustrators($query)
+    {
+        $query->whereHas('types',function ($query){
+            $query->where('name', 'تصویرگر');
+        });
+        return $query->get();
+    }
 }

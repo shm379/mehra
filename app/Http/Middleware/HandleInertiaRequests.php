@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Creator;
+use App\Models\CreatorType;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -34,6 +36,13 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $custom = [];
+        if($request->routeIs('admin.products.create')){
+            $custom['publishers'] = Creator::authors();
+            $custom['illustrators'] = Creator::illustrators();
+            $custom['speakers'] = Creator::speakers();
+            $custom['translators'] = Creator::translators();
+        }
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
@@ -49,6 +58,6 @@ class HandleInertiaRequests extends Middleware
                 'info' => fn () => $request->session()->get('info'),
                 'success' => fn () => $request->session()->get('success'),
             ],
-        ]);
+        ],$custom);
     }
 }
