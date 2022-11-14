@@ -45,7 +45,7 @@ class Creator extends Model
         return $query->get();
     }
 
-    public function scopeSpeakers($query)
+    public function scopeNarrators($query)
     {
         $query->whereHas('types',function ($query){
             $query->where('name', 'گوینده');

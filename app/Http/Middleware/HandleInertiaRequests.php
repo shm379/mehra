@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
         if($request->routeIs('admin.products.create')){
             $custom['authors'] = Creator::authors();
             $custom['illustrators'] = Creator::illustrators();
-            $custom['speakers'] = Creator::speakers();
+            $custom['narrators'] = Creator::narrators();
             $custom['translators'] = Creator::translators();
         }
         return array_merge(parent::share($request), [
