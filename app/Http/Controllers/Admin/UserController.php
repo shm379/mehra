@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Builder\Sorts\GenderSort;
 use App\Builder\Sorts\NameSort;
 use App\Enums\UserGender;
 use App\Models\Collection;
@@ -39,10 +40,10 @@ class UserController extends Controller
         $users = QueryBuilder::for(User::class)
             ->defaultSort('created_at')
             ->allowedSorts([
-                'gender',
                 'email',
                 'created_at',
                 AllowedSort::custom('name', new NameSort(), 'name'),
+                AllowedSort::custom('gender', new GenderSort(), 'gender'),
             ])
             ->allowedFilters(['email', $globalSearch])
             ->paginate($per_page)
