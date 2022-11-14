@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Builder\Sorts\NameSort;
+use App\Enums\UserGender;
 use App\Models\Collection;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class UserController extends Controller
         $users = QueryBuilder::for(User::class)
             ->defaultSort('created_at')
             ->allowedSorts([
+                'gender',
                 'email',
                 'created_at',
                 AllowedSort::custom('name', new NameSort(), 'name'),
@@ -49,6 +51,7 @@ class UserController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'mobile' => $user->mobile,
+                    'gender' => UserGender::getDescription($user->gender),
                     'email' => $user->email,
                     'email_verified_at' => $user->email_verified_at,
                     'created_at' => $user->created_at
@@ -62,6 +65,7 @@ class UserController extends Controller
                     ->withGlobalSearch('جستجو در لیست کاربران ...')
                     ->defaultSort('created_at')
                     ->column(key: 'name', label: 'نام و نام خانوادگی', canBeHidden: false, sortable: true, searchable: true)
+                    ->column(key: 'gender', label: 'جنسیت', sortable: true, searchable: true)
                     ->column(key: 'email', label: 'ایمیل', sortable: true, searchable: true)
                     ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
