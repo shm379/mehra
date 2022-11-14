@@ -41,4 +41,5 @@ Route::prefix('/v1')->controller(\App\Http\Controllers\Api\Auth\AuthController::
     Route::post('/check-exists', 'checkExists');
     Route::get('/ac/publishers/{q}', [AutocompleteController::class, 'publisher']);
     Route::get('/ac/creators/{q}', [AutocompleteController::class, 'creator']);
+    Route::get('/ac/categories/{q}', [AutocompleteController::class, 'category']);
 });

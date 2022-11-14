@@ -33,7 +33,7 @@
       <div
         v-if="items"
         ref="results"
-        class="absolute w-full max-h-32 overflow-y-scroll bg-white top-[86px] flex flex-col gap-1 rounded-lg shadow-lg p-2"
+        class="absolute w-full max-h-32 overflow-y-scroll bg-white top-[86px] flex flex-col gap-1 rounded-lg shadow-lg p-2 z-50	"
       >
         <p
           class="hover:bg-slate-100 rounded-lg p-2 cursor-pointer hover:border hover:shadow-inner"
@@ -55,7 +55,7 @@ import UiLabel from "@/Components/Ui/Label.vue";
 const emit = defineEmits(["update:modelValue"]);
 const results = ref();
 const search = ref("");
-const items = ref([]);
+const items = ref(false);
 const props = defineProps({
   label: String,
   api: "",

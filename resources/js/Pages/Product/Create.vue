@@ -109,7 +109,8 @@ const form = useForm({
   title: "",
   sub_title: "",
   description: "",
-  producer: []
+    producers: [],
+  creators:[]
 });
 </script>
 
