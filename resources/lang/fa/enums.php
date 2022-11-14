@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
 
 return [
+    'App\Enums\UserGender'=>[
+        1 => 'آقا',
+        2 => 'خانم',
+    ],
     'App\Enums\AwardType'=>[
         1 => 'جایزه',
     ],
