@@ -4,8 +4,8 @@
         </ui-autocomplete-publisher>
     </div>
     <div>
-        <ui-autocomplete-publisher v-model="publisher" >
-        </ui-autocomplete-publisher>
+        <ui-autocomplete-creator v-model="publisher" >
+        </ui-autocomplete-creator>
     </div>
 </template>
 
@@ -13,6 +13,7 @@
 import { computed } from "vue";
 
 import UiAutocompletePublisher from "@/Components/Ui/Autocomplete/Publisher.vue"
+import UiAutocompleteCreator from "@/Components/Ui/Autocomplete/Creator.vue"
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({modelValue: [Object,Array]})
 const publisher = computed({
