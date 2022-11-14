@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\ProducerType;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
@@ -17,12 +18,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::query()->with('producer');
-        if(\request()->ajax()){
-//            $products->map(function ($product){
-//               $product->title = '<a href="'.route('admin.products.show',$product).'">'.$product->title.'</a>';
-//               $product->price = number_format($product->price).' تومان';
-//                return $product;
-//            });
+        if (\request()->ajax()) {
+            //            $products->map(function ($product){
+            //               $product->title = '<a href="'.route('admin.products.show',$product).'">'.$product->title.'</a>';
+            //               $product->price = number_format($product->price).' تومان';
+            //                return $product;
+            //            });
             return DataTables::of($products)
                 ->rawColumns(['title'])
                 ->make();
@@ -37,7 +38,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Product/Create');
     }
 
     /**

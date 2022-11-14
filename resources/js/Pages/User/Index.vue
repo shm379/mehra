@@ -19,7 +19,7 @@
       </a>
     </nav>
       <div class="py-12">
-        <Table :resource="users" />
+        <Table :resource="users"  />
       </div>
       <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
       <template v-slot:row-cell-email_verified_at="{ item }">
