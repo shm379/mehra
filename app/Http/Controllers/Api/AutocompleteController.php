@@ -15,7 +15,6 @@ class AutocompleteController extends Controller
         $result = Producer::where('title', 'LIKE', '%' . $q . '%')->get();
         return $result;
     }
-
     public function creator($q, Request $request)
     {
         $result = Creator::where('title', 'LIKE', '%' . $q . '%')->get();

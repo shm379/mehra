@@ -37,8 +37,11 @@ class Creator extends Model
         return $query->get();
     }
 
-    public function scopeTranslators($query)
+    public function scopeTranslators($query,$q=null)
     {
+        if(isset($q)){
+            $query->where('title',$q);
+        }
         $query->whereHas('types',function ($query){
             $query->where('name', 'مترجم');
         });
