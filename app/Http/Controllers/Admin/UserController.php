@@ -61,7 +61,8 @@ class UserController extends Controller
             ->allowedIncludes(['comments','wallet'])
             ->allowedFilters([
                 AllowedFilter::custom('name', new FiltersName(),'name'),
-                'wallet',
+                'comments_count',
+                'wallets.balance',
                 'city',
                 'email',
                 'gender',

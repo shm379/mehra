@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper.cdc0426e.js";import{o,g as t,d as c}from"./app.c672878f.js";const n={},r=c("h1",null,"Product admin page",-1),s=[r];function a(_,d){return o(),t("div",null,s)}const f=e(n,[["render",a]]);export{f as default};

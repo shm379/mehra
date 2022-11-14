@@ -10,4 +10,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-public/hot
+/public/hot
+/public/build
