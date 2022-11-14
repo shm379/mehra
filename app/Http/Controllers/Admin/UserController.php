@@ -51,7 +51,7 @@ class UserController extends Controller
                     'id' => $user->id,
                     'name' => $user->name,
                     'mobile' => $user->mobile,
-                    'gender' => UserGender::getDescription($user->gender),
+                    'gender' => UserGender::getDescription((int)$user->gender),
                     'email' => $user->email,
                     'email_verified_at' => $user->email_verified_at,
                     'created_at' => $user->created_at
