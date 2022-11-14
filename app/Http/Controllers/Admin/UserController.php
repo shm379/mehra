@@ -19,6 +19,7 @@ use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class UserController extends Controller
 {
@@ -42,7 +43,7 @@ class UserController extends Controller
         });
         // get per page number
         $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
-
+        QueryBuilderRequest::setArrayValueDelimiter('|');
         // get users from query builder
         $users = QueryBuilder::for(User::class)
             ->with('wallet')
@@ -58,16 +59,15 @@ class UserController extends Controller
                 AllowedSort::custom('gender', new GenderSort(), 'gender'),
                 'wallets.balance',
             ])
-            ->allowedIncludes(['comments', 'wallet'])
+            ->allowedIncludes(['comments','wallet'])
             ->allowedFilters([
-                AllowedFilter::custom('name', new FiltersName(), 'name'),
+                AllowedFilter::custom('name', new FiltersName(),'name'),
                 'comments_count',
                 'wallets.balance',
                 'city',
                 'email',
                 'gender',
-                $globalSearch
-            ])
+                $globalSearch])
             ->paginate($per_page)
             ->through(function ($user) {
                 return [
@@ -76,10 +76,10 @@ class UserController extends Controller
                     'mobile' => $user->mobile,
                     'gender' => UserGender::getDescription((int)$user->gender),
                     'email' => $user->email,
-                    'email_verified_at' => $user->email_verified_at,
+                    'email_verified_at' => jdate($user->email_verified_at)->format('j F Y'),
                     'comments_count' => $user->comments_count,
-                    'wallets.balance' => number_format(optional($user->wallet)->balance),
-                    'created_at' => $user->created_at
+                    'wallets.balance' => number_format(optional($user->wallet)->balance) . ' تومان',
+                    'created_at' => jdate($user->created_at)->format('j F Y')
                 ];
             })
             ->withQueryString();
@@ -97,15 +97,14 @@ class UserController extends Controller
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
                     ->column(key: 'comments_count', label: 'تعداد دیدگاه ها', sortable: true, searchable: true)
                     ->column(key: 'wallets.balance', label: 'کیف پول', sortable: true, searchable: true)
-                    ->column(key: 'actions', label: 'عملیات')
+                    ->column(key:'actions', label: 'عملیات')
                     ->selectFilter(
                         key: 'email',
                         options: [
-                            'gmail' => 'Gmail',
-                            'live' => 'Live',
-                        ],
-                        label: 'ایمیل'
-                    )
+                        'gmail' => 'Gmail',
+                        'live' => 'Live',
+                    ],
+                        label: 'ایمیل')
                     ->selectFilter(
                         key: 'gender',
                         options: UserGender::asSelectArray(),
