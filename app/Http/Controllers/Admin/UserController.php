@@ -58,15 +58,20 @@ class UserController extends Controller
                 AllowedSort::custom('gender', new GenderSort(), 'gender'),
                 'wallets.balance',
             ])
-            ->allowedIncludes(['comments','wallet'])
+            ->allowedIncludes(['comments', 'wallet'])
             ->allowedFilters([
+<<<<<<< Updated upstream
                 AllowedFilter::custom('name', new FiltersName(),'name'),
                 'comments_count',
                 'wallets.balance',
+=======
+                AllowedFilter::custom('name', new FiltersName(), 'name'),
+>>>>>>> Stashed changes
                 'city',
                 'email',
                 'gender',
-                $globalSearch])
+                $globalSearch
+            ])
             ->paginate($per_page)
             ->through(function ($user) {
                 return [
@@ -95,15 +100,21 @@ class UserController extends Controller
                     ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
                     ->column(key: 'comments_count', label: 'تعداد دیدگاه ها', sortable: true, searchable: true)
+<<<<<<< Updated upstream
                     ->column(key: 'wallets.balance', label: 'کیف پول', sortable: true, searchable: true)
                     ->column(key:'actions', label: 'عملیات')
+=======
+                    ->column(key: 'wallet', label: 'کیف پول', sortable: true, searchable: true)
+                    ->column(key: 'actions', label: 'عملیات')
+>>>>>>> Stashed changes
                     ->selectFilter(
                         key: 'email',
                         options: [
                             'gmail' => 'Gmail',
                             'live' => 'Live',
                         ],
-                        label: 'ایمیل')
+                        label: 'ایمیل'
+                    )
                     ->selectFilter(
                         key: 'gender',
                         options: UserGender::asSelectArray(),

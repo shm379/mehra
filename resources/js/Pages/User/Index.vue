@@ -27,13 +27,20 @@
             <template #cell(name)="{ item: user }">
                 <div>
                         <Link
-                            as="button"
+                            as="a"
                             :href="route('admin.users.show', { id: user.id })"
                             class="bg-red-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs"
+<<<<<<< Updated upstream
                         >
                             {{user.name}}
 
                         </Link>
+=======
+                            v-html="user.name"
+                        ></Link>
+                    </a>
+
+>>>>>>> Stashed changes
                 </div>
             </template>
             <template #cell(actions)="{ item: user }">
@@ -74,6 +81,7 @@ export default {
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Datagrid from "@/Components/Datagrid.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 
