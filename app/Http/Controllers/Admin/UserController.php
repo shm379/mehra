@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Builder\Sorts\GenderSort;
 use App\Builder\Sorts\NameSort;
+use App\Builder\Sorts\WalletBalanceSort;
 use App\Enums\UserCity;
 use App\Enums\UserGender;
 use App\Models\Collection;
@@ -40,6 +41,7 @@ class UserController extends Controller
         $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
 
         $users = QueryBuilder::for(User::class)
+            ->with('wallet')
             ->withCount('comments')
             ->defaultSort('created_at')
             ->allowedSorts([
@@ -48,8 +50,9 @@ class UserController extends Controller
                 'created_at',
                 AllowedSort::custom('name', new NameSort(), 'name'),
                 AllowedSort::custom('gender', new GenderSort(), 'gender'),
+                AllowedSort::custom('wallet', new WalletBalanceSort(), 'wallet'),
             ])
-            ->allowedIncludes(['comments','balance'])
+            ->allowedIncludes(['comments','wallet'])
             ->allowedFilters(['city','email', 'gender', $globalSearch])
             ->paginate($per_page)
             ->through(function ($user) {
@@ -60,6 +63,8 @@ class UserController extends Controller
                     'gender' => UserGender::getDescription((int)$user->gender),
                     'email' => $user->email,
                     'email_verified_at' => $user->email_verified_at,
+                    'comments_count' => $user->comments_count,
+                    'wallet' => number_format(optional($user->wallet)->balance),
                     'created_at' => $user->created_at
                 ];
             })
@@ -76,7 +81,7 @@ class UserController extends Controller
                     ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
                     ->column(key: 'comments_count', label: 'تعداد دیدگاه ها', sortable: true, searchable: true)
-                    ->column(key: 'balance', label: 'موجودی', sortable: true, searchable: true)
+                    ->column(key: 'wallet', label: 'کیف پول', sortable: true, searchable: true)
                     ->column(key:'actions', label: 'عملیات')
                     ->selectFilter(
                         key: 'email',

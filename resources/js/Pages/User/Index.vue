@@ -22,7 +22,7 @@
         <Table :resource="users">
             <template #cell(actions)="{ item: user }">
                 <div>
-                    <a 
+                    <a
                         as="button"
                         v-for="(action, l) in actions"
                         :key="l"
@@ -135,5 +135,7 @@ div[role=menu] button {
 div[aria-labelledby="filter-menu"] {
     display: flex;
 }
-
+nav[aria-label="Pagination"] {
+    direction: ltr;
+}
 </style>

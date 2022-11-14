@@ -117,11 +117,23 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
 
     public function wallet()
     {
-        return $this->belongsTo(Wallet::class);
+        return $this->hasOne(Wallet::class);
     }
 
     public function balance()
     {
         return $this->wallet()->balance;
+    }
+
+    /**
+     * @param Builder $builder
+     * @param string $relation - The relation to join
+     */
+    public function scopeJoinRelation(Builder $query, string $relation) {
+        $join_query = self::RelationToJoin($relation, $relation);
+        $query->join($join_query->table . ' AS ' . $relation, function(JoinClause $builder) use($join_query) {
+            return $builder->mergeWheres($join_query->wheres, $join_query->bindings);
+        });
+        return $query;
     }
 }
