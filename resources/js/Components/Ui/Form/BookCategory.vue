@@ -3,6 +3,10 @@
         <ui-autocomplete-publisher v-model="publisher" >
         </ui-autocomplete-publisher>
     </div>
+    <div>
+        <ui-autocomplete-publisher v-model="publisher" >
+        </ui-autocomplete-publisher>
+    </div>
 </template>
 
 <script setup>
