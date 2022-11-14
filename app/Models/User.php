@@ -110,6 +110,11 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
         return $this->belongsToMany(UserAddress::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function wallet()
     {
         return $this->belongsTo(Wallet::class);

@@ -24,12 +24,12 @@ return new class extends Migration
             $table->text('description');
             $table->text('excerpt')->nullable();
             $table->text('summary')->nullable();
-            $table->text('opinions')->nullable();
             $table->unsignedFloat('price',10);
             $table->unsignedFloat('sale_price',10)->nullable();
             $table->unsignedDouble('vat')->nullable();
             $table->unsignedBigInteger('producer_id')->nullable();
-            $table->integer('product_type');
+            $table->enum('product_structure',\App\Enums\ProductStructure::asArray());
+            $table->enum('product_type',\App\Enums\ProductType::asArray());
             $table->unsignedBigInteger('order');
             $table->integer('min_purchases_per_user')->default(1);
             $table->integer('max_purchases_per_user')->default(1);

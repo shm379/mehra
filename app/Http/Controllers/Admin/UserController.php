@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Builder\Sorts\GenderSort;
 use App\Builder\Sorts\NameSort;
+use App\Enums\UserCity;
 use App\Enums\UserGender;
 use App\Models\Collection;
 use App\Models\User;
@@ -28,8 +29,9 @@ class UserController extends Controller
     {
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
-                Collection::wrap($value)->each(function ($value) use ($query) {
+                \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
+                        ->orWhereRaw("concat(first_name, ' ', last_name) like '%$value%' ")
                         ->orWhere('mobile', 'LIKE', "%{$value}%")
                         ->orWhere('email', 'LIKE', "%{$value}%");
                 });
@@ -38,14 +40,17 @@ class UserController extends Controller
         $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
 
         $users = QueryBuilder::for(User::class)
+            ->withCount('comments')
             ->defaultSort('created_at')
             ->allowedSorts([
                 'email',
+                'comments_count',
                 'created_at',
                 AllowedSort::custom('name', new NameSort(), 'name'),
                 AllowedSort::custom('gender', new GenderSort(), 'gender'),
             ])
-            ->allowedFilters(['email', $globalSearch])
+            ->allowedIncludes(['comments','balance'])
+            ->allowedFilters(['city','email', 'gender', $globalSearch])
             ->paginate($per_page)
             ->through(function ($user) {
                 return [
@@ -66,15 +71,30 @@ class UserController extends Controller
                     ->withGlobalSearch('جستجو در لیست کاربران ...')
                     ->defaultSort('created_at')
                     ->column(key: 'name', label: 'نام و نام خانوادگی', canBeHidden: false, sortable: true, searchable: true)
-                    ->column(key: 'gender', label: 'جنسیت', sortable: true, searchable: true)
+                    ->column(key: 'gender', label: 'جنسیت', sortable: false, searchable: true)
                     ->column(key: 'email', label: 'ایمیل', sortable: true, searchable: true)
                     ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
                     ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
-                    ->column(label: 'عملیات')
-                    ->selectFilter(key: 'email', options: [
-                        'gmail' => 'Gmail',
-                        'live' => 'Live',
-                    ], label: 'ایمیل');
+                    ->column(key: 'comments_count', label: 'تعداد دیدگاه ها', sortable: true, searchable: true)
+                    ->column(key: 'balance', label: 'موجودی', sortable: true, searchable: true)
+                    ->column(key:'actions', label: 'عملیات')
+                    ->selectFilter(
+                        key: 'email',
+                        options: [
+                            'gmail' => 'Gmail',
+                            'live' => 'Live',
+                        ],
+                        label: 'ایمیل')
+                    ->selectFilter(
+                        key: 'gender',
+                        options: UserGender::asSelectArray(),
+                        label: 'جنسیت'
+                    )
+                    ->selectFilter(
+                        key: 'city',
+                        options: UserCity::asSelectArray(),
+                        label: 'شهر'
+                    );
             });
     }
 

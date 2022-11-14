@@ -19,17 +19,27 @@
       </a>
     </nav>
       <div class="py-12">
-        <Table :resource="users"  />
+        <Table :resource="users">
+            <template #cell(actions)="{ item: user }">
+                <div>
+                    <a 
+                        as="button"
+                        v-for="(action, l) in actions"
+                        :key="l"
+                        :href="route(action.route, { id: user.id })"
+                        :class="`bg-${action.color}-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs`"
+                    >
+                        <a href="javascript:;">{{ action.title }}</a>
+                    </a>
+                </div>
+            </template>
+        </Table>
       </div>
       <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
       <template v-slot:row-cell-email_verified_at="{ item }">
         <div class="py-2">
-          <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1"
-            >غیرفعال</span
-          >
-          <span v-else class="text-xs bg-green-100 text-green-500 rounded-lg p-1"
-            >غیرفعال</span
-          >
+          <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1">غیرفعال</span>
+          <span v-else class="text-xs bg-green-100 text-green-500 rounded-lg p-1">غیرفعال</span>
         </div>
       </template>
     <template v-slot:row-cell-created_at="{ item }">
@@ -121,6 +131,9 @@ div[role=menu] button {
 .absolute.inset-y-0.right-0.pr-3.flex.items-center {
     left: 0;
     right: auto;
+}
+div[aria-labelledby="filter-menu"] {
+    display: flex;
 }
 
 </style>
