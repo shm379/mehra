@@ -56,8 +56,8 @@ class AutocompleteController extends Controller
     {
         return Attribute::all();
     }
-    public function award(Request $request)
+    public function award($q, Request $request)
     {
-        return Award::all();
+        return Award::where('title', 'LIKE', `%{$q}%`)->get();
     }
 }

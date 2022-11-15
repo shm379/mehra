@@ -5,7 +5,8 @@
       class="w-full flex flex-nowrap gap-2 h-14 overflow-x-auto overflow-y-none rounded-xl border pr-2"
     >
       <div
-      :key="i"
+        :key="i"
+        v-if="selectedOptions"
         class="flex flex-row min-w-15 items-center justify-start gap-2 my-2 bg-neutral-200/70 text-xs p-1 rounded-lg"
         v-for="(item, i) in multiselect ? selectedOptions : [selectedOptions]"
       >
@@ -33,7 +34,7 @@
       <div
         v-if="items"
         ref="results"
-        class="absolute w-full max-h-32 overflow-y-scroll bg-white top-[86px] flex flex-col gap-1 rounded-lg shadow-lg p-2 z-50	"
+        class="absolute w-full max-h-32 overflow-y-scroll bg-white top-[86px] flex flex-col gap-1 rounded-lg shadow-lg p-2 z-50"
       >
         <p
           class="hover:bg-slate-100 rounded-lg p-2 cursor-pointer hover:border hover:shadow-inner"
@@ -83,7 +84,7 @@ function remove(i) {
     values.splice(i, 1);
     selectedOptions.value = values;
   } else selectedOptions.value = null;
-  console.log(selectedOptions.value)
+  console.log(selectedOptions.value);
   items.value = null;
 }
 watch(search, async (n, o) => {

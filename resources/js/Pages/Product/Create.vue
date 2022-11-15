@@ -57,6 +57,7 @@ import UiFieldBookType from "@/Components/Ui/Field/BookType.vue";
 import UiFormBookInfo from "@/Components/Ui/Form/BookInfo.vue";
 import UiFormBookCategory from "@/Components/Ui/Form/BookCategory.vue";
 import UiFormBookAttribute from "@/Components/Ui/Form/BookAttribute.vue";
+import UiFormBookAward from "@/Components/Ui/Form/BookAward.vue";
 import UiRow from "@/Components/Ui/Row.vue";
 import UiCol from "@/Components/Ui/Col.vue";
 import UiBox from "@/Components/Ui/Page/Box.vue";
@@ -76,6 +77,7 @@ export default {
     UiFormBookInfo,
     UiFormBookCategory,
     UiFormBookAttribute,
+    UiFormBookAward,
   },
 };
 </script>
@@ -117,7 +119,8 @@ const form = useForm({
   translators: [],
   illustrators: [],
   narrators: [],
-  attributes:{}
+  attributes:{},
+  awards: []
 });
 </script>
 
