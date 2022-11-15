@@ -24,13 +24,14 @@ return new class extends Migration
             $table->text('description');
             $table->text('excerpt')->nullable();
             $table->text('summary')->nullable();
-            $table->unsignedFloat('price',10);
-            $table->unsignedFloat('sale_price',10)->nullable();
-            $table->unsignedDouble('vat')->nullable();
+            $table->unsignedFloat('price',10,0);
+            $table->unsignedFloat('sale_price',10,0)->nullable();
+            $table->unsignedDouble('vat',10,0)->nullable();
             $table->unsignedBigInteger('producer_id')->nullable();
             $table->enum('product_structure',\App\Enums\ProductStructure::asArray());
             $table->enum('product_type',\App\Enums\ProductType::asArray());
-            $table->unsignedBigInteger('order');
+            $table->unsignedBigInteger('order')->nullable();
+            $table->unsignedBigInteger('order_volume')->nullable();
             $table->integer('min_purchases_per_user')->default(1);
             $table->integer('max_purchases_per_user')->default(1);
             $table->boolean('is_virtual')->default(0);
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->unsignedInteger('in_stock_count')->default(1);
             $table->boolean('is_active');
             $table->timestamps();
-            $table->unique(['order','volume_id']);
+            $table->unique(['order_volume','volume_id']);
             $table->foreign('producer_id')
                 ->references('id')
                 ->on('producers')

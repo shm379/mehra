@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserFollowType;
 use App\Services\Media\HasMediaTrait;
 use Fouladgar\OTP\Concerns\HasOTPNotify;
 use Fouladgar\OTP\Contracts\OTPNotifiable;
@@ -94,6 +95,20 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
         $conversion->nonQueued()->performOnCollections('main_image');
     }
 
+    public function follows()
+    {
+        return $this->belongsToMany(UserFollow::class, 'user_follow');
+    }
+
+    public function followers()
+    {
+        return $this->follows()->where('type',UserFollowType::FOLLOWER);
+    }
+
+    public function following()
+    {
+        return $this->follows()->where('type',UserFollowType::FOLLOWING);
+    }
 
     public function histories()
     {
