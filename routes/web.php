@@ -18,10 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $product = \App\Models\Product::with(['attributeValues'=>function($aV){
-        $aV;
-    }]);
-    dd($product);
+    dd(auth()->user()->following);
 
 //    OTP('+98939172790');
     return view('dashboard');

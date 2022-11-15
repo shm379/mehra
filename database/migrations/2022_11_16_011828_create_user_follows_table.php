@@ -13,10 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_follow', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+        Schema::create('user_follows', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
             $table->enum('type',\App\Enums\UserFollowType::asArray());
+            $table->unsignedBigInteger('follow_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('follow_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->primary(['user_id','follow_id','type']);
             $table->timestamps();
         });
     }

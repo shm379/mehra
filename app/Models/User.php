@@ -64,6 +64,7 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
      */
     protected $appends = [
         'name',
+        'balance',
     ];
 
     public function getNameAttribute()
@@ -97,7 +98,7 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
 
     public function follows()
     {
-        return $this->belongsToMany(UserFollow::class, 'user_follow');
+        return $this->hasMany(UserFollow::class,'follow_id');
     }
 
     public function followers()
@@ -125,6 +126,11 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
         return $this->belongsToMany(UserAddress::class);
     }
 
+    public function announcements()
+    {
+        return $this->belongsToMany(Announcement::class);
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -135,9 +141,9 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
         return $this->hasOne(Wallet::class);
     }
 
-    public function balance()
+    public function getBalanceAttribute() : int
     {
-        return $this->wallet()->balance;
+        return $this->wallet->balance;
     }
 
     /**

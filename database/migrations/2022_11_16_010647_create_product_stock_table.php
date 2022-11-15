@@ -14,13 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_stock', function (Blueprint $table) {
-            $table->foreign('product_id')->references('id')->on('products')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('stock_id')->references('id')->on('stocks')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('stock_id');
             $table->string('code');
             $table->unsignedInteger('in_stock_count')->default(1);
             $table->unsignedFloat('price',8,0);
             $table->timestamp('last_sync')->nullable();
             $table->unique(['product_id','stock_id']);
+            $table->foreign('stock_id')->references('id')->on('stocks')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_stocks');
+        Schema::dropIfExists('product_stock');
     }
 };
