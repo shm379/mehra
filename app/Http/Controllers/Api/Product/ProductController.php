@@ -31,8 +31,8 @@ class ProductController extends Controller {
             'groups',
             'categories',
             'questions',
-            'attributes'=>function($attribute){
-                $attribute->with('values');
+            'attributeValues'=>function($value){
+                $value->with('attribute');
             },
             'media'
         ])->paginate($request->has('per_page') !== null ?$request->get('per_page'): 15);
@@ -60,8 +60,8 @@ class ProductController extends Controller {
             'groups',
             'categories',
             'questions',
-            'attributes'=>function($attribute){
-                $attribute->with('values');
+            'attributeValues'=>function($value){
+                $value->with('attribute');
             },
             'media'
         ]));

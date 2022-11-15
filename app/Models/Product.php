@@ -140,6 +140,6 @@ class Product extends Model implements HasMedia
 
     public function rates()
     {
-        return $this->belongsToMany(Rate::class);
+        return $this->belongsToMany(Rate::class , 'product_rates');
     }
 }

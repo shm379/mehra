@@ -153,7 +153,9 @@ div[role=menu] button {
 div[aria-labelledby="filter-menu"] {
     display: flex;
 }
-nav[aria-label="Pagination"] {
-    direction: ltr;
+nav[aria-label="Pagination"] a[dusk="pagination-next"],
+nav[aria-label="Pagination"] a[dusk="pagination-previous"],
+nav[aria-label="Pagination"] div.cursor-not-allowed{
+    transform: rotate(180deg);
 }
 </style>

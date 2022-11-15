@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52234186667ca7338fc9c19a0611cba2",
+    "content-hash": "bbca07736f6b7f56e040150f1eb1ad03",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1942,6 +1942,62 @@
                 }
             ],
             "time": "2022-10-26T14:07:24+00:00"
+        },
+        {
+            "name": "hmdana/laravel-inertia-datagrid",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hmdana/laravel-inertia-datagrid.git",
+                "reference": "74b469bc4cea1a3df7dbc65abd65baa2dcade983"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hmdana/laravel-inertia-datagrid/zipball/74b469bc4cea1a3df7dbc65abd65baa2dcade983",
+                "reference": "74b469bc4cea1a3df7dbc65abd65baa2dcade983",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^8.67|^v9.0.0-beta.4",
+                "php": "^7.4|^8.0|^8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8",
+                "inertiajs/inertia-laravel": "^0.5",
+                "orchestra/testbench": "^6.23|^7.0",
+                "phpunit/phpunit": "^9.4"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Hmdana\\LaravelInertiaDataGrid\\InertiaDataGridServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hmdana\\LaravelInertiaDataGrid\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hussain Mousavi",
+                    "email": "shm379@gmail.com"
+                }
+            ],
+            "description": "best package to make datagrid with inertia.js and laravel with laravel query builder",
+            "homepage": "https://github.com/hmdana/laravel-inertia-datagrid",
+            "support": {
+                "issues": "https://github.com/hmdana/laravel-inertia-datagrid/issues",
+                "source": "https://github.com/hmdana/laravel-inertia-datagrid/tree/main"
+            },
+            "time": "2022-11-15T16:02:23+00:00"
         },
         {
             "name": "inertiajs/inertia-laravel",
@@ -12941,7 +12997,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "hmdana/laravel-inertia-datagrid": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

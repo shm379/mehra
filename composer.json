@@ -14,6 +14,7 @@
         "fouladgar/laravel-otp": "^3.0",
         "ghaninia/shipping": "^2.2",
         "guzzlehttp/guzzle": "^7.2",
+        "hmdana/laravel-inertia-datagrid": "dev-main",
         "inertiajs/inertia-laravel": "^0.6.4",
         "jackiedo/cart": "^3.0",
         "jgrossi/corcel": "^6.0",

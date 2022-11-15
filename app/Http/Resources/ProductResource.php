@@ -70,7 +70,7 @@ class ProductResource extends JsonResource
             'collections'=> $this->whenLoaded('collections'),
             'categories'=> $this->whenLoaded('categories'),
             'questions'=> $this->whenLoaded('questions'),
-            'attributes'=> $this->whenLoaded('attributes'),
+            'attributeValues'=> $this->whenLoaded('attributeValues'),
             'awards'=> $this->whenLoaded('awards'),
             'groups'=> $this->whenLoaded('groups',function (){
                 return ProductGroupResource::collection($this->groups);
