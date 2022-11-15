@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Controller;
 use App\Models\Attribute;
+use App\Models\Award;
 use App\Models\Category;
 use App\Models\Creator;
 use App\Models\Producer;
@@ -54,5 +55,9 @@ class AutocompleteController extends Controller
     public function attribute(Request $request)
     {
         return Attribute::all();
+    }
+    public function award(Request $request)
+    {
+        return Award::all();
     }
 }
