@@ -5,6 +5,7 @@
       class="bg-neutral-200/50 rounded-xl outline-0 w-full p-3 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
       :class="{ 'border-red-500 border bg-red-50': errors && errors[error] }"
       v-model="input"
+      v-bind="$attrs"
     />
     <div class="text-xs text-red-600" v-if="errors && errors[error]">{{ errors[error] }}</div>
   </div>
@@ -12,6 +13,7 @@
 
 <script setup>
 import { computed } from "vue";
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
   modelValue: String,
   label: String,

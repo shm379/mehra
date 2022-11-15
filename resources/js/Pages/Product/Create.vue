@@ -38,7 +38,9 @@
       </ui-box>
     </ui-col>
     <ui-col>
-      <ui-box title="قیمت"> <p>content</p></ui-box>
+      <ui-box title="قیمت">
+        <p></p
+      ></ui-box>
     </ui-col>
   </ui-row>
 </template>
@@ -54,7 +56,7 @@ import UiFormProductType from "@/Components/Ui/Field/ProductType.vue";
 import UiFieldBookType from "@/Components/Ui/Field/BookType.vue";
 import UiFormBookInfo from "@/Components/Ui/Form/BookInfo.vue";
 import UiFormBookCategory from "@/Components/Ui/Form/BookCategory.vue";
-
+import UiFormBookAttribute from "@/Components/Ui/Form/BookAttribute.vue";
 import UiRow from "@/Components/Ui/Row.vue";
 import UiCol from "@/Components/Ui/Col.vue";
 import UiBox from "@/Components/Ui/Page/Box.vue";
@@ -73,6 +75,7 @@ export default {
     UiBox,
     UiFormBookInfo,
     UiFormBookCategory,
+    UiFormBookAttribute,
   },
 };
 </script>
@@ -93,7 +96,7 @@ const pageSections = [
   },
   {
     title: "ویژگیها",
-    anchor: "attributes",
+    anchor: "book-attribute",
   },
   {
     title: "جوایز و افتخارات",
@@ -112,8 +115,9 @@ const form = useForm({
   producers: [],
   creators: [],
   translators: [],
-  illustrators:[],
-  narrators:[]
+  illustrators: [],
+  narrators: [],
+  attributes:{}
 });
 </script>
 

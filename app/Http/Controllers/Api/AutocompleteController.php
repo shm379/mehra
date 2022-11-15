@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Controller;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Creator;
 use App\Models\Producer;
@@ -49,5 +50,9 @@ class AutocompleteController extends Controller
     {
         $result = Category::where('title', 'LIKE', '%' . $q . '%')->get();
         return $result;
+    }
+    public function attribute(Request $request)
+    {
+        return Attribute::all();
     }
 }
