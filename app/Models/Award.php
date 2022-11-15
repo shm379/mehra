@@ -22,4 +22,13 @@ class Award extends Model
     {
         return $this->belongsTo($this,'parent_id');
     }
+
+    public function scopeProducers($query,$q=null)
+    {
+        $query->where('award_type',AwardType::AWARD);
+        if(isset($q)){
+            $query->where('title','LIKE', '%' . $q . '%');
+        }
+        return $query->get();
+    }
 }

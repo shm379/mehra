@@ -18,6 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    $product = \App\Models\Product::find(16)->attributeValueWithName();
+    dd($product);
+
 //    OTP('+98939172790');
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

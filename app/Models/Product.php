@@ -112,9 +112,20 @@ class Product extends Model implements HasMedia
         return $this->hasMany(Comment::class);
     }
 
-    public function attributes()
+    public function attributeValues()
     {
-        return $this->belongsToMany(Attribute::class)->with('values')->withPivot(['value_id']);
+        return $this->belongsToMany(AttributeValue::class)->with('attribute');
+    }
+
+    public function scopeAttributeValueWithName($query)
+    {
+        $this->with('attributeValues');
+        $attributeValues = $this->attributeValues()->get();
+        foreach ($attributeValues as $key=> $attributeValue) {
+           $attributeValue['name'] =  $attributeValue->name;
+        }
+        $this->attributes['attributeValues'] = $attributeValues;
+        return $this;
     }
 
     public function awards()
