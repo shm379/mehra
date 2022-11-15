@@ -18,7 +18,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $product = \App\Models\Product::find(16)->attributeValueWithName();
+    $product = \App\Models\Product::with(['attributeValues'=>function($aV){
+        $aV;
+    }]);
     dd($product);
 
 //    OTP('+98939172790');

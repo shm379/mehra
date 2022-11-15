@@ -124,7 +124,7 @@ class Product extends Model implements HasMedia
         foreach ($attributeValues as $key=> $attributeValue) {
            $attributeValue['name'] =  $attributeValue->name;
         }
-        $this->attributes['attributeValues'] = $attributeValues;
+        $this->attributes['attributes'] = $attributeValues;
         return $this;
     }
 
