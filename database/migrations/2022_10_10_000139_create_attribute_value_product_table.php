@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::drop('attribute_value_product');
+            Schema::drop('attribute_value_product');
         Schema::create('attribute_value_product', function (Blueprint $table) {
             $table->unsignedBigInteger('attribute_value_id');
             $table->unsignedBigInteger('product_id');

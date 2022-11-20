@@ -22,11 +22,11 @@
                 :name="`row-cell-${k}`"
               ></slot
             ></span>
-            <span v-else>{{ item }}</span>
+            <span v-else v-html="item"></span>
           </td>
           <td class="flex pt-2 flex-row items-center justfiy-between gap-1">
             <Link
-              as="div"
+              as="a"
               v-for="(action, l) in actions"
               :key="l"
               :href="route(action.route, { id: row.id })"

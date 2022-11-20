@@ -26,7 +26,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index(Request $request)
     {
@@ -85,37 +85,7 @@ class UserController extends Controller
             ->withQueryString();
         // return table in inertia with columns
         return Inertia::render('User/Index')
-            ->with(['users' => $users])
-            ->table(function (InertiaTable $table) {
-                $table
-                    ->withGlobalSearch('جستجو در لیست کاربران ...')
-                    ->defaultSort('created_at')
-                    ->column(key: 'name', label: 'نام و نام خانوادگی', canBeHidden: false, sortable: true, searchable: true)
-                    ->column(key: 'gender', label: 'جنسیت', sortable: true, searchable: true)
-                    ->column(key: 'email', label: 'ایمیل', sortable: true, searchable: true)
-                    ->column(key: 'mobile', label: 'موبایل', sortable: true, searchable: true)
-                    ->column(key: 'created_at', label: 'تاریخ ثبت نام', sortable: true, searchable: true)
-                    ->column(key: 'comments_count', label: 'تعداد دیدگاه ها', sortable: true, searchable: true)
-                    ->column(key: 'wallets.balance', label: 'کیف پول', sortable: true, searchable: true)
-                    ->column(key:'actions', label: 'عملیات')
-                    ->selectFilter(
-                        key: 'email',
-                        options: [
-                        'gmail' => 'Gmail',
-                        'live' => 'Live',
-                    ],
-                        label: 'ایمیل')
-                    ->selectFilter(
-                        key: 'gender',
-                        options: UserGender::asSelectArray(),
-                        label: 'جنسیت'
-                    )
-                    ->selectFilter(
-                        key: 'city',
-                        options: UserCity::asSelectArray(),
-                        label: 'شهر'
-                    );
-            });
+            ->with(['users' => $users]);
     }
 
     /**

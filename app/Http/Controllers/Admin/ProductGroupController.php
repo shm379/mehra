@@ -2,38 +2,74 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ProducerType;
+use App\Enums\ProductGroupType;
 use App\Models\ProductGroup;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class ProductGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productGroups = ProductGroup::query()->with(['products:title'])->get();
-        if(\request()->ajax()){
-            foreach ($productGroups as $productGroup) {
-                if($productGroup->products){
-                    foreach ($productGroup->products as $productKey => $product){
-                        $productGroup->products[$productKey] = $product->title;
-                    }
-                }
-            }
-            return DataTables::of($productGroups)
-                ->editColumn('price',function ($productGroup){
-                    return number_format($productGroup->price).' تومان';
-                })
-                ->editColumn('is_active',function ($productGroup){
-                    return $productGroup->is_active==1?'فعال':'غیرفعال';
-                })
-                ->make();
-        }
-        return view('admin.product_groups.index', compact('productGroups'));
+        // global input search
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
+                    $query
+                        ->orWhere('title', 'LIKE', "%{$value}%")
+                        ->orWhere('sub_title', 'LIKE', "%{$value}%")
+                        ->orWhere('slug', 'LIKE', "%{$value}%")
+                        ->orWhere('description', 'LIKE', "%{$value}%");
+                });
+            });
+        });
+        // get per page number
+        $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
+        QueryBuilderRequest::setArrayValueDelimiter('|');
+        // get users from query builder
+        $productGroups = QueryBuilder::for(ProductGroup::class)
+            ->with('products')
+            ->withCount('products')
+            ->defaultSort('created_at')
+            ->allowedSorts([
+                'title',
+                'description',
+                'price',
+                'sub_title',
+                'sku',
+                'comments_count',
+                'created_at',
+            ])
+            ->allowedIncludes(['comments'])
+            ->allowedFilters([
+                'comments_count',
+                'title',
+                'price',
+                $globalSearch])
+            ->paginate($per_page)
+            ->through(function ($productGroup) {
+                return [
+                    'id'=> $productGroup->id,
+                    'name'=> $productGroup->name,
+                    'price'=> $productGroup->price,
+                    'sale_price'=> $productGroup->sale_price,
+                    'type'=> ProductGroupType::getDescription($productGroup->type),
+                    'is_acitve'=> $productGroup->is_acitve,
+                ];
+            })
+            ->withQueryString();
+        // return table in inertia with columns
+        return Inertia::render('ProductGroup/Index')
+            ->with(['productGroups' => $productGroups]);
     }
 
     /**

@@ -33,9 +33,10 @@
         <div class="grid grid-cols-1">
             <ul class="text-lg pt-10 gap-8 flex-col flex">
                 <Link
-                    as="li"
-                    href="/admin/products"
+                    as="a"
+                    :href="route('admin.users.index')"
                     class="flex flex-row gap-8 justify-start items-center group pr-5 cursor-pointer"
+                    :class="route().current()==='admin.users.index' ? 'font-bold' : ''"
                 >
           <span
           ><svg
@@ -55,15 +56,16 @@
                     <span
                         v-if="sidebar"
                         class="group-hover:text-red-600 group-hover:scale-105 duration-100 delay-75"
-                    >محصولات</span
+                    >کاربران</span
                     >
                 </Link>
                 <AccordionItem>
                     <template #header>
                         <Link
-                            as="li"
-                            href="/admin/products"
+                            as="a"
+                            :href="route('admin.products.index')"
                             class="flex flex-row gap-8 justify-start items-center group pr-5 cursor-pointer"
+                            :class="route().current()==='admin.products.index' ? 'font-bold' : ''"
                         >
               <span
               ><svg
@@ -90,6 +92,7 @@
                     <template #body>
                         <div class="flex flex-col gap-2 pr-5 text-sm pt-4">
                             <Link
+                                :class="route().current()==='admin.products.index' ? 'font-bold' : ''"
                                 as="div"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
@@ -108,10 +111,13 @@
                                         />
                                     </svg>
                                 </div>
+
                                 <div v-if="sidebar">لیست محصولات</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.product-groups.index')"
+                                :class="route().current()==='admin.product-groups.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -132,7 +138,9 @@
                                 <div v-if="sidebar">محصولات گروهی</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.categories.index')"
+                                :class="route().current()==='admin.categories.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -153,7 +161,9 @@
                                 <div v-if="sidebar">دسته بندی ها</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.attributes.index')"
+                                :class="route().current()==='admin.attributes.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -174,7 +184,9 @@
                                 <div v-if="sidebar">ویژگی ها</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.collections.index')"
+                                :class="route().current()==='admin.collections.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -195,7 +207,9 @@
                                 <div v-if="sidebar">لیست‌ها</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.producers.index')"
+                                :class="route().current()==='admin.producers.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -216,7 +230,9 @@
                                 <div v-if="sidebar">برند،ناشر،تولیدکننده</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.creators.index')"
+                                :class="route().current()==='admin.creators.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -237,7 +253,9 @@
                                 <div v-if="sidebar">پدیدآورندگان</div>
                             </Link>
                             <Link
-                                as="div"
+                                :href="route('admin.awards.index')"
+                                :class="route().current()==='admin.awards.index' ? 'font-bold' : ''"
+                                as="a"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >
                                 <div>
@@ -261,8 +279,9 @@
                     </template>
                 </AccordionItem>
                 <Link
-                    as="li"
-                    href="/products"
+                    as="a"
+                    :href="route('admin.orders.index')"
+                    :class="route().current()==='admin.orders.index' ? 'font-bold' : ''"
                     class="flex flex-row gap-8 justify-start items-center group pr-5 cursor-pointer"
                 >
           <span
@@ -287,8 +306,9 @@
                 </Link>
 
                 <Link
-                    as="li"
-                    href="/admin/comments"
+                    as="a"
+                    :class="route().current()==='admin.comments.index' ? 'font-bold' : ''"
+                    :href="route('admin.comments.index')"
                     class="flex flex-row gap-8 justify-start items-center group pr-5 cursor-pointer"
                 >
           <span
@@ -376,8 +396,9 @@
                     >
                 </Link>
                 <Link
-                    as="li"
-                    href="/products"
+                    as="a"
+                    method="post"
+                   :href="route('logout')"
                     class="flex flex-row gap-8 justify-start items-center group pr-5 cursor-pointer"
                 >
           <span
@@ -401,26 +422,6 @@
                     >
                 </Link>
             </ul>
-            <div
-                @click="toggle()"
-                class="absolute cursor-pointer hover:bg-slate-100 rounded-full p-3 bottom-10 left-0"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                    :class="{ 'rotate-180': !sidebar }"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                    />
-                </svg>
-            </div>
         </div>
     </div>
 </template>
@@ -437,6 +438,9 @@ function toggle() {
 }
 function openSubmenu(id) {
     submenu.value = !submenu.value;
+}
+function isActive(route){
+    return route
 }
 </script>
 

@@ -19,50 +19,15 @@
             </a>
         </nav>
         <div class="py-12">
-            <Table :resource="users"
-                   :striped="true"
-                   :prevent-overlapping-requests="false"
-                   :input-debounce-ms="1000"
-                   preserve-scroll="table-top">
-
-                <template #cell(no)="{ item: user }">
-                    <h2>Salam</h2>
-                </template>
-                <template #cell(name)="{ item: user }">
-                    <div>
-                        <Link
-                            as="button"
-                            :href="route('admin.users.show', { id: user.id })"
-                            class="bg-red-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs"
-                        >
-                            {{user.name}}
-                        </Link>
+            <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
+                <template v-slot:row-cell-email_verified_at="{ item }">
+                    <div class="py-2">
+                        <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1">تایید نشده</span>
+                        <span v-else class="text-xs bg-green-100 text-green-500 rounded-lg p-1">تایید شده</span>
                     </div>
                 </template>
-                <template #cell(actions)="{ item: user }">
-                    <div>
-                        <Link
-                            as="button"
-                            v-for="(action, l) in actions"
-                            :key="l"
-                            :href="route(action.route, { id: user.id })"
-                            :class="`bg-${action.color}-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs`"
-                        >
-                            {{ action.title }}
-                        </Link>
-                    </div>
-                </template>
-            </Table>
+            </datagrid>
         </div>
-        <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
-            <template v-slot:row-cell-email_verified_at="{ item }">
-                <div class="py-2">
-                    <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1">غیرفعال</span>
-                    <span v-else class="text-xs bg-green-100 text-green-500 rounded-lg p-1">غیرفعال</span>
-                </div>
-            </template>
-
-        </datagrid>
     </div>
 </template>
 <script>
@@ -74,7 +39,7 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import DataGrid from "inertia-datagrid";
+import datagrid from "@/Components/Datagrid.vue";
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 
@@ -105,6 +70,18 @@ const columns = [
         sortable: true,
     },
     {
+        name: "mobile",
+        label: "موبایل",
+        field: "mobile",
+        sortable: true,
+    },
+    {
+        name: "gender",
+        label: "جنسیت",
+        field: "gender",
+        sortable: true,
+    },
+    {
         name: "email",
         label: "پست الکترونیکی",
         field: "email",
@@ -114,6 +91,18 @@ const columns = [
         name: "verification",
         label: "تایید ایمیل",
         field: "email_verified_at",
+        sortable: false,
+    },
+    {
+        name: "comments_count",
+        label: "تعداد نظرات",
+        field: "comments_count",
+        sortable: false,
+    },
+    {
+        name: "balance",
+        label: "موجودی",
+        field: "balance",
         sortable: false,
     },
     {

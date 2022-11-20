@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Category;
 use App\Models\CategoryTemplate;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class CategoryController extends Controller
 {
@@ -14,33 +17,55 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::query()->withAggregate('template','name');
-        if(\request()->ajax()){
-
-            return DataTables::of($categories)
-                ->editColumn('template',function ($category){
-                    if($category->template){
-                        return $category->template->name;
-                    }
-                })
-                ->editColumn('option',function ($category){
-                    return \view('admin.components.table.option',[
-                        'keys' => [],
-                        'show' => true,
-                        'edit' => true,
-                        'delete' => true,
-                        'model' => $category,
-                        'deleteRoute' => route('admin.categories.destroy',$category->id),
-                        'editRoute' => route('admin.categories.edit',$category->id),
-                        'showRoute' => route('admin.categories.show',$category->id),
-
-                    ]);
-                })
-                ->make();
-        }
-        return view('admin.categories.index', compact('categories'));
+        // global input search
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
+                    $query
+                        ->orWhereRaw("concat(first_name, ' ', last_name) like '%$value%' ")
+                        ->orWhere('mobile', 'LIKE', "%{$value}%")
+                        ->orWhere('email', 'LIKE', "%{$value}%");
+                });
+            });
+        });
+        // get per page number
+        $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
+        QueryBuilderRequest::setArrayValueDelimiter('|');
+        // get users from query builder
+        $categories = QueryBuilder::for(Category::class)
+            ->withAggregate('template','name')
+            ->defaultSort('created_at')
+            ->allowedSorts([
+                'email',
+                'mobile',
+                'comments_count',
+                'created_at',
+                'wallets.balance',
+            ])
+            ->allowedIncludes(['comments','wallet'])
+            ->allowedFilters([
+                'comments_count',
+                'wallets.balance',
+                'city',
+                'email',
+                'gender',
+                $globalSearch])
+            ->paginate($per_page)
+            ->through(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'title' => $category->title,
+                    'description'=> $category->description,
+                    'slug'=> $category->slug,
+                    'template'=> $category->template_name
+                ];
+            })
+            ->withQueryString();
+        // return table in inertia with columns
+        return Inertia::render('Category/Index')
+            ->with(['categories' => $categories]);
     }
 
     /**

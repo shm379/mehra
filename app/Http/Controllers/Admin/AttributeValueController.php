@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\AwardType;
-use App\Enums\OrderStatus;
+use App\Enums\AttributeType;
+use App\Enums\UserCity;
+use App\Enums\UserGender;
 use App\Http\Controllers\Admin\Controller;
-use App\Models\Award;
-use App\Models\Order;
-use App\Models\Product;
+use App\Models\Attribute;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\QueryBuilderRequest;
-use Yajra\DataTables\DataTables;
 
-class OrderController extends Controller
+class AttributeValueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,8 +31,8 @@ class OrderController extends Controller
                 \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
                         ->orWhereRaw("concat(first_name, ' ', last_name) like '%$value%' ")
-                        ->orWhere('title', 'LIKE', "%{$value}%")
-                        ->orWhere('description', 'LIKE', "%{$value}%");
+                        ->orWhere('mobile', 'LIKE', "%{$value}%")
+                        ->orWhere('email', 'LIKE', "%{$value}%");
                 });
             });
         });
@@ -39,30 +40,42 @@ class OrderController extends Controller
         $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
         QueryBuilderRequest::setArrayValueDelimiter('|');
         // get users from query builder
-        $orders = QueryBuilder::for(Order::class)
+        $attributes = QueryBuilder::for(Attribute::class)
+            ->with('values')
+            ->withCount('values')
             ->defaultSort('created_at')
+            ->join('attribute_values', 'attributes.id', '=', 'attribute_id')
+            ->groupBy('attribute_id')
             ->allowedSorts([
+                'email',
+                'mobile',
+                'comments_count',
+                'created_at',
+                'wallets.balance',
             ])
-            ->allowedIncludes([
-            ])
+            ->allowedIncludes(['comments','wallet'])
             ->allowedFilters([
+                'comments_count',
+                'wallets.balance',
+                'city',
+                'email',
+                'gender',
                 $globalSearch])
             ->paginate($per_page)
-            ->through(function ($order) {
+            ->through(function ($attribute) {
                 return [
-                    'id' => $order->id,
-                    'discount' => !is_null($order->discount) ? optional($order->discount)->title : 'بدون تخفیف',
-                    'total_price_without_discount' => number_format($order->total_price_without_discount) . ' تومان',
-                    'total_price' => number_format($order->total_price) . ' تومان',
-                    'status' => OrderStatus::getDescription($order->status),
-                    'items' => count($order->items) ? implode('<br>',Product::query()->whereIn('id',$order->items->where('line_item_type','product')->pluck('line_item_id')->toArray())->pluck('title')->toArray()) : '',
-                    'notes' => count($order->notes) ? implode('<br>',optional($order->notes)->pluck('note')->toArray()) : '',
+                    'id' => $attribute->id,
+                    'name' => $attribute->name,
+                    'values' => implode(',', $attribute->values
+                        ->map(function ($value){
+                            return $value->value;
+                        })->toArray()),
                 ];
             })
             ->withQueryString();
         // return table in inertia with columns
-        return Inertia::render('Order/Index')
-            ->with(['orders' => $orders]);
+        return Inertia::render('Attribute/Index')
+            ->with(['attributes' => $attributes]);
     }
 
     /**
@@ -89,10 +102,10 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(Attribute $attribute)
     {
         //
     }
@@ -100,10 +113,10 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(Attribute $attribute)
     {
         //
     }
@@ -112,10 +125,10 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Attribute $attribute)
     {
         //
     }
@@ -123,10 +136,10 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Order  $order
+     * @param  \App\Models\Attribute  $attribute
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Attribute $attribute)
     {
         //
     }

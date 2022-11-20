@@ -32,7 +32,9 @@ Route::prefix('/admin')
                 Route::delete("/{id}", 'delete')->name('delete');
             });
         Route::resource('attributes', \App\Http\Controllers\Admin\AttributeController::class);
+        Route::resource('attributes.values', \App\Http\Controllers\Admin\AttributeValueController::class);
         Route::resource('awards', \App\Http\Controllers\Admin\AwardController::class);
+        Route::resource('collections', \App\Http\Controllers\Admin\CollectionController::class);
         Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
         Route::resource('creators', \App\Http\Controllers\Admin\CreatorController::class);
         Route::resource('comments', \App\Http\Controllers\Admin\CommentController::class)->except(['create','store']);

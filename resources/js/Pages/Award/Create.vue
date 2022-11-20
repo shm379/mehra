@@ -1,5 +1,5 @@
 <template>
-  <Head title="User" />
+  <Head title="" />
   <form @submit.prevent="form.post('/admin/user')">
     <div class="flex flex-row justify-between items-center h-32">
       <h3 class="text-red-500 font-bold text-lg">افزودن جوایز و افتخارات</h3>
@@ -7,14 +7,8 @@
         <Link
           class="px-3 py-3 rounded-2xl bg-neutral-100 text-sm text-slate-600 cursor-pointer hover:scale-95 delay-100 hover:ring-red-600 hover:ring-offset-stone-600 hover:shadow-lg hover:shadow-red-100 hover:ring-4 duration-200 ease-in"
           as="div"
-          href="#"
-          >مشاهده لیست
-        </Link>
-        <Link
-          class="px-3 py-3 rounded-2xl bg-neutral-100 text-sm text-slate-600 cursor-pointer hover:scale-95 delay-100 hover:ring-red-600 hover:ring-offset-stone-600 hover:shadow-lg hover:shadow-red-100 hover:ring-4 duration-200 ease-in"
-          as="div"
-          href="#"
-          >افزودن مجموعه جدید
+          :href="route('admin.awards.index')"
+          >مشاهده لیست جوایز / افتخارات
         </Link>
       </div>
     </div>
@@ -57,6 +51,18 @@
               <div class="text-xs text-red-600" v-if="errors.title">
                 {{ errors.title }}
               </div>
+            </div>
+            <div class="flex flex-col gap-4">
+                  <label class="text-sm text-slate-600">نوع</label>
+                  <select
+                      v-model="form.parent_id"
+                      :class="{ 'border-red-500 border bg-red-50': errors.parent_awards }"
+                      class="max-w-sm bg-neutral-200/50 rounded-xl outline-0 w-full p-2 pe-10 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
+                  >
+                      <option selected disabled>جایزه / افتخار مادر را انتخاب کنید</option>
+                      <option :value="key" v-for="(value,key) in $page.props.parent_awards">{{ value }}</option>
+                  </select>
+                  <div class="text-xs text-red-600" v-if="errors.parent_awards">{{ errors.parent_awards }}</div>
             </div>
             <div class="flex flex-col gap-4">
               <label class="text-sm text-slate-600">توضیحات</label>

@@ -8,29 +8,56 @@ use App\Http\Requests\StoreAwardRequest;
 use App\Models\Award;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class AwardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Inertia\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $awards = Award::query()->with(['parent'])->paginate();
-        $awards = Award::query()->with(['parent'])->get();
-        if(\request()->ajax()){
-            return DataTables::of($awards)
-                ->editColumn('parent',function ($award){
-                    if($award->parent_id){
-                        return '<a href="'.route('admin.awards.show',$award->parent).'">'.$award->parent->title.'</a>';
-                    }
-                })
-                ->rawColumns(['parent'])
-                ->make();
-        }
-        return view('admin.awards.index', compact('awards'));
+        // global input search
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
+                    $query
+                        ->orWhereRaw("concat(first_name, ' ', last_name) like '%$value%' ")
+                        ->orWhere('title', 'LIKE', "%{$value}%")
+                        ->orWhere('description', 'LIKE', "%{$value}%");
+                });
+            });
+        });
+        // get per page number
+        $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
+        QueryBuilderRequest::setArrayValueDelimiter('|');
+        // get users from query builder
+        $awards = QueryBuilder::for(Award::class)
+            ->defaultSort('created_at')
+            ->allowedSorts([
+            ])
+            ->allowedIncludes([
+            ])
+            ->allowedFilters([
+                $globalSearch])
+            ->paginate($per_page)
+            ->through(function ($award) {
+                return [
+                    'id' => $award->id,
+                    'title' => $award->title,
+                    'parent' => optional($award->parent)->title,
+                    'slug' => $award->slug,
+                    'type' => AwardType::getDescription($award->type),
+                ];
+            })
+            ->withQueryString();
+        // return table in inertia with columns
+        return Inertia::render('Award/Index')
+            ->with(['awards' => $awards]);
     }
 
     /**
