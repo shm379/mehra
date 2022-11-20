@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Enums\AwardType;
+use BenSampo\Enum\Rules\Enum;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAwardRequest extends FormRequest
@@ -25,9 +27,12 @@ class StoreAwardRequest extends FormRequest
     public function rules()
     {
         return [
-           'name'=> 'required|string',
+           'title'=> 'required|string',
+           'slug'=> 'required|string|unique:App\Models\Award,slug',
            'description'=> 'required|string',
-           'award_type'=> 'integer'
+           'award_type'=> 'required',
+           'is_active'=> 'boolean',
+           'parent_id'=> 'nullable|exists:App\Models\Award,id',
         ];
     }
 }

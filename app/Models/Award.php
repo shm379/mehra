@@ -23,6 +23,11 @@ class Award extends Model
         return $this->belongsTo($this,'parent_id');
     }
 
+    public function scopeParentAwards($query)
+    {
+        return $query->whereNull('parent_id')->get();
+    }
+
     public function scopeProducers($query,$q=null)
     {
         $query->where('award_type',AwardType::AWARD);

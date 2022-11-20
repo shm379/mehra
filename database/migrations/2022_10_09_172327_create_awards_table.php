@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->text('description');
             $table->string('award_type');
+            $table->boolean('is_active');
             $table->timestamps();
             $table->foreign('parent_id')
                 ->references('id')

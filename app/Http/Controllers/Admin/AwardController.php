@@ -14,6 +14,7 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class AwardController extends Controller
 {
+    public $model = Award::class;
     /**
      * Display a listing of the resource.
      *
@@ -51,7 +52,7 @@ class AwardController extends Controller
                     'title' => $award->title,
                     'parent' => optional($award->parent)->title,
                     'slug' => $award->slug,
-                    'type' => AwardType::getDescription($award->type),
+                    'type' => AwardType::getDescription((int)$award->award_type),
                 ];
             })
             ->withQueryString();
@@ -68,18 +69,21 @@ class AwardController extends Controller
     public function create()
     {
         $types = AwardType::asSelectArray();
-        return Inertia::render('Award/Create')->with(['types'=> $types]);
+        $parentAwards = Award::parentAwards();
+        return Inertia::render('Award/Create')->with(['types'=> $types,'parent_awards'=>$parentAwards]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreAwardRequest $request)
     {
-        //
+        Award::query()->create($request->validated());
+        session('success','عملیات با موفقیت انجم');
+        return Inertia::render('Award/Create');
     }
 
     /**

@@ -1,6 +1,6 @@
 <template>
   <Head title="" />
-  <form @submit.prevent="form.post('/admin/user')">
+  <form @submit.prevent="form.post('/admin/awards')">
     <div class="flex flex-row justify-between items-center h-32">
       <h3 class="text-red-500 font-bold text-lg">افزودن جوایز و افتخارات</h3>
       <div class="flex flex-row gap-5">
@@ -53,16 +53,27 @@
               </div>
             </div>
             <div class="flex flex-col gap-4">
-                  <label class="text-sm text-slate-600">نوع</label>
+              <label class="text-sm text-slate-600">نامک</label>
+              <input
+                class="bg-neutral-200/50 rounded-xl outline-0 w-full p-3 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
+                :class="{ 'border-red-500 border bg-red-50': errors.slug }"
+                v-model="form.slug"
+              />
+              <div class="text-xs text-red-600" v-if="errors.slug">
+                {{ errors.slug }}
+              </div>
+            </div>
+            <div class="flex flex-col gap-4">
+                  <label class="text-sm text-slate-600">مادر</label>
                   <select
                       v-model="form.parent_id"
-                      :class="{ 'border-red-500 border bg-red-50': errors.parent_awards }"
+                      :class="{ 'border-red-500 border bg-red-50': errors.parent_id }"
                       class="max-w-sm bg-neutral-200/50 rounded-xl outline-0 w-full p-2 pe-10 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
                   >
                       <option selected disabled>جایزه / افتخار مادر را انتخاب کنید</option>
-                      <option :value="key" v-for="(value,key) in $page.props.parent_awards">{{ value }}</option>
+                      <option :value="value.id" v-for="(value,key) in $page.props.parent_awards">{{ value.title }}</option>
                   </select>
-                  <div class="text-xs text-red-600" v-if="errors.parent_awards">{{ errors.parent_awards }}</div>
+                  <div class="text-xs text-red-600" v-if="errors.parent_id">{{ errors.parent_id }}</div>
             </div>
             <div class="flex flex-col gap-4">
               <label class="text-sm text-slate-600">توضیحات</label>
@@ -79,30 +90,30 @@
             <div class="flex flex-col gap-4">
               <label class="text-sm text-slate-600">نوع</label>
               <select
-                v-model="form.type"
-                :class="{ 'border-red-500 border bg-red-50': errors.type }"
+                v-model="form.award_type"
+                :class="{ 'border-red-500 border bg-red-50': errors.award_type }"
                 class="max-w-sm bg-neutral-200/50 rounded-xl outline-0 w-full p-2 pe-10 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
               >
                 <option selected disabled>نوع جایزه را انتخاب کنید</option>
                 <option :value="key" v-for="(value,key) in $page.props.types">{{ value }}</option>
               </select>
-              <div class="text-xs text-red-600" v-if="errors.type">{{ errors.type }}</div>
+              <div class="text-xs text-red-600" v-if="errors.award_type">{{ errors.award_type }}</div>
             </div>
           </div>
         </div>
         <div class="p-5 rounded-xl bg-slate-100 grid">
           <h1 class="font-black text-neutral-600">تصاویر</h1>
           <div class="flex flex-row justify-start items-start gap-4 mt-5">
-            <Upload v-model="image_id"></Upload>
-            <Upload v-model="cover_id"></Upload>
+            <Upload v-model="form.media['image']"></Upload>
+            <Upload v-model="form.media['cover']"></Upload>
           </div>
         </div>
       </div>
       <div class="w-full lg:w-1/4 p-5 rounded-xl bg-slate-100">
         <h3>ذخیره</h3>
         <div class="flex flex-col gap-4">
-          <Status v-model="form.status" />
-          {{ form.status }}
+          <Status v-model="form.is_active" />
+          {{ form.is_active }}
         </div>
         <div>
           <button
@@ -134,10 +145,11 @@ const props = defineProps({ errors: Object });
 const user = computed(() => usePage().props.value.auth.user);
 const form = useForm({
   title: null,
+  slug: null,
   description: null,
-  type: null,
-  status: true,
-  image_id: null,
-  cover_id: null,
+  award_type: null,
+  is_active: true,
+  media: [],
+  parent_id: null,
 });
 </script>
