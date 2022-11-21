@@ -92,7 +92,7 @@
                     <template #body>
                         <div class="flex flex-col gap-2 pr-5 text-sm pt-4">
                             <Link
-                                :class="route().current()==='admin.products.index' ? 'font-bold' : ''"
+                                :class="{'font-bold':route().current()==='admin.products.index'}"
                                 as="div"
                                 class="group hover:text-red-500 cursor-pointer flex flex-row justify-start gap-2 items-baseline"
                             >

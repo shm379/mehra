@@ -54,7 +54,7 @@
         </select>
       </div>
       <div class="flex flex-row justify-end items-center">
-        <div>صفحه {{ data.current_page }} از {{ data.total }}</div>
+        <div>صفحه {{ data.current_page }} از {{ data.last_page }}</div>
         <nav aria-label="Page navigation example" dir="rtl">
           <ul class="inline-flex items-center -space-x-px text-sm">
             <li class="p-2" v-for="(link, l) in data.links">
@@ -65,6 +65,7 @@
                     link.active,
                 }"
                 v-html="link.label"
+                preserve-scroll
               ></Link>
             </li>
           </ul>
