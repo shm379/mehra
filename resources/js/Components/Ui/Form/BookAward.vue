@@ -8,15 +8,26 @@
       <div class="w-5/12">
         <ui-autocomplete-award v-model="item.award"></ui-autocomplete-award>
       </div>
-      <div class="w-6.12"><ui-input label="توضیحات" v-model="item.description"></ui-input></div>
-    <div class="w-1/12 flex flex-row cursor-pointer justify-start items-center" @click="remove(i)">
-        <svg width="21" height="2" viewBox="0 0 21 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M1.23917 1.375H19.9892C20.1767 1.375 20.3642 1.23438 20.3642 1.04688C20.3642 0.8125 20.1767 0.625 19.9892 0.625H1.23917C1.0048 0.625 0.864173 0.8125 0.864173 1.04688C0.864173 1.23438 1.0048 1.375 1.23917 1.375Z"
-                fill="#A3A3A3" />
+      <div class="w-6.12">
+        <ui-input label="توضیحات" v-model="item.description"></ui-input>
+      </div>
+      <div
+        class="w-1/12 flex flex-row cursor-pointer justify-start items-center"
+        @click="remove(i)"
+      >
+        <svg
+          width="21"
+          height="2"
+          viewBox="0 0 21 2"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.23917 1.375H19.9892C20.1767 1.375 20.3642 1.23438 20.3642 1.04688C20.3642 0.8125 20.1767 0.625 19.9892 0.625H1.23917C1.0048 0.625 0.864173 0.8125 0.864173 1.04688C0.864173 1.23438 1.0048 1.375 1.23917 1.375Z"
+            fill="#A3A3A3"
+          />
         </svg>
-
-    </div>
+      </div>
     </div>
     <div class="flex flex-row gap-2 items-end">
       <div class="w-5/12">
@@ -25,7 +36,10 @@
       <div class="w-6/12">
         <ui-input label="توضیحات" v-model="newDescription"></ui-input>
       </div>
-      <div class="w-1/12 flex flex-row cursor-pointer justify-start items-center" @click="add">
+      <div
+        class="w-1/12 flex flex-row cursor-pointer justify-start items-center"
+        @click="add"
+      >
         <svg
           width="30"
           height="31"
@@ -61,19 +75,16 @@ const awards = computed({
   },
 });
 function add() {
-    awards.value.push(
-        {
-            award: newAward.value,
-            description: newDescription.value
-        }
-    )
-    newAward.value = null
-    newDescription.value = null
+  awards.value.push({
+    award: newAward.value,
+    description: newDescription.value,
+  });
+  newAward.value = null;
+  newDescription.value = null;
 }
 
 function remove(i) {
-    awards.value.splice(i,1
-    )
+  awards.value.splice(i, 1);
 }
 </script>
 

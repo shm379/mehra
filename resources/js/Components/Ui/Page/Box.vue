@@ -1,9 +1,9 @@
 <template>
   <div class="rounded-xl bg-gray-100 p-5 my-5 ">
-    <div class="flex flex-row justify-between">
+    <div class="flex cursor-pointer flex-row justify-between" @click="toggle">
       <h1 class="grow font-bold pb-5">{{ title }}</h1>
       <svg
-        @click="toggle"
+        
         :class="{'rotate-90': !open}"
         width="21"
         height="2"

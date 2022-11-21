@@ -1,17 +1,25 @@
 <template>
   <div class="">
     <table
-      class="my-10 min-w-full overflow-x-auto  rounded-lg text-sm text-left text-gray-500 dark:text-gray-400"
+      class="my-10 min-w-full overflow-x-auto rounded-lg text-sm text-left text-gray-500 dark:text-gray-400"
     >
       <thead>
         <tr>
+          <th v-if="bulk"></th>
           <th class="text-right py-5" scope="col" v-for="(col, i) in columns" :key="i">
             {{ col.label }}
+          </th>
+        </tr>
+        <tr>
+          <th v-if="bulk"><input type="checkbox" v-model="all" /></th>
+          <th class="text-right py-5" scope="col" v-for="(col, i) in columns" :key="i">
+            <ui-input v-model="search[col.name]" :placeholder="col.label"></ui-input>
           </th>
         </tr>
       </thead>
       <tbody class="border rounded-lg">
         <tr v-for="(row, j) in data.data" :key="j" class="border-b">
+          <th v-if="bulk"><input type="checkbox" v-model="selected[j]" /></th>
           <td v-for="(item, k) in row" :key="k" class="p-2 rounded-lg text-right py-2">
             <span v-if="slots[`row-cell-${k}`]"
               ><slot
@@ -67,22 +75,26 @@
 </template>
 
 <script setup>
-import { ref, watch,useSlots } from "vue";
+import { ref, watch, useSlots } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/Pagination.vue";
+import UiInput from "@/Components/Ui/Field/Input.vue";
+import { TableFilter } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 
 const props = defineProps({
   columns: Array,
   data: Array,
   actions: Array,
-  baseRoute: String
+  baseRoute: String,
+  bulk: Boolean,
 });
-
+const search = ref({});
+const selected = ref([]);
 const perPage = ref(props.data.per_page);
 const slots = useSlots();
-watch(perPage,  (newValue, oldValue) => {
-    console.log(newValue)
-})
+watch(perPage, (newValue, oldValue) => {
+  console.log(newValue);
+});
 </script>
 
 <style lang="scss" scoped></style>
