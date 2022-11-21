@@ -22,19 +22,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-//        \App\Models\User::factory(10)->create();
-        DB::table('users')->insertGetId([
-            'first_name'=>'سیدحسین',
-            'last_name'=>'موسوی',
-            'email' => 'shm379@gmail.com',
-            'mobile' => '9391727950',
-            'password' => Hash::make('09391727950'),
-            'gender' => UserGender::MALE,
-            'type' => UserType::PERSON,
-            'city' => UserCity::getKey(UserCity::QOM),
-        ]);
-//        $this->call([
-//
+//        DB::table('users')->insertGetId([
+//            'first_name'=>'سیدحسین',
+//            'last_name'=>'موسوی',
+//            'email' => 'shm379@gmail.com',
+//            'mobile' => '9391727950',
+//            'password' => Hash::make('09391727950'),
+//            'gender' => UserGender::MALE,
+//            'type' => UserType::PERSON,
+//            'city' => UserCity::getKey(UserCity::QOM),
+//        ]);
+
+        $this->call([
+
 //            AttributeSeeder::class,
 //            ProducerSeeder::class,
 //            ProductSeeder::class,
@@ -42,10 +42,9 @@ class DatabaseSeeder extends Seeder
 //            ProductProductGroupSeeder::class,
 //            CategoryTemplateSeeder::class,
 //            CategorySeeder::class,
-//            MediaSeeder::class,
-//
-//        ]);
+            MediaSeeder::class,
 
+        ]);
 
     }
 }

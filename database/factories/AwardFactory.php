@@ -1,27 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Award;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Attribute>
+ * @extends Factory<\App\Models\Award>
  */
-class AwardFactory extends Factory
+final class AwardFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
+    * The name of the factory's corresponding model.
+    *
+    * @var string
+    */
+    protected $model = Award::class;
+
+    /**
+    * Define the model's default state.
+    *
+    * @return array
+    */
+    public function definition(): array
     {
         return [
-            "parent_id" => fake()->numberBetween(1, Award::count() - 1),
-            'title' => fake('fa-IR')->text(),
-            'slug' => fake()->slug(),
-            'award_type' => fake()->randomElement([1, 2, 3, 4, 5]),
+            'parent_id' => \App\Models\Award::factory(),
+            'title' => $this->faker->title,
+            'slug' => $this->faker->slug,
+            'description' => $this->faker->text,
+            'award_type' => $this->faker->word,
+            'is_active' => $this->faker->boolean,
+            'admin_id' => $this->faker->randomNumber(),
+            'deleted_at' => $this->faker->dateTime(),
         ];
     }
 }

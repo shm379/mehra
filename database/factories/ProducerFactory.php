@@ -1,32 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Enums\ProducerType;
 use App\Models\Producer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Producer>
+ * @extends Factory<\App\Models\Producer>
  */
-class ProducerFactory extends Factory
+final class ProducerFactory extends Factory
 {
-
-    protected $model = Producer::class;
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
+    * The name of the factory's corresponding model.
+    *
+    * @var string
+    */
+    protected $model = Producer::class;
+
+    /**
+    * Define the model's default state.
+    *
+    * @return array
+    */
+    public function definition(): array
     {
         return [
-            'title'=>$this->faker->jobTitle,
-            'sub_title'=>$this->faker->jobTitle,
-            'slug'=>$this->faker->unique()->slug,
-            'description'=>$this->faker->text(10),
-            'producer_type'=>ProducerType::getRandomValue(),
-            'is_active'=>1
+            'title' => $this->faker->title,
+            'sub_title' => $this->faker->word,
+            'slug' => $this->faker->slug,
+            'description' => $this->faker->text,
+            'site_url' => $this->faker->word,
+            'producer_type' => $this->faker->randomNumber(),
+            'is_active' => $this->faker->boolean,
+            'admin_id' => $this->faker->randomElement(['1']),
+            'deleted_at' => $this->faker->dateTime(),
         ];
     }
 }

@@ -28,8 +28,6 @@
                 </template>
             </datagrid>
         </div>
-<<<<<<< Updated upstream
-=======
         <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index" :bulk="true">
             <template v-slot:row-cell-email_verified_at="{ item }">
                 <div class="py-2">
@@ -39,7 +37,6 @@
             </template>
 
         </datagrid>
->>>>>>> Stashed changes
     </div>
 </template>
 <script>

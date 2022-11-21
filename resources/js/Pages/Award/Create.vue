@@ -1,6 +1,15 @@
 <template>
-  <Head title="" />
-  <form @submit.prevent="form.post('/admin/awards')">
+  <Head title="Award" />
+  <form enctype="multipart/form-data" @submit.prevent="form.post('/admin/awards',{
+      forceFormData: true,
+      preserveScroll: true,
+      onSuccess: () => {
+          form.reset();
+          if($page.props.flash.success!==null){
+             $inertia.reload({ preserveState: true , preserveScroll: true })
+          }
+      },
+  })">
     <div class="flex flex-row justify-between items-center h-32">
       <h3 class="text-red-500 font-bold text-lg">افزودن جوایز و افتخارات</h3>
       <div class="flex flex-row gap-5">
@@ -104,8 +113,8 @@
         <div class="p-5 rounded-xl bg-slate-100 grid">
           <h1 class="font-black text-neutral-600">تصاویر</h1>
           <div class="flex flex-row justify-start items-start gap-4 mt-5">
-            <Upload v-model="form.media['image']"></Upload>
-            <Upload v-model="form.media['cover']"></Upload>
+            <Upload v-model="form.media.image"></Upload>
+            <Upload v-model="form.media.cover"></Upload>
           </div>
         </div>
       </div>
@@ -113,7 +122,6 @@
         <h3>ذخیره</h3>
         <div class="flex flex-col gap-4">
           <Status v-model="form.is_active" />
-          {{ form.is_active }}
         </div>
         <div>
           <button
@@ -149,7 +157,7 @@ const form = useForm({
   description: null,
   award_type: null,
   is_active: true,
-  media: [],
+  media: {image:null,cover:null},
   parent_id: null,
 });
 </script>

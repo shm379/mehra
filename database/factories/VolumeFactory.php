@@ -1,25 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Volume;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Volume>
+ * @extends Factory<\App\Models\Volume>
  */
-class VolumeFactory extends Factory
+final class VolumeFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
+    * The name of the factory's corresponding model.
+    *
+    * @var string
+    */
+    protected $model = Volume::class;
+
+    /**
+    * Define the model's default state.
+    *
+    * @return array
+    */
+    public function definition(): array
     {
         return [
-            'title'=>$this->faker->title,
-            'description'=>$this->faker->text,
-            'is_active'=>1,
+            'parent_id' => $this->faker->randomNumber(),
+            'title' => $this->faker->title,
+            'description' => $this->faker->text,
+            'is_active' => $this->faker->boolean,
+            'admin_id' => $this->faker->randomElement(['1']),
+            'deleted_at' => $this->faker->dateTime(),
         ];
     }
 }

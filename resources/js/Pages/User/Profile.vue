@@ -147,7 +147,6 @@ import { usePage, useForm } from "@inertiajs/inertia-vue3";
 import { computed, defineProps } from "vue";
 const props = defineProps({ errors: Object });
 const user = computed(() => usePage().props.value.auth.user);
-console.log(user.value);
 const form = useForm({
   email: user.value.email,
   name: user.value.name,

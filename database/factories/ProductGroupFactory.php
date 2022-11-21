@@ -1,35 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\ProductGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductGroup>
+ * @extends Factory<\App\Models\ProductGroup>
  */
-class ProductGroupFactory extends Factory
+final class ProductGroupFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
+    * The name of the factory's corresponding model.
+    *
+    * @var string
+    */
     protected $model = ProductGroup::class;
 
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
+    * Define the model's default state.
+    *
+    * @return array
+    */
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'price' => $this->faker->randomDigit(),
-            'sale_price' => $this->faker->randomDigit(),
-            'is_active' => 1,
+            'name' => $this->faker->name,
+            'price' => $this->faker->randomFloat(),
+            'sale_price' => $this->faker->randomFloat(),
+            'is_active' => $this->faker->boolean,
+            'type' => $this->faker->randomNumber(),
+            'admin_id' => $this->faker->randomElement(['1']),
+            'deleted_at' => $this->faker->dateTime(),
         ];
     }
 }

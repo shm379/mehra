@@ -1,49 +1,57 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Enums\ProductType;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<\App\Models\Product>
  */
-class ProductFactory extends Factory
+final class ProductFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
+    * The name of the factory's corresponding model.
+    *
+    * @var string
+    */
     protected $model = Product::class;
 
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition()
+    * Define the model's default state.
+    *
+    * @return array
+    */
+    public function definition(): array
     {
-        $titles = ['حساس' , 'ترافیک' , 'فروش', 'سایت', 'ارگانیک' ,'افزایش', 'نرخ' , 'سئو' , 'کاربردی' , 'ابزار' , 'بهبود' ,'تجربه' , 'بهبود' , 'فروشگاه' , 'سرعت' , 'جستجو' , 'موتورهای جستجو' , 'موبایل' ,'آن ین' ,'لینک' , 'حرفه', 'کلیک' ,'مخاطب' , 'صفحه' ,'تصاویر' ,'اشتراک' ,' شبکه ها اجتماعی' ,'محصول' ,' آن ین' ,'توسعه دهنده' ,'حرفه ای' ,'فاکتور' ,'بهینه سازی' ,'ترافیک' ,'پروتکل' , 'امنیت', 'محتوا' ,'دانلود' ,'رایگان' ,'استاندارد' , 'خرید' , 'رتبه بندی' ,'الگوریتم های گوگل' ,'وب گردی' , 'وب گ نوس' , 'مخاطب' ,'رپورتاژ خبری' ,'مقایسه' ,' اط عات' ,'نقشه' ,'برچسب' ,'بانک' , 'چشمپوشی' ,'اینترنت' ,'پیامرسان' ,'دولت' , 'حمایت' ,'هیولا' , 'یادداشت' , 'لینوکس' , 'هوشمند' , 'عروسک' ,'رباتیک' , 'کودکان' ,'کتاب', 'روزرسانی' , 'وبمستر' , 'آنالیتیکس'];
         return [
-            'title' => $titles[array_rand($titles)],
-            'sub_title' => $this->faker->title(),
-            'slug' => $this->faker->unique()->slug(),
-            'sku' => $this->faker->unique()->randomNumber(6),
-            'volume_id' => VolumeFactory::new([
-                'title'=>'تست',
-                'description'=>'تست توضیحات',
-                'is_active'=>1
-            ]),
-            'description'=>$this->faker->realText(),
-            'excerpt'=>$this->faker->text(),
-            'opinions'=>$this->faker->title(),
-            'price'=>$this->faker->numberBetween(10000,300000),
-            'producer_id'=>ProducerFactory::new(),
-            'product_type'=>ProductType::getRandomValue(),
-            'is_available'=>1,
-            'is_active'=>1,
+            'sku' => $this->faker->word,
+            'parent_id' => \App\Models\Product::factory(),
+            'volume_id' => \App\Models\Volume::factory(),
+            'title' => $this->faker->title,
+            'slug' => $this->faker->slug,
+            'sub_title' => $this->faker->word,
+            'description' => $this->faker->text,
+            'excerpt' => $this->faker->text,
+            'summary' => $this->faker->text,
+            'price' => $this->faker->randomFloat(),
+            'sale_price' => $this->faker->randomFloat(),
+            'vat' => $this->faker->randomFloat(),
+            'producer_id' => \App\Models\Producer::factory(),
+            'product_type' => $this->faker->randomNumber(),
+            'product_structure' => $this->faker->randomNumber(),
+            'order_volume' => $this->faker->randomNumber(),
+            'order' => $this->faker->randomNumber(),
+            'min_purchases_per_user' => $this->faker->randomNumber(),
+            'max_purchases_per_user' => $this->faker->randomNumber(),
+            'is_virtual' => $this->faker->boolean,
+            'is_available' => $this->faker->boolean,
+            'in_stock_count' => $this->faker->randomNumber(),
+            'is_active' => $this->faker->boolean,
+            'admin_id' => $this->faker->randomElement(['1']),
+            'deleted_at' => $this->faker->dateTime(),
         ];
     }
 }

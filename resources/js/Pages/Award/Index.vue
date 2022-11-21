@@ -4,7 +4,7 @@
         <h3 class="text-red-500 font-bold text-lg">لیست جوایز / افتخار ها</h3>
         <Link
             class="px-3 py-3 rounded-2xl bg-neutral-100 text-sm text-slate-600 cursor-pointer hover:scale-95 delay-100 hover:ring-red-600 hover:ring-offset-stone-600 hover:shadow-lg hover:shadow-red-100 hover:ring-4 duration-200 ease-in"
-            as="div"
+            as="a"
             :href="route('admin.awards.create')"
         >اضافه کردن جایزه / افتخار</Link>
     </div>
@@ -30,7 +30,7 @@
             {{ $page.props.flash.success }}
         </div>
         <div class="py-12">
-            <datagrid :columns="columns" :data="awards" :actions="actions" baseRoute="admin.creators.index" />
+            <datagrid :columns="columns" :data="awards" :actions="actions" baseRoute="admin.awards.index" />
         </div>
     </div>
 </template>
@@ -71,12 +71,6 @@ const columns = [
         name: "type",
         label: "نوع",
         field: "type",
-        sortable: false,
-    },
-    {
-        name: "parent",
-        label: "نام مادر",
-        field: "parent",
         sortable: false,
     },
     {

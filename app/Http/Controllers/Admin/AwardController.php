@@ -77,13 +77,28 @@ class AwardController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Inertia\Response
      */
     public function store(StoreAwardRequest $request)
     {
-        Award::query()->create($request->validated());
-        session('success','عملیات با موفقیت انجم');
-        return Inertia::render('Award/Create');
+        $types = AwardType::asSelectArray();
+        $parentAwards = Award::parentAwards();
+        $award = Award::query()->create($request->validated());
+        try {
+            return Inertia::render('Award/Create')
+                ->with([
+                    'flash'=>['success'=>'عملیات با موفقیت انجام شد!'],
+                    'types'=> $types,
+                    'parent_awards'=>$parentAwards
+                ]);
+        } catch (\Exception $exception){
+            return Inertia::render('Award/Create')
+                ->with([
+                    'flash'=>['error'=>'عملیات شکست خورد!'],
+                    'types'=> $types,
+                    'parent_awards'=>$parentAwards
+                ]);
+        }
     }
 
     /**

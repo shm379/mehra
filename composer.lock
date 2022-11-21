@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbca07736f6b7f56e040150f1eb1ad03",
+    "content-hash": "ee35feac0b8415656d9e7bb8c5c6a2e6",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -12944,6 +12944,69 @@
                 }
             ],
             "time": "2022-10-26T17:39:54+00:00"
+        },
+        {
+            "name": "thedoctor0/laravel-factory-generator",
+            "version": "1.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TheDoctor0/laravel-factory-generator.git",
+                "reference": "07dfb3fad5f1523a37ff988a2f32a0f2a00ca605"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TheDoctor0/laravel-factory-generator/zipball/07dfb3fad5f1523a37ff988a2f32a0f2a00ca605",
+                "reference": "07dfb3fad5f1523a37ff988a2f32a0f2a00ca605",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.9|^2.10|^3.0",
+                "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/filesystem": "^6.0|^7.0|^8.0|^9.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "TheDoctor0\\LaravelFactoryGenerator\\FactoryGeneratorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TheDoctor0\\LaravelFactoryGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Generate Laravel or Lumen test factories for your models.",
+            "keywords": [
+                "factories",
+                "factory",
+                "generator",
+                "laravel",
+                "lumen",
+                "tests"
+            ],
+            "support": {
+                "issues": "https://github.com/TheDoctor0/laravel-factory-generator/issues",
+                "source": "https://github.com/TheDoctor0/laravel-factory-generator/tree/1.2.3"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/thedoctor0",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/thedoctor0",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-08-14T11:02:57+00:00"
         },
         {
             "name": "theseer/tokenizer",

@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 use Spatie\MediaLibrary\MediaCollections\File;
+use Faker\Factory as Faker;
 
 class MediaSeeder extends Seeder
 {
@@ -19,21 +20,12 @@ class MediaSeeder extends Seeder
     {
         $media = Storage::disk('media')->allFiles();
         $products = Product::query()->get();
-        foreach ($products as $product){
-            $media_rand = array_rand($media);
-            $array = explode('.', $media[$media_rand]);
-            if(end($array)=='mp4'){
-                if(\Illuminate\Support\Facades\File::exists(public_path('media/').$media[$media_rand])){
-                    $product->addMedia(public_path('media/').$media[$media_rand])->toMediaCollection('gallery');
-                }
-            }
 
-//            if(\Illuminate\Support\Facades\File::exists(public_path('media_copy/').$media[$media_rand])){
-//                for($i=0;$i<3;$i++){
-//                    $media_rand = array_rand($media);
-//                    $product->addMedia(public_path('media_copy/').$media[$media_rand])->toMediaCollection('gallery');
-//                }
-//            }
+        $faker = Faker::create();
+
+        foreach ($products as $product) {
+            $imageUrl = $faker->imageUrl(640, 480, null, false);
+            $product->addMediaFromUrl($imageUrl)->toMediaCollection('gallery');
         }
     }
 }
