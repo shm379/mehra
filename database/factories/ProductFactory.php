@@ -27,9 +27,9 @@ final class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'sku' => $this->faker->word,
-            'parent_id' => \App\Models\Product::factory(),
-            'volume_id' => \App\Models\Volume::factory(),
+            'sku' => $this->faker->unique()->word,
+            'parent_id' => null,
+            'volume_id' => null,
             'title' => $this->faker->title,
             'slug' => $this->faker->slug,
             'sub_title' => $this->faker->word,
@@ -39,9 +39,9 @@ final class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(),
             'sale_price' => $this->faker->randomFloat(),
             'vat' => $this->faker->randomFloat(),
-            'producer_id' => \App\Models\Producer::factory(),
-            'product_type' => $this->faker->randomNumber(),
-            'product_structure' => $this->faker->randomNumber(),
+            'producer_id' => 1,
+            'product_type' => 1,
+            'product_structure' => 1,
             'order_volume' => $this->faker->randomNumber(),
             'order' => $this->faker->randomNumber(),
             'min_purchases_per_user' => $this->faker->randomNumber(),

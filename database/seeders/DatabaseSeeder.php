@@ -22,26 +22,26 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-//        DB::table('users')->insertGetId([
-//            'first_name'=>'سیدحسین',
-//            'last_name'=>'موسوی',
-//            'email' => 'shm379@gmail.com',
-//            'mobile' => '9391727950',
-//            'password' => Hash::make('09391727950'),
-//            'gender' => UserGender::MALE,
-//            'type' => UserType::PERSON,
-//            'city' => UserCity::getKey(UserCity::QOM),
-//        ]);
+        DB::table('users')->insertGetId([
+            'first_name'=>'سیدحسین',
+            'last_name'=>'موسوی',
+            'email' => 'shm379@gmail.com',
+            'mobile' => '9391727950',
+            'password' => Hash::make('09391727950'),
+            'gender' => UserGender::MALE,
+            'type' => UserType::PERSON,
+            'city' => UserCity::getKey(UserCity::QOM),
+        ]);
 
         $this->call([
 
-//            AttributeSeeder::class,
-//            ProducerSeeder::class,
-//            ProductSeeder::class,
-//            ProductGroupSeeder::class,
-//            ProductProductGroupSeeder::class,
-//            CategoryTemplateSeeder::class,
-//            CategorySeeder::class,
+            AttributeSeeder::class,
+            ProducerSeeder::class,
+            ProductSeeder::class,
+            ProductGroupSeeder::class,
+            ProductProductGroupSeeder::class,
+            CategoryTemplateSeeder::class,
+            CategorySeeder::class,
             MediaSeeder::class,
 
         ]);

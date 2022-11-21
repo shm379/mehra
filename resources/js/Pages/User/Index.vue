@@ -28,15 +28,6 @@
                 </template>
             </datagrid>
         </div>
-        <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index" :bulk="true">
-            <template v-slot:row-cell-email_verified_at="{ item }">
-                <div class="py-2">
-                    <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1">غیرفعال</span>
-                    <span v-else class="text-xs bg-green-100 text-green-500 rounded-lg p-1">غیرفعال</span>
-                </div>
-            </template>
-
-        </datagrid>
     </div>
 </template>
 <script>

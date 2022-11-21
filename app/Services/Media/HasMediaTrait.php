@@ -19,11 +19,6 @@ trait HasMediaTrait
         return $this->morphMany(Media::class, 'model')->whereNotNull('verified_at');
     }
 
-    public function mediaPdfVerified(): MorphMany
-    {
-        return $this->morphMany(Media::class, 'model')->whereNotNull('pdf_verified_at');
-    }
-
     public static function isValidMediaCollection(string $collectionName): bool
     {
         return in_array($collectionName, static::getValidCollections());
