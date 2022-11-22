@@ -53,21 +53,22 @@ class AttributeController extends Controller
                 'created_at',
                 'wallets.balance',
             ])
-            ->allowedIncludes(['comments','wallet'])
+            ->allowedIncludes(['comments', 'wallet'])
             ->allowedFilters([
                 'comments_count',
                 'wallets.balance',
                 'city',
                 'email',
                 'gender',
-                $globalSearch])
+                $globalSearch
+            ])
             ->paginate($per_page)
             ->through(function ($attribute) {
                 return [
                     'id' => $attribute->id,
                     'name' => $attribute->name,
                     'values' => implode(',', $attribute->values
-                        ->map(function ($value){
+                        ->map(function ($value) {
                             return $value->value;
                         })->toArray()),
                 ];
@@ -86,6 +87,7 @@ class AttributeController extends Controller
     public function create()
     {
         //
+        return Inertia::render("Attribute/Create");
     }
 
     /**
