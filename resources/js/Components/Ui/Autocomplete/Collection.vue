@@ -1,5 +1,5 @@
 <template>
-    <ui-autocomplete api="/api/v1/ac/creators/" :label="label" v-model="creator" >
+    <ui-autocomplete api="/api/v1/ac/collections/" :label="label" v-model="creator" >
                     <template #tag="{ item }">
                         <span>{{ item.title }}</span>
                     </template>
@@ -12,7 +12,7 @@ import { computed } from "vue";
 import UiAutocomplete from "@/Components/Ui/Autocomplete/Index.vue"
 const props = defineProps({ modelValue: [Object, Array], label: {
     type: String,
-    default: 'نویسنده / نویسندگان'
+    default: 'لیست‌های منتخب'
 } })
 const emit = defineEmits(["update:modelValue"]);
 

@@ -7,7 +7,7 @@
         <tr>
           <th v-if="bulk"></th>
           <th class="text-right py-5" scope="col" v-for="(col, i) in columns" :key="i">
-            {{ col.label }}
+            <col-header :col="col" @sort="log"></col-header>
           </th>
         </tr>
         <tr>
@@ -32,7 +32,10 @@
             ></span>
             <span v-else v-html="item"></span>
           </td>
-          <td class="flex pt-2 flex-row items-center justfiy-between gap-1">
+          <td v-if="slots['row-cell-action']">
+            <slot :row="row" :item="item" :field="k" :data="data.data" :name="`row-cell-action`"></slot>
+          </td>
+          <td v-else  class="flex pt-2 flex-row items-center justfiy-between gap-1">
             <Link
               as="a"
               v-for="(action, l) in actions"
@@ -49,8 +52,8 @@
     <div class="flex flex-row gap-2 items-center justify-between">
       <div>
         <span>نمایش </span
-        ><select v-model="perPage" class="p-2 rounded-lg border" lang="fa">
-          <option v-for="i in [10, 15, 20, 50, 100]" :value="i" :label="i" lang="ar" />
+        ><select v-model="perPage" class="p-2 rounded-xl border border-gray-200 pl-5  pr-10  border" lang="fa">
+          <option v-for="i in [3,5,10, 15, 20, 50, 100]" :value="i" :label="i" lang="ar" />
         </select>
       </div>
       <div class="flex flex-row justify-end items-center">
@@ -78,6 +81,7 @@
 <script setup>
 import { ref, watch, useSlots } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
+import ColHeader from "@/Components/Ui/Datagrid/ColHeader.vue"
 import Pagination from "@/Components/Pagination.vue";
 import UiInput from "@/Components/Ui/Field/Input.vue";
 import { TableFilter } from "@protonemedia/inertiajs-tables-laravel-query-builder";
@@ -96,6 +100,9 @@ const slots = useSlots();
 watch(perPage, (newValue, oldValue) => {
   console.log(newValue);
 });
+function log(v) {
+    console.log(v)
+}
 </script>
 
 <style lang="scss" scoped></style>

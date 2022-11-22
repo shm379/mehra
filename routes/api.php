@@ -52,6 +52,7 @@ Route::prefix('/v1')->controller(\App\Http\Controllers\Api\Auth\AuthController::
     Route::get('/ac/narrators/{q}', [AutocompleteController::class, 'narrators']);
     Route::get('/ac/illustrators/{q}', [AutocompleteController::class, 'illustrators']);
     Route::get('/ac/categories/{q}', [AutocompleteController::class, 'categories']);
+    Route::get('/ac/collections/{q}', [AutocompleteController::class, 'collections']);
     Route::get('/ac/attributes', [AutocompleteController::class, 'attribute']);
     Route::get('/ac/awards/{q}', [AutocompleteController::class, 'award']);
 });

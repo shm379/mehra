@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Models\Attribute;
 use App\Models\Award;
 use App\Models\Category;
+use App\Models\Collection;
 use App\Models\Creator;
 use App\Models\Producer;
 use Illuminate\Http\Request;
@@ -59,5 +60,9 @@ class AutocompleteController extends Controller
     public function award($q, Request $request)
     {
         return Award::where('title', 'LIKE', `%{$q}%`)->get();
+    }
+    public function collections($q, Request $request)
+    {
+        return Collection::where('title', 'LIKE', `%{$q}%`)->get();
     }
 }

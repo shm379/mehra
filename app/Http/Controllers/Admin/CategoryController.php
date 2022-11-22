@@ -35,7 +35,7 @@ class CategoryController extends Controller
         QueryBuilderRequest::setArrayValueDelimiter('|');
         // get users from query builder
         $categories = QueryBuilder::for(Category::class)
-            ->withAggregate('template','name')
+            ->withAggregate('template', 'name')
             ->defaultSort('created_at')
             ->allowedSorts([
                 'email',
@@ -44,22 +44,23 @@ class CategoryController extends Controller
                 'created_at',
                 'wallets.balance',
             ])
-            ->allowedIncludes(['comments','wallet'])
+            ->allowedIncludes(['comments', 'wallet'])
             ->allowedFilters([
                 'comments_count',
                 'wallets.balance',
                 'city',
                 'email',
                 'gender',
-                $globalSearch])
+                $globalSearch
+            ])
             ->paginate($per_page)
             ->through(function ($category) {
                 return [
                     'id' => $category->id,
                     'title' => $category->title,
-                    'description'=> $category->description,
-                    'slug'=> $category->slug,
-                    'template'=> $category->template_name
+                    'description' => $category->description,
+                    'slug' => $category->slug,
+                    'template' => $category->template_name
                 ];
             })
             ->withQueryString();
@@ -75,9 +76,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $parentCategories = Category::query()->get();
-        $categoryTemplates = CategoryTemplate::query()->get();
-        return view('admin.categories.create',compact(['parentCategories','categoryTemplates']))->with(['errors'=>collect('errors')]);
+        $templates = CategoryTemplate::all();
+        return Inertia::render('Category/Create')->with('templates', $templates);
     }
 
     /**

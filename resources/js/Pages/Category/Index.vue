@@ -40,32 +40,38 @@ const props = defineProps({
 const columns = [
     {
         name: "id",
-        label: "شماره ردیف",
+        label: "ID",
         field: "id",
         sortable: true,
     },
     {
         name: "title",
-        label: "نام دسته",
+        label: "عنوان",
         field: "title",
         sortable: true,
     },
     {
-        name: "description",
-        label: "توضیحات",
-        field: "description",
+        name: "order",
+        label: "موقعیت",
+        field: "order",
         sortable: false,
     },
     {
-        name: "slug",
-        label: "نامک",
-        field: "slug",
+        name: "parent",
+        label: "دسته اصلی",
+        field: "parent",
         sortable: false,
     },
     {
-        name: "template_name",
-        label: "نام قالب",
-        field: "template_name",
+        name: "products_no",
+        label: "تعداد محصولات",
+        field: "products_no",
+        sortable: false,
+    },
+    {
+        name: "status",
+        label: "وضعیت",
+        field: "status",
         sortable: false,
     },
     {
@@ -75,7 +81,7 @@ const columns = [
     },
 ];
 const actions = [
-    { title: "نمایش", route: "admin.categories.show", color: "blue" },
+    { title: "مشاهده", route: "admin.categories.show" },
     { title: "ویرایش", route: "admin.categories.edit", color: "orange" },
     { title: "حذف", route: "admin.categories.destroy", color: "red" },
 ];
