@@ -40,7 +40,6 @@
 </template>
 
 <script setup>
-import UiLabel from "@/Components/Ui/Label.vue";
 import { useFileDialog } from "@vueuse/core";
 import { watch, ref } from "vue";
 const { files, open, reset } = useFileDialog({ multiple: false });

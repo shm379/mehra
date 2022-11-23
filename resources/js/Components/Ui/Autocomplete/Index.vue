@@ -52,7 +52,6 @@
 <script setup>
 import { computed, ref, watch, reactive } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import UiLabel from "@/Components/Ui/Label.vue";
 const emit = defineEmits(["update:modelValue"]);
 const results = ref();
 const search = ref("");

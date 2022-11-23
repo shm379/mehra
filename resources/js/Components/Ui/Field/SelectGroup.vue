@@ -20,7 +20,6 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import UiLabel from "@/Components/Ui/Label.vue"
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
   label: String,

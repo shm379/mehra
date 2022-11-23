@@ -38,6 +38,7 @@
           ذخیره
         </button>
       </ui-box>
+      <ui-form-sample-nested-comp />
     </ui-col>
   </ui-row>
 </template>
@@ -53,7 +54,6 @@ import UiFormCreatorAward from "@/Components/Ui/Form/Creator/Award.vue";
 import UiFormCreatorGallery from "@/Components/Ui/Form/Creator/Gallery.vue";
 import UiBox from "@/Components/Ui/Page/Box.vue";
 import Status from "@/Components/Status.vue";
-
 export default {
   layout: AdminLayout,
   components: {

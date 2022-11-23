@@ -17,7 +17,6 @@ import UiFormAttributesSingleChoice from "@/Components/Ui/Form/Attributes/Single
 import UiFormAttributesTextarea from "@/Components/Ui/Form/Attributes/Textarea.vue";
 import UiFormAttributesWeight from "@/Components/Ui/Form/Attributes/Weight.vue";
 import UiFormAttributesYesOrNo from "@/Components/Ui/Form/Attributes/YesOrNo.vue";
-import UiLabel from "@/Components/Ui/Label.vue";
 
 export default {
   components: {

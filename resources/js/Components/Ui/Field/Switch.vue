@@ -14,7 +14,6 @@
 
 <script setup>
 import { ref, defineProps, defineEmits } from "vue";
-import UiLabel from "@/Components/Ui/Label.vue"
 const props = defineProps({
     modelValue: [String, Boolean],
     trueValue: {
