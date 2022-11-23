@@ -51,8 +51,6 @@ import UiPageHeaderAnchors from "@/Components/Ui/Page/HeaderAnchors.vue";
 import UiFormCreatorInfo from "@/Components/Ui/Form/Creator/Info.vue";
 import UiFormCreatorAward from "@/Components/Ui/Form/Creator/Award.vue";
 import UiFormCreatorGallery from "@/Components/Ui/Form/Creator/Gallery.vue";
-import UiRow from "@/Components/Ui/Row.vue";
-import UiCol from "@/Components/Ui/Col.vue";
 import UiBox from "@/Components/Ui/Page/Box.vue";
 import Status from "@/Components/Status.vue";
 
@@ -62,8 +60,6 @@ export default {
     UiPageHeader,
     UiPageHeaderAction,
     UiPageHeaderAnchors,
-    UiRow,
-    UiCol,
     UiBox,
     Status,
     UiFormCreatorInfo,

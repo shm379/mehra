@@ -37,9 +37,9 @@ const col = (content) => ({
                 "div",
                 {
                     class: {
-                        "w-1/3": !wide && !full,
-                        "w-2/3": wide,
-                        "w-full": full,
+                        "w-1/3": !props.wide && !props.full,
+                        "w-2/3": props.wide,
+                        "w-full": props.full,
                     },
                 },
                 slots.default()
@@ -48,4 +48,4 @@ const col = (content) => ({
 });
 
 export const UiRow = row({ name: "UiRow" });
-export const UiCol = row({ name: "UiCol" });
+export const UiCol = col({ name: "UiCol" });

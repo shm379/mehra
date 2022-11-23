@@ -40,8 +40,6 @@ import UiFormCategoryGallery from "@/Components/Ui/Form/CategoryGallery.vue";
 import UiFormCategoryCategory from "@/Components/Ui/Form/CategoryCategory.vue";
 import UiFormCategoryTemplate from "@/Components/Ui/Form/CategoryTemplate.vue";
 import UiFormCategoryTemplateSetting from "@/Components/Ui/Form/CategoryTemplateSetting.vue";
-import UiRow from "@/Components/Ui/Row.vue";
-import UiCol from "@/Components/Ui/Col.vue";
 import UiBox from "@/Components/Ui/Page/Box.vue";
 import Status from "@/Components/Status.vue"
 
@@ -51,12 +49,10 @@ export default {
     UiPageHeader,
     UiPageHeaderAction,
     UiPageHeaderAnchors,
-    UiRow,
-    UiCol,
     UiBox,
     UiFormCategoryInfo,
-      UiFormCategoryCategory,
-      UiFormCategoryGallery,
+    UiFormCategoryCategory,
+    UiFormCategoryGallery,
     UiFormCategoryTemplate,
     UiFormCategoryTemplateSetting,
     Status
