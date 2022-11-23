@@ -13,8 +13,8 @@
       v-model="form.slug"
       error="slug"
     ></ui-input>
-    <ui-input label="عنوان" :errors="error" v-model="form.type" error="type"></ui-input>
-    <UiSelectGroup label="نوع ویژگی" v-model="form.type" :options="options" >
+    <ui-input label="عنوان" :errors="error" v-model="form.title" error="type"></ui-input>
+    <UiSelectGroup label="نوع ویژگی" v-model="form.type"  :options="options" >
         <template v-slot:option="{item}">
         {{ item.title }}
         </template>
@@ -23,6 +23,7 @@
 </template>
 
 <script setup>
+import attributeType from "@/definitions/attribute-types"
 import UiInput from "@/Components/Ui/Field/Input.vue";
 import UiSelectGroup from "@/Components/Ui/Field/SelectGroup.vue";
 import { ref } from "vue";
@@ -30,16 +31,7 @@ const props = defineProps({
   form: Object,
 });
 
-const options = ref([
-  {
-    title: "جند گزینه‌ای",
-    value: 1,
-  },
-  {
-    title: "تک گزینه‌ای",
-    value: 2,
-  },
-]);
+const options = ref(attributeType);
 </script>
 
 <style lang="scss" scoped></style>
