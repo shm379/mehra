@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use App\Enums\AwardType;
 use BenSampo\Enum\Rules\Enum;
@@ -34,7 +34,7 @@ class StoreAwardRequest extends FormRequest
            'award_type'=> ['required',Rule::in(AwardType::asArray())],
            'is_active'=> 'boolean',
            'parent_id'=> 'nullable|exists:App\Models\Award,id',
-           'media'=> 'required|array|required_array_keys:image'
+//           'media'=> 'required|array|required_array_keys:image'
         ];
     }
 }

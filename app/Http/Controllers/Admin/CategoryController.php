@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Models\Category;
 use App\Models\CategoryTemplate;
 use Illuminate\Http\Request;
@@ -86,9 +87,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+
     }
 
     /**

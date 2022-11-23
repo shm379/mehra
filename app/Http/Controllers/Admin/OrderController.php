@@ -94,7 +94,14 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        $orderStatuses = OrderStatus::asSelectArray();
+        $order->load(['user','discount','items'=>function ($item){
+            $item->with(['line_item'=>function ($line_item){
+                $line_item->with('producer');
+            }]);
+        },'notes']);
+        return Inertia::render('Order/Show')
+            ->with(['order'=>$order,'order_status'=>$orderStatuses]);
     }
 
     /**

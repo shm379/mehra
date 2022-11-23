@@ -3,7 +3,7 @@
     <nav class="flex border-b border-gray-100 text-sm font-medium">
       <a
         @click="selected = i"
-        v-for="item,i in anchors"
+        v-for="item,i in flat(anchors)"
         :href="`#${item.anchor}`"
         class="-mb-px  font-bold border-current p-4 "
         :class="{' border-b-4 border-b-red-500': selected == i}"
@@ -40,4 +40,12 @@ const anchors = computed({
     emit("update:modelValue", v);
   },
 });
+
+function flat(arr) {
+    let flatArr = []
+    arr.forEach(v => {
+        flatArr = flatArr.concat(v)
+    })
+    return flatArr
+}
 </script>

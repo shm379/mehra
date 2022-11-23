@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\AwardType;
 use App\Http\Controllers\Admin\Controller;
-use App\Http\Requests\StoreAwardRequest;
+use App\Http\Requests\Admin\StoreAwardRequest;
 use App\Models\Award;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -84,14 +85,14 @@ class AwardController extends Controller
         $types = AwardType::asSelectArray();
         $parentAwards = Award::parentAwards();
         $award = Award::query()->create($request->validated());
-        try {
-            return Inertia::render('Award/Create')
+        if($award){
+           return Redirect::route('admin.awards.index')
                 ->with([
                     'flash'=>['success'=>'عملیات با موفقیت انجام شد!'],
                     'types'=> $types,
                     'parent_awards'=>$parentAwards
                 ]);
-        } catch (\Exception $exception){
+        } else {
             return Inertia::render('Award/Create')
                 ->with([
                     'flash'=>['error'=>'عملیات شکست خورد!'],

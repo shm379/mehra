@@ -9,4 +9,9 @@ class OrderItem extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function line_item()
+    {
+        return $this->morphTo();
+    }
 }
