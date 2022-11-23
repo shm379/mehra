@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ui-label>{{ label }}</ui-label>
     <div
       @click="open"
       class="cursor-pointer w-28 h-28 border border-dashed border-slate-400 rounded-xl bg-white flex flex-col place-content-center place-items-center gap-2"
@@ -33,16 +34,20 @@
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
-
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import UiLabel from "@/Components/Ui/Label.vue";
 import { useFileDialog } from "@vueuse/core";
 import { watch, ref } from "vue";
 const { files, open, reset } = useFileDialog({ multiple: false });
+const props = defineProps({
+  label: { type: String, default: "تصویر" },
+  modelValue: Object,
+});
 const file = ref();
 watch(files, (value) => {
   if (value[0]) {

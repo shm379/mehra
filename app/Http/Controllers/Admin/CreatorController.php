@@ -36,22 +36,21 @@ class CreatorController extends Controller
         // get users from query builder
         $creators = QueryBuilder::for(Creator::class)
             ->defaultSort('created_at')
-            ->allowedSorts([
-            ])
-            ->allowedIncludes([
-            ])
+            ->allowedSorts([])
+            ->allowedIncludes([])
             ->allowedFilters([
-                $globalSearch])
+                $globalSearch
+            ])
             ->paginate($per_page)
             ->through(function ($creator) {
                 return [
                     'id' => $creator->id,
                     'title' => $creator->title,
-                    'slug'=> $creator->slug,
-                    'first_name'=> $creator->first_name,
-                    'last_name'=> $creator->last_name,
-                    'type'=> implode(',',$creator->types->pluck('name')->toArray()),
-                    'birthday'=> $creator->birthday,
+                    'slug' => $creator->slug,
+                    'first_name' => $creator->first_name,
+                    'last_name' => $creator->last_name,
+                    'type' => implode(',', $creator->types->pluck('name')->toArray()),
+                    'birthday' => $creator->birthday,
                 ];
             })
             ->withQueryString();
@@ -69,6 +68,7 @@ class CreatorController extends Controller
     public function create()
     {
         //
+        return Inertia::render('Creator/Create');
     }
 
     /**

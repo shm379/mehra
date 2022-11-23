@@ -19,7 +19,8 @@
         "daisyui": "^2.39.1",
         "flowbite": "^1.5.3",
         "laravel-vite-plugin": "^0.6.1",
-        "tailwindcss-plugin-icons": "^2.0.5"
+        "tailwindcss-plugin-icons": "^2.0.5",
+        "vue3-persian-datetime-picker": "^1.2.2"
     },
     "devDependencies": {
         "@inertiajs/inertia": "^0.11.1",

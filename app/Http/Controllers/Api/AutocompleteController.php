@@ -8,6 +8,7 @@ use App\Models\Award;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Creator;
+use App\Models\CreatorType;
 use App\Models\Producer;
 use Illuminate\Http\Request;
 
@@ -64,5 +65,9 @@ class AutocompleteController extends Controller
     public function collections($q, Request $request)
     {
         return Collection::where('title', 'LIKE', `%{$q}%`)->get();
+    }
+    public function creatorTypes($q, Request $request)
+    {
+        return CreatorType::where('name', 'LIKE', `%{$q}%`)->get();
     }
 }

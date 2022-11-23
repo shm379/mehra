@@ -47,6 +47,7 @@ Route::prefix('/v1')->controller(\App\Http\Controllers\Api\Auth\AuthController::
     Route::get('/ac/creators/narrators/{q}', [AutocompleteController::class, 'narrators']);
     Route::get('/ac/creators/illustrators/{q}', [AutocompleteController::class, 'illustrators']);
     Route::get('/ac/publishers/{q}', [AutocompleteController::class, 'publishers'])->name('ac.publishers');
+    Route::get('/ac/creators/types/{q}', [AutocompleteController::class, 'creatorTypes']);
     Route::get('/ac/creators/{q}', [AutocompleteController::class, 'authors']);
     Route::get('/ac/translators/{q}', [AutocompleteController::class, 'translators']);
     Route::get('/ac/narrators/{q}', [AutocompleteController::class, 'narrators']);

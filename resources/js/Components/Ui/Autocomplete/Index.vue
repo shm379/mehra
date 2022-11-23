@@ -42,7 +42,7 @@
           :key="i"
           v-for="(item, i) in items"
         >
-          {{ item.title }}
+          <slot name="item" :item="item">{{ item.title }}</slot>
         </p>
       </div>
     </div>
