@@ -1,8 +1,8 @@
 <template>
   <Head :title="title" />
-  <div class="flex flex-row justify-between items-center h-32">
-    <h3 class="text-red-500 font-bold text-lg">{{ title }}</h3>
-    <div class="flex flex-row gap-4"><slot></slot></div>
+  <div class="page-header">
+    <h3 class="page-header-title">{{ title }}</h3>
+    <div class="page-header-nav"><slot></slot></div>
   </div>
 </template>
 

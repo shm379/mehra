@@ -38,8 +38,6 @@ const mehraUiAdminPanelPlugin = {
                     .replace("..", "")
                     .replace("Index", "")
                     .replace(".vue", "");
-            console.log(path, componentName);
-
             // Register component on this Vue instance
             app.component(componentName, definition.default);
         });

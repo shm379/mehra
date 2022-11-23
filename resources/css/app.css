@@ -8,7 +8,9 @@
     .input {
         @apply bg-gray-200/50 rounded-xl outline-none border-none w-full p-3  shadow-inner text-gray-500;
     }
-
+    .input-container {
+        @apply flex flex-col gap-4 border-none bg-transparent;
+    }
     .label {
         @apply text-sm text-gray-600 mb-2 block;
     }
@@ -19,4 +21,41 @@
     .caption-error {
         @apply text-xs text-red-600
     }
+    .page-header {
+        @apply flex flex-row justify-between items-center h-32;
+    }
+    .page-header-title {
+        @apply text-red-500 font-bold text-lg
+    }
+    .page-header-nav {
+        @apply flex flex-row gap-4
+    }
+    .page-header-action {
+        @apply px-3 py-3 rounded-2xl bg-gray-100 text-sm text-gray-600 cursor-pointer hover:scale-95 delay-100 hover:ring-red-600 hover:ring-offset-stone-600 hover:shadow-lg hover:shadow-red-100 hover:ring-4 duration-200 ease-in;
+    }
+    .message-success {
+        @apply text-emerald-500 border-green-500 bg-emerald-50 border p-5 rounded-lg mb-10 duration-1000;
+    }
+    .message-error {
+        @apply text-red-500 border-red-500 bg-red-50 border p-5 rounded-lg mb-10 duration-1000
+    }
+    .page-header-anchor {
+        @apply flex border-b border-gray-100 text-sm font-medium;
+    }
+    .page-header-anchor-link {
+        @apply -mb-px font-bold border-current p-4
+    }
+    .page-header-anchor .selected {
+        @apply border-b-4 border-b-red-500
+    }
+    .box {
+        @apply rounded-xl bg-gray-100 p-5 my-5
+    }
+    .box .head {
+        @apply flex cursor-pointer flex-row justify-between
+    }
+    .box .head .title {
+        @apply grow font-bold pb-5
+    }
+
 }

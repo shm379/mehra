@@ -1,10 +1,9 @@
 <template>
-  <div class="rounded-xl bg-gray-100 p-5 my-5 ">
-    <div class="flex cursor-pointer flex-row justify-between" @click="toggle">
-      <h1 class="grow font-bold pb-5">{{ title }}</h1>
+  <div class="box">
+    <div class="head" @click="toggle">
+      <h1 class="title">{{ title }}</h1>
       <svg
-        
-        :class="{'rotate-90': !open}"
+        :class="{ 'rotate-90': !open }"
         width="21"
         height="2"
         viewBox="0 0 21 2"
@@ -17,17 +16,16 @@
         />
       </svg>
     </div>
-        <div v-show="open" class="duration-400">
-            <slot />
-        </div>
-
+    <div v-show="open" class="duration-400">
+      <slot />
+    </div>
   </div>
 </template>
 <script setup>
-import {ref } from "vue"
+import { ref } from "vue";
 const props = defineProps({
-    title : String
-})
+  title: String,
+});
 const open = ref(true);
 function toggle() {
   open.value = !open.value;

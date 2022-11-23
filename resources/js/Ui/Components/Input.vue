@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4 border-none bg-transparent">
+  <div class="input-container">
     <label class="text-sm text-slate-600">{{ label }}</label>
     <input
       lang="fa"
