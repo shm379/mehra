@@ -44,9 +44,8 @@
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { useForm } from "@inertiajs/inertia-vue3";
 
-import sections from "module/Creator/create.js"
+const { sections, form } = useCreator()
 export default {
   layout: AdminLayout,
 };
@@ -55,17 +54,6 @@ export default {
 <script setup>
 const props = defineProps({
   templates: Array,
-});
-
-const form = useForm({
-  name: "",
-  first_name:"",
-  last_name:"",
-  slug:"",
-  description:"",
-  birthday:"",
-  awards:[],
-  types:[]
 });
 </script>
 

@@ -31,64 +31,10 @@ export default {
 </script>
 <script setup>
 import { ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
-
+const {columns, actions} = useCreator()
 
 const props = defineProps({
     creators: Array,
 });
-const columns = [
-    {
-        name: "id",
-        label: "شماره ردیف",
-        field: "id",
-        sortable: true,
-    },
-    {
-        name: "title",
-        label: "عنوان",
-        field: "title",
-        sortable: true,
-    },
-    {
-        name: "slug",
-        label: "نامک",
-        field: "slug",
-        sortable: false,
-    },
-    {
-        name: "first_name",
-        label: "نام",
-        field: "first_name",
-        sortable: false,
-    },
-    {
-        name: "last_name",
-        label: "نام خانوادگی",
-        field: "last_name",
-        sortable: false,
-    },
-    {
-        name: "types",
-        label: "نوع",
-        field: "types",
-        sortable: false,
-    },
-    {
-        name: "birthday",
-        label: "سال تولد",
-        field: "birthday",
-        sortable: false,
-    },
-    {
-        name: "actions",
-        label: "عملیات",
-        type: "action",
-    },
-];
-const actions = [
-    { title: "نمایش", route: "admin.creators.show", color: "blue" },
-    { title: "ویرایش", route: "admin.creators.edit", color: "orange" },
-    { title: "حذف", route: "admin.creators.destroy", color: "red" },
-];
+
 </script>

@@ -61,7 +61,6 @@ export default {
 </script>
 <script setup>
 import { ref } from "vue";
-import { Link } from "@inertiajs/inertia-vue3";
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 

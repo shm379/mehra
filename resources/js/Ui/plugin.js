@@ -1,5 +1,8 @@
 import { UiRow, UiCol } from "@/Ui/js/base/grid.js";
 import { UiLabel } from "@/Ui/js/base/form";
+import { Link } from "@inertiajs/inertia-vue3";
+import plugin from "@tailwindcss/typography";
+
 const mehraUiAdminPanelPlugin = {
     install(app, options) {
         /*
@@ -13,6 +16,7 @@ const mehraUiAdminPanelPlugin = {
          */
         app.component("UiLabel", UiLabel);
 
+        app.component("Link", Link);
         /*
          * =========================
          * Other Ui Components auto import
@@ -69,6 +73,33 @@ const mehraUiAdminPanelPlugin = {
 
             // Register component on this Vue instance
             app.component(componentName, definition.default);
+        });
+
+        /*
+         * ============
+         * Composition Auto import
+         * ============
+         */
+        // load all forms from compositions Directory
+        const compositions = import.meta.globEager("../compositions/**/*.js");
+        Object.entries(compositions).forEach(([path, definition]) => {
+            const compositionFunction =
+                "use" +
+                path
+                    .split("/")
+                    .splice(2)
+                    .reduce(
+                        (accumulator, currentValue) =>
+                            accumulator + currentValue,
+                        ""
+                    )
+                    .replace("..", "")
+                    .replace("..", "")
+                    .replace(".js", "");
+
+            definition.default();
+            // Register component on this Vue instance
+            // app.component(compositionFunction, definition.default);
         });
 
         app.config.globalProperties.mehra_ui_admin_version = "0.0.1";
