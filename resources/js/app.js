@@ -7,6 +7,7 @@ import { InertiaProgress } from "@inertiajs/progress";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 import Vue3PersianDatetimePicker from "vue3-persian-datetime-picker";
+import mehraUiAdminPanelPlugin from "@/Ui/plugin";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
@@ -35,6 +36,7 @@ createInertiaApp({
                 },
             })
             .use(ZiggyVue, Ziggy)
+            .use(mehraUiAdminPanelPlugin)
             .mount(el);
     },
 });
