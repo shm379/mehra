@@ -30,7 +30,7 @@
             {{ $page.props.flash.success }}
         </div>
         <div class="py-12">
-            <datagrid :columns="columns" :data="awards" :actions="actions" baseRoute="admin.awards.index" />
+            <ui-datagrid :columns="columns" :data="awards" :actions="actions" baseRoute="admin.awards.index" />
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import datagrid from "@/Components/Datagrid.vue";
+
 
 const props = defineProps({
     awards: Array,

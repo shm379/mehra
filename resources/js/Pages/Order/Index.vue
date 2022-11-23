@@ -19,7 +19,7 @@
             </a>
         </nav>
         <div class="py-12">
-            <datagrid :columns="columns" :data="orders" :actions="actions" baseRoute="admin.orders.index" />
+            <ui-datagrid :columns="columns" :data="orders" :actions="actions" baseRoute="admin.orders.index" />
         </div>
     </div>
 </template>
@@ -32,7 +32,7 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import datagrid from "@/Components/Datagrid.vue";
+
 
 const props = defineProps({
     orders: Array,

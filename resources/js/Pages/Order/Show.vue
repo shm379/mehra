@@ -27,23 +27,10 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import UiPageHeader from "@/Components/Ui/Page/Header.vue";
-import UiPageHeaderAction from "@/Components/Ui/Page/HeaderAction.vue";
-import UiPageHeaderAnchors from "@/Components/Ui/Page/HeaderAnchors.vue";
-import UiFormOrderStatus from "@/Components/Ui/Form/Order/Status.vue";
-import UiBox from "@/Components/Ui/Page/Box.vue";
 
 export default {
     layout: AdminLayout,
-    components: {
-        UiPageHeader,
-        UiPageHeaderAction,
-        UiPageHeaderAnchors,
-        UiRow,
-        UiCol,
-        UiBox,
-        UiFormOrderStatus
-    },
+
 };
 </script>
 

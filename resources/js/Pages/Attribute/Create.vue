@@ -30,25 +30,9 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import UiPageHeader from "@/Components/Ui/Page/Header.vue";
-import UiPageHeaderAction from "@/Components/Ui/Page/HeaderAction.vue";
-import UiPageHeaderAnchors from "@/Components/Ui/Page/HeaderAnchors.vue";
-import UiFormAttributeInfo from "@/Components/Ui/Form/AttributeInfo.vue";
-import UiFormAttributeSpecefication from "@/Components/Ui/Form/AttributeSpecification.vue";
-import UiBox from "@/Components/Ui/Page/Box.vue";
-import Status from "@/Components/Status.vue"
 
 export default {
     layout: AdminLayout,
-    components: {
-        UiPageHeader,
-        UiPageHeaderAction,
-        UiPageHeaderAnchors,
-        UiBox,
-        Status,
-        UiFormAttributeSpecefication,
-        UiFormAttributeInfo
-    },
 };
 </script>
 

@@ -24,7 +24,7 @@
       </ui-box>
     </ui-col>
     <ui-col>
-      <ui-box title="وضعیت"> <Status v-model="form.status"></Status></ui-box>
+      <ui-box title="وضعیت"> <UiStatus v-model="form.status"></UiStatus></ui-box>
     </ui-col>
   </ui-row>
 </template>
@@ -32,31 +32,9 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import UiPageHeader from "@/Components/Ui/Page/Header.vue";
-import UiPageHeaderAction from "@/Components/Ui/Page/HeaderAction.vue";
-import UiPageHeaderAnchors from "@/Components/Ui/Page/HeaderAnchors.vue";
-import UiFormCategoryInfo from "@/Components/Ui/Form/CategoryInfo.vue";
-import UiFormCategoryGallery from "@/Components/Ui/Form/CategoryGallery.vue";
-import UiFormCategoryCategory from "@/Components/Ui/Form/CategoryCategory.vue";
-import UiFormCategoryTemplate from "@/Components/Ui/Form/CategoryTemplate.vue";
-import UiFormCategoryTemplateSetting from "@/Components/Ui/Form/CategoryTemplateSetting.vue";
-import UiBox from "@/Components/Ui/Page/Box.vue";
-import Status from "@/Components/Status.vue"
 
 export default {
   layout: AdminLayout,
-  components: {
-    UiPageHeader,
-    UiPageHeaderAction,
-    UiPageHeaderAnchors,
-    UiBox,
-    UiFormCategoryInfo,
-    UiFormCategoryCategory,
-    UiFormCategoryGallery,
-    UiFormCategoryTemplate,
-    UiFormCategoryTemplateSetting,
-    Status
-  },
 };
 </script>
 

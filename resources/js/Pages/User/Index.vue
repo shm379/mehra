@@ -19,7 +19,7 @@
             </a>
         </nav>
         <div class="py-12">
-            <datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
+            <ui-datagrid :columns="columns" :data="users" :actions="actions" baseRoute="admin.users.index">
                 <template v-slot:row-cell-email_verified_at="{ item }">
                     <div class="py-2">
                         <span v-if="!item" class="text-xs bg-red-100 text-red-500 rounded-lg p-1">تایید نشده</span>
@@ -39,7 +39,7 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import datagrid from "@/Components/Datagrid.vue";
+
 import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 

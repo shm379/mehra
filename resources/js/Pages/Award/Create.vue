@@ -113,15 +113,15 @@
         <div class="p-5 rounded-xl bg-slate-100 grid">
           <h1 class="font-black text-neutral-600">تصاویر</h1>
           <div class="flex flex-row justify-start items-start gap-4 mt-5">
-            <Upload v-model="form.media.image"></Upload>
-            <Upload v-model="form.media.cover"></Upload>
+            <ui-upload v-model="form.media.image"></ui-upload>
+            <ui-upload v-model="form.media.cover"></ui-upload>
           </div>
         </div>
       </div>
       <div class="w-full lg:w-1/4 p-5 rounded-xl bg-slate-100">
         <h3>ذخیره</h3>
         <div class="flex flex-col gap-4">
-          <Status v-model="form.is_active" />
+          <ui-status v-model="form.is_active" />
         </div>
         <div>
           <button
@@ -139,8 +139,6 @@
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import Status from "@/Components/Status.vue";
-import Upload from "@/Components/Upload.vue";
 export default {
   layout: AdminLayout,
 };

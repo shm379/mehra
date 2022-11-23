@@ -18,7 +18,7 @@
                 لیست نظرات
             </a>
         </nav>
-        <datagrid :columns="columns" :data="comments" :actions="actions" baseRoute="admin.comments.index">
+        <ui-datagrid :columns="columns" :data="comments" :actions="actions" baseRoute="admin.comments.index">
             <template v-slot:row-cell-points="{ item }">
                 <div class="py-2">
                     <ul>
@@ -47,7 +47,7 @@ export default {
 </script>
 <script setup>
 import { ref } from "vue";
-import Datagrid from "@/Components/Datagrid.vue";
+
 const props = defineProps({
     comments: Array,
 });

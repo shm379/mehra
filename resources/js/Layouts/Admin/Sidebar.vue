@@ -59,7 +59,7 @@
                     >کاربران</span
                     >
                 </Link>
-                <AccordionItem>
+                <ui-accordion-item>
                     <template #header>
                         <Link
                             as="a"
@@ -277,7 +277,7 @@
                             </Link>
                         </div>
                     </template>
-                </AccordionItem>
+                </ui-accordion-item>
                 <Link
                     as="a"
                     :href="route('admin.orders.index')"
@@ -429,7 +429,6 @@
 <script setup>
 import { ref } from "vue";
 import { Link, usePage } from "@inertiajs/inertia-vue3";
-import AccordionItem from "@/Components/Ui/Accordion/Item.vue";
 
 const sidebar = ref(true);
 const submenu = ref(true);

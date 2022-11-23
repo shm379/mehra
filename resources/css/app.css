@@ -2,8 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@components{
+@layer base {
+}
+@layer components{
+    .input {
+        @apply bg-gray-200/50 rounded-xl outline-none border-none w-full p-3  shadow-inner text-gray-500;
+    }
+
     .label {
-        @apply text-sm text-slate-600 mb-2 block;
+        @apply text-sm text-gray-600 mb-2 block;
+    }
+
+    .input-wrapper {
+        @apply flex flex-col gap-4 border-none bg-transparent
+    }
+    .caption-error {
+        @apply text-xs text-red-600
     }
 }
