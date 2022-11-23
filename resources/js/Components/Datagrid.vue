@@ -18,9 +18,9 @@
         </tr>
       </thead>
       <tbody class="border rounded-lg">
-        <tr v-for="(row, j) in data.data" :key="j" class="border-b">
-          <th v-if="bulk"><input type="checkbox" v-model="selected[j]" /></th>
-          <td v-for="(item, k) in row" :key="k" class="p-2 rounded-lg text-right py-2">
+        <tr v-for="(row, j) in data.data" :key="j" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 py-2">
+          <th v-if="bulk"><input type="checkbox" v-model="selected[j]" class="py-4 px-6"/></th>
+          <td v-for="(item, k) in row" :key="k" class="p-2 rounded-lg text-right py-4 px-6">
             <span v-if="slots[`row-cell-${k}`]"
               ><slot
                 :row="row"
@@ -32,10 +32,10 @@
             ></span>
             <span v-else v-html="item"></span>
           </td>
-          <td v-if="slots['row-cell-action']">
+          <td v-if="slots['row-cell-action']" class="py-4 px-6">
             <slot :row="row" :item="item" :field="k" :data="data.data" :name="`row-cell-action`"></slot>
           </td>
-          <td v-else  class="flex pt-2 flex-row items-center justfiy-between gap-1">
+          <td v-else  class="flex pt-2 flex-row items-center justfiy-between gap-1 py-4">
             <Link
               as="a"
               v-for="(action, l) in actions"
@@ -93,7 +93,9 @@ const props = defineProps({
   baseRoute: String,
   bulk: Boolean,
 });
+const emit=defineEmits(["sort"])
 const search = ref({});
+const sort = ref({})
 const selected = ref([]);
 const perPage = ref(props.data.per_page);
 const slots = useSlots();
@@ -101,7 +103,13 @@ watch(perPage, (newValue, oldValue) => {
   console.log(newValue);
 });
 function log(v) {
-    console.log(v)
+    if(v.order == 'none')
+        sort.value = ''
+    else
+        if(v.order == "asc")
+            sort.value = "-"+v.col.field
+        else sort.value =  v.col.field
+emit("sort", sort.value)
 }
 </script>
 

@@ -19,12 +19,13 @@
             </a>
         </nav>
         <div class="py-12">
-            <datagrid :columns="columns" :data="attributes" :actions="actions" baseRoute="admin.attributes.index" />
+            <datagrid @sort="onSort" :columns="columns" :data="attributes" :actions="actions" baseRoute="admin.attributes.index" />
         </div>
     </div>
 </template>
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+import { Inertia } from "@inertiajs/inertia";
 export default {
     layout: AdminLayout,
 };
@@ -33,7 +34,7 @@ export default {
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import datagrid from "@/Components/Datagrid.vue";
-
+const sort = ref(null)
 const props = defineProps({
     attributes: Array,
 });
@@ -67,4 +68,5 @@ const actions = [
     { title: "افزودن مقدار", route: "admin.attributes.values.create", color: "orange" },
     { title: "حذف ویژگی", route: "admin.attributes.destroy", color: "red" },
 ];
+
 </script>
