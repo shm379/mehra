@@ -21,6 +21,7 @@ export default defineConfig({
         alias: {
             "@": "/resources/js",
             "~": "/resources/js/Forms",
+            module: "/resources/js/Modules",
         },
     },
 });

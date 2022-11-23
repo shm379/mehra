@@ -45,19 +45,9 @@ w    </ui-col>
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import UiFormCreatorInfo from "@/Components/Ui/Form/Creator/Info.vue";
-import UiFormCreatorAward from "@/Components/Ui/Form/Creator/Award.vue";
-import UiFormCreatorGallery from "@/Components/Ui/Form/Creator/Gallery.vue";
+import sections from "module/Creator/create.js"
 export default {
   layout: AdminLayout,
-  components: {
-    UiPageHeader,
-    UiPageHeaderAction,
-    UiPageHeaderAnchors,
-    UiFormCreatorInfo,
-    UiFormCreatorAward,
-    UiFormCreatorGallery,
-  },
 };
 </script>
 
@@ -65,20 +55,7 @@ export default {
 const props = defineProps({
   templates: Array,
 });
-const pageSections = [
-  {
-    title: "مشخصات ",
-    anchor: "creator-info",
-  },
-  {
-    title: "تصاویر",
-    anchor: "creator-gallery",
-  },
-  {
-    title: "افزودن  جوایز و افتخارات",
-    anchor: "creator-award",
-  },
-];
+
 const form = useForm({
   name: "",
   first_name:"",
