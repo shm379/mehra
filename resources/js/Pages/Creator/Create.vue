@@ -9,13 +9,13 @@
   </ui-page-header>
   <ui-row>
     <ui-col full>
-      <ui-page-header-anchors v-model="pageSections"></ui-page-header-anchors>
+      <ui-page-header-anchors v-model="sections"></ui-page-header-anchors>
     </ui-col>
   </ui-row>
   <ui-row>
     <ui-col wide>
       <ui-box
-        v-for="(item, i) in pageSections"
+        v-for="(item, i) in sections"
         :key="i"
         :title="item.title"
         :id="item.anchor"
@@ -38,13 +38,14 @@
           ذخیره
         </button>
       </ui-box>
-w    </ui-col>
+    </ui-col>
   </ui-row>
 </template>
 
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
+
 import sections from "module/Creator/create.js"
 export default {
   layout: AdminLayout,
