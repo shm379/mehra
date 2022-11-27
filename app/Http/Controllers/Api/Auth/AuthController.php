@@ -44,7 +44,7 @@ class AuthController
                 $user = $this->registerUser($mobile);
             }
             $code = \App\Services\OtpService::generateOtp($mobile)->code;
-            if(config('app.env')!=='local')
+            if(config('app.env')=='production')
                 $user->notify(new SendVerifySMS($code));
             // generate token
             $temporaryToken = $user->createToken('web',['verify-otp']);
@@ -75,7 +75,7 @@ class AuthController
             return response()->json(['success'=>false,'message'=>'خطایی در تایید کد پیش آمده است'], 500);
         }
 
-        return response()->json(['success'=>true,'token'=>$token->plainTextToken,'refresh_token'=>route('refreshToken'),'user'=>$user]);
+        return response()->json(['success'=>true,'token'=>$token->plainTextToken,'refresh_token'=>route('refresh-token'),'user'=>$user]);
     }
 
     public function refreshToken(Request $request)

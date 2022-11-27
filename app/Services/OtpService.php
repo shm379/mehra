@@ -43,7 +43,7 @@ class OtpService
         $user = User::query()->where('mobile',$mobile)->first();
         $otpGeneratedCode = Otp::query()
             ->where('user_id',$user->id)
-            ->where('expired_at','<',now());
+            ->where('expired_at','>',now());
         if(!$otpGeneratedCode->exists()){
             return false;
         } else {

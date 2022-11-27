@@ -39,7 +39,7 @@ Route::prefix('/v1')->group(function () {
 Route::prefix('/v1')->controller(\App\Http\Controllers\Api\Auth\AuthController::class)->group(function () {
     Route::middleware(['throttle:OTP'])->post('/otp', 'sendOTP')->name('send-otp');
     Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/verify', 'verifyOTP')->name('verify-otp');
-    Route::middleware(['auth:sanctum','abilities:view-user'])->post('/refresh', 'refreshToken')->name('refreshToken')->name('refresh-token');
+    Route::middleware(['auth:sanctum','abilities:view-user'])->post('/refresh', 'refreshToken')->name('refresh-token');
 });
 /*
 * V1 ADMIN INERTIA CONTROLLER

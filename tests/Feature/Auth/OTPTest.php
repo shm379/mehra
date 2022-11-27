@@ -7,6 +7,7 @@ use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class OTPTest extends TestCase
@@ -49,7 +50,6 @@ class OTPTest extends TestCase
                 ->post(route('verify-otp'),[
                     'code'=> '899as88'
                 ]);
-
         if($response->status()!==200){
             $this->assertTrue(true);
         } else {
@@ -59,7 +59,6 @@ class OTPTest extends TestCase
 
     public function test_can_verify_mobile_with_success_code()
     {
-
         $mobile = '+989391727950';
         $response = $this->post(route('send-otp'),[
             'mobile'=> $mobile
@@ -68,18 +67,14 @@ class OTPTest extends TestCase
         $user = User::query()->where('mobile',$mobile)->first();
         $token = $response->collect('temporary_token')->first();
         $otp_code = (string)Otp::query()->first()->code;
-        $response =
-            $this
+        $response = $this
                 ->withHeader('Authorization', 'Bearer ' . $token)
                 ->post(route('verify-otp'),[
                     'code'=>$otp_code
                 ]);
+        $this->assertTrue($response->status()==200);
+        $this->assertFalse($response->status()!=200);
 
-        if($response->status()==200){
-            $this->assertTrue(true);
-        } else {
-            $this->assertFalse(true);
-        }
     }
 
 }
