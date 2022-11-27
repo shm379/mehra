@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum','abilities:view-user'])->get('/v1/me', function (Request $request) {
     return $request->user();
 });
 /*
  * V1 API LOGGED IN ROUTES
  */
 Route::prefix('/v1')->middleware(['auth:sanctum'])->group(function () {
+
     Route::get('/cart', [\App\Http\Controllers\Api\Global\CartController::class, 'content']);
     Route::post('/cart/add-item', [\App\Http\Controllers\Api\Global\CartController::class, 'addItem']);
 });
@@ -36,9 +37,14 @@ Route::prefix('/v1')->group(function () {
 * V1 API AUTH CONTROLLER
 */
 Route::prefix('/v1')->controller(\App\Http\Controllers\Api\Auth\AuthController::class)->group(function () {
-    Route::middleware(['throttle:OTP'])->post('/send-otp', 'sendOTP');
-    Route::post('/validate-otp', 'verifyOTPAndLogin');
-    Route::post('/check-exists', 'checkExists');
+    Route::middleware(['throttle:OTP'])->post('/otp', 'sendOTP')->name('send-otp');
+    Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/verify', 'verifyOTP')->name('verify-otp');
+    Route::middleware(['auth:sanctum','abilities:view-user'])->post('/refresh', 'refreshToken')->name('refreshToken')->name('refresh-token');
+});
+/*
+* V1 ADMIN INERTIA CONTROLLER
+*/
+Route::prefix('/v1')->group(function (){
     Route::get('/ac/producers/publishers/{q}', [AutocompleteController::class, 'publishers'])->name('ac.publishers');
     Route::get('/ac/producers/brands/{q}', [AutocompleteController::class, 'brands']);
     Route::get('/ac/producers/producers/{q}', [AutocompleteController::class, 'producers']);

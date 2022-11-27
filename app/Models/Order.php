@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tartan\Larapay\Payable;
 
 class Order extends Model
 {
     use HasFactory;
+    use Payable;
+    protected $appends = ['is_cart'];
     protected $guarded = [];
 
     public function user()
@@ -28,5 +32,12 @@ class Order extends Model
     public function notes()
     {
         return $this->hasMany(OrderNote::class);
+    }
+
+    public function getIsCart()
+    {
+        if($this->attributes['type']==OrderStatus::CARD)
+            return true;
+        return false;
     }
 }

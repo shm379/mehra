@@ -48,13 +48,6 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import UiFormProductStructure from "@/Components/Ui/Field/ProductStructure.vue";
-import UiFormProductType from "@/Components/Ui/Field/ProductType.vue";
-import UiFieldBookType from "@/Components/Ui/Field/BookType.vue";
-import UiFormBookInfo from "@/Components/Ui/Form/BookInfo.vue";
-import UiFormBookCategory from "@/Components/Ui/Form/BookCategory.vue";
-import UiFormBookAttribute from "@/Components/Ui/Form/BookAttribute.vue";
-import UiFormBookAward from "@/Components/Ui/Form/BookAward.vue";
 
 export default {
   layout: AdminLayout,

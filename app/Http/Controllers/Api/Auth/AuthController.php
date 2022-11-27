@@ -3,72 +3,88 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Helpers\Helpers;
-use App\Http\Requests\Api\SendOTPRequest;
+use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\Api\Auth\VerifyOtpRequest;
 use App\Models\User;
-use Fouladgar\OTP\Exceptions\InvalidOTPTokenException;
-use Fouladgar\OTP\OTPBroker as OTPService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
+use App\Notifications\SendVerifySMS;
+use App\Services\OtpService;
+use Illuminate\Support\Facades\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 use Throwable;
 
 class AuthController
 {
-    public function __construct(private OTPService $OTPService)
+
+    public function checkExists($mobile)
     {
+         /** @var User $user */
+         $mobile_normalized = Helpers::mobileNumberNormalize($mobile);
+         $user = User::query()->where('mobile',$mobile_normalized);
+         if(!$user->exists()){
+             return false;
+         }
+         return $user->first();
     }
 
-    public function checkExists(Request $request)
+    public function registerUser($mobile)
     {
-            /** @var User $user */
-            $mobile = Helpers::mobileNumberNormalize($request->get('mobile'));
-            $user = User::query()->whereMobile($mobile)->exists();
-            if(!$user){
-                return response()->json(['message'=>'کاربر در سیستم وجود ندارد'],404);
-            }
-            return response()->json(['message'=>'کاربر در سیستم موجود است']);
+        return User::query()->create([
+            'mobile'=> $mobile
+        ]);
     }
 
-    public function sendOTP(SendOTPRequest $request)
+    public function sendOTP(LoginRequest $request)
     {
         try {
-            /** @var User $user */
+            /** @var  $user User */
             $mobile = Helpers::mobileNumberNormalize($request->get('mobile'));
-            $user = $this->OTPService->send($mobile);
+
+            $user = $this->checkExists($mobile);
+            if(!$user){
+                $user = $this->registerUser($mobile);
+            }
+            $code = \App\Services\OtpService::generateOtp($mobile)->code;
+            if(config('app.env')!=='local')
+                $user->notify(new SendVerifySMS($code));
+            // generate token
+            $temporaryToken = $user->createToken('web',['verify-otp']);
+
         } catch (Throwable $ex) {
             // or prepare and return a view.
-            return response()->json(['message'=>'An unexpected error occurred.'], 500);
+            return response()->json(['success'=>false,'message'=>'ارسال کد با مشکل مواجه شده است'], 500);
         }
 
-        return response()->json(['message'=>'A token has been sent to:'. $user->mobile]);
+        return response()->json(['result'=>true,'temporary_token'=>$temporaryToken->plainTextToken]);
     }
 
-    public function verifyOTPAndLogin(Request $request)
+    public function verifyOTP(VerifyOtpRequest $request)
     {
         try {
-            /** @var User $user */
-            $mobile = Helpers::mobileNumberNormalize($request->get('mobile'));
-            if($request->has('password')){
-                $user = User::query()->whereMobile($mobile)->first();
-                if($user && Hash::check($request->getPassword(),$user->password)){
-                    Auth::guard('api')->attempt([
-                        'mobile'=> $mobile,
-                        'password'=> $request->get('password')
-                    ]);
-                    $user = Auth::guard('api')->user();
-                }
+            /** @var PersonalAccessToken personalAccessToken */
+            $temporaryToken = PersonalAccessToken::findToken($request->bearerToken());
+            /** @var mixed $user */
+            $user = $temporaryToken->tokenable;
+            if(OtpService::verifyOtp($user->mobile,(int)$request->get('code'))){
+                $token = $user->createToken('web',['view-user']);
             } else {
-                $user = $this->OTPService->validate($mobile, $request->get('token'));
+                return response()->json(['success'=>false,'message'=>'کد تایید اشتباه است'], 500);
             }
-            $token = $user->createToken('app');
-        } catch (InvalidOTPTokenException $exception){
+        } catch (\App\Exceptions\InvalidOTPTokenException $exception){
             return response()->json(['error'=>$exception->getMessage()],$exception->getCode());
         } catch (Throwable $ex) {
-            return response()->json(['message'=>'An unexpected error occurred.'], 500);
+            return response()->json(['success'=>false,'message'=>'خطایی در تایید کد پیش آمده است'], 500);
         }
 
-        return response()->json(['message'=>'Logged in successfully.','token'=>$token->plainTextToken]);
+        return response()->json(['success'=>true,'token'=>$token->plainTextToken,'refresh_token'=>route('refreshToken'),'user'=>$user]);
+    }
+
+    public function refreshToken(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'success'=>true,
+            'access_token' => $request->user()->createToken('web', ['view-user'])->plainTextToken,
+        ]);
     }
 }

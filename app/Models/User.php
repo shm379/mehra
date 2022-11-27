@@ -15,14 +15,13 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements OTPNotifiable, HasMedia
+class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
     use HasPermissions;
     use HasRoles;
-    use HasOTPNotify;
     use HasMediaTrait;
     /**
      * The attributes that are mass assignable.
@@ -64,9 +63,14 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
      */
     protected $appends = [
         'name',
-        'balance',
     ];
 
+
+    public function verifyMobile()
+    {
+        $this->mobile_verified_at = now();
+        $this->save();
+    }
     public function getNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
@@ -156,5 +160,14 @@ class User extends Authenticatable implements OTPNotifiable, HasMedia
             return $builder->mergeWheres($join_query->wheres, $join_query->bindings);
         });
         return $query;
+    }
+
+
+    /*
+     * for KAVENEGAR notification system
+     */
+    public function routeNotificationForKavenegar($driver, $notification = null)
+    {
+        return $this->mobile;
     }
 }
