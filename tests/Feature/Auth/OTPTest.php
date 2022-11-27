@@ -14,7 +14,7 @@ class OTPTest extends TestCase
 {
     use RefreshDatabase;
     use WithoutMiddleware;
-    public function test_can_login_with_invalid_mobile()
+    public function test_cannot_login_with_invalid_mobile()
     {
         $response = $this->post(route('send-otp'),[
             'mobile'=> '893891y89289198'
@@ -38,7 +38,7 @@ class OTPTest extends TestCase
 
     }
 
-    public function test_can_verify_mobile_with_invalid_code()
+    public function test_cannot_verify_mobile_with_invalid_code()
     {
         $response = $this->post(route('send-otp'),[
             'mobile'=> '+989391727950'
