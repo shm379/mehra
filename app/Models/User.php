@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\UserFollowType;
 use App\Services\Media\HasMediaTrait;
+use App\Traits\MustVerifyMobile;
 use Fouladgar\OTP\Concerns\HasOTPNotify;
 use Fouladgar\OTP\Contracts\OTPNotifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements HasMedia
     use HasPermissions;
     use HasRoles;
     use HasMediaTrait;
+    use MustVerifyMobile;
     /**
      * The attributes that are mass assignable.
      *
@@ -65,12 +67,6 @@ class User extends Authenticatable implements HasMedia
         'name',
     ];
 
-
-    public function verifyMobile()
-    {
-        $this->mobile_verified_at = now();
-        $this->save();
-    }
     public function getNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];

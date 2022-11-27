@@ -1,5 +1,7 @@
 <?php
 namespace App\Traits;
+
+use App\Helpers\Helpers;
 use App\Notifications\SendVerifySMS;
 
 trait MustVerifyMobile {
@@ -15,8 +17,9 @@ trait MustVerifyMobile {
         ])->save();
     }
 
-    public function sendMobileVerificationNotification(): void
+    public function sendMobileVerificationNotification($code): void
     {
-        $this->notify(new SendVerifySMS);
+        $mobile = Helpers::mobileNumberNormalize($this->mobile);
+        $this->notify(new SendVerifySMS($code));
     }
 }

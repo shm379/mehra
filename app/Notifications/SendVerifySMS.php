@@ -23,18 +23,12 @@ class SendVerifySMS extends KavenegarBaseNotification
      * Get the mail representation of the notification.
      *
      * @param  mixed  $notifiable
-     * @return false
+     * @return KavenegarMessage
      */
     public function toKavenegar($notifiable)
     {
         $mobile = Helpers::mobileNumberNormalize($notifiable->mobile);
-        try {
-        } catch (InvalidOTPTokenException $exception){
-
-        }
         return (new KavenegarMessage())
                 ->verifyLookup('login',[$this->code]);
-
-
     }
 }

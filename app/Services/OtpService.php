@@ -28,11 +28,12 @@ class OtpService
             return $verificationCode;
         }
 
+        $code = rand(103246, 999999);
 
         // Create a New OTP
         return Otp::query()->create([
             'user_id' => $user->id,
-            'code' => rand(103246, 999999),
+            'code' => $code,
             'expired_at' => Carbon::now()->addMinutes(1)
         ]);
     }
@@ -49,7 +50,9 @@ class OtpService
         } else {
             if($otpGeneratedCode->first()->code==$code){
                 $otpGeneratedCode->delete();
-                $user->verifyMobile();
+                if(!$user->hasVerifiedMobile())
+                    $user->markMobileAsVerified();
+
                 return true;
             }
         }
