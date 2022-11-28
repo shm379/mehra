@@ -19,22 +19,14 @@ class OTPTest extends TestCase
         $response = $this->post(route('send-otp'),[
             'mobile'=> '893891y89289198'
         ]);
-        if($response->status()==500){
-            $this->assertTrue(true);
-        } else {
-            $this->assertFalse(true);
-        }
+        $this->assertTrue(!$response->json('success'));
     }
     public function test_can_login_with_existing_mobile()
     {
         $response = $this->post(route('send-otp'),[
             'mobile'=> '+989391727950'
         ]);
-        if($response->status()==200){
-            $this->assertTrue(true);
-        } else {
-            $this->assertFalse(true);
-        }
+        $this->assertTrue($response->json('success'));
 
     }
 
@@ -50,11 +42,7 @@ class OTPTest extends TestCase
                 ->post(route('verify-otp'),[
                     'code'=> '899as88'
                 ]);
-        if($response->status()!==200){
-            $this->assertTrue(true);
-        } else {
-            $this->assertFalse(true);
-        }
+        $this->assertTrue(!$response->json('success'));
     }
 
     public function test_can_verify_mobile_with_success_code()
@@ -72,8 +60,7 @@ class OTPTest extends TestCase
                 ->post(route('verify-otp'),[
                     'code'=>$otp_code
                 ]);
-        $this->assertTrue($response->status()==200);
-        $this->assertFalse($response->status()!=200);
+        $this->assertTrue($response->json('success'));
 
     }
 

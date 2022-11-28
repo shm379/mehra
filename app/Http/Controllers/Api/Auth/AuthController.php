@@ -54,7 +54,7 @@ class AuthController
             return response()->json(['success'=>false,'message'=>'ارسال کد با مشکل مواجه شده است'], 500);
         }
 
-        return response()->json(['result'=>true,'temporary_token'=>$temporaryToken->plainTextToken]);
+        return response()->json(['success'=>true,'temporary_token'=>$temporaryToken->plainTextToken]);
     }
 
     public function verifyOTP(VerifyOtpRequest $request)

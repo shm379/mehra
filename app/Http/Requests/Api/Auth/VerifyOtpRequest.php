@@ -47,7 +47,7 @@ class VerifyOtpRequest extends FormRequest
 
             'data'      => $validator->errors()
 
-        ],500));
+        ]));
 
     }
 }

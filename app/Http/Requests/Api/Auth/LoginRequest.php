@@ -105,7 +105,7 @@ class LoginRequest extends FormRequest
 
             'data'      => $validator->errors()
 
-        ],500));
+        ]));
 
     }
 }
