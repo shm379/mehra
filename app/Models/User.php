@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use App\Enums\UserFollowType;
 use App\Services\Media\HasMediaTrait;
 use App\Traits\MustVerifyMobile;
@@ -136,6 +137,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Comment::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function wallet()
     {
         return $this->hasOne(Wallet::class);
@@ -144,6 +150,26 @@ class User extends Authenticatable implements HasMedia
     public function getBalanceAttribute() : int
     {
         return $this->wallet->balance;
+    }
+
+    public function scopeGetOrders($query,$user_id): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        $order = $this->orders()->with('items')->find($user_id);
+        $order->total_price = $order->items()->sum('total_price');
+        $order->total_price_without_discount = $order->items()->sum('total_price_without_discount');
+        return $this->orders()->with('items');
+    }
+    public function scopeGetCart($query,$user_id)
+    {
+        $order = $this->find($user_id)->orders()->where('status',OrderStatus::CART)->with('items');
+        if(!$order->exists()){
+            return $query->where('id', null);
+        }
+        $order = $order->first();
+        $order->total_price = $order->items()->sum('total_price',0);
+        $order->total_price_without_discount = $order->items()->sum('total_price_without_discount');
+        $order->update();
+        return $order;
     }
 
     /**

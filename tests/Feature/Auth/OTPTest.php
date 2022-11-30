@@ -16,30 +16,29 @@ class OTPTest extends TestCase
     use WithoutMiddleware;
     public function test_cannot_login_with_invalid_mobile()
     {
-        $response = $this->post(route('send-otp'),[
+        $response = $this->post(route('api.v1.send-otp'),[
             'mobile'=> '893891y89289198'
         ]);
         $this->assertTrue(!$response->json('success'));
     }
     public function test_can_login_with_existing_mobile()
     {
-        $response = $this->post(route('send-otp'),[
+        $response = $this->post(route('api.v1.send-otp'),[
             'mobile'=> '+989391727950'
         ]);
         $this->assertTrue($response->json('success'));
-
     }
 
     public function test_cannot_verify_mobile_with_invalid_code()
     {
-        $response = $this->post(route('send-otp'),[
+        $response = $this->post(route('api.v1.send-otp'),[
             'mobile'=> '+989391727950'
         ]);
         $token = $response->collect('temporary_token')->first();
         $response =
             $this
                 ->withHeader('Authorization', 'Bearer ' . $token)
-                ->post(route('verify-otp'),[
+                ->post(route('api.v1.verify-otp'),[
                     'code'=> '899as88'
                 ]);
         $this->assertTrue(!$response->json('success'));
@@ -48,7 +47,7 @@ class OTPTest extends TestCase
     public function test_can_verify_mobile_with_success_code()
     {
         $mobile = '+989391727950';
-        $response = $this->post(route('send-otp'),[
+        $response = $this->post(route('api.v1.send-otp'),[
             'mobile'=> $mobile
         ]);
 
@@ -57,7 +56,7 @@ class OTPTest extends TestCase
         $otp_code = (string)Otp::query()->first()->code;
         $response = $this
                 ->withHeader('Authorization', 'Bearer ' . $token)
-                ->post(route('verify-otp'),[
+                ->post(route('api.v1.verify-otp'),[
                     'code'=>$otp_code
                 ]);
         $this->assertTrue($response->json('success'));

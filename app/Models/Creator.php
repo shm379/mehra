@@ -2,17 +2,44 @@
 
 namespace App\Models;
 
+use App\Services\Media\HasMediaTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 
-class Creator extends Model
+class Creator extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory , HasMediaTrait;
     protected $guarded = [];
 
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    protected static function getValidCollections(): array
+    {
+        return [
+            'avatar',
+        ];
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('avatar')->singleFile();
+    }
+
+    public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
+    {
+//        $conversion = $this->addMediaConversion('thumbnail');
+//
+//        $crop = $media->getCustomProperty('crop');
+//
+//        if (!empty($crop)) {
+//            $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
+//        }
+//
+//        $conversion->nonQueued()->performOnCollections('main_image');
     }
 
     public function getNameAttribute()

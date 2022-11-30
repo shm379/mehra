@@ -51,7 +51,7 @@ class AuthController
 
         } catch (Throwable $ex) {
             // or prepare and return a view.
-            return response()->json(['success'=>false,'message'=>'ارسال کد با مشکل مواجه شده است'], 500);
+            return response()->json(['success'=>false,'message'=>'ارسال کد با مشکل مواجه شده است']);
         }
 
         return response()->json(['success'=>true,'temporary_token'=>$temporaryToken->plainTextToken]);
@@ -67,15 +67,15 @@ class AuthController
             if(OtpService::verifyOtp($user->mobile,(int)$request->get('code'))){
                 $token = $user->createToken('web',['view-user']);
             } else {
-                return response()->json(['success'=>false,'message'=>'کد تایید اشتباه است'], 500);
+                return response()->json(['success'=>false,'message'=>'کد تایید اشتباه است']);
             }
         } catch (\App\Exceptions\InvalidOTPTokenException $exception){
             return response()->json(['error'=>$exception->getMessage()],$exception->getCode());
         } catch (Throwable $ex) {
-            return response()->json(['success'=>false,'message'=>'خطایی در تایید کد پیش آمده است'], 500);
+            return response()->json(['success'=>false,'message'=>'خطایی در تایید کد پیش آمده است']);
         }
 
-        return response()->json(['success'=>true,'token'=>$token->plainTextToken,'refresh_token'=>route('refresh-token'),'user'=>$user]);
+        return response()->json(['success'=>true,'token'=>$token->plainTextToken,'refresh_token'=>route('api.v1.refresh-token'),'user'=>$user]);
     }
 
     public function refreshToken(Request $request)

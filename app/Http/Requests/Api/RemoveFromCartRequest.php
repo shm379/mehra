@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddToCartRequest extends FormRequest
+class RemoveFromCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,6 @@ class AddToCartRequest extends FormRequest
         return [
             'id'=>'required|exists:App\Models\Product,id',
             'quantity'=>'required',
-            'extra_info'=>'nullable'
         ];
     }
 }

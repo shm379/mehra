@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\ProductType;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartResource extends JsonResource
+class BookVolumeResource extends BookResource
 {
     /**
      * Transform the resource into an array.
@@ -12,13 +13,11 @@ class CartResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($items)
+    public function toArray($request)
     {
         return [
-            'items'=> $this->items,
-            'total_items'=> count($this->items),
-            'total_price'=>0,
-            'post_price'=> 0
+            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'active'=> $this->is_active_volume,
         ];
     }
 }

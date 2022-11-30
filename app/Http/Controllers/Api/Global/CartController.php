@@ -4,22 +4,25 @@ namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
+use App\Http\Requests\Api\RemoveFromCartRequest;
+use App\Http\Resources\CartResource;
 use App\Models\Product;
-use Jackiedo\Cart\Cart;
+use App\Services\CartService;
 
 class CartController extends Controller {
 
-    protected $cart;
-
-    public function __construct(Cart $cart)
+    protected CartService $cart;
+    public function __construct(CartService $cart)
     {
         $this->cart = $cart;
-        $this->cart->name('cart')->useForCommercial(true)->hasNoTaxes();
     }
 
-    public function content()
+    public function getCart()
     {
-        return $this->cart->getDetails();
+        if(!$this->cart->getCart(auth()->id())){
+            return response()->json(['success'=>true,'items'=>[],'total_items'=>count([])]);
+        }
+        return new CartResource($this->cart->getCart(auth()->id()));
     }
 
     public function addItem(AddToCartRequest $request)
@@ -27,19 +30,23 @@ class CartController extends Controller {
         $product_id = $request->validated('id');
         $quantity = $request->validated('quantity');
         try {
-            $product = Product::query()->find($product_id);
-            $this->cart->addItem([
-                'id'       => $product_id,
-                'title'    => $product->title,
-                'quantity' => $quantity,
-                'price'    => isset($product->sale_price) ? $product->sale_price*$quantity : $product->price*$quantity,
-            ]);
-            return $this->cart->getItems();
+            return new CartResource($this->cart->addToCart(auth()->id(),$product_id,$quantity));
+        }
+        catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+    }
+    public function removeItem(RemoveFromCartRequest $request)
+    {
+        $product_id = $request->validated('id');
+        $quantity = $request->validated('quantity');
+        try {
+            return $this->cart->removeFromCart(auth()->id(),$product_id,$quantity);
         }
         catch (\Exception $exception){
 
         }
 
-        return response()->json(['message'=>'Product ID ADD TO CART'], 201);
+        return response()->json(['success'=>true,'message'=>'Product ID REMOVE FROM CART']);
     }
 }

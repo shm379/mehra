@@ -77,16 +77,6 @@ class Product extends Model implements HasMedia
         return $this->belongsTo(Producer::class);
     }
 
-    public function volume()
-    {
-        return $this->belongsTo(Volume::class);
-    }
-
-    public function volumes()
-    {
-        return $this->hasMany(Product::class,'volume_id')->orderBy('order_volume');
-    }
-
     public function groups()
     {
         return $this->belongsToMany(ProductGroup::class,'product_product_groups');
@@ -94,7 +84,7 @@ class Product extends Model implements HasMedia
 
     public function creators()
     {
-        return $this->belongsToMany(Creator::class);
+        return $this->belongsToMany(Creator::class)->withPivotValue('creator_creator_type_id');
     }
 
     public function collections()

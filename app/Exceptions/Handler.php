@@ -47,4 +47,67 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    private function customApiResponse($exception): \Illuminate\Http\JsonResponse
+    {
+        if (method_exists($exception, 'getStatusCode')) {
+            $statusCode = $exception->getStatusCode();
+        } else {
+            $statusCode = 500;
+        }
+
+        $response = [];
+
+        switch ($statusCode) {
+            case 401:
+                $response['message'] = 'عدم دسترسی';
+                break;
+            case 403:
+                $response['message'] = 'دسترسی غیرمجاز';
+                break;
+            case 405:
+            case 404:
+                $response['message'] = 'صفحه مورد نظر یافت نشد!';
+                break;
+            case 422:
+                $response['message'] = $exception->original['message'];
+                $response['errors'] = $exception->original['errors'];
+                break;
+            default:
+                $response['message'] = ($statusCode == 500) ? 'خطایی در سیستم رخ داده است!' : $exception->getMessage();
+                break;
+        }
+
+        if (config('app.debug')) {
+            $response['trace'] = $exception->getTrace();
+            $response['code'] = $exception->getCode();
+        }
+
+        $response['success'] = false;
+
+        return response()->json($response,$statusCode);
+    }
+    private function handleApiException($request, \Exception $exception)
+    {
+        $exception = $this->prepareException($exception);
+
+        if ($exception instanceof \HttpResponseException) {
+            $exception = $exception->getResponse();
+        }
+
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            $exception = $this->unauthenticated($request, $exception);
+        }
+
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            $exception = $this->convertValidationExceptionToResponse($exception, $request);
+        }
+
+        return $this->customApiResponse($exception);
+    }
+
+    public function render($request, \Exception|Throwable $e)
+    {
+        return $this->handleApiException($request, $e);
+    }
 }

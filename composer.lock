@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db39b3546f4dd032d9d00a6d734635f4",
+    "content-hash": "8f2633c906855849470da28690df36bd",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1357,74 +1357,6 @@
             "time": "2022-07-20T13:12:54+00:00"
         },
         {
-            "name": "fouladgar/laravel-otp",
-            "version": "v3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mohammad-fouladgar/laravel-otp.git",
-                "reference": "0a15486fa7e974985a5fc3f0c7a0fa40592c8703"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mohammad-fouladgar/laravel-otp/zipball/0a15486fa7e974985a5fc3f0c7a0fa40592c8703",
-                "reference": "0a15486fa7e974985a5fc3f0c7a0fa40592c8703",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/database": "^9.0",
-                "illuminate/notifications": "^9.0.2",
-                "illuminate/support": "^9.0",
-                "php": "^8.0 || ^8.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "orchestra/testbench": "^7.0",
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Fouladgar\\OTP\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
-                "psr-4": {
-                    "Fouladgar\\OTP\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mohammad Fouladgar",
-                    "email": "fouladgar.dev@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "keywords": [
-                "laravel",
-                "laravel-otp",
-                "lumen",
-                "one-time-password",
-                "otp",
-                "otp-authentication",
-                "otp-login"
-            ],
-            "support": {
-                "issues": "https://github.com/mohammad-fouladgar/laravel-otp/issues",
-                "source": "https://github.com/mohammad-fouladgar/laravel-otp"
-            },
-            "time": "2022-11-10T10:16:29+00:00"
-        },
-        {
             "name": "fruitcake/php-cors",
             "version": "v1.2.0",
             "source": {
@@ -2152,71 +2084,6 @@
                 }
             ],
             "time": "2022-05-21T17:30:32+00:00"
-        },
-        {
-            "name": "jackiedo/cart",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JackieDo/Laravel-Cart.git",
-                "reference": "07a62f96ad9e65ef100faf237d9d30d8f606b487"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JackieDo/Laravel-Cart/zipball/07a62f96ad9e65ef100faf237d9d30d8f606b487",
-                "reference": "07a62f96ad9e65ef100faf237d9d30d8f606b487",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^9.0|^8.0|^7.0|^6.0|^5.0",
-                "php": ">=5.6.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0|^0.9",
-                "orchestra/testbench": "^7.0|^6.0|^5.0|^4.0|^3.0",
-                "phpunit/phpunit": "^9.0|^8.0|^7.0|^6.0|^5.0|^4.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Jackiedo\\Cart\\CartServiceProvider"
-                    ],
-                    "aliases": {
-                        "Cart": "Jackiedo\\Cart\\Facades\\Cart"
-                    }
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Helpers/helpers.php"
-                ],
-                "psr-4": {
-                    "Jackiedo\\Cart\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jackie Do",
-                    "email": "anhvudo@gmail.com"
-                }
-            ],
-            "description": "A package used to create and manage carts (such as shopping, recently viewed, compared items...) in Laravel application.",
-            "keywords": [
-                "cart",
-                "laravel",
-                "shopping",
-                "shoppingcart"
-            ],
-            "support": {
-                "issues": "https://github.com/JackieDo/Laravel-Cart/issues",
-                "source": "https://github.com/JackieDo/Laravel-Cart/tree/3.0.3"
-            },
-            "time": "2022-02-28T03:56:27+00:00"
         },
         {
             "name": "jgrossi/corcel",

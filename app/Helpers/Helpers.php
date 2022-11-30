@@ -23,4 +23,9 @@ class Helpers
 
         return '';
     }
+
+    static function toman($price,$separator=',')
+    {
+        return number_format($price,0, '',$separator) . ' تومان';
+    }
 }

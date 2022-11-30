@@ -36,7 +36,7 @@ class Order extends Model
 
     public function getIsCart()
     {
-        if($this->attributes['type']==OrderStatus::CARD)
+        if($this->attributes['type']==OrderStatus::CART)
             return true;
         return false;
     }

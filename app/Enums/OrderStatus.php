@@ -13,7 +13,7 @@ use BenSampo\Enum\Enum;
  */
 final class OrderStatus extends Enum implements LocalizedEnum
 {
-    const CARD = 0;
+    const CART = 0;
     const PENDING = 1;
     const CANCELED = 2;
     const RETURNED = 3;

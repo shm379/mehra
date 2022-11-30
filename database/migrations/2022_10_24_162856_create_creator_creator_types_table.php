@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('creator_creator_types', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('creator_id');
             $table->unsignedBigInteger('creator_type_id');
 

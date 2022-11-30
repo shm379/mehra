@@ -52,7 +52,6 @@ class ProductResource extends JsonResource
             'is_available'=> $this->is_available,
             'in_stock_count'=> $this->in_stock_count,
             'is_active'=> $this->is_active,
-            'is_active_volume'=> $this->is_active_volume,
             'rates'=> $this->whenLoaded('rates'),
             'rate'=> ['customers_count'=>10,'rate'=>4.33],
             'comments'=> $this->whenLoaded('comments',function () {

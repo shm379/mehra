@@ -10,6 +10,7 @@ return [
     'page' => 'App\Models\Page',
     'producer' => 'App\Models\Producer',
     'product' => 'App\Models\Product',
+    'book' => 'App\Models\Book',
     'shipping' => 'App\Models\Shipping',
     'user' => 'App\Models\User',
 ];

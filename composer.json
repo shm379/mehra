@@ -11,12 +11,10 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.0",
         "cviebrock/eloquent-sluggable": "^9.0",
-        "fouladgar/laravel-otp": "^3.0",
         "ghaninia/shipping": "^2.2",
         "guzzlehttp/guzzle": "^7.2",
         "hmdana/laravel-inertia-datagrid": "dev-main",
         "inertiajs/inertia-laravel": "^0.6.4",
-        "jackiedo/cart": "^3.0",
         "jgrossi/corcel": "^6.0",
         "kavenegar/laravel": "*",
         "laravel/framework": "^9.19",
@@ -39,7 +37,8 @@
         "symfony/cache": "^4.4 || ^5.0",
         "tartan/laravel-online-payment": "^8.1",
         "tightenco/ziggy": "^1.5",
-        "unisharp/laravel-filemanager": "^2.5"
+        "unisharp/laravel-filemanager": "^2.5",
+        "ext-http": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
