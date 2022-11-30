@@ -112,22 +112,22 @@ module.exports = {
                 // By default, it will search for icons in common iconify module locations.
                 // Namely "@iconify/json" and "@iconify-json/[the-icon-set-name]"
             },
-            logos: {
-                icons: {
-                    "ember-tomster": {
-                        // You can use the special "SCALE" symbol to apply icon-specific scaling
-                        [SCALE]: 2,
-                    },
-                    vue: {
-                        [SCALE]: 1.2,
-                    },
-                    cardano: {},
-                    stackblitz: {},
-                    stackoverflow: {},
-                },
-                // You can specify other modules too
-                location: "my-icons/icons.json",
-            },
+            // logos: {
+            //     icons: {
+            //         "ember-tomster": {
+            //             // You can use the special "SCALE" symbol to apply icon-specific scaling
+            //             [SCALE]: 2,
+            //         },
+            //         vue: {
+            //             [SCALE]: 1.2,
+            //         },
+            //         cardano: {},
+            //         stackblitz: {},
+            //         stackoverflow: {},
+            //     },
+            //     // You can specify other modules too
+            //     // location: "my-icons/icons.json",
+            // },
             vscodeIcons: {
                 icons: {
                     "file-type-light-db?mask": {},

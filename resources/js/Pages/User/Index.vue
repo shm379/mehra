@@ -26,7 +26,7 @@
                         <span v-else class="text-xs bg-green-100 text-green-500 rounded-lg p-1">تایید شده</span>
                     </div>
                 </template>
-            </datagrid>
+            </ui-datagrid>
         </div>
     </div>
 </template>

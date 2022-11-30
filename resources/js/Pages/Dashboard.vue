@@ -3,7 +3,7 @@
 </script>
 
 <script>
-import AdminLayout from '@/layouts/AdminLayout.vue'
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 export default {
     layout: AdminLayout

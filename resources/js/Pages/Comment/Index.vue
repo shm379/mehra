@@ -36,7 +36,7 @@
             <template v-slot:row-cell-created_at="{ item }">
                 {{ jDate(item) }}
             </template>
-        </datagrid>
+        </ui-datagrid>
     </div>
 </template>
 <script>

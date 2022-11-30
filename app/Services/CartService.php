@@ -25,7 +25,7 @@ class CartService
         return null;
     }
 
-    private function createCart() : \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    private function createCart()
     {
         try {
             return User::query()->find($this->user_id)->orders()->create([
@@ -39,7 +39,7 @@ class CartService
         }
     }
 
-    public function findCartItemByProductID($product_id): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    public function findCartItemByProductID($product_id)
     {
         return OrderItem::query()
             ->where('line_item_type','product')
@@ -47,7 +47,7 @@ class CartService
             ->first();
     }
 
-    private function getCartItem($item_id,$quantity,$item_type=Product::class): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    private function getCartItem($item_id,$quantity,$item_type=Product::class)
     {
         $item = $item_type::query()->find($item_id);
         $cartItem = [];
@@ -65,7 +65,7 @@ class CartService
 
     }
 
-    private function calculateItem($item,$quantity=1,$op): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    private function calculateItem($item,$quantity=1,$op)
     {
         try {
             // if add to cart
@@ -88,7 +88,7 @@ class CartService
         return $item;
     }
 
-    private function updateItem($item): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    private function updateItem($item)
     {
         try {
             $item->total_price = $item->quantity * $item->price;
@@ -100,7 +100,7 @@ class CartService
         return $item;
     }
 
-    private function updateCart($cart): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    private function updateCart($cart)
     {
         try {
             $cart->total_price = $cart->items()->sum('total_price');
