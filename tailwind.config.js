@@ -146,14 +146,14 @@ module.exports = {
                 location:
                     "https://gist.githubusercontent.com/JensDll/4e59cf6005f585581975941a94bc1d88/raw/0e70bdac81224add27d8f0576ab15406709e5938/icons.json",
             },
-            local: {
-                icons: {
-                    loading: {},
-                },
-                scale: 1.5,
-                // It can be a relative or absolute path
-                location: path.resolve(__dirname, "./src/icons.json"),
-            },
+            // local: {
+            //     icons: {
+            //         loading: {},
+            //     },
+            //     scale: 1.5,
+            //     // It can be a relative or absolute path
+            //     location: path.resolve(__dirname, "./src/icons.json"),
+            // },
         })),
         plugin(({ addUtilities }) => {
             addUtilities({
