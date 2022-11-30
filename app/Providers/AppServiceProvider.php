@@ -27,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap(config('morphmap'));
         if($this->app->environment('production')) {
+            $this->app['request']->server->set('HTTPS','on');
             URL::forceScheme('https');
         }
     }
