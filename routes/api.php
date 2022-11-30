@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware(['auth:sanctum','abilities:view-user'])->get('/me', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
+    Route::get('/me', function (Request $request) {
+        return response()->json($request->user('sanctum'));
+    })->name('me');
+    Route::post('/me', function (Request $request) {
+        $request->user('sanctum')->update($request->toArray());
+    })->name('me');
 });
 /*
  * V1 API LOGGED IN ROUTES
@@ -26,8 +31,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ->controller('App\Http\Controllers\Api\Global\CartController')
         ->group(function(){
             Route::get('/', 'getCart')->name('get-cart');
-            Route::post('/', 'addItem')->name('add-item');
-            Route::delete('/', 'removeItem')->name('remove-item');
+            Route::post('/add', 'addItem')->name('add-item');
+            Route::post('/remove', 'removeItem')->name('remove-item');
         });
 });
 /*

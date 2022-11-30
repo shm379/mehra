@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class SearchResource extends JsonResource
+
+class SearchResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

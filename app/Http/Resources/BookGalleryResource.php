@@ -4,9 +4,9 @@ namespace App\Http\Resources;
 
 use App\Enums\ProductType;
 use App\Helpers\Helpers;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookGalleryResource extends JsonResource
+
+class BookGalleryResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

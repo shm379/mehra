@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Enums\CommentPointStatus;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentPointResource extends JsonResource
+
+class CommentPointResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

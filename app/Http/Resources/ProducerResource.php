@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Enums\ProducerType;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProducerResource extends JsonResource
+
+class ProducerResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

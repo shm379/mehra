@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Enums\AwardType;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class AwardResource extends JsonResource
+
+class AwardResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

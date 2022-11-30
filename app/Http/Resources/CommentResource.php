@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Enums\CommentStatus;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class CommentResource extends JsonResource
+
+class CommentResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedDouble('total_price',10);
             $table->unsignedDouble('vat',10)->nullable();
             $table->integer('status');
-            $table->enum('gateway',\App\Enums\PaymentGateway::asArray());
+//            $table->enum('gateway',\App\Enums\PaymentGateway::asArray());
             $table->timestamps();
 
             $table->foreign('user_id')

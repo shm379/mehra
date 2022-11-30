@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreatorResource extends JsonResource
+
+class CreatorResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

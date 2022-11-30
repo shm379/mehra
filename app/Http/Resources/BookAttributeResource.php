@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Enums\ProductType;
-use Illuminate\Http\Resources\Json\JsonResource;
+
 
 class BookAttributeResource extends BookResource
 {

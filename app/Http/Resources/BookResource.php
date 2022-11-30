@@ -6,8 +6,9 @@ use App\Enums\ProductType;
 use App\Helpers\Helpers;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookResource extends JsonResource
+class BookResource extends MehraResource
 {
+
     /**
      * Transform the resource into an array.
      *
@@ -50,5 +51,10 @@ class BookResource extends JsonResource
                     return BookGalleryResource::collection($this->getMedia('gallery'));
             }),
         ];
+    }
+
+    public function toResponse($request)
+    {
+        dd('aa');
     }
 }

@@ -87,8 +87,9 @@ class Handler extends ExceptionHandler
 
         return response()->json($response,$statusCode);
     }
-    private function handleApiException($request, \Exception $exception)
+    private function handleApiException($request, $exception)
     {
+        dd($exception);
         $exception = $this->prepareException($exception);
 
         if ($exception instanceof \HttpResponseException) {
@@ -106,7 +107,7 @@ class Handler extends ExceptionHandler
         return $this->customApiResponse($exception);
     }
 
-    public function render($request, \Exception|Throwable $e)
+    public function render($request, $e)
     {
         return $this->handleApiException($request, $e);
     }

@@ -3,9 +3,8 @@
 namespace App\Http\Resources;
 
 use App\Enums\ProductGroupType;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductGroupResource extends JsonResource
+class ProductGroupResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

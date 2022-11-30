@@ -5,9 +5,9 @@ namespace App\Http\Resources;
 use App\Enums\UserCity;
 use App\Enums\UserGender;
 use App\Enums\UserType;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+
+class UserResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

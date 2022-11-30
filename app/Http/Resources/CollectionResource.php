@@ -3,9 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Enums\CollectionType;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class CollectionResource extends JsonResource
+
+class CollectionResource extends MehraResource
 {
     /**
      * Transform the resource into an array.

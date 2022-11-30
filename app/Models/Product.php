@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ProductRelatedType;
+use App\Services\CartService;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ class Product extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
     protected $guarded = [''];
-//    protected $appends = [''];
+    protected $appends = ['max_purchases_per_user'];
 
     public function getRouteKeyName(): string
     {
@@ -131,5 +132,20 @@ class Product extends Model implements HasMedia
     public function rates()
     {
         return $this->belongsToMany(Rate::class , 'product_rates');
+    }
+
+    public function getMaxPurchasesPerUserAttribute()
+    {
+        $max = $this->attributes['max_purchases_per_user'];
+        $cartService = new CartService();
+        $cart = $cartService->getCart();
+        if($cart){
+            $item = $cartService->findCartItemByProductID($this->attributes['id']);
+            if($item){
+                if($max>0)
+                    $max -= $item->quantity;
+            }
+        }
+        return $max;
     }
 }

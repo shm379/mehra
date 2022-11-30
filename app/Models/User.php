@@ -162,13 +162,17 @@ class User extends Authenticatable implements HasMedia
 
     public function scopeGetCart($query,$user_id)
     {
-        $order = $this->find($user_id)->orders()->where('status',OrderStatus::CART)->with('items');
-        if(!$order->exists()){
+        if($user_id) {
+            $order = $query->find($user_id)->orders()->where('status', OrderStatus::CART)->with('items');
+            if (!$order->exists()) {
+                return $query->where('id', null);
+            }
+
+            $order = $order->first();
+            return $order;
+        } else {
             return $query->where('id', null);
         }
-
-        $order = $order->first();
-        return $order;
     }
 
     /**

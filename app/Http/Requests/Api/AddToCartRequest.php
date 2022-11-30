@@ -2,7 +2,12 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Models\Product;
+use App\Rules\AddToCartRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class AddToCartRequest extends FormRequest
 {
@@ -13,7 +18,7 @@ class AddToCartRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->check();
+        return auth()->guard('sanctum')->check();
     }
 
     /**
@@ -24,9 +29,33 @@ class AddToCartRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'=>'required|exists:App\Models\Product,id',
+            'id'=>[
+                'required',
+                'exists:App\Models\Product,id',
+                new AddToCartRule()
+            ],
             'quantity'=>'required',
             'extra_info'=>'nullable'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+
+        throw new HttpResponseException(response()->json([
+
+            'success'   => false,
+
+            'message'   => 'خطا',
+
+            'data'      => $validator->errors()
+
+        ]));
+
     }
 }

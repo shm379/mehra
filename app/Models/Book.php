@@ -69,7 +69,6 @@ class Book extends Product
 
     public function authors()
     {
-        dd($this->creators()->get());
-        return $this->creators();
+//        return $this->creators();
     }
 }
