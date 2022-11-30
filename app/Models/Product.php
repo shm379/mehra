@@ -144,7 +144,7 @@ class Product extends Model implements HasMedia
         if($cart){
             $item = $cartService->findCartItemByProductID($this->attributes['id']);
             if($item){
-                if($max>0)
+                if($max<0)
                     $max -= $item->quantity;
             }
         }
