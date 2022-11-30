@@ -85,7 +85,9 @@ class Product extends Model implements HasMedia
 
     public function creators()
     {
-        return $this->belongsToMany(Creator::class)->withPivotValue('creator_creator_type_id');
+        return $this->belongsToMany(Creator::class,'creator_product','product_id')
+            ->using(CreatorProduct::class)
+            ->withPivot('creator_creator_type_id');
     }
 
     public function collections()
