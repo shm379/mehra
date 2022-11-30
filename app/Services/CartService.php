@@ -138,6 +138,7 @@ class CartService
                 'line_item_id'=>$product_id,
                 'line_item_type'=>'product'
             ]);
+            // IF Cart Exists
             if($item->exists()){
                 $currentItem = $item->first();
                 $currentItem = self::calculateItem($currentItem,$quantity,'-');
