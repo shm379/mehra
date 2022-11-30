@@ -20,5 +20,4 @@ class MehraResource extends JsonResource
             'success' => true
         ];
     }
-
 }

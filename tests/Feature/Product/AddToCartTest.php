@@ -556,5 +556,59 @@ class AddToCartTest extends TestCase
             $this->assertTrue($response->json('success'));
         }
     }
+    public function test_cannot_add_to_cart_when_stock_is_empty()
+    {
+        $token = self::getToken();
+        $product = Product::query()->find(16)->update(['in_stock_count'=>0]);
+        $response = $this
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->get(route('api.v1.me'));
+        if($response->status()==200){
+            $response = $this
+                ->withHeader('Authorization', 'Bearer ' . $token)
+                ->post(route('api.v1.cart.add-item'),[
+                    'id'=> '16',
+                    'quantity'=> 1
+            ]);
+            $this->assertTrue(!$response->json('success'));
+        }
+    }
+
+    public function test_cannot_add_to_cart_when_max_purchases_is_limit()
+    {
+        $token = self::getToken();
+        $product = Product::query()->find(16)->update(['max_purchases_per_user'=>0]);
+        $response = $this
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->get(route('api.v1.me'));
+        if($response->status()==200){
+            $response = $this
+                ->withHeader('Authorization', 'Bearer ' . $token)
+                ->post(route('api.v1.cart.add-item'),[
+                    'id'=> '16',
+                    'quantity'=> 1
+            ]);
+            $this->assertTrue(!$response->json('success'));
+        }
+    }
+
+    public function test_cannot_add_to_cart_when_min_purchases_two()
+    {
+        $token = self::getToken();
+        $product = Product::query()->find(16)->update(['min_purchases_per_user'=>2]);
+        $response = $this
+            ->withHeader('Authorization', 'Bearer ' . $token)
+            ->get(route('api.v1.me'));
+        if($response->status()==200){
+            $response = $this
+                ->withHeader('Authorization', 'Bearer ' . $token)
+                ->post(route('api.v1.cart.add-item'),[
+                    'id'=> '16',
+                    'quantity'=> 1
+            ]);
+            $this->assertTrue(!$response->json('success'));
+            $this->addWarning($response->collect('data')->first()[0]);
+        }
+    }
 
 }

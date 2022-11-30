@@ -52,9 +52,4 @@ class BookResource extends MehraResource
             }),
         ];
     }
-
-    public function toResponse($request)
-    {
-        dd('aa');
-    }
 }
