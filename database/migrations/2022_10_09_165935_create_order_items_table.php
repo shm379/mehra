@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_items', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedFloat('price_without_discount',10,0)->nullable();
             $table->unsignedFloat('price',10,0);

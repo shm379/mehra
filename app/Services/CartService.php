@@ -11,6 +11,7 @@ class CartService
     public function getCart($user_id)
     {
         $cart = User::GetCart($user_id);
+        self::updateCart($cart);
         if($cart->exists())
             return $cart;
         return null;
@@ -59,14 +60,16 @@ class CartService
         return self::calculateTotal($item,$quantity);
 
     }
-    private function updateCart($user_id): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
+    private function updateCart($cart): \Illuminate\Database\Eloquent\Builder|array|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|bool
     {
-        $cart = self::getCart($user_id);
-        $cart->update([
-            'total_price'=> $cart->total_price,
-            'total_price_without_discount'=> $cart->total_price_without_discount
-        ]);
-
+        try {
+            $cart->total_price = $cart->items()->sum('total_price');
+            $cart->total_price_without_discount = $cart->items()->sum('total_price_without_discount');
+            $cart->save();
+        } catch (\Exception $exception){
+            return $exception->getMessage();
+        }
+        return $cart;
     }
 
     public function addToCart($user_id,$product_id,$quantity=1)
@@ -75,11 +78,19 @@ class CartService
         if(!$cart){
             $cart = self::createCart($user_id);
         }
-        $cart->items()->firstOrCreate([
+        $cartItem = $cart->items()->firstOrCreate([
             'order_id'=>$cart->id,
             'line_item_id'=>$product_id,
             'line_item_type'=>'product'
         ],self::calculateCart($product_id,$quantity));
+
+        if(!$cartItem->wasRecentlyCreated){
+            $quantity = $cartItem->quantity+$quantity;
+            $cartItem->quantity = $quantity;
+            $cartItem->total_price = $cartItem->price * $quantity;
+            $cartItem->total_price_without_discount = $cartItem->price_without_discount * $quantity;
+            $cartItem->save();
+        }
         return $cart;
     }
 

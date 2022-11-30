@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_notes', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('order_id');
             $table->text('note');
             $table->enum('status',\App\Enums\OrderNoteStatus::getKeys());
