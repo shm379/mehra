@@ -56,7 +56,7 @@ class AddToCartRequest extends FormRequest
     public function messages()
     {
         return [
-          'quantity.max'=>'تعداد درخواستی شما برای خرید بیش تر از حد مجاز است!'
+          'quantity.max'=>'تعداد نمی تواند بیششتر از :max عدد باشد'
         ];
     }
 
