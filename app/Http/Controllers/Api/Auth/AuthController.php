@@ -44,8 +44,10 @@ class AuthController
                 $user = $this->registerUser($mobile);
             }
             $code = \App\Services\OtpService::generateOtp($mobile);
-            if(config('app.env')=='production')
-                $user->sendMobileVerificationNotification($code);
+            if(config('app.env')=='production') {
+                if($code)
+                    $user->sendMobileVerificationNotification($code->code);
+            }
             // generate token
             $temporaryToken = $user->createToken('web',['verify-otp']);
 
