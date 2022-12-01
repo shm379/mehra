@@ -40,11 +40,12 @@ class OtpService
 
     static function verifyOtp($mobile,$code)
     {
+        $expireTime = now()->addMinutes(30);
         $mobile = Helpers::mobileNumberNormalize($mobile);
         $user = User::query()->where('mobile',$mobile)->first();
         $otpGeneratedCode = Otp::query()
             ->where('user_id',$user->id)
-            ->where('expired_at','>',now());
+            ->where('expired_at','>',$expireTime);
         if(!$otpGeneratedCode->exists()){
             return false;
         } else {
