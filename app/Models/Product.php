@@ -141,10 +141,10 @@ class Product extends Model implements HasMedia
         $max = $this->attributes['max_purchases_per_user'];
         $cartService = new CartService();
         $cart = $cartService->getCart();
-        if($cart){
+        if($cart && count($cart->items)){
             $item = $cartService->findCartItemByProductID($this->attributes['id']);
             if($item){
-                if($max<0)
+                if($max>0)
                     $max -= $item->quantity;
             }
         }

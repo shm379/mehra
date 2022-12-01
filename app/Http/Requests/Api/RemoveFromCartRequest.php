@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 
 class RemoveFromCartRequest extends FormRequest
 {
+    protected $stopOnFirstFailure = true;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -60,9 +61,9 @@ class RemoveFromCartRequest extends FormRequest
 
             'success'   => false,
 
-            'message'   => 'خطا',
+            'message'   => count($validator->errors()->all())?$validator->errors()->all()[0]:$validator->errors()->all(),
 
-            'data'      => $validator->errors()
+            'data'      => $validator->failed()
 
         ]));
 

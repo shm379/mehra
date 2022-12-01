@@ -27,10 +27,10 @@ class AddToCartRule implements InvokableRule
             $dontAvailable = !$product->is_available;
             $inStockCount = $product->in_stock_count;
             $dontInStock = $inStockCount <= 0;
-            $minPurchasesPerUser = $product->min_purchases_per_user;
+//            $minPurchasesPerUser = $product->min_purchases_per_user;
             $maxPurchasesPerUser = $product->max_purchases_per_user;
-            $minPurchasesPerUserLimit = $minPurchasesPerUser!==1;
-            $maxPurchasesPerUserLimit = $maxPurchasesPerUser!==1;
+//            $minPurchasesPerUserLimit = false;
+            $maxPurchasesPerUserLimit = $maxPurchasesPerUser>=request()->quantity;
             $maxPurchasesPerUserLimitAndDontInStock = $maxPurchasesPerUserLimit && $dontInStock;
             $cart = $user->GetCart($user->id);
             if($cart->exists() && count($cart->items)) {
@@ -41,23 +41,24 @@ class AddToCartRule implements InvokableRule
                     $dontInStock = true;
                 }
                 // if min purchases per user smaller than cart item quantity
-                if($minPurchasesPerUser>=$cartItemQuantity){
-                    $minPurchasesPerUserLimit = true;
-                }
+//                if($minPurchasesPerUser>$cartItemQuantity){
+//                    $minPurchasesPerUserLimit = true;
+//                }
                 // if max purchases per user larger or equal than cart item quantity
                 if($maxPurchasesPerUser<=$cartItemQuantity && ($maxPurchasesPerUser+$cartItemQuantity)>$inStockCount){
                     $maxPurchasesPerUserLimitAndDontInStock = true;
                 }
                 // if max purchases per user larger or equal than cart item quantity
-                if($maxPurchasesPerUser<$cartItemQuantity){
+                if($maxPurchasesPerUser<=$cartItemQuantity){
                     $maxPurchasesPerUserLimit = true;
                 }
+
             }
 
             if ($dontAvailable)
                 return $fail('محصول مورد نظر قابل خرید نیست!');
-            if ($minPurchasesPerUserLimit)
-                return $fail('تعداد درخواستی شما برای خرید کم تر از حد مجاز است!');
+//            if ($minPurchasesPerUserLimit)
+//                return $fail('تعداد درخواستی شما برای خرید کم تر از حد مجاز است!');
             if ($maxPurchasesPerUserLimitAndDontInStock)
                 return $fail('تعداد درخواستی شما برای خرید این محصول بیشتر از موجودی انبار است!');
             if ($dontInStock)
