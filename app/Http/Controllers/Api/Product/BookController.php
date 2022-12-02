@@ -8,6 +8,7 @@ use App\Http\Resources\BookResource;
 use App\Http\Resources\BookResourceCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Book;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
@@ -30,13 +31,13 @@ class BookController extends Controller {
 
         return new BookResourceCollection($books);
     }
-    public function show(Book $book): BookResource
+    public function show($book): BookResource
     {
-//        if(is_int($book)){
-//            $book = Book::query()->findOrFail($book);
-//        } else {
-//            $book = Book::query()->whereSlug($book)->first();
-//        }
+        if(is_int($book)){
+            $book = Book::query()->where('id',$book)->firstOrFail();
+        } else {
+            $book = Book::query()->where('slug',$book)->firstOrFail();
+        }
         return BookResource::make($book->load([
             'volume',
             'volumes',
