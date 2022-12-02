@@ -35,7 +35,7 @@ class BookController extends Controller {
         if(is_int($book)){
             $book = Book::query()->find($book);
         } else {
-            $book = Book::query()->whereSlug($book);
+            $book = Book::query()->whereSlug($book)->first();
         }
         return BookResource::make($book->load([
             'volume',
