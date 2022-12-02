@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
+use App\Http\Requests\Api\CheckoutRequest;
 use App\Http\Requests\Api\RemoveFromCartRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
@@ -22,8 +23,8 @@ class CheckoutController extends Controller {
         $this->checkout = $checkout;
     }
 
-    public function cartToCheckout(Cart $cart,)
+    public function cartToCheckout(CheckoutRequest $request)
     {
-
+//        return $this->checkout->toCheckout();
     }
 }

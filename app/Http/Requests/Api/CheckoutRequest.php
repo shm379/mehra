@@ -46,8 +46,8 @@ class CheckoutRequest extends FormRequest
     public function messages()
     {
         return [
-          'quantity.max'=>'تعداد درخواستی شما برای خرید بیشتر از حد مجاز است!',
-          'quantity.min'=>'تعداد درخواستی شما برای خرید کمتر از حد مجاز است!',
+//          'quantity.max'=>'تعداد درخواستی شما برای خرید بیشتر از حد مجاز است!',
+//          'quantity.min'=>'تعداد درخواستی شما برای خرید کمتر از حد مجاز است!',
         ];
     }
 

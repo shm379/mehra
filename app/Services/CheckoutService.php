@@ -14,5 +14,9 @@ class CheckoutService extends CartService
        parent::__construct($guard);
    }
 
-
+   public function toCheckout()
+   {
+        $cart = $this->getCart();
+        dd($this->user_id);
+   }
 }

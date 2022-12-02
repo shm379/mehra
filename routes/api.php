@@ -35,6 +35,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/remove', 'removeItem')->name('remove-item');
             Route::post('/checkout', 'checkout')->name('checkout');
         });
+    Route::prefix('/checkout')
+        ->controller('App\Http\Controllers\Api\Global\CheckoutController')
+        ->group(function(){
+            Route::post('/checkout', 'checkout')->name('checkout');
+        });
 });
 /*
  * V1 Without Auth
