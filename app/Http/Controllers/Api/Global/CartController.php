@@ -8,8 +8,11 @@ use App\Http\Requests\Api\RemoveFromCartRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Product;
 use App\Services\CartService;
+use App\Traits\HasCheckout;
 
 class CartController extends Controller {
+
+//    use HasCheckout;
 
     /*
      * Cart Service Inject

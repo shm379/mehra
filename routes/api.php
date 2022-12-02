@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/', 'getCart')->name('get-cart');
             Route::post('/add', 'addItem')->name('add-item');
             Route::post('/remove', 'removeItem')->name('remove-item');
+            Route::post('/checkout', 'checkout')->name('checkout');
         });
 });
 /*

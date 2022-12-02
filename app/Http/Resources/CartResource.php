@@ -26,7 +26,10 @@ class CartResource extends MehraResource
             'total_items'=> count($this->items),
             'total_price'=> Helpers::toman($this->total_price),
             'shipping_price'=> 0,
-            'is_shipping_free'=> true
+            'is_shipping_free'=> true,
+            'user'=> $this->whenLoaded('user',function (){
+                return UserResource::make($this->user->load('addresses'));
+            })
         ];
     }
 
