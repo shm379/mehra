@@ -31,13 +31,13 @@ class BookController extends Controller {
 
         return new BookResourceCollection($books);
     }
-    public function show($book): BookResource
+    public function show(Book $book): BookResource
     {
-        if(is_int($book)){
-            $book = Book::query()->where('id',$book)->firstOrFail();
-        } else {
-            $book = Book::query()->where('slug',$book)->firstOrFail();
-        }
+//        if(is_int($book)){
+//            $book = Book::query()->where('id',$book)->firstOrFail();
+//        } else {
+//            $book = Book::query()->where('slug',$book)->firstOrFail();
+//        }
         return BookResource::make($book->load([
             'volume',
             'volumes',
