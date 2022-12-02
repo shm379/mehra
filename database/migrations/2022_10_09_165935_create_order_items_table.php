@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -16,6 +17,7 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedFloat('price_without_discount',10,0)->nullable();
             $table->unsignedFloat('price',10,0);
             $table->unsignedInteger('quantity');
@@ -27,6 +29,10 @@ return new class extends Migration
             $table->foreign('order_id')
                 ->references('id')
                 ->on('orders')
+                ->onDelete('cascade');
+            $table->foreign('address_id')
+                ->references('id')
+                ->on('user_addresses')
                 ->onDelete('cascade');
         });
     }

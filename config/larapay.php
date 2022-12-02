@@ -27,7 +27,7 @@ return [
     | the gateways list is comma separated
     |
     */
-    'gateways' => env('LARAPAY_GATES', 'Mellat,Saman,Pasargad,Parsian,ZarinPal,Idpay,Payir,Saderat,Zibal,Nextpay'),
+    'gateways' => env('LARAPAY_GATES', 'Mellat,Saman,Pasargad,Parsian,Zarinpal,Idpay,Payir,Saderat,Zibal,Nextpay'),
 
     /*
     |--------------------------------------------------------------------------
@@ -104,10 +104,10 @@ return [
     |
     */
     'zarinpal' => [
-        'merchant_id'  => env('ZARINPAL_MERCHANT_ID', ''),
-        'type'         => env('ZARINPAL_TYPE', 'zarin-gate'),
+        'merchant_id'  => '0B2BDC21-1797-4D28-8CF3-9108B4B9AD35',
+        'type'         => env('ZARINPAL_TYPE', 'normal'),
         'callback_url' => env('ZARINPAL_CALLBACK_URL', ''),
-        'server'       => env('ZARINPAL_SERVER', 'germany'),
+        'server'       => env('ZARINPAL_SERVER', 'iran'),
         'email'        => env('ZARINPAL_EMAIL', ''),
         'mobile'       => env('ZARINPAL_MOBILE', '09xxxxxxxxx'),
         'description'  => env('ZARINPAL_DESCRIPTION', 'powered-by-Larapay'),

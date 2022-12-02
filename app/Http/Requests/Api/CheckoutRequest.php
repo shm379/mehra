@@ -34,12 +34,14 @@ class CheckoutRequest extends FormRequest
             'first_name'=> 'required',
             'last_name'=> 'required',
             'province_id'=> 'required',
+            'state_id'=> 'required',
             'number'=> 'required',
             'postal_code'=> 'required',
             'unit'=> 'required',
             'district'=> 'required',
-            'phone'=>'nullable',
-            'mobile'=> 'nullable'
+            'phone'=>'required',
+            'mobile'=> 'required',
+            'gateway'=> 'required'
         ];
     }
 
@@ -64,4 +66,5 @@ class CheckoutRequest extends FormRequest
         ]));
 
     }
+
 }

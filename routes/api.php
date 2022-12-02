@@ -38,7 +38,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::prefix('/checkout')
         ->controller('App\Http\Controllers\Api\Global\CheckoutController')
         ->group(function(){
-            Route::post('/checkout', 'checkout')->name('checkout');
+            Route::post('/', 'cartToCheckout')->name('checkout');
+            Route::post('/callback', 'checkoutCallback')->name('checkout.callback');
         });
 });
 /*

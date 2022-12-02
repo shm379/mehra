@@ -124,7 +124,7 @@ class User extends Authenticatable implements HasMedia
 
     public function addresses()
     {
-        return $this->belongsToMany(UserAddress::class);
+        return $this->hasMany(UserAddress::class);
     }
 
     public function announcements()

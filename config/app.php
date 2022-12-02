@@ -198,7 +198,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        PhpMonsters\Log\XLogServiceProvider::class,
     ],
 
     /*
@@ -216,10 +216,8 @@ return [
         'Kavenegar' => Kavenegar\Laravel\Facade::class,
         'Larapay' => Tartan\Larapay\Facades\Larapay::class,
         'XLog'    => PhpMonsters\Log\XLogServiceProvider::class,
-        'Cart' => Jackiedo\Cart\Facades\Cart::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Helper' => App\Helpers\Helpers::class,
-        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
