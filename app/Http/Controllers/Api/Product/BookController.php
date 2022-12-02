@@ -30,8 +30,13 @@ class BookController extends Controller {
 
         return new BookResourceCollection($books);
     }
-    public function show(Book $book): BookResource
+    public function show($book): BookResource
     {
+        if(is_int($book)){
+            $book = Book::query()->find($book);
+        } else {
+            $book = Book::query()->whereSlug($book);
+        }
         return BookResource::make($book->load([
             'volume',
             'volumes',

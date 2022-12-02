@@ -16,10 +16,10 @@ class Product extends Model implements HasMedia
     protected $guarded = [''];
     protected $appends = ['max_purchases_per_user'];
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
+//    public function getRouteKeyName(): string
+//    {
+//        return 'slug';
+//    }
 
     protected static function getValidCollections(): array
     {
