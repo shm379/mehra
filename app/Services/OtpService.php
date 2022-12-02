@@ -23,6 +23,7 @@ class OtpService
         $verificationCode = Otp::query()->where('user_id', $user->id)->latest()->first();
 
         $now = Carbon::now();
+        $expireTime= $now->addMinutes(30);
 
         if ($verificationCode && $now->isBefore($verificationCode->expire_at)) {
             return $verificationCode;
@@ -34,7 +35,7 @@ class OtpService
         return Otp::query()->create([
             'user_id' => $user->id,
             'code' => $code,
-            'expired_at' => Carbon::now()->addMinutes(1)
+            'expired_at' => $expireTime
         ]);
     }
 
