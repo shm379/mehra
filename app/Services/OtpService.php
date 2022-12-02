@@ -25,7 +25,7 @@ class OtpService
         $now = Carbon::now();
         $expireTime= $now->addMinutes(30);
 
-        if ($verificationCode && $now->isBefore($verificationCode->expire_at)) {
+        if ($verificationCode && $now->isBefore($verificationCode->expired_at)) {
             return $verificationCode;
         }
 
@@ -51,7 +51,7 @@ class OtpService
             return false;
         } else {
             if($otpGeneratedCode->first()->code==$code){
-//                $otpGeneratedCode->delete();
+                $otpGeneratedCode->delete();
                 if(!$user->hasVerifiedMobile())
                     $user->markMobileAsVerified();
 
