@@ -35,6 +35,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::post('/remove', 'removeItem')->name('remove-item');
             Route::post('/checkout', 'checkout')->name('checkout');
         });
+});
+Route::middleware(['auth:sanctum'])->group(function (){
     Route::prefix('/checkout')
         ->controller('App\Http\Controllers\Api\Global\CheckoutController')
         ->group(function(){
