@@ -66,7 +66,7 @@ class AuthController
             $temporaryToken = PersonalAccessToken::findToken($request->bearerToken());
             /** @var mixed $user */
             $user = $temporaryToken->tokenable;
-            if(OtpService::verifyOtp($user->mobile,(int)$request->get('code'))){
+            if($user && OtpService::verifyOtp($user->mobile,(int)$request->get('code'))){
                 $token = $user->createToken('web',['view-user']);
             } else {
                 return response()->json(['success'=>false,'message'=>'کد تایید اشتباه است']);

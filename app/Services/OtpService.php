@@ -51,7 +51,7 @@ class OtpService
             return false;
         } else {
             if($otpGeneratedCode->first()->code==$code){
-                $otpGeneratedCode->delete();
+//                $otpGeneratedCode->delete();
                 if(!$user->hasVerifiedMobile())
                     $user->markMobileAsVerified();
 
