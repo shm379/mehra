@@ -31,7 +31,7 @@ class CheckoutService extends CartService
    public function process($userAddressId)
    {
         $cart = $this->getCart();
-        if((int)$cart->total_price!==0) {
+        if($cart->total_price!==0) {
             $transaction = $cart->createTransaction(Bank::ZARINPAL, $cart->total_price);
             $form = $transaction->generateForm();
             dd($form);
