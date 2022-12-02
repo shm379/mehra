@@ -39,9 +39,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 /*
  * V1 Without Auth
  */
-Route::get('books/{book}', [\App\Http\Controllers\Api\Product\BookController::class, 'show'])->name('books.show');
-//Route::get('books/{book:id}', [\App\Http\Controllers\Api\Product\BookController::class, 'show'])->name('books.showById');
-Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index');
+Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
 /*
 * V1 API AUTH CONTROLLER

@@ -12,10 +12,10 @@ use Spatie\MediaLibrary\HasMedia;
 class Book extends Product
 {
     protected $table = 'products';
-//    public function getRouteKeyName(): string
-//    {
-//        return 'slug';
-//    }
+    public function getRouteKeyName(): string
+    {
+        return 'id';
+    }
     protected static function getValidCollections(): array
     {
         return [
