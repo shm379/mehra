@@ -19,6 +19,7 @@ class BookResource extends MehraResource
     {
         return [
             'id'=> $this->id,
+            'slug'=> $this->slug,
             'title'=> preg_replace( "/\r|\n/", "", $this->title ),
             'sub_title'=> $this->sub_title,
             'attributes'=> $this->whenLoaded('attributeValues',function (){

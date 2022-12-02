@@ -13,6 +13,7 @@ class Order extends Model
     use Payable;
     protected $appends = ['is_cart'];
     protected $guarded = [];
+    protected $table = 'orders';
 
     public function user()
     {

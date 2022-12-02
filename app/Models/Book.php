@@ -14,7 +14,7 @@ class Book extends Product
     protected $table = 'products';
     public function getRouteKeyName(): string
     {
-        return 'id';
+        return 'slug';
     }
     protected static function getValidCollections(): array
     {
