@@ -32,13 +32,14 @@ class CheckoutService extends CartService
    {
         $cart = $this->getCart();
         if($cart->total_price!==0) {
-            $transaction = $cart->createTransaction(Bank::ZARINPAL, $cart->total_price);
-            $form = $transaction->generateForm();
-            dd($form);
+//            $transaction = $cart->createTransaction(Bank::ZARINPAL, $cart->total_price);
+//            $form = $transaction->generateForm();
+//            dd($form);
 
-            return view('go-to-bank', [
-                'form' => $form,
-            ]);
+//            return view('go-to-bank', [
+//                'form' => $form,
+//            ]);
+            return true;
         }
         return false;
    }
