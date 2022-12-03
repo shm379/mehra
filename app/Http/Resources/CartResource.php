@@ -23,7 +23,7 @@ class CartResource extends MehraResource
                     }]
                 ));
             }),
-            'total_items'=> $this->items->sum('quantity'),
+            'total_items'=> count($this->items) ? $this->items->sum('quantity') : 0,
             'total_price'=> Helpers::toman($this->total_price),
             'shipping_price'=> 0,
             'is_shipping_free'=> true,
