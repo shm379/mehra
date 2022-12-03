@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Tartan\Larapay\Models\Enum\Bank;
 
 class CheckoutService extends CartService

@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('shipping_cities', function (Blueprint $table) {
+        Schema::create('shipping_states', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->unique();
-            $table->unsignedBigInteger('shipping_state_id');
             $table->string('title');
-
-            $table->foreign('shipping_state_id')
-                ->references('id')
-                ->on('shipping_states')
-                ->onDelete('cascade');
         });
     }
 
@@ -32,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipping_cities');
+        Schema::dropIfExists('shipping_states');
     }
 };

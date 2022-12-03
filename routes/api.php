@@ -26,6 +26,8 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
  * V1 API LOGGED IN ROUTES
  */
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    //cart
     Route::prefix('/cart')
         ->name('cart.')
         ->controller('App\Http\Controllers\Api\Global\CartController')
@@ -33,17 +35,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/', 'getCart')->name('get-cart');
             Route::post('/add', 'addItem')->name('add-item');
             Route::post('/remove', 'removeItem')->name('remove-item');
-            Route::post('/checkout', 'checkout')->name('checkout');
         });
-});
-Route::middleware(['auth:sanctum'])->group(function (){
+
+    //checkout
     Route::prefix('/checkout')
         ->controller('App\Http\Controllers\Api\Global\CheckoutController')
         ->group(function(){
             Route::post('/', 'cartToCheckout')->name('checkout');
             Route::post('/callback', 'checkoutCallback')->name('checkout.callback');
         });
+
+    //shipping - tapin
+    Route::prefix('/states')
+        ->controller('App\Http\Controllers\Api\Global\ShippingController')
+        ->group(function(){
+            Route::post('/', 'getStates')->name('get-states');
+            Route::post('/{state}', 'getCities')->name('get-cities');
+        });
 });
+
 /*
  * V1 Without Auth
  */
