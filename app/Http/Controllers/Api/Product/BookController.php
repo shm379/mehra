@@ -24,6 +24,11 @@ class BookController extends Controller {
 
     public function index(Request $request)
     {
+        if($request->has('per_page'){
+            $per_page = $request->get('per_page');
+            if($request->get('per_page')>20)
+                $per_page = 12;
+        }
         // global input search
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -64,7 +69,7 @@ class BookController extends Controller {
                 AllowedFilter::exact('attributeValues.id'),
                 'title',
                 $globalSearch])
-            ->paginate($request->has('per_page') !== null ?$request->get('per_page'): 15)
+            ->paginate($per_page)
             ->withQueryString();
         return new BookResourceCollection($books);
     }
