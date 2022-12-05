@@ -109,6 +109,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, $e)
     {
+        \Log::info($request,$e->getMessage());
         if ($request->wantsJson()) {   //add Accept: application/json in request
             return $this->handleApiException($request, $e);
         } else {
