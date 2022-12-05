@@ -24,7 +24,8 @@ class BookController extends Controller {
 
     public function index(Request $request)
     {
-        if($request->has('per_page'){
+        $per_page = 12;
+        if($request->has('per_page')){
             $per_page = $request->get('per_page');
             if($request->get('per_page')>20)
                 $per_page = 12;
