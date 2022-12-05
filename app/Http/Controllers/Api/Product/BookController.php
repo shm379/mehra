@@ -97,39 +97,57 @@ class BookController extends Controller {
         $creators = \App\Models\Creator::query()->pluck('id','title')->toArray();
         $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();
         $producers = \App\Models\Producer::query()->pluck('id','title')->toArray();
-        return response()->json([
+        $filters = [
             'filter'=> [
                 'attributes'=> [
+                    'title'=>'ویژگی',
                     'key'=> 'attributeValues.id',
-                    'icon'=>''
+                    'icon'=>'',
                     'value'=> $attributes,
                 ],
                 'awards'=> [
+                    'title'=>'جایزه/افتخار',
                     'key'=> 'awards.id',
-                    'icon'=>''
+                    'icon'=>'',
                     'value'=> $awards,
                 ],
                 'creators' => [
+                    'title'=>'پدیدآورنده',
                     'key'=> 'creators.id',
-                    'icon'=>''
+                    'icon'=>'',
                     'value'=> $creators,
                 ],
                 'categories'=> [
+                    'title'=>'دسته‌بندی',
                     'key'=> 'categories.id',
-                    'icon'=>''
+                    'icon'=>'',
                     'value'=> $categories,
                 ],
                 'collections'=> [
+                    'title'=>'مجموعه',
                     'key'=> 'collections.id',
-                    'icon'=>''
+                    'icon'=>'',
                     'value'=> $collections,
                 ],
                 'producers'=> [
+                    'title'=>'ناشر',
                     'key'=> 'producer_id',
-                    'icon'=>''
+                    'icon'=>'',
                     'value'=> $producers,
                 ]
             ]
-        ]);
+        ];
+        foreach ($filters as $filter){
+            foreach ($attributes as $key=> $attribute){
+                $en_name = \Str::slug($attribute->first()->attribute->en_name);
+                $filters['filter'][$en_name]['key'] = 'attributeValues.id';
+                $filters['filter'][$en_name]['title'] = $key;
+                $filters['filter'][$en_name]['icon'] = $attribute->first()->attribute->icon;
+                $filters['filter'][$en_name]['value'] = $attribute->flatten()->pluck('id','value')->all();
+            }
+        }
+        unset($filters['filter']['attributes']);
+
+        return response()->json($filters);
     }
 }
