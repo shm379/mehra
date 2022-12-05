@@ -9,6 +9,7 @@ use App\Enums\ProducerType;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\BookResourceCollection;
+use App\Http\Resources\CreatorResourceCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Book;
 use App\Models\Product;
@@ -86,5 +87,49 @@ class BookController extends Controller {
             },
             'media'
         ]));
+    }
+
+    public function filters()
+    {
+        $awards = \App\Models\Award::query()->pluck('id','title')->toArray();
+        $attributes = \App\Models\Attribute::query()->with('values')->get()->pluck('values')->flatten()->groupBy('name');
+        $categories = \App\Models\Category::query()->pluck('id','title')->toArray();
+        $creators = \App\Models\Creator::query()->pluck('id','title')->toArray();
+        $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();
+        $producers = \App\Models\Producer::query()->pluck('id','title')->toArray();
+        return response()->json([
+            'filter'=> [
+                'attributes'=> [
+                    'key'=> 'attributeValues.id',
+                    'icon'=>''
+                    'value'=> $attributes,
+                ],
+                'awards'=> [
+                    'key'=> 'awards.id',
+                    'icon'=>''
+                    'value'=> $awards,
+                ],
+                'creators' => [
+                    'key'=> 'creators.id',
+                    'icon'=>''
+                    'value'=> $creators,
+                ],
+                'categories'=> [
+                    'key'=> 'categories.id',
+                    'icon'=>''
+                    'value'=> $categories,
+                ],
+                'collections'=> [
+                    'key'=> 'collections.id',
+                    'icon'=>''
+                    'value'=> $collections,
+                ],
+                'producers'=> [
+                    'key'=> 'producer_id',
+                    'icon'=>''
+                    'value'=> $producers,
+                ]
+            ]
+        ]);
     }
 }
