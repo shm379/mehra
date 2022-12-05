@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Enums\ProductType;
-
+use App\Enums\ProductStructure;
 
 class ProductResource extends MehraResource
 {
@@ -46,7 +46,8 @@ class ProductResource extends MehraResource
             'producer'=> $this->whenLoaded('producer'),
             'order'=> $this->order,
             'order_volume'=> $this->order_volume,
-            'product_type'=> isset($this->product_type) ? ProductType::getDescription($this->product_type) : null,
+            'type'=> isset($this->type) ? ProductType::getDescription($this->type) : null,
+            'structure'=> isset($this->structure) ? ProductStructure::getDescription($this->structure) : null,
             'min_purchases_per_user'=> $this->min_purchases_per_user,
             'max_purchases_per_user'=> $this->max_purchases_per_user,
             'is_available'=> $this->is_available,

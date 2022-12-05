@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('description');
             $table->string('site_url')->nullable();
-            $table->integer('producer_type');
+            $table->enum('type', \App\Enums\ProducerType::asArray());
             $table->boolean('is_active');
             $table->timestamps();
         });

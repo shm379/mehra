@@ -16,10 +16,19 @@ class AwardResource extends MehraResource
     public function toArray($request)
     {
         return [
+            'id'=> $this->id,
             'title'=> $this->title,
-            'parent'=> $this->whenLoaded('parent'),
             'slug'=> $this->slug,
-            'award_type'=> AwardType::getDescription($this->award_type),
+            'image'=> $this->whenLoaded('media', function (){
+                if($this->hasMedia('image'))
+                    return $this->getMedia('image')->first()->original_url;
+            }),
+            'cover_image'=> $this->whenLoaded('media', function (){
+                if($this->hasMedia('cover_image'))
+                    return $this->getMedia('cover_image')->first()->original_url;
+            }),
+            'type'=> AwardType::getDescription($this->type),
+            'description'=> $this->description,
         ];
     }
 }

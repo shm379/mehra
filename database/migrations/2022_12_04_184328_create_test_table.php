@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('product_groups', function (Blueprint $table) {
+        Schema::create('test', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedFloat('price',10,2)->nullable();
-            $table->unsignedFloat('sale_price',10,2)->nullable();
-            $table->boolean('is_active');
-            $table->enum('type', \App\Enums\ProductGroupType::asArray())->default(\App\Enums\ProductGroupType::GROUPED);
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_groups');
+        Schema::dropIfExists('test');
     }
 };

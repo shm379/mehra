@@ -5,17 +5,34 @@ namespace App\Models;
 use App\Enums\AwardType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Media\HasMediaTrait;
+use App\Services\Media\Media;
+use Spatie\MediaLibrary\HasMedia;
 
-class Award extends Model
+class Award extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasMediaTrait;
     protected $guarded = [];
     protected $casts = [
 //        'award_type'=> AwardType::class
     ];
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'id';
+    }
+
+    protected static function getValidCollections(): array
+    {
+        return [
+            'image',
+            'cover_image',
+        ];
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singleFile();
+        $this->addMediaCollection('conver_image')->singleFile();
     }
 
     public function parent()
@@ -30,7 +47,7 @@ class Award extends Model
 
     public function scopeProducers($query,$q=null)
     {
-        $query->where('award_type',AwardType::AWARD);
+        $query->where('type',AwardType::AWARD);
         if(isset($q)){
             $query->where('title','LIKE', '%' . $q . '%');
         }

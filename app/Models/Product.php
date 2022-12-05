@@ -6,9 +6,9 @@ use App\Enums\ProductRelatedType;
 use App\Services\CartService;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
 
 class Product extends Model implements HasMedia
 {
@@ -50,12 +50,12 @@ class Product extends Model implements HasMedia
 
     public function parent()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'parent_id');
     }
 
     public function productRelated(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class,'product_related');
+        return $this->belongsToMany(Product::class,'product_related', 'product_id');
     }
 
     public function related(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -80,7 +80,7 @@ class Product extends Model implements HasMedia
 
     public function groups()
     {
-        return $this->belongsToMany(ProductGroup::class,'product_product_groups');
+        return $this->belongsToMany(ProductGroup::class,'product_product_groups','product_id');
     }
 
     public function creators()
@@ -92,24 +92,23 @@ class Product extends Model implements HasMedia
 
     public function collections()
     {
-        return $this->belongsToMany(Collection::class);
+        return $this->belongsToMany(Collection::class , 'collection_product', 'product_id');
     }
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class,'category_product', 'product_id');
     }
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'product_id');
     }
 
     public function attributeValues()
     {
-        return $this->belongsToMany(AttributeValue::class)->with('attribute');
+        return $this->belongsToMany(AttributeValue::class,'attribute_value_product','product_id')->with('attribute');
     }
-
     public function scopeAttributeValueWithName($query)
     {
         $this->with('attributeValues');
@@ -123,17 +122,17 @@ class Product extends Model implements HasMedia
 
     public function awards()
     {
-        return $this->belongsToMany(Award::class);
+        return $this->belongsToMany(Award::class, 'award_product','product_id');
     }
 
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class, 'product_id');
     }
 
     public function rates()
     {
-        return $this->belongsToMany(Rate::class , 'product_rates');
+        return $this->belongsToMany(Rate::class , 'product_rates', 'product_id');
     }
 
     public function getMaxPurchasesPerUserAttribute()

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('body');
-            $table->unsignedInteger('type')->default(\App\Enums\PageType::STANDARD);
+            $table->enum('type', \App\Enums\PageType::asArray())->default(\App\Enums\PageType::STANDARD);
             $table->timestamps();
             $table->foreign('parent_id')
                 ->references('id')

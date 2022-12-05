@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('icon');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->unsignedInteger('type');
+            $table->enum('type', \App\Enums\AttributeType::asArray());
             $table->timestamps();
             $table->foreign('parent_id')
                 ->references('id')

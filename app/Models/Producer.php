@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Enums\ProducerType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Media\HasMediaTrait;
+use App\Services\Media\Media;
+use Spatie\MediaLibrary\HasMedia;
 
-class Producer extends Model
+class Producer extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasMediaTrait;
     protected $guarded = [];
     protected $appends = ['producer_type'];
     protected $casts = [
@@ -17,7 +20,19 @@ class Producer extends Model
 
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'id';
+    }
+
+    protected static function getValidCollections(): array
+    {
+        return [
+            'logo',
+        ];
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('logo')->singleFile();
     }
 
     public function products()
@@ -25,14 +40,19 @@ class Producer extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function books()
+    {
+        return $this->hasMany(Book::class, 'producer_id');
+    }
+
     public function getProducerTypeAttribute()
     {
-        return ProducerType::getDescription($this->attributes['producer_type']);
+        return ProducerType::getDescription($this->attributes['type']);
     }
 
     public function scopePublishers($query,$q=null)
     {
-        $query->where('producer_type',ProducerType::PUBLISHER);
+        $query->where('type',ProducerType::PUBLISHER);
         if(isset($q)){
             $query->where('title','LIKE', '%' . $q . '%');
         }
@@ -41,7 +61,7 @@ class Producer extends Model
 
     public function scopeBrands($query,$q=null)
     {
-        $query->where('producer_type',ProducerType::BRAND);
+        $query->where('type',ProducerType::BRAND);
         if(isset($q)){
             $query->where('title','LIKE', '%' . $q . '%');
         }
@@ -50,7 +70,7 @@ class Producer extends Model
 
     public function scopeProducers($query,$q=null)
     {
-        $query->where('producer_type',ProducerType::PRODUCER);
+        $query->where('type',ProducerType::PRODUCER);
         if(isset($q)){
             $query->where('title','LIKE', '%' . $q . '%');
         }

@@ -2,9 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\ProductType;
-
-
 class BookVolumeResource extends MehraResource
 {
     /**
@@ -16,7 +13,7 @@ class BookVolumeResource extends MehraResource
     public function toArray($request)
     {
         return [
-            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'title'=> preg_replace( "/\r|\n/", "", $this->volume->title ),
             'active'=> $this->is_active_volume,
         ];
     }

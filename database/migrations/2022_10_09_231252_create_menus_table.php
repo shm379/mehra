@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('is_visible');
             $table->unsignedBigInteger('order');
             $table->string('css_class');
-            $table->integer('position');
+            $table->enum('position', \App\Enums\MenuPosition::asArray());
             $table->timestamps();
 
             $table->foreign('parent_id')

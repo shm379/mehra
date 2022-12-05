@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->string('award_type');
+            $table->enum('type', \App\Enums\AwardType::asArray());
             $table->boolean('is_active');
             $table->timestamps();
             $table->foreign('parent_id')

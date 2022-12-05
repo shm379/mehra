@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->text('note');
-            $table->enum('status',\App\Enums\OrderNoteStatus::getKeys());
+            $table->enum('status',\App\Enums\OrderNoteStatus::asArray());
             $table->enum('type',\App\Enums\OrderNoteType::asArray());
 
             $table->foreign('order_id')

@@ -28,8 +28,8 @@ return new class extends Migration
             $table->unsignedFloat('sale_price',10,0)->nullable();
             $table->unsignedDouble('vat',10,0)->nullable();
             $table->unsignedBigInteger('producer_id')->nullable();
-            $table->enum('product_structure',\App\Enums\ProductStructure::asArray());
-            $table->enum('product_type',\App\Enums\ProductType::asArray());
+            $table->enum('structure',\App\Enums\ProductStructure::asArray());
+            $table->enum('type',\App\Enums\ProductType::asArray());
             $table->unsignedBigInteger('order')->nullable();
             $table->unsignedBigInteger('order_volume')->nullable();
             $table->integer('min_purchases_per_user')->default(1);

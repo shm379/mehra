@@ -23,6 +23,12 @@ class CreatorResource extends MehraResource
             'description'=> $this->description,
             'birthday'=> $this->birthday,
             'nickname'=> $this->nickname,
+            'books'=> $this->whenLoaded('books', function (){
+                return BookResource::collection($this->books);
+            }),
+            'awards'=> $this->whenLoaded('awards', function (){
+                return AwardResource::collection($this->awards);
+            }),
         ];
     }
 }

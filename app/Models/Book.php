@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ProductRelatedType;
+use App\Enums\ProductStructure;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,10 +12,17 @@ use Spatie\MediaLibrary\HasMedia;
 class Book extends Product
 {
     protected $table = 'products';
+
     public function getRouteKeyName(): string
     {
         return 'id';
     }
+
+    public function newQuery($excludeDeleted = true): \Illuminate\Database\Eloquent\Builder
+    {
+        return parent::newQuery()->whereStructure(ProductStructure::BOOK);
+    }
+
     protected static function getValidCollections(): array
     {
         return [
@@ -45,16 +52,9 @@ class Book extends Product
 //        $conversion->nonQueued()->performOnCollections('main_image');
     }
 
-    public function creators()
+    public function parent()
     {
-        return $this->belongsToMany(Creator::class,'creator_product','product_id')
-            ->using(CreatorProduct::class)
-            ->withPivot('creator_creator_type_id');
-    }
-
-    public function attributeValues()
-    {
-        return $this->belongsToMany(AttributeValue::class,'attribute_value_product','product_id')->with('attribute');
+        return $this->belongsTo(Book::class,'parent_id');
     }
 
     public function volume()
@@ -67,8 +67,10 @@ class Book extends Product
         return $this->hasMany(Book::class,'volume_id')->orderBy('order_volume');
     }
 
-    public function authors()
+    public function scopeVolumeTitle($query, $title)
     {
-//        return $this->creators();
+        return Book::whereHas('volume', function ($query) use ($title) {
+            $query->where('title', 'like', '%'.$title.'%');
+        });
     }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('shipping_states', function (Blueprint $table) {
             $table->unsignedBigInteger('id')->unique();
             $table->string('title');
+            $table->boolean('is_available')->default(1);
         });
     }
 

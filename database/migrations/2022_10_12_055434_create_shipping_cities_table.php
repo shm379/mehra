@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->unique();
             $table->unsignedBigInteger('shipping_state_id');
             $table->string('title');
+            $table->boolean('is_available')->default(1);
 
             $table->foreign('shipping_state_id')
                 ->references('id')

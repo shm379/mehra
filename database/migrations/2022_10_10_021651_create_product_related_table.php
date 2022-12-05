@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('related_id');
             $table->unsignedBigInteger('order');
-            $table->integer('type');
+            $table->enum('type', \App\Enums\ProductRelatedType::asArray());
             $table->unique(['product_id','related_id']);
 
             $table->foreign('related_id')

@@ -16,13 +16,21 @@ class ProducerResource extends MehraResource
     public function toArray($request)
     {
         return [
+            'id'=> $this->id,
             'title'=> $this->title,
             'sub_title'=> $this->sub_title,
             'slug'=> $this->slug,
             'description'=> $this->description,
             'site_url'=> $this->site_url,
-            'producer_type'=> ProducerType::getDescription($this->producer_type),
+            'type'=> ProducerType::getDescription($this->type),
             'is_active'=> $this->is_active,
+            'books'=> $this->whenLoaded('books', function (){
+                return BookResource::collection($this->books);
+            }),
+            'logo'=> $this->whenLoaded('media',function (){
+                if($this->hasMedia('logo'))
+                    return $this->getMedia('logo')->first()->original_url;
+            }),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Enums\ProductType;
+use App\Enums\ProductRelatedType;
 use App\Helpers\Helpers;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -40,6 +41,9 @@ class BookResource extends MehraResource
             'creators'=> $this->whenLoaded('creators',function (){
                 $this->creators->load('media');
                 return BookCreatorResource::collection($this->creators);
+            }),
+            'related'=> $this->whenLoaded('productRelated',function (){
+                return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
             }),
             'cover_image'=> $this->whenLoaded('media',function (){
                 if($this->hasMedia('cover_image'))

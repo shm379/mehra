@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('type');
+            $table->enum('type', \App\Enums\StockType::asArray());
             $table->integer('period');
             $table->timestamp('last_sync')->nullable();
             $table->timestamps();

@@ -14,7 +14,7 @@ class Creator extends Model implements HasMedia
 
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'id';
     }
 
     protected static function getValidCollections(): array
@@ -49,6 +49,16 @@ class Creator extends Model implements HasMedia
     public function products()
     {
         return $this->belongsToMany(Product::class);
+    }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'creator_product','creator_id','product_id');
+    }
+
+    public function awards()
+    {
+        return $this->belongsToMany(Award::class, 'creator_awards','creator_id');
     }
 
     public function types()

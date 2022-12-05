@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
 /*
  * V1 API LOGGED IN ROUTES
  */
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
 
     //cart
     Route::prefix('/cart')
@@ -57,8 +57,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 /*
  * V1 Without Auth
  */
-Route::get('books/{book}', [\App\Http\Controllers\Api\Product\BookController::class, 'show'])->name('books.show');
-Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index');
+Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
+Route::apiResource('awards', \App\Http\Controllers\Api\Product\AwardController::class)->only('index','show');
+Route::apiResource('collections', \App\Http\Controllers\Api\Product\CollectionController::class)->only('index','show');
+Route::apiResource('creators', \App\Http\Controllers\Api\Product\CreatorController::class)->only('index','show');
+Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerController::class)->only('index','show');
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
 /*
 * V1 API AUTH CONTROLLER

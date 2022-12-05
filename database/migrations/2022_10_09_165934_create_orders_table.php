@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedDouble('total_price_without_discount',10)->nullable();
             $table->unsignedDouble('total_price',10);
             $table->unsignedDouble('vat',10)->nullable();
-            $table->integer('status');
+            $table->enum('status', \App\Enums\OrderStatus::asArray());
 //            $table->enum('gateway',\App\Enums\PaymentGateway::asArray());
             $table->timestamps();
 

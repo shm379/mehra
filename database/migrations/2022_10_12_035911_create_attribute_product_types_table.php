@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('attribute_product_types', function (Blueprint $table) {
             $table->unsignedBigInteger('attribute_id');
-            $table->integer('product_type');
-            $table->unique(['attribute_id','product_type']);
+            $table->enum('type',\App\Enums\ProductType::asArray());
+            $table->unique(['attribute_id','type']);
 
             $table->foreign('attribute_id')
                 ->references('id')

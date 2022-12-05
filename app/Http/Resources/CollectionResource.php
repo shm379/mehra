@@ -16,14 +16,14 @@ class CollectionResource extends MehraResource
     public function toArray($request)
     {
         return [
+            'id'=> $this->id,
+            'books'=> BookResource::collection($this->books),
             'title'=> $this->title,
-            'slug'=> $this->slug,
-            'description'=> $this->description,
-            'type'=> CollectionType::getDescription($this->type),
-            'is_private'=> $this->is_private,
-            'user'=> $this->whenLoaded('user',function (){
-//                return
-            })
+            'count'=> isset($this->books) ? count($this->books) : 0,
+            'image'=> $this->whenLoaded('media',function (){
+                if($this->hasMedia('image'))
+                    return $this->getMedia('image')->first()->original_url;
+            }),
         ];
     }
 }
