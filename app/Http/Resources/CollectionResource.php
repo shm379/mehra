@@ -23,7 +23,7 @@ class CollectionResource extends MehraResource
             'image'=> $this->whenLoaded('media',function (){
                 if($this->hasMedia('image'))
                     return $this->getMedia('image')->first()->original_url;
-            }),
+            })
         ];
     }
 }
