@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1.8",
         "artesaos/seotools": "^1.0",
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-dompdf": "^2.0",
@@ -17,7 +17,7 @@
         "inertiajs/inertia-laravel": "^0.6.4",
         "jgrossi/corcel": "^6.0",
         "kavenegar/laravel": "*",
-        "laravel/framework": "^9.19",
+        "laravel/framework": "^9.42.2",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
@@ -38,8 +38,7 @@
         "tartan/laravel-online-payment": "^8.1",
         "tartan/laravel-xlog": "^v1.3.2",
         "tightenco/ziggy": "^1.5",
-        "unisharp/laravel-filemanager": "^2.5",
-        "ext-http": "*"
+        "unisharp/laravel-filemanager": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
