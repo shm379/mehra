@@ -17,13 +17,13 @@ class CollectionResource extends MehraResource
     {
         return [
             'id'=> $this->id,
-            'books'=> CollectionBookResource::collection($this->books),
+            'books'=> BookResource::collection($this->books),
             'title'=> $this->title,
             'count'=> isset($this->books) ? count($this->books) : 0,
             'image'=> $this->whenLoaded('media',function (){
                 if($this->hasMedia('image'))
                     return $this->getMedia('image')->first()->original_url;
-            })
+            }),
         ];
     }
 }
