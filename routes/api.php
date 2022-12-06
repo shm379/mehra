@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
     Route::get('/me', function (Request $request) {
         return response()->json($request->user('sanctum'));
