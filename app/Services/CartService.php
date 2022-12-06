@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\OrderStatus;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Discount;
 use App\Models\User;
 
 class CartService

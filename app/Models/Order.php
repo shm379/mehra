@@ -11,7 +11,6 @@ class Order extends Model
 {
     use HasFactory;
     use Payable;
-    protected $appends = ['is_cart'];
     protected $guarded = [];
     protected $table = 'orders';
 
@@ -33,12 +32,5 @@ class Order extends Model
     public function notes()
     {
         return $this->hasMany(OrderNote::class);
-    }
-
-    public function getIsCart()
-    {
-        if($this->attributes['type']==OrderStatus::CART)
-            return true;
-        return false;
     }
 }

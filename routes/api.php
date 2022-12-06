@@ -31,11 +31,11 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
     //cart
     Route::prefix('/cart')
         ->name('cart.')
-        ->controller('App\Http\Controllers\Api\Global\CartController')
         ->group(function(){
-            Route::get('/', 'getCart')->name('get-cart');
-            Route::post('/add', 'addItem')->name('add-item');
-            Route::post('/remove', 'removeItem')->name('remove-item');
+            Route::post('/discount', [App\Http\Controllers\Api\Global\DiscountController::class,'setDiscount'])->name('set-discount');
+            Route::get('/', [App\Http\Controllers\Api\Global\CartController::class,'getCart'])->name('get-cart');
+            Route::post('/add', [App\Http\Controllers\Api\Global\CartController::class,'addItem'])->name('add-item');
+            Route::post('/remove', [App\Http\Controllers\Api\Global\CartController::class,'removeItem'])->name('remove-item');
         });
 
     //checkout
@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
             Route::post('/', 'cartToCheckout')->name('checkout');
             Route::post('/callback', 'checkoutCallback')->name('checkout.callback');
         });
+
 
     //shipping - tapin
     Route::prefix('/states')
@@ -58,8 +59,6 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
 /*
  * V1 Without Auth
  */
-Route::post('book', [\App\Http\Controllers\Api\Product\BookController::class, 'index'])->name('books_index');
-Route::post('book/{book}', [\App\Http\Controllers\Api\Product\BookController::class, 'show'])->name('books_show');
 Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
 Route::get('filters/books', [\App\Http\Controllers\Api\Product\BookController::class,'filters'])->name('filters.books');
 Route::apiResource('awards', \App\Http\Controllers\Api\Product\AwardController::class)->only('index','show');

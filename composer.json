@@ -38,7 +38,8 @@
         "tartan/laravel-online-payment": "^8.1",
         "tartan/laravel-xlog": "^v1.3.2",
         "tightenco/ziggy": "^1.5",
-        "unisharp/laravel-filemanager": "^2.5"
+        "unisharp/laravel-filemanager": "^2.5",
+        "ext-http": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
