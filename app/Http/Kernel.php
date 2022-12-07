@@ -46,7 +46,7 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             UserViews::class,
-            \Illuminate\Http\Middleware\HandleCors::class,
+//            \Illuminate\Http\Middleware\HandleCors::class,
         ],
     ];
 
