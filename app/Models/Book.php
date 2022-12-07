@@ -23,7 +23,7 @@ class Book extends Product
         return parent::newQuery()->whereStructure(ProductStructure::BOOK);
     }
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
             'cover_image',

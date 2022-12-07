@@ -151,4 +151,14 @@ class CartService
 
         return self::getCart();
     }
+
+    public function getCartTotal()
+    {
+        return self::getCart()->total_price;
+    }
+
+    public function getSumQuantities()
+    {
+        return (int)self::getCart()->items()->sum('quantity');
+    }
 }

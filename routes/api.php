@@ -62,6 +62,7 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
 Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
 Route::get('filters/books', [\App\Http\Controllers\Api\Product\BookController::class,'filters'])->name('filters.books');
 Route::apiResource('awards', \App\Http\Controllers\Api\Product\AwardController::class)->only('index','show');
+Route::apiResource('categories', \App\Http\Controllers\Api\Product\CategoryController::class)->only('index','show');
 Route::apiResource('collections', \App\Http\Controllers\Api\Product\CollectionController::class)->only('index','show');
 Route::apiResource('creators', \App\Http\Controllers\Api\Product\CreatorController::class)->only('index','show');
 Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerController::class)->only('index','show');

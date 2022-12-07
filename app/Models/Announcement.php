@@ -11,7 +11,7 @@ class Announcement extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
             'main_image',

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('address_id')->nullable();
+            $table->boolean('discount_applied')->default(0);
             $table->unsignedFloat('price_without_discount',10,0)->nullable();
             $table->unsignedFloat('price',10,0);
             $table->unsignedInteger('quantity');

@@ -14,11 +14,6 @@ trait HasMediaTrait
         return $this->morphOne(Media::class, 'model')->where('collection_name', 'main_image');
     }
 
-    public function mediaVerified(): MorphMany
-    {
-        return $this->morphMany(Media::class, 'model')->whereNotNull('verified_at');
-    }
-
     public static function isValidMediaCollection(string $collectionName): bool
     {
         return in_array($collectionName, static::getValidCollections());

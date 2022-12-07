@@ -15,12 +15,21 @@ class CategoryResource extends MehraResource
     public function toArray($request)
     {
         return [
+            'id'=> $this->id,
             'title'=> $this->title,
+//            'books'=> $this->whenLoaded('books',function (){
+//                return new BookResourceCollection($this->books);
+//            }),
+            'children'=> $this->whenLoaded('children',function (){
+                return new CategoryResourceCollection($this->children->load('media'));
+            }),
             'slug'=> $this->slug,
             'description'=> $this->description,
-            'path'=> $this->path,
             'category_template'=> $this->whenLoaded('category_template'),
-            'is_active'=> $this->is_active,
+            'image'=> $this->whenLoaded('media',function (){
+                if($this->hasMedia('image'))
+                    return $this->getMedia('image')->first()->getUrl('thumb');
+            }),
         ];
     }
 }

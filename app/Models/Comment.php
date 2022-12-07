@@ -22,7 +22,7 @@ class Comment extends Model implements HasMedia
 //            ->dontLogIfAttributesChangedOnly([]);
     }
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
             'main_image',

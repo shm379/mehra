@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('all_products')->default(0);
             $table->unsignedBigInteger('used_count')->default(0);
             $table->unsignedBigInteger('per_user')->default(1);
-            $table->unsignedSmallInteger('percent')->nullable();
+            $table->unsignedSmallInteger('is_percent')->nullable();
             $table->unsignedBigInteger('amount')->nullable();
             $table->unsignedBigInteger('min_cart_total')->nullable();
             $table->unsignedBigInteger('max_cart_total')->nullable();

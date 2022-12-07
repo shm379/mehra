@@ -14,7 +14,7 @@ class Collection extends Model implements HasMedia
     use HasFactory, HasMediaTrait;
     protected $guarded = [];
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
             'image',

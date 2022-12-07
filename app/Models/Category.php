@@ -2,17 +2,42 @@
 
 namespace App\Models;
 
+use App\Services\Media\HasMediaTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 
-class Category extends Model
+class Category extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, HasMediaTrait;
+
+    public static function getValidCollections(): array
+    {
+        return [
+            'image',
+        ];
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('image')->singleFile();
+    }
 
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class,'parent_id')
+            ->orderBy('created_at');
     }
 
     public function template()
@@ -22,7 +47,20 @@ class Category extends Model
 
     public function products()
     {
-        return $this->belongsToMany(CategoryProduct::class);
+        return $this->belongsToMany(Product::class,'category_product','category_id')
+            ->using(CategoryProduct::class);
+    }
+
+
+    public function books()
+    {
+        return $this->belongsToMany(
+            Book::class,
+            'category_product',
+            'category_id',
+            'product_id'
+            )
+            ->using(CategoryProduct::class);
     }
 
 

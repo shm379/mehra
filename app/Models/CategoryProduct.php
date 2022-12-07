@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class CategoryProduct extends Pivot
 {
     use HasFactory;
+
+
 }

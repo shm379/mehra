@@ -73,15 +73,15 @@ class User extends Authenticatable implements HasMedia
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
-            'main_image',
+            'avatar',
         ];
     }
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')->singleFile();
+        $this->addMediaCollection('avatar')->singleFile();
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void

@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discount extends Model
 {
-    use HasFactory;
+    public function products()
+    {
+        return $this->belongsToMany(Product::class,'product_discounts');
+    }
+
+    public function scopeLimitProducts($query)
+    {
+        return !$this->attributes['all_products'];
+    }
 }

@@ -17,7 +17,7 @@ class Creator extends Model implements HasMedia
         return 'id';
     }
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
             'avatar',

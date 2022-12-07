@@ -28,7 +28,7 @@ class DiscountController extends Controller
         if(!$this->discount->getCart()){
             return response()->json(['success'=>false,'message'=>'سبد خرید خالی می باشد']);
         }
-//        return $this->discount->applyDiscount($request->input('code');
+        $this->discount->applyDiscount($request->input('code'));
         return new CartResource($this->discount->getCart());
     }
 }

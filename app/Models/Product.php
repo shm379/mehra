@@ -14,14 +14,14 @@ class Product extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
     protected $guarded = [''];
-    protected $appends = ['max_purchases_per_user'];
+    protected $appends = ['main_price','max_purchases_per_user'];
 
     public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    protected static function getValidCollections(): array
+    public static function getValidCollections(): array
     {
         return [
             'main_image',
@@ -148,5 +148,11 @@ class Product extends Model implements HasMedia
             }
         }
         return $max;
+    }
+
+    public function getMainPriceAttribute()
+    {
+        $price = $this->attributes['sale_price'] ? $this->attributes['sale_price'] : $this->attributes['price'];
+        return $price;
     }
 }
