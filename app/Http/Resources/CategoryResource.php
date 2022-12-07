@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 
 
+use App\Models\Category;
+
 class CategoryResource extends MehraResource
 {
     /**
@@ -23,12 +25,15 @@ class CategoryResource extends MehraResource
             'children'=> $this->whenLoaded('children',function (){
                 return new CategoryResourceCollection($this->children->load('media'));
             }),
+            'parent'=> $this->whenLoaded('parent',function (){
+                return new CategoryResource($this->parent->load('media'));
+            }),
             'slug'=> $this->slug,
             'description'=> $this->description,
             'category_template'=> $this->whenLoaded('category_template'),
             'image'=> $this->whenLoaded('media',function (){
                 if($this->hasMedia('image'))
-                    return $this->getMedia('image')->first()->getUrl('thumb');
+                    return $this->getMedia('image')->first()->original_url;
             }),
         ];
     }

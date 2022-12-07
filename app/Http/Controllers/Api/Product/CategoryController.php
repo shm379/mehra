@@ -48,6 +48,8 @@ class CategoryController extends Controller {
     {
         return CategoryResource::make($category->load([
             'media',
+            'parent',
+            'children',
             'books'=> function ($b){
                 $b->with('media');
             }

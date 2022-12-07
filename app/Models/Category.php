@@ -26,7 +26,7 @@ class Category extends Model implements HasMedia
 
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'id';
     }
 
     public function parent()
