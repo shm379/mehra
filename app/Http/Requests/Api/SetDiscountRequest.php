@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api;
 
 use App\Models\Product;
 use App\Rules\AddToCartRule;
+use App\Rules\SetDiscountRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -34,6 +35,7 @@ class SetDiscountRequest extends FormRequest
             'code'=> [
                 'exists:App\Models\Discount,code',
                 'required',
+                new SetDiscountRule::class
             ],
         ];
     }
