@@ -26,4 +26,3 @@ Route::get('/dashboard', function () {
 Route::get('user-datatables', function () {
     return view('admin.users.index');
 });
-require __DIR__.'/auth.php';

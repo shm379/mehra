@@ -48,3 +48,4 @@ Route::prefix('/admin')
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('volumes', \App\Http\Controllers\Admin\VolumeController::class);
     });
+require __DIR__.'/admin/auth.php';
