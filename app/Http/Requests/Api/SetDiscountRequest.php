@@ -35,7 +35,7 @@ class SetDiscountRequest extends FormRequest
             'code'=> [
                 'exists:App\Models\Discount,code',
                 'required',
-                new SetDiscountRule::class
+//                new SetDiscountRule::class
             ],
         ];
     }
