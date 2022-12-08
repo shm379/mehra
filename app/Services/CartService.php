@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\OrderStatus;
+use App\Models\Book;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Discount;
@@ -48,12 +49,12 @@ class CartService
             ->first();
     }
 
-    private function getCartItem($item_id,$quantity,$item_type=Product::class)
+    private function getCartItem($item_id,$quantity,$item_type=Book::class)
     {
         $item = $item_type::query()->find($item_id);
         $cartItem = [];
-        if($item_type==Product::class) {
-            $cartItem['line_item_type'] = 'product';
+        if($item_type==Book::class) {
+            $cartItem['line_item_type'] = 'book';
             $cartItem['line_item_id'] = $item_id;
             $cartItem['price_without_discount'] = $item->price;
             $cartItem['price'] = $item->sale_price ?? $item->price;
@@ -121,7 +122,7 @@ class CartService
         }
         $cartItem = $cart->items()->firstOrCreate([
             'line_item_id'=>$product_id,
-            'line_item_type'=>'product'
+            'line_item_type'=> 'book'
         ],self::getCartItem($product_id,$quantity));
 
         if(!$cartItem->wasRecentlyCreated){

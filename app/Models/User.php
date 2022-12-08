@@ -154,10 +154,7 @@ class User extends Authenticatable implements HasMedia
 
     public function scopeGetOrders($query,$user_id): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        $order = $this->orders()->with(['items'=>function($i){
-                $i->with('load');
-            }
-        ])->find($user_id);
+        $order = $this->orders()->with(['items'])->find($user_id);
         $order->total_price = $order->items()->sum('total_price');
         $order->total_price_without_discount = $order->items()->sum('total_price_without_discount');
         return $this->orders()->with('items');
@@ -169,7 +166,10 @@ class User extends Authenticatable implements HasMedia
             $order = $query->find($user_id)->orders()
                 ->where('status', OrderStatus::CART)
                 ->with(['items'=>function ($i){
-                        $i->with('media');
+                        $i->with(['line_item'=>function ($l){
+                                $l->with('media');
+                            }
+                        ]);
                     }
                 ]);
             if (!$order->exists()) {

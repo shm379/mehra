@@ -24,9 +24,9 @@ class CartItemResource extends MehraResource
             'sub_title'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->sub_title;
             }),
-            'image'=> $this->whenLoaded('line_item.media',function (){
+            'image'=> $this->whenLoaded('line_item',function (){
                 if($this->line_item->hasMedia('back_image'))
-                    return $this->line_item->getMedia('back_image')->first()->original_url;
+                    return optional($this->line_item->getMedia('back_image')->first())->original_url;
             }),
             'producer'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->producer;
