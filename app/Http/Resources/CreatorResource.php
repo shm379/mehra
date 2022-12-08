@@ -23,6 +23,10 @@ class CreatorResource extends MehraResource
             'description'=> $this->description,
             'birthday'=> $this->birthday,
             'nickname'=> $this->nickname,
+            'avatar'=> $this->whenLoaded('media',function (){
+                if($this->hasMedia('avatar'))
+                    return $this->getMedia('avatar')->first()->original_url;
+            }),
             'books'=> $this->whenLoaded('books', function (){
                 return BookResource::collection($this->books);
             }),

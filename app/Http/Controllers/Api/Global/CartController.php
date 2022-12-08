@@ -26,7 +26,7 @@ class CartController extends Controller {
     public function getCart()
     {
         if(!$this->cart->getCart()){
-            return response()->json(['success'=>true,'items'=>[],'total_items'=>count([])]);
+            return response()->json(['success'=>true,'data'=>['items'=>[],'total_items'=>count([])]]);
         }
         return new CartResource($this->cart->getCart());
     }
