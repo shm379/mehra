@@ -2,9 +2,9 @@
 
 namespace App\Exceptions\Api\Auth;
 
-use App\Exceptions\ApiException;
+use App\Exceptions\MehraApiException;
 
-class SendOtpException extends ApiException
+class SendOtpException extends MehraApiException
 {
     public function render($request)
     {

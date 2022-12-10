@@ -5,7 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-class ApiException extends Exception
+class MehraApiException extends Exception
 {
     public function render($request)
     {

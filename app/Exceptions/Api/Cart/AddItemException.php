@@ -2,9 +2,9 @@
 
 namespace App\Exceptions\Api\Cart;
 
-use App\Exceptions\ApiException;
+use App\Exceptions\MehraApiException;
 
-class AddItemException extends ApiException
+class AddItemException extends MehraApiException
 {
     public function render($request)
     {
