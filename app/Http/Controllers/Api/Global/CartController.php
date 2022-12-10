@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Global;
 
+use App\Exceptions\Api\Cart\AddItemException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
 use App\Http\Requests\Api\RemoveFromCartRequest;
@@ -42,9 +43,7 @@ class CartController extends Controller {
         try {
             return new CartResource($this->cart->addToCart($product_id,$quantity));
         }
-        catch (\Exception $exception){
-            return response()->json(['success'=>false,'message'=>config('app.debug')? $exception->getMessage() :'خطا در عملیات']);
-        }
+        catch (AddItemException $exception){}
     }
 
     /*

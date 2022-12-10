@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Exceptions\Api\Auth\SendOtpException;
 use App\Helpers\Helpers;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\Auth\VerifyOtpRequest;
@@ -51,10 +52,7 @@ class AuthController
             // generate token
             $temporaryToken = $user->createToken('web',['verify-otp']);
 
-        } catch (Throwable $ex) {
-            // or prepare and return a view.
-            return response()->json(['success'=>false,'message'=>'ارسال کد با مشکل مواجه شده است']);
-        }
+        } catch (SendOtpException $ex){}
 
         return response()->json(['success'=>true,'temporary_token'=>$temporaryToken->plainTextToken]);
     }
