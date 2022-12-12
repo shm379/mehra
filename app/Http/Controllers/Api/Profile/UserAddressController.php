@@ -19,7 +19,7 @@ class UserAddressController extends Controller
 {
     public function __construct()
     {
-//        $this->authorizeResource(UserAddress::class);
+      //  $this->authorizeResource(UserAddress::class);
     }
 
     /**
