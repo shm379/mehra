@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Helpers\Helpers;
 use App\Models\Product;
 use App\Rules\AddToCartRule;
 use Illuminate\Contracts\Validation\Validator;
@@ -21,6 +22,16 @@ class ApiFormRequest extends FormRequest
     public function authorize()
     {
         return auth()->guard('sanctum')->check();
+    }
+
+    protected function prepareForValidation()
+    {
+        foreach ($this->all() as $key=> $item) {
+//            if(Helpers::isArabicOrPersianNumber($item))
+                $this->merge([
+                    $key => Helpers::toEnglishNumber($item)
+                ]);
+        }
     }
 
     public function failedValidation(Validator $validator)

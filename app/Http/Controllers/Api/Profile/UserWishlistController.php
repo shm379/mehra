@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Profile;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\UserWishlistResourceCollection;
 use App\Models\UserWishlist;
 use Illuminate\Http\Request;

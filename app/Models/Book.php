@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Enums\ProductStructure;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
+use App\Traits\LogsUserView;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 
 class Book extends Product
 {
+    use LogsUserView;
     protected $table = 'products';
 
     public function getRouteKeyName(): string

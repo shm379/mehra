@@ -10,7 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserView extends Model
 {
-    use HasFactory;
     use SoftDeletes;
+    protected $table = 'user_views';
     protected $guarded = [];
+
+    public function model()
+    {
+        return $this->morphTo();
+    }
 }

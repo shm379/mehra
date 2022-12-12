@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('user_views', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->morphs('model');
 

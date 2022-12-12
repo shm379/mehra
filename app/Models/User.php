@@ -122,7 +122,7 @@ class User extends Authenticatable implements HasMedia
 
     public function views()
     {
-        return $this->belongsToMany(UserView::class);
+        return $this->hasMany(UserView::class);
     }
 
     public function addresses()

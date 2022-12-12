@@ -60,13 +60,13 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
             // user address
             Route::apiResource('addresses',\App\Http\Controllers\Api\Profile\UserAddressController::class);
             // user orders
-            Route::get('orders',[\App\Http\Controllers\Api\Profile\OrderController::class, 'index']);
+            Route::get('orders',\App\Http\Controllers\Api\Profile\OrderController::class);
             // user wishlist
             Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class);
            // user messages
-            Route::get('messages',[\App\Http\Controllers\Api\Profile\MessageController::class,'index']);
-           // user wishlist
-            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class);
+            Route::get('messages',\App\Http\Controllers\Api\Profile\MessageController::class);
+           // user views
+            Route::get('last-visits',\App\Http\Controllers\Api\Profile\UserViewController::class);
         });
 });
 

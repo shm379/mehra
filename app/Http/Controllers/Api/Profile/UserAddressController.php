@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Profile;
 use App\Exceptions\Api\Profile\Address\DestroyException;
 use App\Exceptions\Api\Profile\Address\UpdateException;
 use App\Exceptions\MehraApiException;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Profile\StoreUserAddressRequest;
 use App\Http\Requests\Api\Profile\UpdateUserAddressRequest;
 use App\Http\Resources\UserAddressResource;
@@ -17,6 +17,11 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserAddressController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(UserAddress::class,'user');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +45,7 @@ class UserAddressController extends Controller
             $userAddress = auth()->user()->addresses()->create($request->validated());
         } catch (MehraApiException $exception){}
 
-        return response()->json(['success'=>true,'message'=>'آدرس با موفقیت ایجاد گردید']);
+        return $this->successResponse('آدرس با موفقیت ایجاد گردید');
     }
 
     /**
@@ -55,10 +60,9 @@ class UserAddressController extends Controller
             $userAddress = UserAddress::query()->findOrFail($userAddressId);
             if($userAddress->user_id == auth()->id())
                 return UserAddressResource::make($userAddress);
-
-            return response()->json(['success'=>false,'message'=>'دسترسی غیر مجاز!']);
+            return $this->errorResponse('دسترسی غیر مجاز!');
         } catch (ModelNotFoundException $exception){
-            return response()->json(['success'=>false,'message'=>'آدرس یافت نشد!']);
+            return $this->errorResponse('آدرس یافت نشد!');
         }
     }
 
@@ -100,6 +104,7 @@ class UserAddressController extends Controller
         } catch (ModelNotFoundException $exception){
             return response()->json(['success'=>false,'message'=>'آدرس یافت نشد!']);
         } catch (DestroyException $exception){}
+
 
         return response()->json(['success'=>true,'message'=>'آدرس با موفقیت حذف گردید']);
     }

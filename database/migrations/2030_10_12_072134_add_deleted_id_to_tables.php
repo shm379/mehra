@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     public $tables = [
+        'user_views',
         'user_addresses',
         'announcements',
         'category_templates',
