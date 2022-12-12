@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\ShippingCity;
+use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +17,7 @@ final class ShippingStateFactory extends Factory
     *
     * @var string
     */
-    protected $model = ShippingCity::class;
+    protected $model = City::class;
 
     /**
     * Define the model's default state.

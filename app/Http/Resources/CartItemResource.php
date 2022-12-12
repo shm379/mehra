@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\ProductStructure;
 use App\Helpers\Helpers;
 
 
@@ -25,8 +26,10 @@ class CartItemResource extends MehraResource
                 return $this->line_item->sub_title;
             }),
             'image'=> $this->whenLoaded('line_item',function (){
-                if($this->line_item->hasMedia('back_image'))
+                if($this->line_item_type==ProductStructure::BOOK && $this->line_item->hasMedia('back_image'))
                     return optional($this->line_item->getMedia('back_image')->first())->original_url;
+
+                return optional($this->line_item->getMedia('main_image')->first())->original_url;
             }),
             'producer'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->producer;

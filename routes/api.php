@@ -27,7 +27,6 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
  * V1 API LOGGED IN ROUTES
  */
 Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
-
     //cart
     Route::prefix('/cart')
         ->name('cart.')
@@ -53,6 +52,21 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
         ->group(function(){
             Route::post('/', 'getStates')->name('get-states');
             Route::post('/{state}', 'getCities')->name('get-cities');
+        });
+
+    //profile
+    Route::prefix('/profile')
+        ->group(function (){
+            // user address
+            Route::apiResource('addresses',\App\Http\Controllers\Api\Profile\UserAddressController::class);
+            // user orders
+            Route::get('orders',[\App\Http\Controllers\Api\Profile\OrderController::class, 'index']);
+            // user wishlist
+            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class);
+           // user messages
+            Route::get('messages',[\App\Http\Controllers\Api\Profile\MessageController::class,'index']);
+           // user wishlist
+            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class);
         });
 });
 

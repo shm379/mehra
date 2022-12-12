@@ -19,12 +19,13 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name');
             $table->string('national_number')->nullable();
-            $table->string('province_id');
-            $table->string('state_id');
-            $table->integer('number');
-            $table->string('postal_code');
-            $table->string('district');
+            $table->unsignedBigInteger('state_id');
+            $table->unsignedBigInteger('city_id');
+            $table->string('district')->nullable();
+            $table->string('address');
             $table->string('unit');
+            $table->integer('plaque');
+            $table->string('postal_code');
             $table->string('phone');
             $table->string('mobile');
             $table->timestamps();
@@ -32,6 +33,14 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('state_id')
+                ->references('id')
+                ->on('states')
+                ->onDelete('cascade');
+            $table->foreign('city_id')
+                ->references('id')
+                ->on('cities')
                 ->onDelete('cascade');
         });
     }
@@ -43,6 +52,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('addresses');
+        Schema::dropIfExists('user_addresses');
     }
 };

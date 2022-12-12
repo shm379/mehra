@@ -7,8 +7,8 @@ use App\Http\Requests\Api\AddToCartRequest;
 use App\Http\Requests\Api\RemoveFromCartRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Product;
-use App\Models\ShippingCity;
-use App\Models\ShippingState;
+use App\Models\City;
+use App\Models\State;
 use App\Services\CartService;
 
 class ShippingController extends Controller {
@@ -19,13 +19,13 @@ class ShippingController extends Controller {
      */
     public function getStates()
     {
-       return ShippingState::query()->get();
+       return State::query()->get();
     }
 
     /*
      * Get Cities By State
      */
-    public function getCities(ShippingState $state)
+    public function getCities(State $state)
     {
         return $state->cities()->get();
     }

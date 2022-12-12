@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\ShippingCity;
-use App\Models\ShippingState;
+use App\Models\City;
+use App\Models\State;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 
@@ -21,7 +21,7 @@ class StateAndCitiesSeeder extends Seeder
         if($hasTapinFile){
             $states = json_decode(File::get(public_path('data/tapin.json')),true);
             foreach ($states as $stateId => $state) {
-                $stateDB = ShippingState::query()->create(
+                $stateDB = State::query()->create(
                     [
                         'id'=> $stateId,
                         'title'=> $state['title'],
@@ -29,10 +29,10 @@ class StateAndCitiesSeeder extends Seeder
                 );
                 if(isset($state['cities'])) {
                     foreach ($state['cities'] as $cityId => $cityTitle) {
-                        ShippingCity::query()->create(
+                        City::query()->create(
                             [
                                 'id' => $cityId,
-                                'shipping_state_id' => $stateId,
+                                'state_id' => $stateId,
                                 'title' => $cityTitle
                             ]
                         );

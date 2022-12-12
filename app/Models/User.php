@@ -6,8 +6,6 @@ use App\Enums\OrderStatus;
 use App\Enums\UserFollowType;
 use App\Services\Media\HasMediaTrait;
 use App\Traits\MustVerifyMobile;
-use Fouladgar\OTP\Concerns\HasOTPNotify;
-use Fouladgar\OTP\Contracts\OTPNotifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -102,6 +100,11 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(UserFollow::class,'follow_id');
     }
 
+    public function messages()
+    {
+        return $this->morphMany(Notification::class,'object');
+    }
+
     public function followers()
     {
         return $this->follows()->where('type',UserFollowType::FOLLOWER);
@@ -125,6 +128,11 @@ class User extends Authenticatable implements HasMedia
     public function addresses()
     {
         return $this->hasMany(UserAddress::class);
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(UserWishlist::class);
     }
 
     public function announcements()
