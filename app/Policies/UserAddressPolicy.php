@@ -19,6 +19,17 @@ class UserAddressPolicy
     {
         //
     }
+    /**
+     * Perform pre-authorization checks.
+     *
+     * @param  \App\Models\User  $user
+     * @param  string  $ability
+     * @return void|bool
+     */
+    public function before(User $user, $ability)
+    {
+        dd($user);
+    }
 
     public function create (User $user) {
         return true;
@@ -36,7 +47,6 @@ class UserAddressPolicy
         return $user->id == $userAddress->user_id;
     }
     public function view (User $user, UserAddress $userAddress) {
-
         return $user->id == $userAddress->user_id;
     }
 }
