@@ -19,7 +19,7 @@ class UserAddressController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(UserAddress::class,'user');
+//        $this->authorizeResource(UserAddress::class);
     }
 
     /**
@@ -58,9 +58,7 @@ class UserAddressController extends Controller
     {
         try {
             $userAddress = UserAddress::query()->findOrFail($userAddressId);
-            if($userAddress->user_id == auth()->id())
-                return UserAddressResource::make($userAddress);
-            return $this->errorResponse('دسترسی غیر مجاز!');
+            return UserAddressResource::make($userAddress);
         } catch (ModelNotFoundException $exception){
             return $this->errorResponse('آدرس یافت نشد!');
         }

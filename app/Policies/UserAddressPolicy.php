@@ -36,6 +36,7 @@ class UserAddressPolicy
         return $user->id == $userAddress->user_id;
     }
     public function view (User $user, UserAddress $userAddress) {
+
         return $user->id == $userAddress->user_id;
     }
 }
