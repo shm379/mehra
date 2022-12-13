@@ -15,15 +15,20 @@ return new class extends Migration
     {
         Schema::create('comment_rates', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('comment_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('rate_id');
-            $table->integer('rate');
-            $table->unique(['product_id','rate_id']);
+            $table->unsignedTinyInteger('score') ;
+            $table->unique(['comment_id','product_id','rate_id']);
             $table->timestamps();
 
             $table->foreign('product_id')
                 ->references('id')
                 ->on('products')
+                ->onDelete('cascade');
+            $table->foreign('comment_id')
+                ->references('id')
+                ->on('comments')
                 ->onDelete('cascade');
             $table->foreign('rate_id')
                 ->references('id')

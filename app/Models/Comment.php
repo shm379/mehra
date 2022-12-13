@@ -13,6 +13,7 @@ use Spatie\MediaLibrary\HasMedia;
 
 class Comment extends Model implements HasMedia
 {
+    protected $guarded = ['user_id'];
     use LogsActivity, HasMediaTrait;
 
     public function getActivitylogOptions(): LogOptions
@@ -25,12 +26,12 @@ class Comment extends Model implements HasMedia
     public static function getValidCollections(): array
     {
         return [
-            'main_image',
+            'gallery',
         ];
     }
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')->singleFile();
+        $this->addMediaCollection('gallery');
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
@@ -43,7 +44,7 @@ class Comment extends Model implements HasMedia
             $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
         }
 
-        $conversion->nonQueued()->performOnCollections('main_image');
+        $conversion->nonQueued()->performOnCollections('gallery');
     }
 
     public function user()
@@ -53,13 +54,19 @@ class Comment extends Model implements HasMedia
 
     public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function points()
     {
         return $this->hasMany(CommentPoint::class);
     }
+
+    public function rates()
+    {
+        return $this->hasMany(CommentRate::class,'comment_id');
+    }
+
 
     public function likes()
     {

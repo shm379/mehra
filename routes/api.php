@@ -68,6 +68,9 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
            // user views
             Route::get('last-visits',\App\Http\Controllers\Api\Profile\UserViewController::class);
         });
+
+    //comments
+    Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index','store');
 });
 
 /*

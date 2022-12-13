@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\Api\SetDiscountRequest;
+use App\Http\Requests\Api\Cart\SetDiscountRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Product;
 use App\Services\DiscountService;

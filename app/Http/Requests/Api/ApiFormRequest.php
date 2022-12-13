@@ -13,7 +13,6 @@ use Illuminate\Validation\Rule;
 class ApiFormRequest extends FormRequest
 {
 //    protected $stopOnFirstFailure = true;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,9 +27,13 @@ class ApiFormRequest extends FormRequest
     {
         foreach ($this->all() as $key=> $item) {
 //            if(Helpers::isArabicOrPersianNumber($item))
+            if(!is_array($item)) {
                 $this->merge([
                     $key => Helpers::toEnglishNumber($item)
                 ]);
+            } else {
+
+            }
         }
     }
 

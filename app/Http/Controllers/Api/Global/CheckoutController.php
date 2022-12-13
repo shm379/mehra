@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\Api\AddToCartRequest;
-use App\Http\Requests\Api\CheckoutRequest;
-use App\Http\Requests\Api\RemoveFromCartRequest;
+use App\Http\Requests\Api\Cart\AddToCartRequest;
+use App\Http\Requests\Api\Cart\CheckoutRequest;
+use App\Http\Requests\Api\Cart\RemoveFromCartRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Cart;
 use App\Models\Product;

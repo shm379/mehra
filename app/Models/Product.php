@@ -18,7 +18,7 @@ class Product extends Model implements HasMedia
 
     public function getRouteKeyName(): string
     {
-        return 'slug';
+        return 'id';
     }
 
     public static function getValidCollections(): array
@@ -132,7 +132,9 @@ class Product extends Model implements HasMedia
 
     public function rates()
     {
-        return $this->belongsToMany(Rate::class , 'product_rates', 'product_id');
+        return $this->belongsToMany(Rate::class, 'comment_rates')
+            ->using(CommentRate::class)
+            ->withPivot(['comment_id','rate_id','product_id','score']);
     }
 
     public function getMaxPurchasesPerUserAttribute()
@@ -154,5 +156,16 @@ class Product extends Model implements HasMedia
     {
         $price = $this->attributes['sale_price'] ? $this->attributes['sale_price'] : $this->attributes['price'];
         return $price;
+    }
+
+    public function getSatisfiedNoAttribute()
+    {
+        $i_suggest = 0;
+        foreach ($this->comments->groupBy('user_id') as $comment){
+            if(in_array(1,$comment->pluck('i_suggest')->toArray())){
+                $i_suggest += 1;
+            }
+        }
+        return $i_suggest;
     }
 }

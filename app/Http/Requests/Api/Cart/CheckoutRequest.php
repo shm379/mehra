@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Cart;
 
+use App\Http\Requests\Api\ApiFormRequest;
 use App\Models\Product;
 use App\Rules\AddToCartRule;
 use Illuminate\Contracts\Validation\Validator;
@@ -9,19 +10,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class CheckoutRequest extends FormRequest
+class CheckoutRequest extends ApiFormRequest
 {
     protected $stopOnFirstFailure = true;
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return auth()->guard('sanctum')->check();
-    }
 
     /**
      * Get the validation rules that apply to the request.

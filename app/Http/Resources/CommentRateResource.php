@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\CommentPointStatus;
+use App\Enums\CommentStatus;
 
 
-class CommentPointResource extends MehraResource
+class CommentRateResource extends MehraResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,9 @@ class CommentPointResource extends MehraResource
     public function toArray($request)
     {
         return [
-            "id"=> $this->id,
             "title"=> $this->title,
-            "status"=> $this->status==1?'مثبت':'منفی',
+            "rank"=> $this->pivot->rank,
+            "number_of_voters"=> $this->pivot->number_of_voters,
         ];
     }
 }

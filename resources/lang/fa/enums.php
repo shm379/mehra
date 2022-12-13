@@ -1,6 +1,10 @@
 <?php declare(strict_types=1);
 
 return [
+    'App\Enums\CommentStatus'=>[
+        1 => 'در انتظار تایید',
+        2 => 'تایید شده',
+    ],
     'App\Enums\UserCity'=>[
         'قم' => 'قم',
         2 => 'خانم',

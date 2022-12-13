@@ -1,6 +1,6 @@
 {
     "platform": "laravel",
-    "app": "laravel-starter",
+    "app": "mehra",
     "laravel": {
         "phpVersion": "8.1"
     }

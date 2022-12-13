@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\CommentPointStatus;
 use App\Enums\CommentStatus;
 
 
@@ -17,29 +18,23 @@ class CommentResource extends MehraResource
     {
         return [
             "id"=> $this->id,
-            "user"=> $this->whenLoaded('user'),
-            "user_id"=> $this->user_id,
-            "order_id"=> $this->order_id,
-            "body"=> $this->body,
-            "product_id"=> $this->product_id,
-            "parent_id"=> $this->parent_id,
-            "rate"=> $this->rate,
-            "status"=> CommentStatus::getDescription($this->status),
-            "is_anonymous"=> $this->is_anonymous,
-            "created_at"=> $this->created_at,
-            "updated_at"=> $this->updated_at,
-            "admin_id"=> $this->admin_id,
-            "deleted_at"=> $this->deleted_at,
-            "media"=> $this->whenLoaded('media'),
-            "points"=> $this->whenLoaded('points',function (){
-                return CommentPointResource::collection($this->points);
+            "name"=> $this->is_anonymous ? 'ناشناس' : $this->user->name,
+            "rate"=> $this->whenLoaded('rates',function (){
+                return new CommentRateResourceCollection($this->rates);
             }),
-            "likes_count"=> $this->whenLoaded('likes',function (){
+            "i_suggest"=> (bool)$this->i_suggest,
+            "body"=> $this->body,
+            "is_buyer"=> (bool)$this->is_buyer,
+            "date"=> optional($this->created_at)->diffForHumans(),
+            "clap"=> $this->whenLoaded('likes',function (){
                 return $this->likes->where('is_dislike',0)->count();
             }),
-            "dislikes_count"=> $this->whenLoaded('likes',function (){
-                return $this->likes->where('is_dislike',1)->count();
-            })
+            "advantages"=> $this->whenLoaded('points',function (){
+                return CommentPointResource::collection($this->points->where('status',CommentPointStatus::POSITIVE));
+            }),
+            "disadvantages"=> $this->whenLoaded('points',function (){
+                return CommentPointResource::collection($this->points->where('status',CommentPointStatus::NEGATIVE));
+            }),
         ];
     }
 }

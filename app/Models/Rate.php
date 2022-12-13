@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rate extends Model
 {
     use HasFactory;
+
+    public function comments()
+    {
+        return $this->belongsToMany(Comment::class,'comment_rates');
+    }
 }

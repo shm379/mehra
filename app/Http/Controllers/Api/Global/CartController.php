@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Global;
 
 use App\Exceptions\Api\Cart\AddItemException;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\Api\AddToCartRequest;
-use App\Http\Requests\Api\RemoveFromCartRequest;
+use App\Http\Requests\Api\Cart\AddToCartRequest;
+use App\Http\Requests\Api\Cart\RemoveFromCartRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Product;
 use App\Services\CartService;

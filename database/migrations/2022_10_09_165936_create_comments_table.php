@@ -16,21 +16,27 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('order_id')->nullable();
-            $table->text('body');
-            $table->morphs('commentable');
+            $table->boolean('i_suggest')->nullable();
+            $table->boolean('is_anonymous')->nullable();
+            $table->boolean('is_buyer')->nullable();
+            $table->longText('body');
             $table->unsignedBigInteger('parent_id')->nullable();
-            $table->unsignedFloat(  'rate')->nullable();
-            $table->integer('status');
+            $table->enum('status',\App\Enums\CommentStatus::asArray())->default(\App\Enums\CommentStatus::PENDING);
             $table->timestamps();
 
-            $table->foreign('order_id')
-                ->references('id')
-                ->on('orders')
-                ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('products')
+                ->onDelete('cascade');
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
                 ->onDelete('cascade');
             $table->foreign('parent_id')
                 ->references('id')
