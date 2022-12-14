@@ -24,8 +24,8 @@ class AddressRequest extends ApiFormRequest
             'city_id'=>'required|exists:App\Models\City,id',
             'unit'=>'required',
             'postal_code'=>'nullable|ir_postal_code',
-            'mobile'=>'required|ir_mobile',
-            'phone'=>'required|ir_phone_with_code',
+            'mobile'=>'nullable|ir_mobile',
+            'phone'=>'nullable|ir_phone_with_code',
         ];
     }
 }

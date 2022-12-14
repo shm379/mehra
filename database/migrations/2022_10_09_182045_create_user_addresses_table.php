@@ -25,9 +25,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('unit');
             $table->integer('plaque');
-            $table->string('postal_code');
-            $table->string('phone');
-            $table->string('mobile');
+            $table->string('postal_code')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('mobile')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')
