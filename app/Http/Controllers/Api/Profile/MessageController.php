@@ -11,7 +11,7 @@ class MessageController extends Controller
 {
     public function __invoke()
     {
-        $notifications = auth()->user()->messages;
+        $notifications = auth()->user()->messages()->paginate($this->perPage);
         return new NotificationResourceCollection($notifications);
     }
 }

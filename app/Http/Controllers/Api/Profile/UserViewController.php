@@ -16,7 +16,7 @@ class UserViewController extends Controller
      */
     public function __invoke()
     {
-        $views = auth()->user()->views;
+        $views = auth()->user()->views()->paginate($this->perPage);
         return new UserViewResourceCollection($views);
     }
 }
