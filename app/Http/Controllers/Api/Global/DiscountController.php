@@ -26,7 +26,7 @@ class DiscountController extends Controller
     public function setDiscount(SetDiscountRequest $request)
     {
         if(!$this->discount->getCart()){
-            return response()->json(['success'=>false,'message'=>'سبد خرید خالی می باشد']);
+            return $this->errorResponse('سبد خرید خالی می باشد');
         }
         $this->discount->applyDiscount($request->input('code'));
         return new CartResource($this->discount->getCart());

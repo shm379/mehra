@@ -18,7 +18,15 @@ trait ApiResponse
             'success' => true,
             'data'=>[
                 'message' => $message,
-                ]
+            ]
+            ], $code);
+    }
+    protected function successResponseWithData($data, $code = 200): JsonResponse
+    {
+        return response()->json([
+                'success' => true,
+                'data'=> $data,
+
             ], $code);
     }
 

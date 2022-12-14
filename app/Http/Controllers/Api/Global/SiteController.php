@@ -13,7 +13,7 @@ class SiteController extends Controller {
 
     public function index()
     {
-        return response()->json([
+        return $this->successResponseWithData([
             'menu'=> Menu::query()->get(),
             'announcements'=> Announcement::query()->first(),
         ]);

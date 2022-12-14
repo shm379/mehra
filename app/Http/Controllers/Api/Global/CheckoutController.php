@@ -32,7 +32,7 @@ class CheckoutController extends Controller {
         $addressId = $this->checkout->saveAddress($request->except(['gateway']));
         $process = $this->checkout->process($addressId);
         if(!$process){
-            return response()->json(['success'=>false,'message'=>'سبد خرید خالی است']);
+            return $this->errorResponse('سبد خرید خالی است');
         }
     }
 

@@ -11,7 +11,7 @@ class HomeController extends Controller {
 
     public function index()
     {
-        return response()->json([
+        return $this->successResponseWithData([
             'products'=>Product::query()->get(),
             'categories'=>Category::query()->get(),
             'awards'=>Award::query()->get()

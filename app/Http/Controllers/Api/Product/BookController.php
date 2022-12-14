@@ -98,7 +98,6 @@ class BookController extends Controller {
         $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();
         $producers = \App\Models\Producer::query()->pluck('id','title')->toArray();
         $filters = [
-            'filter'=> [
                 'attributes'=> [
                     'title'=>'ویژگی',
                     'key'=> 'attributeValues.id',
@@ -135,19 +134,18 @@ class BookController extends Controller {
                     'icon'=>'',
                     'value'=> $producers,
                 ]
-            ]
         ];
         foreach ($filters as $filter){
             foreach ($attributes as $key=> $attribute){
                 $en_name = \Str::slug($attribute->first()->attribute->en_name);
-                $filters['filter'][$en_name]['key'] = 'attributeValues.id';
-                $filters['filter'][$en_name]['title'] = $key;
-                $filters['filter'][$en_name]['icon'] = $attribute->first()->attribute->icon;
-                $filters['filter'][$en_name]['value'] = $attribute->flatten()->pluck('id','value')->all();
+                $filters[$en_name]['key'] = 'attributeValues.id';
+                $filters[$en_name]['title'] = $key;
+                $filters[$en_name]['icon'] = $attribute->first()->attribute->icon;
+                $filters[$en_name]['value'] = $attribute->flatten()->pluck('id','value')->all();
             }
         }
-        unset($filters['filter']['attributes']);
+        unset($filters['attributes']);
 
-        return response()->json($filters);
+        return $this->successResponseWithData($filters);
     }
 }

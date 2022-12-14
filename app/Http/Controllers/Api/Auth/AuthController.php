@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Exceptions\Api\Auth\SendOtpException;
 use App\Helpers\Helpers;
+use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\Auth\VerifyOtpRequest;
 use App\Models\User;
 use App\Notifications\SendVerifySMS;
 use App\Services\OtpService;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 use Throwable;
 
-class AuthController
+class AuthController extends Controller
 {
 
     public function checkExists($mobile)
@@ -55,7 +56,7 @@ class AuthController
 
         } catch (SendOtpException $ex){}
 
-        return response()->json(['success'=>true,'temporary_token'=>$temporaryToken->plainTextToken]);
+        return $this->successResponseWithData(['temporary_token'=>$temporaryToken->plainTextToken]);
     }
 
     public function verifyOTP(VerifyOtpRequest $request)
@@ -68,24 +69,38 @@ class AuthController
             if($user && OtpService::verifyOtp($user->mobile,(int)$request->get('code'))){
                 $token = $user->createToken('web',['view-user']);
             } else {
-                return response()->json(['success'=>false,'message'=>'کد تایید اشتباه است']);
+                return $this->errorResponse('کد تایید اشتباه است');
             }
         } catch (\App\Exceptions\InvalidOTPTokenException $exception){
-            return response()->json(['error'=>$exception->getMessage()],$exception->getCode());
+            return $this->errorResponse('خطایی در تایید کد پیش آمده است');
         } catch (Throwable $ex) {
-            return response()->json(['success'=>false,'message'=>'خطایی در تایید کد پیش آمده است']);
+            return $this->errorResponse('خطایی در تایید کد پیش آمده است');
         }
 
-        return response()->json(['success'=>true,'token'=>$token->plainTextToken,'refresh_token'=>route('api.v1.refresh-token'),'user'=>$user]);
+        return $this->successResponseWithData([
+            'token'=>$token->plainTextToken,
+            'refresh_token'=>route('api.v1.refresh-token'),
+            'user'=>$user
+        ]);
     }
 
     public function refreshToken(Request $request)
     {
         $request->user()->tokens()->delete();
 
-        return response()->json([
-            'success'=>true,
-            'access_token' => $request->user()->createToken('web', ['view-user'])->plainTextToken,
+        return $this->successResponseWithData([
+            'access_token' => $request->user()->createToken('web', ['view-user'])->plainTextToken
         ]);
+    }
+
+    public function getMe(Request $request)
+    {
+        return $this->successResponseWithData($request->user('sanctum'));
+    }
+
+    public function updateMe(Request $request)
+    {
+        $request->user('sanctum')->update($request->toArray());
+        return $this->successResponse('اطلاعات با موفقیت ویرایش گردید');
     }
 }

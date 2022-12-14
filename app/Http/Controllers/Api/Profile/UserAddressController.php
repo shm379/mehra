@@ -79,10 +79,10 @@ class UserAddressController extends Controller
                 $userAddress->update($request->validated());
 
         } catch (ModelNotFoundException $exception){
-            return response()->json(['success'=>false,'message'=>'آدرس یافت نشد!']);
+            return $this->errorResponse('آدرس یافت نشد!');
         } catch (UpdateException $exception){}
 
-        return response()->json(['success'=>true,'message'=>'آدرس با موفقیت ویرایش گردید.']);
+        return $this->successResponse('آدرس با موفقیت ویرایش گردید.');
     }
 
     /**
@@ -98,12 +98,11 @@ class UserAddressController extends Controller
             if($userAddress->user_id == auth()->id())
                 $userAddress->delete();
             else
-                return response()->json(['success'=>false,'message'=>'دسترسی غیر مجاز!']);
+                return $this->errorResponse('دسترسی غیر مجاز!');
         } catch (ModelNotFoundException $exception){
-            return response()->json(['success'=>false,'message'=>'آدرس یافت نشد!']);
+            return $this->errorResponse('آدرس یافت نشد!');
         } catch (DestroyException $exception){}
 
-
-        return response()->json(['success'=>true,'message'=>'آدرس با موفقیت حذف گردید']);
+        return $this->successResponse('آدرس با موفقیت حذف گردید');
     }
 }

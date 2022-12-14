@@ -16,12 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
-    Route::get('/me', function (Request $request) {
-        return response()->json($request->user('sanctum'));
-    })->name('me');
-    Route::post('/me', function (Request $request) {
-        $request->user('sanctum')->update($request->toArray());
-    })->name('me');
+    Route::get('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'getMe'])->name('get-me');
+    Route::post('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'updateMe'])->name('update-me');
 });
 /*
  * V1 API LOGGED IN ROUTES

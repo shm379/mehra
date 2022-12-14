@@ -19,7 +19,7 @@ class ShippingController extends Controller {
      */
     public function getStates()
     {
-       return State::query()->get();
+       return $this->successResponseWithData(State::query()->get());
     }
 
     /*
@@ -27,6 +27,6 @@ class ShippingController extends Controller {
      */
     public function getCities(State $state)
     {
-        return $state->cities()->get();
+        return $this->successResponseWithData($state->cities()->get());
     }
 }

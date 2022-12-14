@@ -138,7 +138,7 @@ class CartService
             //Get Current Cart Item
             $item = $cart->items()->where([
                 'line_item_id'=>$product_id,
-                'line_item_type'=>'product'
+                'line_item_type'=>'book'
             ]);
             // IF Cart Exists
             if($item->exists()){
