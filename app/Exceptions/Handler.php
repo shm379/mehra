@@ -60,27 +60,27 @@ class Handler extends ExceptionHandler
 
         switch ($statusCode) {
             case 401:
-                $response['message'] = 'عدم دسترسی';
+                $response['data']['message'] = 'عدم دسترسی';
                 break;
             case 403:
-                $response['message'] = 'دسترسی غیرمجاز';
+                $response['data']['message'] = 'دسترسی غیرمجاز';
                 break;
             case 405:
             case 404:
-                $response['message'] = 'صفحه مورد نظر یافت نشد!';
+                $response['data']['message'] = 'صفحه مورد نظر یافت نشد!';
                 break;
             case 422:
-                $response['message'] = $exception->original['message'];
-                $response['errors'] = $exception->original['errors'];
+                $response['data']['message'] = $exception->original['message'];
+                $response['data']['errors'] = $exception->original['errors'];
                 break;
             default:
-                $response['message'] = ($statusCode == 500) ? 'خطایی در سیستم رخ داده است!' : $exception->getMessage();
+                $response['data']['message'] = ($statusCode == 500) ? 'خطایی در سیستم رخ داده است!' : $exception->getMessage();
                 break;
         }
 
         if (config('app.debug')) {
-            $response['trace'] = $exception->getTrace();
-            $response['code'] = $exception->getCode();
+            $response['data']['trace'] = $exception->getTrace();
+            $response['data']['code'] = $exception->getCode();
         }
 
         $response['success'] = false;
@@ -89,7 +89,6 @@ class Handler extends ExceptionHandler
     }
     private function handleApiException($request, $exception)
     {
-        dd($exception);
         $exception = $this->prepareException($exception);
 
         if ($exception instanceof \HttpResponseException) {

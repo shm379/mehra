@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 
-
 use App\Models\Category;
 
 class CategoryResource extends MehraResource
