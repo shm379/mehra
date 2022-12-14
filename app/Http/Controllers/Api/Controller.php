@@ -17,7 +17,7 @@ class Controller extends BaseController
     {
         if($method=='index'){
             $this->perPage = 12;
-            if($parameters[0]->query->has('per_page')){
+            if(isset($parameters[0]) && $parameters[0]->query->has('per_page')){
                 $this->perPage = (int)$parameters[0]->query->get('per_page');
                 if($parameters[0]->query->get('per_page')>20)
                     $this->perPage = 12;
