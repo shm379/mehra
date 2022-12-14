@@ -27,7 +27,7 @@ class ApiFormRequest extends FormRequest
     {
         foreach ($this->all() as $key=> $item) {
 //            if(Helpers::isArabicOrPersianNumber($item))
-            if(!is_array($item)) {
+            if(!is_array($item) && !is_null($item)) {
                 $this->merge([
                     $key => Helpers::toEnglishNumber($item)
                 ]);
