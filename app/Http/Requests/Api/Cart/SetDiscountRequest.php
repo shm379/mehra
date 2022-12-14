@@ -39,18 +39,4 @@ class SetDiscountRequest extends ApiFormRequest
     }
 
 
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-
-            'success'   => false,
-
-            'message'   => count($validator->errors()->all())?$validator->errors()->all()[0]:$validator->errors()->all(),
-
-//            'rules'      => $validator->failed()
-
-        ]));
-
-    }
-
 }

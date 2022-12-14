@@ -46,17 +46,4 @@ class RemoveFromCartRequest extends ApiFormRequest
           'id.exists'=>'آیتم انتخابی در سبد خرید وجود ندارد'
         ];
     }
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-
-            'success'   => false,
-
-            'message'   => count($validator->errors()->all())?$validator->errors()->all()[0]:$validator->errors()->all(),
-
-            'data'      => $validator->failed()
-
-        ]));
-
-    }
 }

@@ -43,10 +43,10 @@ class ApiFormRequest extends FormRequest
 
             'success'   => false,
 
-            'message'   => count($validator->errors()->all())?$validator->errors()->all()[0]:$validator->errors()->all(),
-
-            'rules'      => $validator->failed()
-
+            'data'=>[
+                'message'   => count($validator->errors()->all())?$validator->errors()->all()[0]:$validator->errors()->all(),
+                'rules'      => $validator->failed()
+            ]
         ]));
 
     }

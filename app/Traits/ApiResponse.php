@@ -16,16 +16,20 @@ trait ApiResponse
     {
         return response()->json([
             'success' => true,
-            'message' => $message,
-        ], $code);
+            'data'=>[
+                'message' => $message,
+                ]
+            ], $code);
     }
 
     protected function errorResponse($message, $code= 200): JsonResponse
     {
         return response()->json([
             'success' => false,
-            'message' => $message,
-        ], $code);
+            'data'=>[
+                'message' => $message,
+                ]
+            ], $code);
     }
 
 }

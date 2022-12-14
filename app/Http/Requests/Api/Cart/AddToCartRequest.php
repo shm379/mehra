@@ -51,18 +51,4 @@ class AddToCartRequest extends ApiFormRequest
           'quantity.min'=>'تعداد درخواستی شما برای خرید کمتر از حد مجاز است!',
         ];
     }
-
-    public function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-
-            'success'   => false,
-
-            'message'   => count($validator->errors()->all())?$validator->errors()->all()[0]:$validator->errors()->all(),
-
-            'rules'      => $validator->failed()
-
-        ]));
-
-    }
 }
