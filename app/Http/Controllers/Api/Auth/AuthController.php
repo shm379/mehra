@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Notifications\SendVerifySMS;
 use App\Services\OtpService;
 use Illuminate\Support\Facades\Request;
+use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 use Throwable;
 

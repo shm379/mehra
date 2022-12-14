@@ -23,13 +23,11 @@ class OtpService
         $verificationCode = Otp::query()->where('user_id', $user->id)->latest()->first();
 
         $now = Carbon::now();
-        $expireTime= $now->addMinutes(30);
-
         if ($verificationCode && $now->isBefore($verificationCode->expired_at)) {
             return $verificationCode;
         }
-
         $code = rand(103246, 999999);
+        $expireTime= $now->addMinutes(30);
 
         // Create a New OTP
         return Otp::query()->create([
