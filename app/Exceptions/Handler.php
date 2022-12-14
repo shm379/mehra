@@ -114,5 +114,6 @@ class Handler extends ExceptionHandler
             $retval = parent::render($request, $e);
         }
 
-        return $retval;    }
+        return $retval;
+    }
 }
