@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rates', function (Blueprint $table) {
+        Schema::create('rank_attributes', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->timestamps();

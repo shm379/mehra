@@ -55,22 +55,33 @@ class Product extends Model implements HasMedia
 
     public function productRelated(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class,'product_related', 'product_id');
+        return $this->belongsToMany(Product::class,'product_related', 'product_id')
+            ->using(ProductRelated::class)
+            ->withPivot(['order','type']);
     }
 
     public function related(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->productRelated()->where('type',ProductRelatedType::RELATED);
+        if($this->productRelated()->exists())
+            return $this->productRelated()->where('pivot.type',ProductRelatedType::RELATED);
+
+            return $this->productRelated();
     }
 
     public function upsell(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->productRelated()->where('type',ProductRelatedType::UPSELL);
+        if($this->productRelated()->exists())
+            return $this->productRelated()->where('pivot.type',ProductRelatedType::UPSELL);
+
+        return $this->productRelated();
     }
 
     public function cross_sell(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->productRelated()->where('type',ProductRelatedType::CROSS_SELL);
+        if($this->productRelated()->exists())
+            return $this->productRelated()->where('pivot.type',ProductRelatedType::CROSS_SELL);
+
+        return $this->productRelated();
     }
 
     public function producer()
@@ -130,11 +141,22 @@ class Product extends Model implements HasMedia
         return $this->hasMany(Question::class, 'product_id');
     }
 
-    public function rates()
+    public function rank_attributes()
     {
-        return $this->belongsToMany(Rate::class, 'comment_rates')
-            ->using(CommentRate::class)
-            ->withPivot(['comment_id','rate_id','product_id','score']);
+        return $this->belongsToMany(RankAttribute::class, 'ranks')
+            ->using(Rank::class)
+            ->withPivot(['comment_id','user_id','rank_attribute_id','product_id','score']);
+    }
+
+    public function getRankAttribute()
+    {
+        if($this->rank_attributes()->exists())
+            return [
+                'rank'=>round($this->rank_attributes()->avg('score'),2),
+                'number_of_voters'=> $this->rank_attributes()->get()->unique('user_id')->count()
+            ];
+
+        return null;
     }
 
     public function getMaxPurchasesPerUserAttribute()

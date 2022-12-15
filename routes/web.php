@@ -18,9 +18,6 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    dd(auth()->user()->following);
-
-//    OTP('+98939172790');
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('user-datatables', function () {

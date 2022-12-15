@@ -89,8 +89,8 @@ class ProductController extends Controller
                     'in_stock_count'=> $product->in_stock_count,
                     'is_active'=> $product->is_active,
                     'is_active_volume'=> $product->is_active_volume,
-                    'rates'=> $product->rates,
-                    'rate'=> ['customers_count'=>10,'rate'=>4.33],
+                    'ranks'=> $product->rank_attributes,
+                    'rank'=> $product->rank,
                     'comments'=> $product->comments->load(['points','likes']),
                     'creators'=> $product->creators,
                     'main_image'=> $product->hasMedia('main_image') ? $product->getMedia('main_image')->first()->original_url : '',
@@ -104,6 +104,7 @@ class ProductController extends Controller
                 ];
             })
             ->withQueryString();
+        dd($products->first());
         // return table in inertia with columns
         return Inertia::render('Product/Index')
             ->with(['products' => $products])

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\Rate;
+use App\Models\RankAttribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +17,7 @@ final class RateFactory extends Factory
     *
     * @var string
     */
-    protected $model = Rate::class;
+    protected $model = RankAttribute::class;
 
     /**
     * Define the model's default state.

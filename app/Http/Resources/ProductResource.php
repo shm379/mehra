@@ -53,8 +53,10 @@ class ProductResource extends MehraResource
             'is_available'=> $this->is_available,
             'in_stock_count'=> $this->in_stock_count,
             'is_active'=> $this->is_active,
-            'rates'=> $this->whenLoaded('rates'),
-            'rate'=> ['customers_count'=>10,'rate'=>4.33],
+            'ranks'=> $this->whenLoaded('rank_attributes'),
+            'rank'=> $this->whenLoaded('rank_attributes', function (){
+                return $this->rank;
+            }),
             'comments'=> $this->whenLoaded('comments',function () {
                 return CommentResource::collection($this->comments->load(['points','likes']));
             }),

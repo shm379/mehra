@@ -18,8 +18,8 @@ class ProductCommentResource extends MehraResource
     {
         return [
             "satisfied_no"=> $this->satisfied_no,
-            "rate" => $this->whenLoaded('rates',function (){
-                return new CommentRateResourceCollection($this->rates);
+            "rate" => $this->whenLoaded('rank_attributes',function (){
+                return new CommentRankResourceCollection($this->rank_attributes);
             }),
             "galleries"=> $this->whenLoaded('comments',function (){
                 return new CommentGalleryResourceCollection($this->comments->pluck('media')->flatten());

@@ -62,11 +62,10 @@ class Comment extends Model implements HasMedia
         return $this->hasMany(CommentPoint::class);
     }
 
-    public function rates()
+    public function ranks()
     {
-        return $this->hasMany(CommentRate::class,'comment_id');
+        return $this->hasMany(Rank::class,'comment_id');
     }
-
 
     public function likes()
     {

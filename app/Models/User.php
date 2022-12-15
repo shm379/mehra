@@ -107,12 +107,18 @@ class User extends Authenticatable implements HasMedia
 
     public function followers()
     {
-        return $this->follows()->where('type',UserFollowType::FOLLOWER);
+        if($this->follows()->exists())
+            return $this->follows()->where('type',UserFollowType::FOLLOWER);
+
+        return $this->follows();
     }
 
     public function following()
     {
-        return $this->follows()->where('type',UserFollowType::FOLLOWING);
+        if($this->follows()->exists())
+            return $this->follows()->where('type',UserFollowType::FOLLOWING);
+
+        return $this->follows();
     }
 
     public function histories()

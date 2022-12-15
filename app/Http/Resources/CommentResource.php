@@ -19,8 +19,8 @@ class CommentResource extends MehraResource
         return [
             "id"=> $this->id,
             "name"=> $this->is_anonymous ? 'ناشناس' : $this->user->name,
-            "rate"=> $this->whenLoaded('rates',function (){
-                return new CommentRateResourceCollection($this->rates);
+            "rate"=> $this->whenLoaded('rank_attributes',function (){
+                return new CommentRankResourceCollection($this->rank_attributes);
             }),
             "i_suggest"=> (bool)$this->i_suggest,
             "body"=> $this->body,

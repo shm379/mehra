@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Enums\CommentStatus;
 
 
-class CommentRateResource extends MehraResource
+class CommentRankResource extends MehraResource
 {
     /**
      * Transform the resource into an array.
