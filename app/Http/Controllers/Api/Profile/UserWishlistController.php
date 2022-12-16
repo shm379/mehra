@@ -16,7 +16,7 @@ class UserWishlistController extends Controller
      */
     public function index()
     {
-        $wishlist = auth()->user()->wishlist()->paginate($this->perPage);
+        $wishlist = auth()->user()->wishlist()->with('product')->paginate($this->perPage);
         return new UserWishlistResourceCollection($wishlist);
     }
 
