@@ -18,6 +18,12 @@ class UserViewResource extends MehraResource
     public function toArray($request)
     {
         return [
+            'image'=> $this->whenLoaded('model',function (){
+                if($this->model->hasMedia('back_image'))
+                    return $this->model->getMedia('back_image')->first()->original_url;
+                if($this->model->hasMedia('main_image'))
+                    return $this->model->getMedia('main_image')->first()->original_url;
+            }),
             'id'=> $this->model->id,
             'title'=> $this->model->title,
             'sub_title'=> $this->model->sub_title,
