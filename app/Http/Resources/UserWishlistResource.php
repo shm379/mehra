@@ -19,11 +19,10 @@ class UserWishlistResource extends MehraResource
     {
         return [
             'image'=> $this->whenLoaded('product',function (){
-                if($this->product->structure == ProductStructure::BOOK
-                    && Book::query()->find($this->product_id)->hasMedia('back_image'))
-                    return optional(Book::query()->find($this->product_id)->getMedia('back_image')->first())->original_url;
-
-                return optional($this->product->getMedia('main_image')->first())->original_url;
+                if($this->product->hasMedia('back_image'))
+                    return $this->product->getMedia('back_image')->first()->original_url;
+                if($this->product->hasMedia('main_image'))
+                    return $this->product->getMedia('main_image')->first()->original_url;
             }),
             'title'=> $this->product->title,
             'main_price'=> Helpers::toman($this->product->price),
