@@ -30,6 +30,7 @@ class UserWishlistResource extends MehraResource
             'price'=> $this->product->sale_price ? Helpers::toman($this->product->sale_price) : Helpers::toman($this->product->price),
             'rate'=> 1,
             'discount'=> 10,
+            'product_id'=> $this->product_id,
         ];
     }
 }

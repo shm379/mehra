@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 
 class Category extends Model implements HasMedia
 {
+    protected $guarded = [];
     use HasFactory, HasMediaTrait;
 
     public static function getValidCollections(): array

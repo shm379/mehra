@@ -72,7 +72,6 @@ const props = defineProps({
 const selectedOptions = computed({
   get: () => props.modelValue,
   set: (v) => {
-    console.log(v);
     emit("update:modelValue", v);
   },
 });
@@ -83,7 +82,6 @@ function remove(i) {
     values.splice(i, 1);
     selectedOptions.value = values;
   } else selectedOptions.value = null;
-  console.log(selectedOptions.value);
   items.value = null;
 }
 watch(search, async (n, o) => {

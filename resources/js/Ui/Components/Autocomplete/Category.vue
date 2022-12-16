@@ -1,8 +1,8 @@
 <template>
-    <ui-autocomplete api="/api/v1/ac/categories/" :label="label" v-model="creator" >
-                    <template #tag="{ item }">
-                        <span>{{ item.title }}</span>
-                    </template>
+    <ui-autocomplete api="/api/v1/ac/categories/" :label="label" v-model="category" >
+            <template #tag="{ item }">
+                <span>{{ item.title }}</span>
+            </template>
     </ui-autocomplete>
 </template>
 
@@ -15,7 +15,7 @@ const props = defineProps({ modelValue: [Object, Array], label: {
 } })
 const emit = defineEmits(["update:modelValue"]);
 
-const creator = computed({
+const category = computed({
     get: () => props.modelValue,
     set(v) {
         emit("update:modelValue", v);

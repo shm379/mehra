@@ -14,10 +14,11 @@ const props = defineProps({
 });
 
 const category = computed({
-  get: () => props.form.categories,
+  get: () => props.form.parent,
   set(v) {
     var mv = props.form;
-    mv.categories = v;
+    mv.parent = v;
+    mv.parent_id = v.id;
     emit("update:form", mv);
   },
 });

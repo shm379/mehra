@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Models\Category;
 use App\Models\CategoryTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -89,7 +90,18 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-
+        $category = Category::query()->create($request->validated());
+        if($category){
+            return Redirect::route('admin.categories.index')
+                ->with([
+                    'flash'=>['success'=>'عملیات با موفقیت انجام شد!'],
+                ]);
+        } else {
+            return Inertia::render('Category/Create')
+                ->with([
+                    'flash'=>['error'=>'عملیات شکست خورد!'],
+                ]);
+        }
     }
 
     /**

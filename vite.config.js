@@ -11,7 +11,7 @@ const compositionResolver = (name) => {
 };
 
 export default defineConfig({
-    server: { https: true },
+    server: { https: false },
     plugins: [
         laravel({
             input: "resources/js/app.js",

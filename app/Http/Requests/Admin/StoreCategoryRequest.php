@@ -28,11 +28,20 @@ class StoreCategoryRequest extends FormRequest
         return [
             "title"=> "required",
             "slug"=> "required",
+            "path"=> "nullable",
+            "is_active"=> "nullable",
             "description"=> "required",
-            "parent"=> "required",
+            "parent_id"=> ["required","exists:App\Models\Category,id"],
             "gallery"=> "nullable|array",
-            "template"=> ['required','exists:App\Models\CategoryTemplate,id'],
-            "template_setting"=> [],
+            "category_template_id"=> ['required','exists:App\Models\CategoryTemplate,id'],
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'path'=> $this->slug.'/',
+            'is_active'=> 1
+        ]);
     }
 }
