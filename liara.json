@@ -8,6 +8,10 @@
         {
             "name": "mehra",
             "mountTo": "public/media"
+        },
+        {
+            "name": "mehra-cache",
+            "mountTo": "storage/framework/cache"
         }
     ]
 }
