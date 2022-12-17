@@ -4,10 +4,4 @@
     "laravel": {
         "phpVersion": "8.1"
     },
-    "disks": [
-        {
-            "name": "mehra",
-            "mountTo": "storage/app/public"
-        }
-    ]
 }
