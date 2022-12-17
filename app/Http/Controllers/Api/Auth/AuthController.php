@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Exceptions\Api\Auth\SendOtpException;
+use App\Exceptions\MehraApiException;
 use App\Helpers\Helpers;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
@@ -102,7 +103,14 @@ class AuthController extends Controller
 
     public function updateMe(UpdateMeRequest $request)
     {
-        $request->user('sanctum')->update($request->validated());
+        $user = $request->user('sanctum');
+        try {
+            $user->update($request->validated());
+            $this->uploadMedia($user,'avatar','avatar');
+        } catch (MehraApiException $exception){
+            return $this->errorResponse('عملیات با خطا مواجه شد!');
+
+        }
         return $this->successResponse('اطلاعات با موفقیت ویرایش گردید');
     }
 }

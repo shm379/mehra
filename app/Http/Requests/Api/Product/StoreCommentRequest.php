@@ -40,8 +40,8 @@ class StoreCommentRequest extends ApiFormRequest
                 'persian_alpha_eng_num'
             ],
             "body"=> 'required|persian_alpha_eng_num',
-            "media.*"=> 'required|file|mimes:mp4,jpg,jpeg,png',
-            "is_anonymous"=> 'required|boolean',
+            "media.*"=> 'nullable|file|mimes:mp4,jpg,jpeg,png,heic|max:1000',
+            "is_anonymous"=> 'nullable|boolean',
             "product_id"=> 'nullable|exists:App\Models\Product,id',
             "order_id"=> 'nullable|exists:App\Models\Order,id',
         ];

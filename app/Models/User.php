@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -81,22 +82,32 @@ class User extends Authenticatable implements HasMedia
             'avatar',
         ];
     }
+
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('avatar')->singleFile();
+        $this->addMediaCollection('avatar')
+            ->acceptsMimeTypes(['image/jpeg','image/png','image/jpg'])
+            ->withResponsiveImages()
+            ->singleFile();
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
     {
         $conversion = $this->addMediaConversion('thumbnail');
 
-        $crop = $media->getCustomProperty('crop');
+        $crop = [];
+        $crop['width'] = [];
+        $crop['height'] = [];
+        $crop['left'] = [];
+        $crop['top'] = [];
 
-        if (!empty($crop)) {
-            $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
-        }
+//        if (!empty($crop)) {
+            $conversion
+                ->crop(Manipulations::CROP_CENTER,150,150)
+                ->nonOptimized();
+//        }
 
-        $conversion->nonQueued()->performOnCollections('main_image');
+        $conversion->nonQueued()->performOnCollections('avatar');
     }
 
     public function follows()
