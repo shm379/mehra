@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 //        ]);
 
         $this->call([
-            StateAndCitiesSeeder::class,
+//            StateAndCitiesSeeder::class,
 //
 //            AttributeSeeder::class,
 //            ProducerSeeder::class,
@@ -44,7 +44,7 @@ class DatabaseSeeder extends Seeder
 //            ProductProductGroupSeeder::class,
 //            CategoryTemplateSeeder::class,
 //            CategorySeeder::class,
-//            MediaSeeder::class,
+            MediaSeeder::class,
 
         ]);
 
