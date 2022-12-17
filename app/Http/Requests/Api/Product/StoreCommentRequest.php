@@ -17,7 +17,7 @@ class StoreCommentRequest extends ApiFormRequest
             "i_suggest"=> 'required|boolean',
             "features.*.id"=> [
                 'required',
-                'exists:App\Models\Rate,id'
+                'exists:App\Models\Rank,id'
             ],
             "features.*.user_vote"=> [
                 'required',

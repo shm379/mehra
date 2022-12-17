@@ -27,8 +27,8 @@ class UserResource extends MehraResource
             'email_verified_at'=> $this->email_verified_at ? jdate($this->email_verified_at)->format('Y-m-d') : $this->email_verified_at,
             'mobile'=> $this->mobile,
             'mobile_verified_at'=> $this->mobile_verified_at ? jdate($this->mobile_verified_at)->format('Y-m-d') : $this->mobile_verified_at,
-            'type'=> UserType::getDescription((int)$this->type),
-            'gender'=> UserGender::getDescription((int)$this->gender),
+            'type'=> !is_null($this->type) ? UserType::getDescription((int)$this->type) : $this->type,
+            'gender'=> !is_null($this->type) ? UserGender::getDescription((int)$this->gender) : $this->gender,
             'city'=> optional($this->city)->title,
             'state'=> optional($this->state)->title,
             'addresses'=> $this->whenLoaded('addresses'),
@@ -39,7 +39,6 @@ class UserResource extends MehraResource
             'views'=> $this->whenLoaded('views'),
             'discounts'=> $this->whenLoaded('discounts'),
             'image'=> $this->hasMedia('avatar') ? optional(optional($this->getMedia('avatar'))->first())->original_url : '',
-
         ];
     }
 }
