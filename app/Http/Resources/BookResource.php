@@ -42,6 +42,7 @@ class BookResource extends MehraResource
                 $this->creators->load('media');
                 return BookCreatorResource::collection($this->creators);
             }),
+            'is_liked'=> $this->is_liked,
             'related'=> $this->whenLoaded('productRelated',function (){
                 return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
             }),

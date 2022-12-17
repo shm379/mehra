@@ -14,7 +14,7 @@ class Product extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
     protected $guarded = [''];
-    protected $appends = ['main_price','max_purchases_per_user'];
+    protected $appends = ['main_price','max_purchases_per_user','is_liked'];
 
     public function getRouteKeyName(): string
     {
@@ -189,5 +189,11 @@ class Product extends Model implements HasMedia
             }
         }
         return $i_suggest;
+    }
+
+
+    public function getIsLikedAttribute()
+    {
+        return auth()->check() ? auth()->user()->wishlist()->where('product_id',$this->attributes['id'])->exists() : false;
     }
 }
