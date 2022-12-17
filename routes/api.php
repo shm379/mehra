@@ -70,13 +70,14 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
     // user unlike product
     Route::delete('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'destroy'])->name('product.unlike');
     //comments
-    Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index','store');
+    Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('store');
 });
 
 /*
  * V1 Without Auth
  */
 Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
+Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index');
 Route::get('filters/books', [\App\Http\Controllers\Api\Product\BookController::class,'filters'])->name('filters.books');
 Route::apiResource('awards', \App\Http\Controllers\Api\Product\AwardController::class)->only('index','show');
 Route::apiResource('categories', \App\Http\Controllers\Api\Product\CategoryController::class)->only('index','show');
