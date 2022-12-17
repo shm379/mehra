@@ -53,8 +53,7 @@ class Controller extends BaseController
             foreach ($mediaList as $media){
                 $model
                     ->addMedia($media) //starting method
-                    ->storingConversionsOnDisk(config('media-library.disk_name'))
-                    ->toMediaCollection($collectionName,config('media-library.disk_name'));
+                    ->toMediaCollection($collectionName);
             }
         }
     }

@@ -3,8 +3,5 @@
     "app": "mehra",
     "laravel": {
         "phpVersion": "8.1"
-    },
-    "disks": [
-
-    ]
+    }
 }
