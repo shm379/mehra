@@ -44,7 +44,7 @@ return [
         ],
 
         'media' => [
-            'driver' => env('media_driver'),
+            'driver' => env('MEDIA_DRIVER','local'),
             'root'   => storage_path('app/public/media'),
             'url'    => env('APP_URL').'/media',
         ],
