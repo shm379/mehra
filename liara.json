@@ -11,7 +11,7 @@
         },
         {
             "name": "mehra-cache",
-            "mountTo": "storage/framework/cache"
+            "mountTo": "storage/media-library"
         }
     ]
 }
