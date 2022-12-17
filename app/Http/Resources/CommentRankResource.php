@@ -16,6 +16,7 @@ class CommentRankResource extends MehraResource
     public function toArray($request)
     {
         return [
+            "id"=> $this->id,
             "title"=> $this->title,
             "rank"=> $this->pivot->rank,
             "number_of_voters"=> $this->pivot->number_of_voters,
