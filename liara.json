@@ -7,7 +7,7 @@
     "disks": [
         {
             "name": "mehra",
-            "mountTo": "storage"
+            "mountTo": "storage/app/public"
         }
     ]
 }
