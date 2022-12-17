@@ -18,18 +18,18 @@ class UserViewResource extends MehraResource
     public function toArray($request)
     {
         return [
-            'image'=> $this->whenLoaded('model',function (){
-                if($this->model->hasMedia('back_image'))
-                    return $this->model->getMedia('back_image')->first()->original_url;
-                if($this->model->hasMedia('main_image'))
-                    return $this->model->getMedia('main_image')->first()->original_url;
-            }),
             'id'=> $this->model->id,
             'title'=> $this->model->title,
             'sub_title'=> $this->model->sub_title,
             'discount'=> $this->model->sale_price,
             'price'=> Helpers::toman($this->model->price),
             'qty'=> $this->model->max_purchases_per_user,
+            'image'=> $this->whenLoaded('model',function (){
+                if($this->model->hasMedia('back_image'))
+                    return $this->model->getMedia('back_image')->first()->original_url;
+                if($this->model->hasMedia('main_image'))
+                    return $this->model->getMedia('main_image')->first()->original_url;
+            }),
         ];
     }
 }
