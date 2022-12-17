@@ -44,7 +44,7 @@ return [
         ],
 
         'media' => [
-            'driver' => 'local',
+            'driver' => env('media_driver'),
             'root'   => storage_path('app/public/media'),
             'url'    => env('APP_URL').'/media',
         ],
@@ -67,6 +67,15 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
+        ],
+
+        'liara' => [
+            'driver' => 's3',
+            'endpoint' => env('ENDPOINT_URL'),
+            'key' => env('ACCESS_KEY'),
+            'secret' => env('SECRET_KEY'),
+            'region' => env('DEFAULT_REGION'),
+            'bucket' => env('BUCKET_NAME'),
         ],
 
     ],
