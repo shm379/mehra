@@ -6,7 +6,9 @@ use App\Exceptions\Api\Auth\SendOtpException;
 use App\Helpers\Helpers;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\Api\Auth\UpdateMeRequest;
 use App\Http\Requests\Api\Auth\VerifyOtpRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Notifications\SendVerifySMS;
 use App\Services\OtpService;
@@ -80,7 +82,7 @@ class AuthController extends Controller
         return $this->successResponseWithData([
             'token'=>$token->plainTextToken,
             'refresh_token'=>route('api.v1.refresh-token'),
-            'user'=>$user
+            'user'=> UserResource::make($user)
         ]);
     }
 
@@ -95,12 +97,12 @@ class AuthController extends Controller
 
     public function getMe(Request $request)
     {
-        return $this->successResponseWithData($request->user('sanctum'));
+        return $this->successResponseWithData(UserResource::make($request->user('sanctum')));
     }
 
-    public function updateMe(Request $request)
+    public function updateMe(UpdateMeRequest $request)
     {
-        $request->user('sanctum')->update($request->toArray());
+        $request->user('sanctum')->update($request->validated());
         return $this->successResponse('اطلاعات با موفقیت ویرایش گردید');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Auth;
 
+use App\Http\Requests\Api\ApiFormRequest;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class VerifyOtpRequest extends FormRequest
+class VerifyOtpRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

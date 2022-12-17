@@ -47,6 +47,5 @@ class ApiFormRequest extends FormRequest
             ],
             'success'   => false,
         ]));
-
     }
 }

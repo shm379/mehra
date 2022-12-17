@@ -13,6 +13,14 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     use ApiResponse;
     public int $perPage = 12;
+    public $user_id = null;
+
+    public function __construct()
+    {
+        if(auth()->guard('sanctum')->check())
+            $this->user_id = auth()->guard('sanctum')->id();
+    }
+
     public function callAction($method, $parameters)
     {
         if($method=='index'){

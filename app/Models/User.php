@@ -32,6 +32,10 @@ class User extends Authenticatable implements HasMedia
     protected $fillable = [
         'first_name',
         'last_name',
+        'city_id',
+        'state_id',
+        'gender',
+        'type',
         'mobile',
         'email',
         'password',
@@ -102,7 +106,7 @@ class User extends Authenticatable implements HasMedia
 
     public function messages()
     {
-        return $this->morphMany(Notification::class,'object');
+        return $this->hasMany(Notification::class,'actor_id');
     }
 
     public function followers()
@@ -120,7 +124,14 @@ class User extends Authenticatable implements HasMedia
 
         return $this->follows();
     }
-
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
     public function histories()
     {
         return $this->belongsToMany(UserSearchHistory::class);

@@ -58,13 +58,17 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
             // user orders
             Route::get('orders',\App\Http\Controllers\Api\Profile\OrderController::class);
             // user wishlist
-            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class);
+            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class)->only(['index']);
            // user messages
             Route::get('messages',\App\Http\Controllers\Api\Profile\MessageController::class);
            // user views
             Route::get('last-visits',\App\Http\Controllers\Api\Profile\UserViewController::class);
         });
 
+    // user like product
+    Route::post('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'store'])->name('product.like');
+    // user unlike product
+    Route::delete('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'destroy'])->name('product.unlike');
     //comments
     Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index','store');
 });

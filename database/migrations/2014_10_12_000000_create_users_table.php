@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->unsignedBigInteger('country_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('national_number')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -25,10 +27,10 @@ return new class extends Migration
             $table->timestamp('mobile_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();
-            $table->enum('type',\App\Enums\UserType::asArray())->nullable();
+            $table->enum('type',\App\Enums\UserType::asArray())->default(\App\Enums\UserType::PERSON)->nullable();
             $table->enum('gender',\App\Enums\UserGender::asArray())->nullable();
-            $table->enum('city',\App\Enums\UserCity::getKeys())->nullable();
             $table->timestamps();
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 

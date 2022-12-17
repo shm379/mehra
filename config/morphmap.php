@@ -7,6 +7,8 @@ return [
     'collection' => 'App\Models\Collection',
     'creator' => 'App\Models\Creator',
     'slider' => 'App\Models\Slider',
+    'discount' => 'App\Models\Discount',
+    'message' => 'App\Models\Message',
     'page' => 'App\Models\Page',
     'producer' => 'App\Models\Producer',
     'product' => 'App\Models\Product',

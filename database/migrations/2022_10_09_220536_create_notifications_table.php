@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('notifier_id');
-            $table->unsignedBigInteger('actor_id')->nullable();
-            $table->unsignedBigInteger('message_id');
+            $table->unsignedBigInteger('actor_id');
             $table->unsignedBigInteger('object_id');
             $table->string('object_type', 31);
-            $table->string('activity_type', 255);
+            $table->enum('activity_type', \App\Enums\NotificationActivityType::asArray());
             $table->text('message')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('read_at')->nullable();
@@ -29,7 +28,6 @@ return new class extends Migration
             $table->index(['object_id', 'object_type']);
             $table->foreign('actor_id')->references('id')->on('users');
             $table->foreign('notifier_id')->references('id')->on('users');
-            $table->foreign('message_id')->references('id')->on('messages');
         });
     }
 

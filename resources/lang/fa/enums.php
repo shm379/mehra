@@ -1,13 +1,19 @@
 <?php declare(strict_types=1);
 
 return [
+    'App\Enums\NotificationActivityType'=>[
+        1 => 'پیام همگانی',
+        2 => 'پسندیدن دیدگاه',
+        3 => 'پاسخ به دیدگاه',
+        4 => 'مدیریت',
+    ],
     'App\Enums\CommentStatus'=>[
         1 => 'در انتظار تایید',
         2 => 'تایید شده',
     ],
-    'App\Enums\UserCity'=>[
-        'قم' => 'قم',
-        2 => 'خانم',
+    'App\Enums\UserType'=>[
+        1 => 'شخص',
+        2 => 'شرکت',
     ],
     'App\Enums\UserGender'=>[
         1 => 'آقا',

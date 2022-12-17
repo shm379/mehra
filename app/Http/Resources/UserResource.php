@@ -24,19 +24,22 @@ class UserResource extends MehraResource
             'country'=> $this->whenLoaded('country'),
             'national_number'=> $this->national_number,
             'email'=> $this->email,
-            'email_verified_at'=> $this->email_verified_at,
+            'email_verified_at'=> $this->email_verified_at ? jdate($this->email_verified_at)->format('Y-m-d') : $this->email_verified_at,
             'mobile'=> $this->mobile,
-            'mobile_verified_at'=> $this->mobile_verified_at,
-            'type'=> UserType::getDescription($this->type),
-            'gender'=> UserGender::getDescription($this->gender),
-            'city'=> UserCity::getDescription($this->city),
+            'mobile_verified_at'=> $this->mobile_verified_at ? jdate($this->mobile_verified_at)->format('Y-m-d') : $this->mobile_verified_at,
+            'type'=> UserType::getDescription((int)$this->type),
+            'gender'=> UserGender::getDescription((int)$this->gender),
+            'city'=> optional($this->city)->title,
+            'state'=> optional($this->state)->title,
             'addresses'=> $this->whenLoaded('addresses'),
             'histories'=> $this->whenLoaded('search_histories'),
             'wallet_balance'=> $this->whenLoaded('wallet',function (){
                 return $this->wallet->balance;
             }),
             'views'=> $this->whenLoaded('views'),
-            'discounts'=> $this->whenLoaded('discounts')
+            'discounts'=> $this->whenLoaded('discounts'),
+            'image'=> $this->hasMedia('avatar') ? optional(optional($this->getMedia('avatar'))->first())->original_url : '',
+
         ];
     }
 }

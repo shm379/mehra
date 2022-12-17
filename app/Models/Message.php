@@ -15,6 +15,10 @@ class Message extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function discount(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Discount::class);
+    }
 
     public function notifications(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
