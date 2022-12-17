@@ -87,7 +87,6 @@ class User extends Authenticatable implements HasMedia
     {
         $this->addMediaCollection('avatar')
             ->acceptsMimeTypes(['image/jpeg','image/png','image/jpg'])
-            ->withResponsiveImages()
             ->singleFile();
     }
 
