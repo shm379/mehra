@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Services\Media\HasMediaTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Maize\Markable\Markable;
-use Maize\Markable\Models\Like;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;

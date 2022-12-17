@@ -29,6 +29,7 @@ class CommentController extends Controller {
     {
         try {
             $comment = auth()->user()->comments()->create($request->validated());
+            $this->uploadMedia($comment,'gallery');
         } catch (\Exception $exception){
             return $this->errorResponse('خطا در انجام عملیات');
         }
