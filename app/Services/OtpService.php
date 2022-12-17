@@ -25,7 +25,7 @@ class OtpService
         $now = Carbon::now();
         if ($verificationCode && $now->isBefore($verificationCode->expired_at)) {
             return $verificationCode;
-        } elseif($now->isAfter($verificationCode->expired_at)){
+        } elseif($verificationCode && $now->isAfter($verificationCode->expired_at)){
             Otp::query()->where('user_id', $user->id)->delete();
         }
         $code = rand(103246, 999999);
