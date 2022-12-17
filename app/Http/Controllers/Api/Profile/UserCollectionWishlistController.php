@@ -11,7 +11,7 @@ use App\Models\Product;
 use App\Models\UserWishlist;
 use Illuminate\Http\Request;
 
-class UserWishlistController extends Controller
+class UserCollectionWishlistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class UserWishlistController extends Controller
      */
     public function index()
     {
-        $wishlist = auth()->user()->wishlist()->whereIn('model_type',['product'])->with('model')->paginate($this->perPage);
+        $wishlist = auth()->user()->wishlist()->where('model_type','collection')->with('model')->paginate($this->perPage);
         return new UserWishlistResourceCollection($wishlist);
     }
 
@@ -30,19 +30,19 @@ class UserWishlistController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Product $product)
+    public function store(Collection $collection)
     {
         try {
             $wishlist = auth()->user()->wishlist();
-            if(!$wishlist->whereIn('model_type',['product'])->where('model_id',$product->id)->exists()) {
+            if(!$wishlist->whereIn('model_type',['collection'])->where('model_id',$collection->id)->exists()) {
                 $wishlist->create([
-                    'model_id' => $product->id,
-                    'model_type' => 'product',
+                    'model_id' => $collection->id,
+                    'model_type' => 'collection',
                     'user_id' => $this->user_id,
                 ]);
-                return $this->successResponse('این محصول در لیست علاقه‌مندی ها قرار گرفت');
+                return $this->successResponse('این مجموعه در لیست علاقه‌مندی ها قرار گرفت');
             } else {
-                return $this->errorResponse('این محصول قبلا در لیست علاقه‌مندی ها قرار گرفته است');
+                return $this->errorResponse('این مجموعه قبلا در لیست علاقه‌مندی ها قرار گرفته است');
             }
         } catch (MehraApiException $exception){}
     }
@@ -53,15 +53,15 @@ class UserWishlistController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Product $product)
+    public function destroy(Collection $collection)
     {
         try {
             $wishlist = auth()->user()->wishlist();
-            if(!$wishlist->whereIn('model_type',['product'])->where('model_id',$product->id)->exists()) {
-                return $this->successResponse('این محصول در لیست علاقه‌مندی های شما وجود ندارد!');
+            if(!$wishlist->whereIn('model_type',['collection'])->where('model_id',$collection->id)->exists()) {
+                return $this->successResponse('این مجموعه در لیست علاقه‌مندی های شما وجود ندارد!');
             } else {
-                $wishlist->whereIn('model_type',['product'])->where('model_id',$product->id)->delete();
-                return $this->errorResponse('این محصول از لیست علاقه‌مندی ها خارج شد');
+                $wishlist->whereIn('model_type',['collection'])->where('model_id',$collection->id)->delete();
+                return $this->errorResponse('این مجموعه از لیست علاقه‌مندی ها خارج شد');
             }
         } catch (MehraApiException $exception){}
     }

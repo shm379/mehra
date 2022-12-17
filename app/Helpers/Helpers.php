@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Product;
 use Config;
 use Illuminate\Support\Str;
 
@@ -45,5 +46,10 @@ class Helpers
             $arabic_numbers .
             $persian_numbers .
             "]+$)/u", $string);
+    }
+
+    static function isProduct($model): bool
+    {
+        return is_a($model,Product::class) || is_subclass_of($model,Product::class);
     }
 }

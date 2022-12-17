@@ -59,6 +59,9 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
             Route::get('orders',\App\Http\Controllers\Api\Profile\OrderController::class);
             // user wishlist
             Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class)->only(['index']);
+            // user collection with wishlist
+//            Route::apiResource('collections/wishlist',\App\Http\Controllers\Api\Profile\UserCollectionController::class)->only(['index']);
+            Route::apiResource('collections/wishlist',\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class)->only(['index']);
            // user messages
             Route::get('messages',\App\Http\Controllers\Api\Profile\MessageController::class);
            // user views
@@ -69,9 +72,19 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
     Route::post('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'store'])->name('product.like');
     // user unlike product
     Route::delete('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'destroy'])->name('product.unlike');
-    //comments
+    // user like collection
+    Route::post('/collection/{collection}/like',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class, 'store'])->name('collection.like');
+    // user unlike collection
+    Route::delete('/collection/{collection}/like',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class, 'destroy'])->name('collection.unlike');
+    //comment like
+    Route::post('/comment/{comment}/like',[\App\Http\Controllers\Api\Product\CommentLikeController::class, 'store'])->name('comment.like');
+    // comment unlike
+    Route::delete('/comment/{comment}/like',[\App\Http\Controllers\Api\Product\CommentLikeController::class, 'destroy'])->name('comment.unlike');
+    // send comment
     Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('store');
+
 });
+
 
 /*
  * V1 Without Auth

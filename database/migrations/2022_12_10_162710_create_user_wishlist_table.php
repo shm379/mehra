@@ -16,8 +16,13 @@ return new class extends Migration
         Schema::create('user_wishlist', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
-            $table->unique(['user_id','product_id']);
+            $table->morphs('model');
+
+            $table->unique(['model_id','model_type','user_id']);
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_wishlists');
+        Schema::dropIfExists('user_wishlist');
     }
 };

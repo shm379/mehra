@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
+            $table->boolean('for_me')->default(1);
             $table->timestamps();
 
             $table->foreign('user_id')

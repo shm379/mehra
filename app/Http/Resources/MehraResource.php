@@ -20,4 +20,9 @@ class MehraResource extends JsonResource
             'success' => true
         ];
     }
+
+    public function getDefaultAvatar()
+    {
+        return url('/img/avatar.png');
+    }
 }

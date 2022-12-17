@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ProductRelatedType;
+use App\Enums\ProductStructure;
 use App\Services\CartService;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
@@ -193,6 +194,6 @@ class Product extends Model implements HasMedia
 
     public function getIsLikedAttribute()
     {
-        return auth()->check() ? auth()->user()->wishlist()->where('product_id',$this->attributes['id'])->exists() : false;
+        return auth()->check() ? auth()->user()->wishlist()->where('model_type','product')->where('model_id',$this->attributes['id'])->exists() : false;
     }
 }

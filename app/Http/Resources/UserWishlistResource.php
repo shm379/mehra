@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Enums\ProductStructure;
 use App\Helpers\Helpers;
 use App\Models\Book;
+use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserWishlistResource extends MehraResource
@@ -17,19 +18,22 @@ class UserWishlistResource extends MehraResource
      */
     public function toArray($request)
     {
-        return [
-            'image'=> $this->whenLoaded('product',function (){
-                if($this->product->hasMedia('back_image'))
-                    return $this->product->getMedia('back_image')->first()->original_url;
-                if($this->product->hasMedia('main_image'))
-                    return $this->product->getMedia('main_image')->first()->original_url;
+        $wishListArray = [
+            'image'=> $this->whenLoaded('model',function (){
+                if($this->model->hasMedia('back_image'))
+                    return $this->model->getMedia('back_image')->first()->original_url;
+                if($this->model->hasMedia('main_image'))
+                    return $this->model->getMedia('main_image')->first()->original_url;
             }),
-            'title'=> $this->product->title,
-            'main_price'=> Helpers::toman($this->product->price),
-            'price'=> $this->product->sale_price ? Helpers::toman($this->product->sale_price) : Helpers::toman($this->product->price),
-            'rate'=> 1,
-            'discount'=> 10,
-            'product_id'=> $this->product_id,
+            'title'=> $this->model->title,
+            'id'=> $this->model_id,
         ];
+        if(Helpers::isProduct($this->model)){
+            $wishListArray['main_price'] = Helpers::toman($this->model->price);
+            $wishListArray['price'] = $this->model->sale_price ? Helpers::toman($this->model->sale_price) : Helpers::toman($this->model->price);
+            $wishListArray['rate'] = 1;
+            $wishListArray['discount'] = 10;
+        }
+        return $wishListArray;
     }
 }
