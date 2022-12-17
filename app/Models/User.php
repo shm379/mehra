@@ -102,12 +102,12 @@ class User extends Authenticatable implements HasMedia
         $crop['top'] = [];
 
 //        if (!empty($crop)) {
-//            $conversion
-//                ->crop(Manipulations::CROP_CENTER,150,150)
-//                ->nonOptimized();
+            $conversion
+                ->crop(Manipulations::CROP_CENTER,150,150)
+                ->nonOptimized();
 //        }
 
-//        $conversion->nonQueued()->performOnCollections('avatar');
+        $conversion->queued()->performOnCollections('avatar');
     }
 
     public function follows()
