@@ -11,6 +11,6 @@ class TemporaryUpload extends SpatieTemporaryUpload
      */
     protected static function getDiskName(): string
     {
-        return config('media-library.disk_name');
+        return 'temp_upload';
     }
 }
