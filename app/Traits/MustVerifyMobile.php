@@ -16,6 +16,12 @@ trait MustVerifyMobile {
             'mobile_verified_at' => $this->freshTimestamp(),
         ])->save();
     }
+    public function markMobileAsNotVerified(): bool
+    {
+        return $this->forceFill([
+            'mobile_verified_at' => null,
+        ])->save();
+    }
 
     public function sendMobileVerificationNotification($code): void
     {

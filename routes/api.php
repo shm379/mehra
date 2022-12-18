@@ -15,14 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum','abilities:view-user'])->group(function (){
+Route::middleware('auth.mehra')->group(function (){
+Route::middleware(['auth:sanctum','verifiedMobile'])->group(function (){
     Route::get('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'getMe'])->name('get-me');
     Route::post('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'updateMe'])->name('update-me');
 });
 /*
  * V1 API LOGGED IN ROUTES
  */
-Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
+Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
     //cart
     Route::prefix('/cart')
         ->name('cart.')
@@ -85,10 +86,18 @@ Route::middleware(['auth:sanctum','abilities:view-user'])->group(function () {
 
 });
 
-
+    /*
+    * V1 API AUTH CONTROLLER
+    */
+    Route::controller(\App\Http\Controllers\Api\Auth\AuthController::class)->group(function () {
+        Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/verify', 'verifyOTP')->name('verify-otp');
+        Route::middleware(['auth:sanctum','verifiedMobile'])->post('/refresh', 'refreshToken')->name('refresh-token');
+    });
+});
 /*
  * V1 Without Auth
  */
+Route::middleware(['throttle:OTP'])->post('/otp', [\App\Http\Controllers\Api\Auth\AuthController::class,'sendOTP'])->name('send-otp');
 Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
 Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index');
 Route::get('filters/books', [\App\Http\Controllers\Api\Product\BookController::class,'filters'])->name('filters.books');
@@ -98,14 +107,7 @@ Route::apiResource('collections', \App\Http\Controllers\Api\Product\CollectionCo
 Route::apiResource('creators', \App\Http\Controllers\Api\Product\CreatorController::class)->only('index','show');
 Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerController::class)->only('index','show');
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
-/*
-* V1 API AUTH CONTROLLER
-*/
-Route::controller(\App\Http\Controllers\Api\Auth\AuthController::class)->group(function () {
-    Route::middleware(['throttle:OTP'])->post('/otp', 'sendOTP')->name('send-otp');
-    Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/verify', 'verifyOTP')->name('verify-otp');
-    Route::middleware(['auth:sanctum','abilities:view-user'])->post('/refresh', 'refreshToken')->name('refresh-token');
-});
+
 /*
 * V1 ADMIN INERTIA CONTROLLER
 */

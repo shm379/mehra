@@ -70,7 +70,7 @@ class AuthController extends Controller
             /** @var mixed $user */
             $user = $temporaryToken->tokenable;
             if($user && OtpService::verifyOtp($user->mobile,(int)$request->get('code'))){
-                $token = $user->createToken('web',['view-user']);
+                $token = $user->createToken('web');
             } else {
                 return $this->errorResponse('کد تایید اشتباه است');
             }
@@ -106,6 +106,14 @@ class AuthController extends Controller
         $user = $request->user('sanctum');
         try {
             $user->update($request->validated());
+            if(count($user->getChanges()) > 0){
+               if(in_array('mobile',array_keys($user->getChanges()))){
+                   $user->markMobileAsNotVerified();
+               }
+               if(in_array('email',array_keys($user->getChanges()))){
+                    $user->markEmailAsNotVerified();
+               }
+            }
             $this->uploadMedia($user,'avatar','avatar');
         } catch (MehraApiException $exception){
             return $this->errorResponse('عملیات با خطا مواجه شد!');

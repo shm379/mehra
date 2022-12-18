@@ -104,7 +104,6 @@ class ProductController extends Controller
                 ];
             })
             ->withQueryString();
-        dd($products->first());
         // return table in inertia with columns
         return Inertia::render('Product/Index')
             ->with(['products' => $products])

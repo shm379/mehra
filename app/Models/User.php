@@ -239,4 +239,16 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->mobile;
     }
+
+    /**
+     * Mark the given user's email as verified.
+     *
+     * @return bool
+     */
+    public function markEmailAsNotVerified()
+    {
+        return $this->forceFill([
+            'email_verified_at' => null,
+        ])->save();
+    }
 }
