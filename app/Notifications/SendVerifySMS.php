@@ -29,6 +29,6 @@ class SendVerifySMS extends KavenegarBaseNotification
     {
         $mobile = Helpers::mobileNumberNormalize($notifiable->mobile);
         return (new KavenegarMessage())
-                ->verifyLookup('login',[$this->code]);
+                ->verifyLookup('mehrak',[$this->code]);
     }
 }
