@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import attributeType from "@/definitions/attribute-types"
+import attributeType from "@/Definitions/attribute-types"
 import { ref } from "vue";
 const props = defineProps({
   form: Object,

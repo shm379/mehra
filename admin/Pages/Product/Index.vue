@@ -20,7 +20,24 @@
         </nav>
         <div class="py-12">
           <ui-datagrid :columns="columns" :data="products" :actions="actions" baseRoute="admin.products.index">
+            <template v-slot:row-cell-title="{ item: product }">
+              <div>
 
+              </div>
+            </template>
+            <template v-slot:row-cell-actions="{ item: product }">
+              <div>
+                <Link
+                    as="button"
+                    v-for="(action, l) in actions"
+                    :key="l"
+                    :href="route(action.route, { id: product.id })"
+                    :class="`bg-${action.color}-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs`"
+                >
+                  {{ action.title }}
+                </Link>
+              </div>
+            </template>
           </ui-datagrid>
 
         </div>

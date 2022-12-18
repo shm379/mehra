@@ -8,7 +8,7 @@
 <script setup>
 import {ref ,computed } from "vue"
 
-import attributeType from "@/definitions/attribute-types"
+import attributeType from "@/Definitions/attribute-types"
 
 
 const componentName = computed(() => values.value.find(v => v.value == props.form.type).component || false)
