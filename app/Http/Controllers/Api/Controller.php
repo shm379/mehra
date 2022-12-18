@@ -53,6 +53,7 @@ class Controller extends BaseController
             foreach ($mediaList as $media){
                 $model
                     ->addMedia($media) //starting method
+                    ->withResponsiveImages()
                     ->toMediaCollection($collectionName);
             }
         }
