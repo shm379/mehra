@@ -4,16 +4,6 @@
     "laravel": {
         "phpVersion": "8.1"
     },
-    "disks": [
-        {
-            "name": "mehra",
-            "mountTo": "public/media"
-        },
-        {
-            "name": "mehra-cache",
-            "mountTo": "storage/media-library"
-        }
-    ],
     "cron": [
         "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1"
     ]
