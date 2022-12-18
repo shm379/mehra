@@ -6,7 +6,7 @@ import AutoImport from "unplugin-auto-import/vite";
 const compositionResolver = (name) => {
     const isCompositionApi = name.startsWith("use");
     if (isCompositionApi) {
-        return `@/composables/${name}.js`;
+        return `@/Composables/${name}.js`;
     }
 };
 
@@ -14,7 +14,7 @@ export default defineConfig({
     server: { https: false },
     plugins: [
         laravel({
-            input: "resources/js/app.js",
+            input: "admin/admin.js",
             refresh: true,
         }),
         vue({
@@ -29,9 +29,9 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@": "/resources/js",
-            "~": "/resources/js/Forms",
-            module: "/resources/js/Modules",
+            "@": "/admin",
+            "~": "/admin/Forms",
+            module: "/admin/Modules",
         },
     },
     build: {
