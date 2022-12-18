@@ -22,8 +22,8 @@ class AuthenticateMehra
      */
     public function handle($request, Closure $next, $redirectToRoute = null)
     {
-        if (! $request->user() ) {
-            return $this->errorResponse('این درخواست نیاز به ورود به سایت دارد.');
+        if (! $request->user()){
+            return $this->errorResponse('لطفا شماره موبایل خود را تایید کنید');
         }
 
         return $next($request);
