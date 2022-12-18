@@ -31,8 +31,8 @@ class Award extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('image')->singleFile();
-        $this->addMediaCollection('conver_image')->singleFile();
+        $this->addMediaCollection('image')->useDisk(config('media-library.disk_name'))->singleFile();
+        $this->addMediaCollection('cover_image')->useDisk(config('media-library.disk_name'))->singleFile();
     }
 
     public function parent()

@@ -36,9 +36,9 @@ class Book extends Product
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('cover_image')->singleFile();
-        $this->addMediaCollection('back_image')->singleFile();
-        $this->addMediaCollection('gallery');
+        $this->addMediaCollection('cover_image')->useDisk(config('media-library.disk_name'))->singleFile();
+        $this->addMediaCollection('back_image')->useDisk(config('media-library.disk_name'))->singleFile();
+        $this->addMediaCollection('gallery')->useDisk(config('media-library.disk_name'));
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void

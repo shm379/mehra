@@ -23,7 +23,7 @@ class Collection extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('image')->singleFile();
+        $this->addMediaCollection('image')->useDisk(config('media-library.disk_name'))->singleFile();
     }
 
     public function getRouteKeyName(): string

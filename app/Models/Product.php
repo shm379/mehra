@@ -32,8 +32,8 @@ class Product extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')->singleFile();
-        $this->addMediaCollection('gallery');
+        $this->addMediaCollection('main_image')->useDisk(config('media-library.disk_name'))->singleFile();
+        $this->addMediaCollection('gallery')->useDisk(config('media-library.disk_name'));
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void

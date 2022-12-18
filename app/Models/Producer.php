@@ -32,7 +32,7 @@ class Producer extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('logo')->singleFile();
+        $this->addMediaCollection('logo')->useDisk(config('media-library.disk_name'))->singleFile();
     }
 
     public function products()
