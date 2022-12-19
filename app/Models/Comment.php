@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CommentPointStatus;
 use App\Services\Media\HasMediaTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -58,6 +59,16 @@ class Comment extends Model implements HasMedia
     public function points()
     {
         return $this->hasMany(CommentPoint::class);
+    }
+
+    public function advantages()
+    {
+        return $this->hasMany(CommentPoint::class)->where('status',CommentPointStatus::POSITIVE);
+    }
+
+    public function disadvantages()
+    {
+        return $this->hasMany(CommentPoint::class)->where('status',CommentPointStatus::NEGATIVE);
     }
 
     public function ranks()

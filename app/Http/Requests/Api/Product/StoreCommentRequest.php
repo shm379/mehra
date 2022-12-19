@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Product;
 
+use App\Enums\CommentPointStatus;
 use App\Http\Requests\Api\ApiFormRequest;
 
 class StoreCommentRequest extends ApiFormRequest
@@ -15,11 +16,11 @@ class StoreCommentRequest extends ApiFormRequest
     {
         return [
             "i_suggest"=> 'required|boolean',
-            "features.*.id"=> [
+            "features.*.rank_attribute_id"=> [
                 'required',
-                'exists:App\Models\Rank,id'
+                'exists:App\Models\RankAttribute,id',
             ],
-            "features.*.user_vote"=> [
+            "features.*.score"=> [
                 'required',
                 'int',
                 'min:1',
@@ -50,8 +51,27 @@ class StoreCommentRequest extends ApiFormRequest
     public function prepareForValidation()
     {
         parent::prepareForValidation();
+        $this->commentPointStatus();
         $this->merge([
             'product_id'=> $this->route()->parameter('product')->id
         ]);
+    }
+    private function commentPointStatus(){
+        if($this->has('advantages')){
+            $advantages = [];
+            foreach ($this->get('advantages') as $key => $advantage) {
+                $advantages[$key] = $advantage;
+                $advantages[$key]['status'] = CommentPointStatus::POSITIVE;
+            }
+            $this->merge(['advantages'=>$advantages]);
+        }
+        if($this->has('disadvantages')){
+            $disadvantages = [];
+            foreach ($this->get('disadvantages') as $key => $disadvantage) {
+                $disadvantages[$key] = $disadvantage;
+                $disadvantages[$key]['status'] = CommentPointStatus::NEGATIVE;
+            }
+            $this->merge(['disadvantages'=>$disadvantages]);
+        }
     }
 }

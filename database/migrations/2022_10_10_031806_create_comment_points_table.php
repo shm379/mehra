@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('comment_id')
                 ->references('id')
-                ->on('users')
+                ->on('comments')
                 ->onDelete('cascade');
         });
     }

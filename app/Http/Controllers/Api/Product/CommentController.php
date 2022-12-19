@@ -29,10 +29,40 @@ class CommentController extends Controller {
     {
         try {
             $comment = auth()->user()->comments()->create($request->validated());
-            $this->uploadMedia($comment,'gallery');
+            $this->saveCommentPoints($comment,$request);
+            $this->saveRanks($comment,$request);
+            $this->uploadMedia($comment,'gallery','media',false);
         } catch (\Exception $exception){
             return $this->errorResponse('خطا در انجام عملیات');
         }
         return $this->successResponse('عملیات با موفقیت انجام شد');
+    }
+
+    private function  saveCommentPoints($comment,$request)
+    {
+        if ($request->has('advantages'))
+            foreach ($request->validated(['advantages']) as $advantages)
+                $comment->advantages()->create($advantages);
+        if ($request->has('disadvantages'))
+            foreach ($request->validated(['disadvantages']) as $disadvantages)
+                $comment->disadvantages()->create($disadvantages);
+    }
+
+    private function  saveRanks($comment,$request)
+    {
+        if($request->has('features')) {
+            foreach ($request->validated(['features']) as $feature) {
+                if($comment->ranks()
+                    ->where('user_id',$comment->user_id)
+                    ->where('product_id',$comment->product_id)
+                    ->where('rank_attribute_id',$feature['rank_attribute_id'])
+                    ->doesntExist()
+                )
+                    $comment->ranks()->create(array_merge($feature, [
+                        'user_id' => $comment->user_id,
+                        'product_id' => $comment->product_id,
+                    ]));
+            }
+        }
     }
 }
