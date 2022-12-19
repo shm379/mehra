@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 Route::middleware('auth.mehra')->group(function (){
 Route::middleware(['auth:sanctum','verifiedMobile'])->group(function (){
     Route::get('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'getMe'])->name('get-me');

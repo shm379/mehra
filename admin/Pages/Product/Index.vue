@@ -20,15 +20,9 @@
         </nav>
         <div class="py-12">
           <ui-datagrid :columns="columns" :data="products" :actions="actions" baseRoute="admin.products.index">
-            <template v-slot:row-cell-title="{ item: product }">
+            <template v-slot:row-cell-title="{ item: title }">
               <div>
-                <Link
-                    as="button"
-                    :href="route('admin.products.show', { id: product.id })"
-                    class="bg-red-500 hover:shadow-xl opacity-70 hover:opacity-100 hover:scale-105 duration-100 cursor-pointer text-white rounded-lg px-2 p-1 text-xs"
-                >
-                  {{product.title}}
-                </Link>
+                {{title}}
               </div>
             </template>
             <template v-slot:row-cell-actions="{ item: product }">
@@ -58,27 +52,10 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import { Table } from "@protonemedia/inertiajs-tables-laravel-query-builder";
-import { setTranslations } from "@protonemedia/inertiajs-tables-laravel-query-builder";
-
-setTranslations({
-    next: "بعدی",
-    no_results_found: "یافت نشد!",
-    of: "از",
-    per_page: "",
-    previous: "قبلی",
-    results: "نتیجه",
-    to: "از",
-    reset: "ریست"
-});
+const {columns, actions} = useProduct()
 const props = defineProps({
     products: Array,
 });
-const actions = [
-    { title: "نمایش", route: "admin.products.show", color: "blue" },
-    { title: "ویرایش", route: "admin.products.edit", color: "orange" },
-    { title: "حذف", route: "admin.products.destroy", color: "red" },
-];
 function jDate(d) {
     return new Intl.DateTimeFormat('fa-IR').format(new Date(d))
 }

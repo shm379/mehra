@@ -41,6 +41,7 @@ Route::prefix('/admin')
         Route::get('notifications', [\App\Http\Controllers\Admin\NotificationController::class,'index'])->name('notifications.index');
         Route::resource('messages', \App\Http\Controllers\Admin\MessageController::class);
         Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
+        Route::resource('stocks', \App\Http\Controllers\Admin\StockController::class);
         Route::resource('pages', \App\Http\Controllers\Admin\PageController::class);
         Route::resource('producers', \App\Http\Controllers\Admin\ProducerController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);

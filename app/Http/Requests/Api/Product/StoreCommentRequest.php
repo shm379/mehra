@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\Product;
 
 use App\Enums\CommentPointStatus;
 use App\Http\Requests\Api\ApiFormRequest;
+use Illuminate\Support\Facades\DB;
 
 class StoreCommentRequest extends ApiFormRequest
 {
@@ -56,7 +57,9 @@ class StoreCommentRequest extends ApiFormRequest
             'product_id'=> $this->route()->parameter('product')->id
         ]);
     }
-    private function commentPointStatus(){
+
+    private function commentPointStatus()
+    {
         if($this->has('advantages')){
             $advantages = [];
             foreach ($this->get('advantages') as $key => $advantage) {

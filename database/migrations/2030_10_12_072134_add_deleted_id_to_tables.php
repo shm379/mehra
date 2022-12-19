@@ -35,6 +35,7 @@ return new class extends Migration
         'order_notes',
         'product_groups',
         'messages',
+        'stocks',
     ];
     /**
      * Run the migrations.

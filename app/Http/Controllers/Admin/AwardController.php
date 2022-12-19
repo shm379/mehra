@@ -53,7 +53,7 @@ class AwardController extends Controller
                     'title' => $award->title,
                     'parent' => optional($award->parent)->title,
                     'slug' => $award->slug,
-                    'type' => AwardType::getDescription((int)$award->award_type),
+                    'type' => $award->award_type ? AwardType::getDescription((int)$award->award_type) : $award->award_type,
                 ];
             })
             ->withQueryString();

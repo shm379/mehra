@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ProducerType;
 use App\Helpers\Helpers;
-use App\Models\Product;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
@@ -13,7 +13,7 @@ use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\QueryBuilderRequest;
 
-class ProductController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,10 +27,7 @@ class ProductController extends Controller
             $query->where(function ($query) use ($value) {
                 \Illuminate\Database\Eloquent\Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
-                        ->orWhere('title', 'LIKE', "%{$value}%")
-                        ->orWhere('sub_title', 'LIKE', "%{$value}%")
-                        ->orWhere('slug', 'LIKE', "%{$value}%")
-                        ->orWhere('description', 'LIKE', "%{$value}%");
+                        ->orWhere('title', 'LIKE', "%{$value}%");
                 });
             });
         });
@@ -38,39 +35,35 @@ class ProductController extends Controller
         $per_page = abs($request->perPage) > 0 ? abs($request->perPage) : 15;
         QueryBuilderRequest::setArrayValueDelimiter('|');
         // get users from query builder
-        $products = QueryBuilder::for(Product::class)
-            ->with('producer')
-            ->withCount('comments')
+        $stocks = QueryBuilder::for(Stock::class)
+            ->with('products')
+            ->withCount('products')
             ->defaultSort('created_at')
             ->allowedSorts([
                 'title',
-                'description',
                 'price',
-                'sub_title',
-                'sku',
-                'comments_count',
                 'created_at',
             ])
-            ->allowedIncludes(['comments'])
+            ->allowedIncludes([])
             ->allowedFilters([
-                'comments_count',
                 'title',
-                'price',
                 $globalSearch])
             ->paginate($per_page)
-            ->through(function ($product) {
+            ->through(function ($stock) {
                 return [
-                    'id'=> $product->id,
-                    'title'=> preg_replace( "/\r|\n/", "", $product->title ),
-                    'sub_title'=> $product->sub_title,
-                    'price'=> Helpers::toman($product->price),
-                    'comments_count'=> $product->comments_count,
+                    'id'=> $stock->id,
+                    'title'=> preg_replace( "/\r|\n/", "", $stock->title ),
+                    'type'=> $stock->type,
+                    'location'=> $stock->type,
+                    'products_count'=> $stock->products_count,
+                    'priority'=> $stock->priority,
+
                 ];
             })
             ->withQueryString();
         // return table in inertia with columns
-        return Inertia::render('Product/Index')
-            ->with(['products' => $products]);
+        return Inertia::render('Stock/Index')
+            ->with(['stocks' => $stocks]);
     }
 
     /**
@@ -80,7 +73,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Product/Create');
+        return Inertia::render('Stock/Create');
     }
 
     /**
@@ -97,10 +90,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Stock $stock)
     {
         //
     }
@@ -108,10 +101,10 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Stock $stock)
     {
         //
     }
@@ -120,10 +113,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Stock $stock)
     {
         //
     }
@@ -131,10 +124,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Stock  $stock
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Stock $stock)
     {
         //
     }
