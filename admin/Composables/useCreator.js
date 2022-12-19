@@ -11,8 +11,7 @@ export default () => {
         birthday: "",
         awards: [],
         types: [],
-    });
-    const sections = ref([
+    }), sections = ref([
         {
             title: "مشخصات ",
             anchor: "creator-info",
@@ -25,8 +24,7 @@ export default () => {
             title: "افزودن  جوایز و افتخارات",
             anchor: "creator-award",
         },
-    ]);
-    const columns = ref([
+    ]), columns = ref([
         {
             name: "id",
             label: "شماره ردیف",

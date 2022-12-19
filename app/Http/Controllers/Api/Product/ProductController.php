@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Enums\AttributeType;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\ProductRankAttributeCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -65,5 +66,11 @@ class ProductController extends Controller {
             },
             'media'
         ]));
+    }
+
+    public function getRanks(Product $product)
+    {
+        $features = $product->rank_attributes;
+        return new ProductRankAttributeCollection($features);
     }
 }

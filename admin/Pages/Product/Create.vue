@@ -3,7 +3,7 @@
     <ui-page-header-action to="admin.products.index"
       >مشاهده لیست محصولات</ui-page-header-action
     >
-    <ui-page-header-action to="admin.products.index"
+    <ui-page-header-action to="admin.products.create"
       >افزودن محصول جدید</ui-page-header-action
     >
   </ui-page-header>
