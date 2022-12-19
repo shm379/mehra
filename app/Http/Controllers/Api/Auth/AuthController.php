@@ -74,9 +74,7 @@ class AuthController extends Controller
             } else {
                 return $this->errorResponse('کد تایید اشتباه است');
             }
-        } catch (\App\Exceptions\InvalidOTPTokenException $exception){
-            return $this->errorResponse('خطایی در تایید کد پیش آمده است');
-        } catch (Throwable $ex) {
+        } catch (\App\Exceptions\InvalidOTPTokenException | \Exception $exception){
             return $this->errorResponse('خطایی در تایید کد پیش آمده است');
         }
 
