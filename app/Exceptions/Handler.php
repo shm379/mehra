@@ -109,9 +109,9 @@ class Handler extends ExceptionHandler
     public function render($request, $e)
     {
         if ($request->is('api/*')) {
-            $this->handleApiException($request, $e);
+//            $this->handleApiException($request, $e);
         } else {
-            return parent::render($request, $e);
+//            return parent::render($request, $e);
         }
     }
 }
