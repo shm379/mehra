@@ -83,8 +83,8 @@ class AuthController extends Controller
                     return $this->errorResponse('کد تایید اشتباه است');
                 }
             }
-        } catch (\Exception $exception){
-            return $this->errorResponse('خطایی در تایید کد پیش آمده است');
+        } catch (MehraApiException $exception){
+//            return $this->errorResponse('خطایی در تایید کد پیش آمده است');
         }
 
         return $this->successResponseWithData([
