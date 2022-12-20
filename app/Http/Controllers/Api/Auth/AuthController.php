@@ -82,13 +82,6 @@ class AuthController extends Controller
                     case 'expired':
                         return $this->errorResponse('کد تایید منقضی شده است');
                 }
-                if ($otpService=='verified') {
-                    $token = $user->createToken('web');
-                } else if ($otpService == 'deleted') {
-                    return $this->errorResponse('این کد قبلا استفاده شده است');
-                } else if ($otpService == 'expired') {
-                    return $this->errorResponse('کد تایید منقضی شده است');
-                }
 
 
             }
