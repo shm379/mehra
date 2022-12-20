@@ -108,7 +108,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, $e)
     {
-        if(!$request->expectsJson() || !$request->is('api/*')) return parent::render($request, $e);
+//        if(!$request->expectsJson() || !$request->is('api/*')) return parent::render($request, $e);
         return $this->handleApiException($request, $e);
     }
 }

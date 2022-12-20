@@ -71,17 +71,26 @@ class AuthController extends Controller
             $user = $temporaryToken->tokenable;
             if($user) {
                 $otpService = OtpService::verifyOtp($user->mobile, (int)$request->get('code'));
-                if ($otpService == 'deleted') {
-                    return $this->errorResponse('این کد قبلا استفاده شده است');
+                if(!$otpService)
+                    return $this->errorResponse('کد تایید اشتباه است');
+                switch ($otpService){
+                    case 'verified':
+                        $token = $user->createToken('web');
+                        break;
+                    case 'deleted':
+                        return $this->errorResponse('این کد قبلا استفاده شده است');
+                    case 'expired':
+                        return $this->errorResponse('کد تایید منقضی شده است');
                 }
-                if ($otpService == 'expired') {
+                if ($otpService=='verified') {
+                    $token = $user->createToken('web');
+                } else if ($otpService == 'deleted') {
+                    return $this->errorResponse('این کد قبلا استفاده شده است');
+                } else if ($otpService == 'expired') {
                     return $this->errorResponse('کد تایید منقضی شده است');
                 }
-                if ($otpService) {
-                    $token = $user->createToken('web');
-                } else {
-                    return $this->errorResponse('کد تایید اشتباه است');
-                }
+
+
             }
         } catch (MehraApiException $exception){
 //            return $this->errorResponse('خطایی در تایید کد پیش آمده است');

@@ -41,7 +41,7 @@ class OtpService
 
     static function verifyOtp($mobile,$code)
     {
-        $expireTime = now();
+        $expireTime = now()->timezone('Asia/Tehran');
         $mobile = Helpers::mobileNumberNormalize($mobile);
         $user = User::query()->where('mobile',$mobile)->first();
         $otpGeneratedCode = Otp::query()
@@ -58,7 +58,7 @@ class OtpService
                 if(!$user->hasVerifiedMobile())
                     $user->markMobileAsVerified();
 
-                return true;
+                return 'verified';
             }
         }
         return false;
