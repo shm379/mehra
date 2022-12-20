@@ -103,7 +103,7 @@ class Handler extends ExceptionHandler
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 
-        $this->customApiResponse($exception);
+        return $this->customApiResponse($exception);
     }
 
     public function render($request, $e)
