@@ -44,7 +44,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+            return response(['message' => $e->getMessage()], $e->getCode() ?: 400);
         });
     }
 
@@ -108,12 +108,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, $e)
     {
-        if ($request->wantsJson()) {   //add Accept: application/json in request
-            return $this->handleApiException($request, $e);
+        if ($request->is('api/*')) {
+            $this->handleApiException($request, $e);
         } else {
-            $retval = parent::render($request, $e);
+            return parent::render($request, $e);
         }
-
-        return $retval;
     }
 }

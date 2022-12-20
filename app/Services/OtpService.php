@@ -48,7 +48,10 @@ class OtpService
             ->where('user_id',$user->id)
             ->where('expired_at','>=',$expireTime);
         if(!$otpGeneratedCode->exists()){
-            return false;
+            if($otpGeneratedCode->withTrashed()->exists()){
+                return 'deleted';
+            }
+            return 'expired';
         } else {
             if($otpGeneratedCode->first()->code==$code){
                 $otpGeneratedCode->delete();

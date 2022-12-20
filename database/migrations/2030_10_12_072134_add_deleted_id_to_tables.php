@@ -36,6 +36,7 @@ return new class extends Migration
         'product_groups',
         'messages',
         'stocks',
+        'otps',
     ];
     /**
      * Run the migrations.
