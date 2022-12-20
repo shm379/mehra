@@ -10,5 +10,4 @@ class Otp extends Model
 {
     protected $guarded = [''];
     use HasFactory;
-    use SoftDeletes;
 }
