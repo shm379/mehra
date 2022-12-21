@@ -70,7 +70,7 @@ class ProductController extends Controller {
 
     public function getRanks(Product $product)
     {
-        $features = $product->rank_attributes;
+        $features = $product->rank_attributes->unique('id');
         return new ProductRankAttributeCollection($features);
     }
 }
