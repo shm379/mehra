@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Product;
 
-use App\Builder\Filters\FiltersVolumeTitle;
 use App\Builder\Includes\AggregateInclude;
 use App\Enums\AttributeType;
 use App\Enums\ProducerType;

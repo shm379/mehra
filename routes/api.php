@@ -107,24 +107,3 @@ Route::apiResource('collections', \App\Http\Controllers\Api\Product\CollectionCo
 Route::apiResource('creators', \App\Http\Controllers\Api\Product\CreatorController::class)->only('index','show');
 Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerController::class)->only('index','show');
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
-
-/*
-* V1 ADMIN INERTIA CONTROLLER
-*/
-Route::get('/ac/producers/publishers/{q}', [AutocompleteController::class, 'publishers'])->name('ac.publishers');
-Route::get('/ac/producers/brands/{q}', [AutocompleteController::class, 'brands']);
-Route::get('/ac/producers/producers/{q}', [AutocompleteController::class, 'producers']);
-Route::get('/ac/creators/authors/{q}', [AutocompleteController::class, 'authors']);
-Route::get('/ac/creators/translators/{q}', [AutocompleteController::class, 'translators']);
-Route::get('/ac/creators/narrators/{q}', [AutocompleteController::class, 'narrators']);
-Route::get('/ac/creators/illustrators/{q}', [AutocompleteController::class, 'illustrators']);
-Route::get('/ac/publishers/{q}', [AutocompleteController::class, 'publishers'])->name('ac.publishers');
-Route::get('/ac/creators/types/{q}', [AutocompleteController::class, 'creatorTypes']);
-Route::get('/ac/creators/{q}', [AutocompleteController::class, 'authors']);
-Route::get('/ac/translators/{q}', [AutocompleteController::class, 'translators']);
-Route::get('/ac/narrators/{q}', [AutocompleteController::class, 'narrators']);
-Route::get('/ac/illustrators/{q}', [AutocompleteController::class, 'illustrators']);
-Route::get('/ac/categories/{q}', [AutocompleteController::class, 'categories']);
-Route::get('/ac/collections/{q}', [AutocompleteController::class, 'collections']);
-Route::get('/ac/attributes', [AutocompleteController::class, 'attribute']);
-Route::get('/ac/awards/{q}', [AutocompleteController::class, 'award']);

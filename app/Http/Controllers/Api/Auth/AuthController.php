@@ -117,7 +117,6 @@ class AuthController extends Controller
             $this->uploadMedia($user,'avatar','avatar');
         } catch (MehraApiException $exception){
             return $this->errorResponse('عملیات با خطا مواجه شد!');
-
         }
         return $this->successResponse('اطلاعات با موفقیت ویرایش گردید');
     }

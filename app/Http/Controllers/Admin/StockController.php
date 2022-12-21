@@ -84,7 +84,7 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

@@ -3,11 +3,18 @@ import { useForm } from "@inertiajs/inertia-vue3";
 
 export default () => {
     const form = useForm({
-
+        title: "",
+        type: "",
+        priority: "",
+        period: "",
+        country_id:"",
+        state_id:"",
+        city_id:"",
+        is_active:1,
     }), sections = ref([
         {
             title: "مشخصات ",
-            anchor: "creator-info",
+            anchor: "stock-form",
         },
     ]), columns = ref([
         {
@@ -35,9 +42,9 @@ export default () => {
             sortable: false,
         },
         {
-            name: "products_count",
+            name: "stocks_count",
             label: "تعداد محصولات",
-            field: "products_count",
+            field: "stocks_count",
             sortable: false,
         },
         {
@@ -54,9 +61,9 @@ export default () => {
     ]);
 
     const actions = [
-        { title: "نمایش", route: "admin.products.show", color: "blue" },
-        { title: "ویرایش", route: "admin.products.edit", color: "orange" },
-        { title: "حذف", route: "admin.products.destroy", color: "red" },
+        { title: "نمایش", route: "admin.stocks.show", color: "blue" },
+        { title: "ویرایش", route: "admin.stocks.edit", color: "orange" },
+        { title: "حذف", route: "admin.stocks.destroy", color: "red" },
     ];
     return { columns, actions, form, sections };
 };

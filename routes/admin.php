@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 Route::prefix('/admin')
     ->name('admin.')
-    ->middleware(['auth'])
+    ->middleware(['auth','role:admin'])
     ->group(function (){
 
         Route::get("/", function () {
@@ -48,5 +48,32 @@ Route::prefix('/admin')
         Route::resource('product-groups', \App\Http\Controllers\Admin\ProductGroupController::class);
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('volumes', \App\Http\Controllers\Admin\VolumeController::class);
+
+
     });
+/*
+        * V1 ADMIN INERTIA CONTROLLER
+        */
+        Route::prefix('/api/v1')
+            ->middleware(['auth','role:admin'])
+            ->group(function (){
+                Route::get('/ac/producers/publishers/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'publishers'])->name('ac.publishers');
+                Route::get('/ac/producers/brands/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'brands']);
+                Route::get('/ac/producers/producers/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'producers']);
+                Route::get('/ac/creators/authors/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'authors']);
+                Route::get('/ac/creators/translators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'translators']);
+                Route::get('/ac/creators/narrators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'narrators']);
+                Route::get('/ac/creators/illustrators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'illustrators']);
+                Route::get('/ac/publishers/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'publishers'])->name('ac.publishers');
+                Route::get('/ac/creators/types/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'creatorTypes']);
+                Route::get('/ac/creators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'authors']);
+                Route::get('/ac/translators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'translators']);
+                Route::get('/ac/narrators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'narrators']);
+                Route::get('/ac/illustrators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'illustrators']);
+                Route::get('/ac/categories/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'categories']);
+                Route::get('/ac/collections/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'collections']);
+                Route::get('/ac/attributes', [\App\Http\Controllers\Api\AutocompleteController::class, 'attribute']);
+                Route::get('/ac/awards/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'award']);
+        });
+
 require __DIR__.'/admin/auth.php';

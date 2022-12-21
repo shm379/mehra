@@ -6,7 +6,7 @@
         <ui-input  class="w-2/3" label="سال تولد" :errors="error" v-model="form.birthday" error="birthday" />
         <ui-input label="تخلص" class="w-2/3" :errors="error" v-model="form.nickname" error="nickname"></ui-input>
         <ui-input label="عنوان فرعی یا زیرعنوان" :errors="error" v-model="form.slug" error="slug"></ui-input>
-        <ui-autocomplete-creatpr-type label="تخصص" :errors="error" v-model="form.types" error="slug"></ui-autocomplete-creatpr-type>
+        <ui-autocomplete-creator-type label="تخصص" :errors="error" v-model="form.types" error="slug"></ui-autocomplete-creator-type>
         <ui-textarea label="بیوگرافی" :errors="error" v-model="form.description" error="description"></ui-textarea>
     </div>
 </template>

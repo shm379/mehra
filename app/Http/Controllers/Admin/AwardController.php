@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\AwardType;
 use App\Http\Controllers\Admin\Controller;
-use App\Http\Requests\Admin\StoreAwardRequest;
+use App\Http\Requests\Admin\Product\StoreAwardRequest;
 use App\Models\Award;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
