@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Product;
 use App\Builder\Includes\AggregateInclude;
 use App\Enums\AttributeType;
 use App\Enums\ProducerType;
+use App\Exceptions\MehraApiException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\BookResourceCollection;
@@ -12,6 +13,7 @@ use App\Http\Resources\CreatorResourceCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Book;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -67,25 +69,25 @@ class BookController extends Controller {
             ->withQueryString();
         return new BookResourceCollection($books);
     }
-    public function show(Book $book): BookResource
+    public function show($book)
     {
-//        if(is_int($book)){
-//            $book = Book::query()->where('id',$book)->firstOrFail();
-//        } else {
-//            $book = Book::query()->where('slug',$book)->firstOrFail();
-//        }
-        return BookResource::make($book->load([
-            'volume',
-            'volumes',
-            'producer',
-            'creators'=>function($creator){
-                $creator->with('types');
-            },
-            'attributeValues'=>function($value){
-                $value->with('attribute');
-            },
-            'media'
-        ]));
+        try {
+            $book = Book::query()->with([
+                'volume',
+                'volumes',
+                'producer',
+                'creators'=>function($creator){
+                    $creator->with('types','media');
+                },
+                'attributeValues'=>function($value){
+                    $value->with('attribute');
+                },
+                'media'
+            ])->findOrFail($book);
+        } catch (ModelNotFoundException $exception){
+            return $this->errorResponse('محصول مورد نظر یافت نشد',404);
+        }
+        return BookResource::make($book);
     }
 
     public function filters()

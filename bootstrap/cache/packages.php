@@ -65,13 +65,6 @@
       0 => 'GhaniniaIR\\Shipping\\ShippingServiceProvider',
     ),
   ),
-  'hmdana/laravel-inertia-datagrid' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Hmdana\\LaravelInertiaDataGrid\\InertiaDataGridServiceProvider',
-    ),
-  ),
   'inertiajs/inertia-laravel' => 
   array (
     'providers' => 
@@ -88,6 +81,17 @@
     'aliases' => 
     array (
       'Image' => 'Intervention\\Image\\Facades\\Image',
+    ),
+  ),
+  'itsgoingd/clockwork' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Clockwork\\Support\\Laravel\\ClockworkServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Clockwork' => 'Clockwork\\Support\\Laravel\\Facade',
     ),
   ),
   'jgrossi/corcel' => 
@@ -161,17 +165,6 @@
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'livewire/livewire' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Livewire\\LivewireServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Livewire' => 'Livewire\\Livewire',
-    ),
-  ),
   'maatwebsite/excel' => 
   array (
     'providers' => 
@@ -181,17 +174,6 @@
     'aliases' => 
     array (
       'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
-    ),
-  ),
-  'mediconesystems/livewire-datatables' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Mediconesystems\\LivewireDatatables\\LivewireDatatablesServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'LivewireDatatables' => 'Mediconesystems\\LivewireDatatables\\LivewireDatatablesFacade',
     ),
   ),
   'nesbot/carbon' => 
@@ -215,13 +197,6 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-  'protonemedia/inertiajs-tables-laravel-query-builder' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'ProtoneMedia\\LaravelQueryBuilderInertiaJs\\InertiaTableServiceProvider',
-    ),
-  ),
   'realrashid/sweet-alert' => 
   array (
     'providers' => 
@@ -231,13 +206,6 @@
     'aliases' => 
     array (
       'Alert' => 'RealRashid\\SweetAlert\\Facades\\Alert',
-    ),
-  ),
-  'reedware/laravel-relation-joins' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Reedware\\LaravelRelationJoins\\LaravelRelationJoinServiceProvider',
     ),
   ),
   'sadegh19b/laravel-persian-validation' => 

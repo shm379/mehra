@@ -91,7 +91,6 @@ class Handler extends ExceptionHandler
     private function handleApiException($request, $exception)
     {
         $exception = $this->prepareException($exception);
-
         if ($exception instanceof \HttpResponseException) {
             $exception = $exception->getResponse();
         }
@@ -109,8 +108,8 @@ class Handler extends ExceptionHandler
 
     public function render($request, $e)
     {
-        Log::info($request->fullUrl().' - '.$e->getMessage(),$request->toArray());
-        if(!$request->expectsJson() || !$request->is('api/*')) return parent::render($request, $e);
+        Log::debug($request->fullUrl().' - '.$e->getMessage(),$request->toArray());
+        if(!$request->expectsJson() && !$request->is('api/*')) return parent::render($request, $e);
         return $this->handleApiException($request, $e);
     }
 }
