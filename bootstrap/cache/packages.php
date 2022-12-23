@@ -83,6 +83,17 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
+  'itsgoingd/clockwork' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Clockwork\\Support\\Laravel\\ClockworkServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Clockwork' => 'Clockwork\\Support\\Laravel\\Facade',
+    ),
+  ),
   'jgrossi/corcel' => 
   array (
     'providers' => 

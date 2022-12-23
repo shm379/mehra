@@ -37,8 +37,9 @@ class BookResource extends MehraResource
             'description'=> $this->description,
             'main_price'=> Helpers::toman($this->price),
             'price'=> $this->sale_price ? Helpers::toman($this->sale_price) : Helpers::toman($this->price),
-            'max_number'=> $this->max_purchases_per_user,
+//            'max_number'=> $this->max_purchases_per_user,
             'creators'=> $this->whenLoaded('creators',function (){
+                $this->creators->load('media');
                 return BookCreatorResource::collection($this->creators);
             }),
             'is_liked'=> $this->is_liked,

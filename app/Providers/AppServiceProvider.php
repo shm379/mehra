@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Services\CartService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -19,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+
     }
 
     /**
@@ -33,6 +36,8 @@ class AppServiceProvider extends ServiceProvider
             $this->app['request']->server->set('HTTPS','on');
             URL::forceScheme('https');
         }
-
+//        $this->app->singleton(CartService::class, function ($app) {
+//            return new CartService();
+//        });
     }
 }

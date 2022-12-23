@@ -8,12 +8,38 @@ use App\Services\Media\Media;
 use App\Traits\LogsUserView;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Spatie\MediaLibrary\HasMedia;
 
 class Book extends Product
 {
     use LogsUserView;
     protected $table = 'products';
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this
+            ->with([
+            'media',
+            'volumes',
+            'producer',
+            'creators'=>function($creator){
+                $creator->with('types','media');
+            },
+            'attributeValues'=>function($value) {
+                $value->with('attribute');
+            }
+            ])
+            ->where($this->getRouteKeyName(), $value)
+            ->firstOrFail();
+    }
 
     public function getRouteKeyName(): string
     {
@@ -68,7 +94,7 @@ class Book extends Product
 
     public function volumes()
     {
-        return $this->hasMany(Book::class,'volume_id')->orderBy('order_volume');
+        return $this->hasMany(Book::class,'volume_id')->with('volume')->orderBy('order_volume');
     }
 
     public function scopeVolumeTitle($query, $title)

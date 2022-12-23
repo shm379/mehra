@@ -54,7 +54,7 @@ class CartService
         $item = $item_type::query()->find($item_id);
         $cartItem = [];
         if($item_type==Book::class) {
-            $cartItem['line_item_type'] = 'book';
+            $cartItem['line_item_type'] = 'product';
             $cartItem['line_item_id'] = $item_id;
             $cartItem['price_without_discount'] = $item->price;
             $cartItem['price'] = $item->sale_price ?? $item->price;
@@ -122,7 +122,7 @@ class CartService
         }
         $cartItem = $cart->items()->firstOrCreate([
             'line_item_id'=>$product_id,
-            'line_item_type'=> 'book'
+            'line_item_type'=> 'product'
         ],self::getCartItem($product_id,$quantity));
 
         if(!$cartItem->wasRecentlyCreated){
@@ -138,7 +138,7 @@ class CartService
             //Get Current Cart Item
             $item = $cart->items()->where([
                 'line_item_id'=>$product_id,
-                'line_item_type'=>'book'
+                'line_item_type'=>'product'
             ]);
             // IF Cart Exists
             if($item->exists()){

@@ -177,8 +177,7 @@ class Product extends Model implements HasMedia
 
     public function getMainPriceAttribute()
     {
-        $price = $this->attributes['sale_price'] ? $this->attributes['sale_price'] : $this->attributes['price'];
-        return $price;
+        return $this->attributes['sale_price'] ?: $this->attributes['price'];
     }
 
     public function getSatisfiedNoAttribute()

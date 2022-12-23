@@ -52,13 +52,37 @@ const mehraUiAdminPanelPlugin = {
          * ============
          */
         // load all forms from Forms Directory
-        const forms = import.meta.globEager("./Forms/**/*.vue");
-        Object.entries(forms).forEach(([path, definition]) => {
+        const uiforms = import.meta.globEager("./Forms/**/*.vue");
+        Object.entries(uiforms).forEach(([path, definition]) => {
             // Get name of component, based on filename
             // "../Forms/Name.vue" will become "UiFormName"
 
             const componentName =
                 "UiForm" +
+                path
+                    .split("/")
+                    .splice(2)
+                    .reduce(
+                        (accumulator, currentValue) =>
+                            accumulator + currentValue,
+                        ""
+                    )
+                    .replace("..", "")
+                    .replace("..", "")
+                    .replace(".vue", "");
+
+            // Register component on this Vue instance
+            app.component(componentName, definition.default);
+        });
+
+        // load all forms from Forms Directory
+        const forms = import.meta.globEager("../Forms/*.vue");
+        Object.entries(forms).forEach(([path, definition]) => {
+            // Get name of component, based on filename
+            // "../Forms/Name.vue" will become "UiFormName"
+
+            const componentName =
+                "form" +
                 path
                     .split("/")
                     .splice(2)

@@ -69,21 +69,10 @@ class BookController extends Controller {
             ->withQueryString();
         return new BookResourceCollection($books);
     }
-    public function show($book)
+    public function show(Book $book)
     {
         try {
-            $book = Book::query()->with([
-                'volume',
-                'volumes',
-                'producer',
-                'creators'=>function($creator){
-                    $creator->with('types','media');
-                },
-                'attributeValues'=>function($value){
-                    $value->with('attribute');
-                },
-                'media'
-            ])->findOrFail($book);
+
         } catch (ModelNotFoundException $exception){
             return $this->errorResponse('محصول مورد نظر یافت نشد',404);
         }

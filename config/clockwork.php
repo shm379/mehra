@@ -288,10 +288,10 @@ return [
 	'storage' => env('CLOCKWORK_STORAGE', 'files'),
 
 	// Path where the Clockwork metadata is stored
-	'storage_files_path' => env('CLOCKWORK_STORAGE_FILES_PATH', sys_get_temp_dir()),
+	'storage_files_path' => env('CLOCKWORK_STORAGE_FILES_PATH', storage_path('clockwork')),
 
 	// Compress the metadata files using gzip, trading a little bit of performance for lower disk usage
-	'storage_files_compress' => env('CLOCKWORK_STORAGE_FILES_COMPRESS', true),
+	'storage_files_compress' => env('CLOCKWORK_STORAGE_FILES_COMPRESS', false),
 
 	// SQL database to use, can be a name of database configured in database.php or a path to a SQLite file
 	'storage_sql_database' => env('CLOCKWORK_STORAGE_SQL_DATABASE', storage_path('clockwork.sqlite')),
