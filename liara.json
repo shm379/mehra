@@ -6,6 +6,5 @@
     },
     "cron": [
         "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1"
-    ],
-    "args": [ "php artisan octane:start --server=swoole --host=0.0.0.0 --port=80" ]
+    ]
 }
