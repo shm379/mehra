@@ -11,13 +11,7 @@
             ></ui-input>
           </ui-col>
           <ui-col wide>
-            <ui-field-select
-                :errors="errors"
-                :options="cities"
-                label="مکان فیزیکی انبار (کشور / شهر)"
-                v-model="form.city_id"
-            >
-            </ui-field-select>
+
           </ui-col>
         </ui-row>
         <ui-row>

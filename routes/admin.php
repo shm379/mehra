@@ -46,7 +46,7 @@ Route::prefix('/admin')
         Route::resource('producers', \App\Http\Controllers\Admin\ProducerController::class);
         Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
         Route::resource('product-groups', \App\Http\Controllers\Admin\ProductGroupController::class);
-        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+       // Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('volumes', \App\Http\Controllers\Admin\VolumeController::class);
 
 
@@ -64,7 +64,7 @@ Route::prefix('/admin')
                 Route::get('/ac/creators/translators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'translators']);
                 Route::get('/ac/creators/narrators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'narrators']);
                 Route::get('/ac/creators/illustrators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'illustrators']);
-                Route::get('/ac/publishers/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'publishers'])->name('ac.publishers');
+                Route::get('/ac/publishers/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'publishers']);
                 Route::get('/ac/creators/types/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'creatorTypes']);
                 Route::get('/ac/creators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'authors']);
                 Route::get('/ac/translators/{q}', [\App\Http\Controllers\Api\AutocompleteController::class, 'translators']);

@@ -27,11 +27,10 @@
         :title="item.title"
         :id="item.anchor"
       >
-                <component
-                  :is="`ui-form-${item.anchor}`"
-                  :setting="item.props ? item.props : false"
-                  :form="form"
-                />
+        <form-stock
+            :setting="item.props ? item.props : false"
+            :form="form"
+        ></form-stock>
       </ui-box>
     </ui-col>
     <ui-col>
