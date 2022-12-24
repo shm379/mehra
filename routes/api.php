@@ -60,7 +60,7 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
             // user wishlist
             Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class)->only(['index']);
             // user collection with wishlist
-            Route::get('collections/wishlist',\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class)->name('collections.wishlist.index');
+            Route::get('collections/wishlist',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class,'index'])->name('collections.wishlist.index');
            // user messages
             Route::get('messages',\App\Http\Controllers\Api\Profile\MessageController::class);
            // user views
