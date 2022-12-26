@@ -359,13 +359,14 @@
 
           <Link
                     as="a"
-                    href="/settings"
+                    :class="['admin.settings.index'].includes(route().current()) ? 'font-bold text-red-600' :''"
+                    :href="route('admin.settings.index')"
                     class="flex flex-row gap-8 justify-start items-center group pr-5 cursor-pointer"
                 >
           <span
           ><svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="none"
+              :fill="['admin.settings.index'].includes(route().current()) ? '#E3272F' : 'none'"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"

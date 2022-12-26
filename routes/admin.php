@@ -48,6 +48,8 @@ Route::prefix('/admin')
         Route::resource('product-groups', \App\Http\Controllers\Admin\ProductGroupController::class);
        // Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
         Route::resource('volumes', \App\Http\Controllers\Admin\VolumeController::class);
+        Route::get('settings', [\App\Http\Controllers\Admin\SettingController::class,'index'])->name('settings.index');
+        Route::post('settings', [\App\Http\Controllers\Admin\SettingController::class,'update'])->name('settings.update');
 
 
     });

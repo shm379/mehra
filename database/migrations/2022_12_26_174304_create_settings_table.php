@@ -11,7 +11,7 @@ return new class extends Migration
         'category_templates',
         'collections',
         'creators',
-        'ranks',
+        'comment_rates',
         'comments',
         'products',
         'users',
@@ -30,7 +30,6 @@ return new class extends Migration
         'wallet_histories',
         'product_groups',
         'messages',
-        'settings',
     ];
     /**
      * Run the migrations.
@@ -39,17 +38,15 @@ return new class extends Migration
      */
     public function up()
     {
-        foreach ($this->tables as $tableName) {
-            Schema::table($tableName, function (Blueprint $table)  use ($tableName) {
-                if (!Schema::hasColumn($tableName, 'admin_id')) {
-                    $table->unsignedBigInteger('admin_id')->nullable();
-                    $table->foreign('admin_id')
-                        ->references('id')
-                        ->on('users')
-                        ->onDelete('cascade');
-                }
-            });
-        }
+        Schema::create('settings', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->string('key')->nullable();
+            $table->text('value')->nullable();
+            $table->nullableMorphs('model');
+            $table->unsignedBigInteger('order')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -59,11 +56,12 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('settings');
         foreach ($this->tables as $tableName) {
-            Schema::table($tableName, function (Blueprint $table) use($tableName) {
+            Schema::table($tableName, function (Blueprint $table) use ($tableName) {
                 if (!Schema::hasColumn($tableName, 'admin_id')) {
                     $table->dropColumn('admin_id');
-                    $table->dropForeign('admin_id');
+                    $table->dropForeign($tableName . '_' . 'admin_id_foreign');
                 }
             });
         }
