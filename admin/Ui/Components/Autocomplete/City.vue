@@ -1,5 +1,5 @@
 <template>
-    <ui-autocomplete api="/api/v1/ac/cities/" :label="label" v-model="city" :multiselect="false">
+    <ui-autocomplete api="/api/v1/ac/cities/" :label="label" v-model="city">
             <template #tag="{ item }">
                 <span>{{ item.title }}</span>
             </template>

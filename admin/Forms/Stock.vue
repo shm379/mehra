@@ -11,7 +11,7 @@
             ></ui-input>
           </ui-col>
           <ui-col wide>
-            <ui-autocomplete-city v-model="stock" >
+            <ui-autocomplete-city label="شهر" v-model="stock" >
             </ui-autocomplete-city>
           </ui-col>
         </ui-row>

@@ -52,7 +52,7 @@ class AutocompleteController extends Controller
 
     public function categories($q, Request $request)
     {
-        $result = Category::where('title', 'LIKE', '%' . $q . '%')->get();
+        $result = Category::query()->where('title', 'LIKE', '%' . $q . '%')->get();
         return $result;
     }
     public function attribute(Request $request)
@@ -61,18 +61,18 @@ class AutocompleteController extends Controller
     }
     public function award($q, Request $request)
     {
-        return Award::where('title', 'LIKE', `%{$q}%`)->get();
+        return Award::query()->where('title', 'LIKE', "%$q%")->get();
     }
     public function collections($q, Request $request)
     {
-        return Collection::where('title', 'LIKE', `%{$q}%`)->get();
+        return Collection::query()->where('title', 'LIKE', "%$q%")->get();
     }
     public function creatorTypes($q, Request $request)
     {
-        return CreatorType::where('name', 'LIKE', `%{$q}%`)->get();
+        return CreatorType::query()->where('name', 'LIKE', "%$q%")->get();
     }
     public function cities($q, Request $request)
     {
-        return City::where('title', 'LIKE', `%{$q}%`)->get();
+        return City::query()->where('title', 'LIKE', "%$q%")->get();
     }
 }
