@@ -2,7 +2,7 @@
     "platform": "laravel",
     "app": "mehra",
     "laravel": {
-        "phpVersion": "8.1"
+        "phpVersion": "8.2"
     },
     "cron": [
         "* * * * * cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1"
