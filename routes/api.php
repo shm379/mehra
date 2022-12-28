@@ -106,3 +106,4 @@ Route::apiResource('collections', \App\Http\Controllers\Api\Product\CollectionCo
 Route::apiResource('creators', \App\Http\Controllers\Api\Product\CreatorController::class)->only('index','show');
 Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerController::class)->only('index','show');
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
+Route::apiResource('home', \App\Http\Controllers\Api\Global\HomeController::class)->only('index');

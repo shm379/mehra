@@ -35,5 +35,7 @@ class Slider extends Model implements HasMedia
 
         $conversion->nonQueued()->performOnCollections('main_image');
     }
-
+    /**
+     * Get the settings.
+     */
 }

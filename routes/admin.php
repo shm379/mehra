@@ -29,7 +29,7 @@ Route::prefix('/admin')
                 Route::get("/", 'index')->name('index');
                 Route::get("/{id}", 'show')->name('show');
                 Route::get("/{id}/edit", 'edit')->name('edit');
-                Route::delete("/{id}", 'delete')->name('delete');
+                Route::delete("/{id}", 'delete')->name('destroy');
             });
         Route::resource('attributes', \App\Http\Controllers\Admin\AttributeController::class);
         Route::resource('attributes.values', \App\Http\Controllers\Admin\AttributeValueController::class);

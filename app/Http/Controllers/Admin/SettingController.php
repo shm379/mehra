@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin;
+use App\Models\Home;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,8 +17,8 @@ class SettingController extends Controller
      */
     public function index()
     {
-        $settings = Setting::query()->get();
-        // return table in inertia
+        $settings = Home::query()->get();
+        // return inertia
         return Inertia::render('Setting/Index')
             ->with(['settings' => $settings]);
     }

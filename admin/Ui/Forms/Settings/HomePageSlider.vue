@@ -2,11 +2,11 @@
   <div class="flex flex-col gap-4">
     <div
       class="flex w-full flex-row gap-2 items-center justify-between"
-      v-for="(item, i) in awards"
+      v-for="(item, i) in sliders"
       :key="i"
     >
       <div class="w-5/12">
-        <ui-autocomplete-award v-model="item.award"></ui-autocomplete-award>
+        <ui-input label="عنوان" v-model="item.slider"></ui-input>
       </div>
       <div class="w-6.12">
         <ui-input label="توضیحات" v-model="item.description"></ui-input>
@@ -31,7 +31,7 @@
     </div>
     <div class="flex flex-row gap-2 items-end">
       <div class="w-5/12">
-        <ui-autocomplete-award v-model="newAward"></ui-autocomplete-award>
+          <ui-input label="عنوان" v-model="newSlider"></ui-input>
       </div>
       <div class="w-6/12">
         <ui-input label="توضیحات" v-model="newDescription"></ui-input>
@@ -62,27 +62,27 @@ import { computed, ref } from "vue";
 const props = defineProps({
   form: Object,
 });
-const newAward = ref();
+const newSlider = ref();
 const newDescription = ref();
-const awards = computed({
-  get: () => props.form.awards,
+const sliders = computed({
+  get: () => props.form.sliders,
   set(v) {
     var mv = props.form;
-    mv.awards = v;
+    mv.sliders = v;
     emit("update:form", mv);
   },
 });
 function add() {
-  awards.value.push({
-    award: newAward.value,
+    sliders.value.push({
+    slider: newSlider.value,
     description: newDescription.value,
   });
-  newAward.value = null;
+  newSlider.value = null;
   newDescription.value = null;
 }
 
 function remove(i) {
-  awards.value.splice(i, 1);
+  sliders.value.splice(i, 1);
 }
 </script>
 

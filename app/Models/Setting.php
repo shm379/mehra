@@ -14,4 +14,9 @@ class Setting extends Model
      * @var array
      */
     protected $guarded = [];
+
+    public function children()
+    {
+        return $this->hasMany(self::class,'parent_id')->orderBy('order');
+    }
 }

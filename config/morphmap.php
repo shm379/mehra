@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'announcement' => 'App\Models\Announcement',
     'award' => 'App\Models\Award',
     'comment' => 'App\Models\Comment',
     'category' => 'App\Models\Category',

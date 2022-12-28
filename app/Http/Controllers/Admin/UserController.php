@@ -119,13 +119,17 @@ class UserController extends Controller
         ]);
 
         $user = User::find(Auth::id());
-        $user->name = $request->first_name . ' ' . $request->last_name;
-        $user->email = $request->email;
+        $updated = [];
+        if($request->has('first_name') || $request->has('last_name')){
+            $updated['name'] = $request->first_name . ' ' . $request->last_name;
+        }
+        $updated['email'] = $request->email;
         if (isset($request->password))
-            $user->password = Hash::make($request->password);
+            $updated['password'] = Hash::make($request->password);
 
-        if ($user->save())
-            Redirect::route('admin.users.profile')->with('success', 'اطلاعات کاربری با موفقیت به روز شد.');
+        $user->update($updated);
+        if ($user->wasChanged())
+        Redirect::route('admin.users.profile')->with('success', 'اطلاعات کاربری با موفقیت به روز شد.');
         else
             Redirect::route('admin.users.profile')->with('error', 'لطفا اطلاعات را درست وارد کنید');
     }

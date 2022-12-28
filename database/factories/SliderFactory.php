@@ -31,8 +31,6 @@ final class SliderFactory extends Factory
             'link' => $this->faker->url,
             'is_active' => $this->faker->boolean,
             'color' => $this->faker->word,
-            'admin_id' => $this->faker->randomElement(['1']),
-            'deleted_at' => $this->faker->dateTime(),
         ];
     }
 }

@@ -195,4 +195,12 @@ class Product extends Model implements HasMedia
     {
         return auth()->check() ? auth()->user()->wishlist()->where('model_type','product')->where('model_id',$this->attributes['id'])->exists() : false;
     }
+
+    /**
+     * Get the settings.
+     */
+    public function home()
+    {
+        return $this->morphOne(Home::class, 'model');
+    }
 }
