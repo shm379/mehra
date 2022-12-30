@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('en_name');
-            $table->string('icon');
+            $table->string('icon')->nullable();
             $table->string('name');
             $table->string('slug')->unique();
             $table->enum('type', \App\Enums\AttributeType::asArray());

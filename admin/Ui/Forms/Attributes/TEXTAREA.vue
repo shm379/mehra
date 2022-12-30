@@ -1,5 +1,5 @@
 <template>
-    <ui-textarea v-model="input" :label="attribute.name"></ui-textarea>
+    <ui-textarea v-model="input" :label="attribute.title"></ui-textarea>
 </template>
 
 <script setup>

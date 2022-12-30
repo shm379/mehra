@@ -2,9 +2,10 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-final class ProductStructure extends Enum
+final class ProductStructure extends Enum  implements LocalizedEnum
 {
     const BOOK = 1;
     const STATIONERY = 2;

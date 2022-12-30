@@ -9,10 +9,13 @@
 <script setup>
 import { computed } from "vue";
 
-const props = defineProps({ modelValue: [Object, Array], label: {
-    type: String,
-    default: 'دسته بندی'
-} })
+const props = defineProps({
+    modelValue: [Object, Array],
+    label: {
+        type: String,
+        default: 'دسته بندی'
+    }
+})
 const emit = defineEmits(["update:modelValue"]);
 
 const category = computed({

@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="flex flex-row gap-4 items-center justify-start">
-    <UiInput v-model="newItem" class="grow"></UiInput>
+    <ui-input v-model="newItem" class="grow"></ui-input>
     <div class="w-8 h-8" @click="add">
       <svg
         width="30"

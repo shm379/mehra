@@ -37,6 +37,10 @@ class Attribute extends Model implements HasMedia
         $conversion->nonQueued()->performOnCollections('main_image');
     }
 
+    public function children()
+    {
+        return $this->hasMany(Attribute::class,'parent_id');
+    }
     public function values()
     {
         return $this->hasMany(AttributeValue::class);

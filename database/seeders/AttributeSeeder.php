@@ -160,24 +160,24 @@ class AttributeSeeder extends Seeder
         foreach ($defaultAttributes as $en_name => $attribute) {
             $attribute_child_id = 0;
             // insert attribute
-            $attribute_id = DB::table('attributes')->insertGetId(array_merge(['admin_id'=>1,'en_name'=>$en_name],collect($attribute)->only(['name','slug','type'])->toArray()));
+            $attribute_id = DB::table('attributes')->insertGetId(array_merge(['en_name'=>$en_name],collect($attribute)->only(['name','slug','type'])->toArray()));
             // insert attribute value
             if(isset($attribute['values'])) {
                 foreach ($attribute['values'] as $value) {
                     $attribute_value_id = DB::table('attribute_values')->insertGetId(
-                        array_merge(['admin_id' => 1, 'attribute_id' => $attribute_id, 'value' => $value])
+                        array_merge([ 'attribute_id' => $attribute_id, 'value' => $value])
                     );
                 }
             }
             // insert child attribute
             if(isset($attribute['children'])) {
                 foreach ($attribute['children'] as $en_name_child => $child) {
-                    $attribute_child_id = DB::table('attributes')->insertGetId(array_merge(['parent_id' => $attribute_id, 'admin_id' => 1, 'en_name' => $en_name_child], collect($child)->only(['name', 'slug', 'type'])->toArray()));
+                    $attribute_child_id = DB::table('attributes')->insertGetId(array_merge(['parent_id' => $attribute_id,  'en_name' => $en_name_child], collect($child)->only(['name', 'slug', 'type'])->toArray()));
                     // insert child values
                         if (isset($child['values'])) {
                             foreach ($child['values'] as $childValue) {
                                 DB::table('attribute_values')->insertGetId(
-                                    array_merge(['admin_id' => 1, 'attribute_id' => $attribute_child_id, 'value' => $childValue])
+                                    array_merge([ 'attribute_id' => $attribute_child_id, 'value' => $childValue])
                                 );
                             }
                         }

@@ -3,7 +3,7 @@
     <ui-label>{{ label }}</ui-label>
     <div
       @click="open"
-      class="cursor-pointer w-28 h-28 border border-dashed border-slate-400 rounded-xl bg-white flex flex-col place-content-center place-items-center gap-2"
+      class="cursor-pointer w-36 h-36 border border-dashed border-slate-400 rounded-xl bg-white flex flex-col place-content-center place-items-center gap-2"
     >
       <div>
         <svg
@@ -19,7 +19,8 @@
           />
         </svg>
       </div>
-      <span class="text-sm text-slate-400">انتخاب تصویر</span>
+      <span class="text-sm text-slate-400" v-if="!selectLabel">انتخاب تصویر</span>
+      <span class="text-sm text-slate-400" v-else>{{selectLabel}}</span>
     </div>
     <div class="relative mt-2" v-if="file">
       <img class="w-full rounded-xl h-20 object-cover" :src="file" alt="" />
@@ -46,6 +47,7 @@ const { files, open, reset } = useFileDialog({ multiple: false });
 const props = defineProps({
   label: { type: String, default: "تصویر" },
   modelValue: Object,
+  selectLabel: String,
 });
 const file = ref();
 watch(files, (value) => {

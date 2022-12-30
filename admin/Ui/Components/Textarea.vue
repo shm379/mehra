@@ -7,7 +7,10 @@
       v-model="input"
     ></textarea>
     <div class="text-xs text-red-600" v-if="errors && errors[error]">{{ errors[error] }}</div>
-    <div class="text-xs text-slate-300" v-else>حداقل ۳۰۰ حرف باید وارد کنید</div>
+    <div class="text-xs text-slate-300" v-else>
+        <span v-if="!description">حداقل ۳۰۰ حرف باید وارد کنید</span>
+        <span v-else>{{description}}</span>
+    </div>
   </div>
 </template>
 
@@ -16,6 +19,7 @@ import { computed } from "vue";
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
   modelValue: String,
+  description: String,
   label: String,
   error: String,
   errors: [Array, Object, Boolean],

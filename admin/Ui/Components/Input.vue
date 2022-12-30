@@ -1,7 +1,7 @@
 <template>
   <div class="input-container">
     <label class="text-sm text-slate-600">{{ label }}</label>
-    <input
+    <input style="height: 55px"
       lang="fa"
       class="input"
       :class="{ 'border-red-500 border bg-red-50': errors && errors[error] }"

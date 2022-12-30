@@ -2,14 +2,11 @@
   <div class="flex flex-col gap-4">
     <div
       class="flex w-full flex-row gap-2 items-center justify-between"
-      v-for="(item, i) in awards"
+      v-for="(item, i) in points"
       :key="i"
     >
-      <div class="w-5/12">
-        <ui-autocomplete-award v-model="item.award"></ui-autocomplete-award>
-      </div>
-      <div class="w-6/12">
-        <ui-input label="توضیحات" v-model="item.description"></ui-input>
+      <div class="w-11/12">
+        <ui-autocomplete-point v-model="item.point"></ui-autocomplete-point>
       </div>
       <div
         style="height: 100px;"
@@ -31,11 +28,8 @@
       </div>
     </div>
     <div class="flex flex-row gap-2 items-end">
-      <div class="w-5/12">
-        <ui-autocomplete-award v-model="newAward"></ui-autocomplete-award>
-      </div>
-      <div class="w-6/12">
-        <ui-input label="توضیحات" v-model="newDescription"></ui-input>
+      <div class="w-11/12">
+        <ui-autocomplete-point v-model="newPoint"></ui-autocomplete-point>
       </div>
       <div
           style="margin: 20px 0"
@@ -64,27 +58,25 @@ import { computed, ref } from "vue";
 const props = defineProps({
   form: Object,
 });
-const newAward = ref();
+const newPoint = ref();
 const newDescription = ref();
-const awards = computed({
-  get: () => props.form.awards,
+const points = computed({
+  get: () => props.form.points,
   set(v) {
     var mv = props.form;
-    mv.awards = v;
+    mv.points = v;
     emit("update:form", mv);
   },
 });
 function add() {
-  awards.value.push({
-    award: newAward.value,
-    description: newDescription.value,
+  points.value.push({
+    title: newPoint.value,
   });
-  newAward.value = null;
-  newDescription.value = null;
+  newPoint.value = null;
 }
 
 function remove(i) {
-  awards.value.splice(i, 1);
+  points.value.splice(i, 1);
 }
 </script>
 

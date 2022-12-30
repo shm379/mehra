@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 //        ]);
 
         $this->call([
-              SettingSeeder::class,
+//              SettingSeeder::class,
 //            StateAndCitiesSeeder::class,
 //
 //            AttributeSeeder::class,

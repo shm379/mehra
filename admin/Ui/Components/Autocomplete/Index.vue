@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, reactive } from "vue";
+import { computed, ref, watch, reactive, onServerPrefetch } from "vue";
 import { onClickOutside } from "@vueuse/core";
 const emit = defineEmits(["update:modelValue"]);
 const results = ref();
