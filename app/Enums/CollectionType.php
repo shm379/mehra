@@ -2,16 +2,13 @@
 
 namespace App\Enums;
 
+use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
-/**
- * @method static static OptionOne()
- * @method static static OptionTwo()
- * @method static static OptionThree()
- */
-final class CollectionType extends Enum
+final class CollectionType extends Enum  implements LocalizedEnum
 {
-    const OptionOne = 0;
-    const OptionTwo = 1;
-    const OptionThree = 2;
+    const PRODUCT = 1;
+    const CATEGORY = 2;
+    const ATTRIBUTE = 3;
+    const CREATOR = 4;
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\AttributeType;
+use App\Enums\CollectionType;
 use App\Enums\ProductStructure;
 use App\Enums\ProductType;
 use App\Http\Resources\Admin\BookAttributeResourceCollection;
@@ -95,6 +96,15 @@ class AutocompleteController extends Controller
     public function attributeTypes(Request $request)
     {
         return array_flip(AttributeType::asArray());
+    }
+    public function collectionTypes(Request $request)
+    {
+        $collection_types = [];
+        $collectionTypes = array_flip(CollectionType::asArray());
+        foreach ($collectionTypes as $i=> $collectionType){
+            $collection_types[] = ['label'=>CollectionType::getDescription($i),'value'=>$i];
+        }
+        return $collection_types;
     }
     public function award($q, Request $request)
     {

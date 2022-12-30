@@ -78,9 +78,7 @@ class CollectionController extends Controller
      */
     public function create()
     {
-        $parentCategories = Category::query()->get();
-        $categoryTemplates = CategoryTemplate::query()->get();
-        return view('admin.categories.create',compact(['parentCategories','categoryTemplates']))->with(['errors'=>collect('errors')]);
+        return Inertia::render('Collection/Create')->with(['errors'=>collect('errors')]);
     }
 
     /**

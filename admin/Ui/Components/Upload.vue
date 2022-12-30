@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ui-label>{{ label }}</ui-label>
+    <ui-label class="text-center">{{ label }}</ui-label>
     <div
       @click="open"
       class="cursor-pointer w-36 h-36 border border-dashed border-slate-400 rounded-xl bg-white flex flex-col place-content-center place-items-center gap-2"
