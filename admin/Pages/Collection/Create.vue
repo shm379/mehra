@@ -7,18 +7,18 @@
   </ui-page-header>
   <ui-row>
     <ui-col full>
-      <ui-page-header-anchors v-model="pageSections"></ui-page-header-anchors>
+      <ui-page-header-anchors v-model="sections"></ui-page-header-anchors>
     </ui-col>
   </ui-row>
   <ui-row>
     <ui-col wide>
       <ui-box
-        v-for="(item, i) in pageSections"
+        v-for="(item, i) in sections"
         :key="i"
         :title="item.title"
         :id="item.anchor"
       >
-        <component @modelValueUpdate="handleUpdate"  :is="`ui-form-${item.anchor}`" :form="form" />
+        <component @update="handleUpdate"  :is="`ui-form-${item.anchor}`" :form="form" />
       </ui-box>
     </ui-col>
     <ui-col>
@@ -48,24 +48,8 @@ export default {
 import {computed, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 
-const pageSections = ref([
-    {
-        title: "مشخصات موضوع",
-        anchor: "collection-info",
-    },
-    {
-        title: "تصاویر",
-        anchor: "collection-gallery",
-    },
-]);
-const form = useForm({
-    title: null,
-    description: null,
-    is_active: null,
-    cover_image: null,
-    main_image: null,
-    collection_type: null,
-});
+const { sections, form } = useCollection()
+
 const handleUpdate = function (v){
     console.log(v)
 }

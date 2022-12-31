@@ -33,52 +33,7 @@ import { Link } from "@inertiajs/inertia-vue3";
 const props = defineProps({
     collections: Array,
 });
-const columns = [
-    {
-        name: "id",
-        label: "شماره ردیف",
-        field: "id",
-        sortable: true,
-    },
-    {
-        name: "title",
-        label: "نام دسته",
-        field: "title",
-        sortable: true,
-    },
-    {
-        name: "description",
-        label: "توضیحات",
-        field: "description",
-        sortable: false,
-    },
-    {
-        name: "slug",
-        label: "نامک",
-        field: "slug",
-        sortable: false,
-    },
-    {
-        name: "type",
-        label: "نوع",
-        field: "type",
-        sortable: false,
-    },
-    {
-        name: "user",
-        label: "ساخته شده توسط",
-        field: "user",
-        sortable: false,
-    },
-    {
-        name: "actions",
-        label: "عملیات",
-        type: "action",
-    },
-];
-const actions = [
-    { title: "نمایش", route: "admin.categories.show", color: "blue" },
-    { title: "ویرایش", route: "admin.categories.edit", color: "orange" },
-    { title: "حذف", route: "admin.categories.destroy", color: "red" },
-];
+
+const { sections, form } = useCollection()
+
 </script>
