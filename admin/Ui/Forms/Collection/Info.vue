@@ -10,7 +10,7 @@
 
 
 import {computed, ref} from "vue";
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue','update'])
 const props = defineProps({
     form: Object,
     modelValue: Object,
