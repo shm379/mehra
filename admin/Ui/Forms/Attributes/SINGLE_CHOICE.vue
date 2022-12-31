@@ -14,10 +14,10 @@ const props = defineProps({
     attribute: Object
 });
 const input = computed({
-    get: () => props.modelValue[props.attribute.id],
+    get: () => props.modelValue,
     set(v) {
         var modelValue = props.modelValue
-        modelValue[props.attribute.id] = v
+        modelValue = v
         emit("update:modelValue", modelValue);
     },
 });

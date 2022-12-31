@@ -1,9 +1,5 @@
 <template>
-    <ui-autocomplete
-        :api="props.api"
-        :label="props.label"
-        v-model="attribute"
-        :multiselect="props.multiselect">
+    <ui-autocomplete :api="'/api/v1/ac/attributeValues/'" :label="label" v-model="product" >
                     <template #tag="{ item }">
                         <span>{{ item.title }}</span>
                     </template>
@@ -13,21 +9,13 @@
 <script setup>
 import { computed } from "vue";
 
-const props = defineProps({
-    label: String,
-    api: "",
-    modelValue: {
-        type: [Array, Object],
-        default: [],
-    },
-    multiselect: {
-        type: Boolean,
-        default: true,
-    },
-})
+const props = defineProps({ modelValue: [Object, Array], label: {
+    type: String,
+    default: 'محصول / محصولات'
+} })
 const emit = defineEmits(["update:modelValue"]);
 
-const attribute = computed({
+const product = computed({
     get: () => props.modelValue,
     set(v) {
         emit("update:modelValue", v);

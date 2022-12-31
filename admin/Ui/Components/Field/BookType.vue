@@ -91,6 +91,7 @@ async function loadTypes() {
 }
 const selected = ref(1);
 function change(v) {
+
     selected.value =  v
     emit('update:modelValue', v)
 }

@@ -3,7 +3,6 @@
         <ui-input label="عنوان موضوع" v-model="form.title" error="title"></ui-input>
         <ui-textarea label="توضیحات" v-model="form.description" error="description"></ui-textarea>
         <ui-field-select label="نوع موضوع" :options="collectionTypes" v-model="collection_type"></ui-field-select>
-        {{  collection_type }}
     </div>
 </template>
 

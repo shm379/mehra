@@ -34,6 +34,6 @@ const props = defineProps({
     collections: Array,
 });
 
-const { sections, form } = useCollection()
+const { columns,actions,sections, form } = useCollection()
 
 </script>

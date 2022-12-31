@@ -52,7 +52,6 @@
 <script>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
-const { sections, form } = useStock()
 export default {
   layout: AdminLayout,
 };
@@ -60,6 +59,8 @@ export default {
 
 <script setup>
 const props = defineProps({});
+const { sections, form } = useStock()
+
 </script>
 
 <style lang="scss" scoped></style>

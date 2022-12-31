@@ -16,6 +16,12 @@ class AttributeValue extends Model
         return $this->belongsTo(Attribute::class);
     }
 
+    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)
+            ->using(AttributeValueProduct::class);
+    }
+
     public function getNameAttribute() : string
     {
         return $this->attribute->name;

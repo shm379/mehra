@@ -11,5 +11,4 @@ final class ProductType extends Enum implements LocalizedEnum
     const SOUND_BOOK = 2;
     const EBOOK = 3;
     const CD = 4;
-    const TEST = 5;
 }

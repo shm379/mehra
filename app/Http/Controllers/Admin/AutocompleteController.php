@@ -18,6 +18,7 @@ use App\Models\Creator;
 use App\Models\City;
 use App\Models\CreatorType;
 use App\Models\Producer;
+use App\Models\Product;
 use App\Models\Volume;
 use Illuminate\Http\Request;
 
@@ -80,6 +81,18 @@ class AutocompleteController extends Controller
                 ->get()
         );
     }
+    public function productsByAttributeValueId($id)
+    {
+        return AttributeValue::query()
+                ->with('products')
+                ->find($id);
+    }
+    public function attributeValues($id)
+    {
+        return AttributeValue::query()
+                ->with('products')
+                ->find($id);
+    }
     public function attributeValuesById($id,$title='')
     {
         $attributeValue =
@@ -113,6 +126,10 @@ class AutocompleteController extends Controller
     public function collections($q, Request $request)
     {
         return Collection::query()->where('title', 'LIKE', "%$q%")->get();
+    }
+    public function products($q, Request $request)
+    {
+        return Product::query()->where('title', 'LIKE', "%$q%")->get();
     }
     public function creatorTypes($q, Request $request)
     {

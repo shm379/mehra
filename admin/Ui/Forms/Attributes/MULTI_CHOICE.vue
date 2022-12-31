@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import { computed } from "vue"
-;
+import {computed, onMounted} from "vue"
+    ;
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
     attribute: Object,
@@ -21,12 +21,10 @@ const props = defineProps({
 });
 const input = computed({
     get: () => {
-        return props.modelValue[props.attribute.id]
+        return props.modelValue
     },
     set(v) {
-        var modelValue = props.modelValue
-        modelValue[props.attribute.id] = v
-        emit("update:modelValue", modelValue);
+        emit("update:modelValue", v);
     },
 });
 

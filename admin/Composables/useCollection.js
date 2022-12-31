@@ -9,14 +9,15 @@ export default () => {
         cover_image: null,
         main_image: null,
         collection_type: null,
+        items: {},
     }), sections = ref([
         {
             title: "مشخصات موضوع",
-            anchor: "collection-info",
+            anchor: "collection-components-info",
         },
         {
             title: "تصاویر",
-            anchor: "collection-gallery",
+            anchor: "collection-components-gallery",
         },
     ]), columns = ref([
         {

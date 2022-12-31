@@ -3,26 +3,53 @@ import { useForm } from "@inertiajs/inertia-vue3";
 
 export default () => {
     const form = useForm({
-        name: "",
-        first_name: "",
-        last_name: "",
-        slug: "",
+        structure: 1,
+        type: 1,
+        min_purchases_per_user: null,
+        max_purchases_per_user: null,
+        is_active: null,
+        is_available: null,
+        price: null,
+        sale_percent: 0,
+        title: "",
+        sub_title: "",
         description: "",
-        birthday: "",
+        producers: [],
+        authors: [],
+        translators: [],
+        illustrators: [],
+        narrators: [],
+        attributes:{},
         awards: [],
-        types: [],
+        sounds: []
     }), sections = ref([
         {
-            title: "مشخصات ",
-            anchor: "creator-info",
+            title: "مشخصات کتاب",
+            anchor: "book-info",
+        },
+        {
+            title: "طبقه بندی",
+            anchor: "book-category",
         },
         {
             title: "تصاویر",
-            anchor: "creator-gallery",
+            anchor: "book-gallery",
         },
         {
-            title: "افزودن  جوایز و افتخارات",
-            anchor: "creator-award",
+            title: "ویژگی‌ها",
+            anchor: "book-attributes",
+        },
+        {
+            title: "جوایز و افتخارات",
+            anchor: "book-award",
+        },
+        {
+            title: "خلاصه",
+            anchor: "book-summary",
+        },
+        {
+            title: "نقاط قوت کتاب",
+            anchor: "book-points",
         },
     ]), columns = ref([
         {

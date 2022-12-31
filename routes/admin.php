@@ -82,6 +82,8 @@ Route::prefix('/admin')
                 Route::get('/ac/attribute-types', [\App\Http\Controllers\Admin\AutocompleteController::class, 'attributeTypes']);
                 Route::get('/ac/awards/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'award']);
                 Route::get('/ac/cities/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'cities']);
+                Route::get('/ac/attributeValues/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'attributeValues']);
+                Route::get('/ac/products/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'products']);
                 Route::get('/ac/product-structures', [\App\Http\Controllers\Admin\AutocompleteController::class, 'productStructures']);
                 Route::get('/ac/product-types', [\App\Http\Controllers\Admin\AutocompleteController::class, 'productTypes']);
         });

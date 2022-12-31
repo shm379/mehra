@@ -4,6 +4,7 @@
     <div
       class="w-full flex flex-nowrap gap-2 h-14 overflow-x-auto overflow-y-none rounded-xl border pr-2"
     >
+
       <div
         :key="i"
         v-if="selectedOptions"
@@ -77,7 +78,7 @@ const selectedOptions = computed({
 });
 
 function remove(i) {
-  if (props.multiselect) {
+    if (props.multiselect) {
     var values = selectedOptions.value;
     values.splice(i, 1);
     selectedOptions.value = values;
@@ -87,20 +88,29 @@ function remove(i) {
 watch(search, async (n, o) => {
   if (n) {
     const s = await fetch(props.api + n).then((response) => response.json());
-    items.value = s;
+        items.value = s.filter(function(value, index, arr){
+          return !pluck(selectedOptions.value,'id').includes(value.id);
+      })
+
   }
 });
 onClickOutside(results, (event) => (items.value = null));
 function select(v) {
   if (props.multiselect) {
-    var values = selectedOptions.value;
-    values.push(v);
-    selectedOptions.value = values;
+    push(selectedOptions.value,v)
     console.log(v);
   } else selectedOptions.value = v;
 
   items.value = null;
   search.value = null;
+}
+function push(array, item) {
+    if (!array.find(({id}) => id === item.id)) {
+        array.push(item);
+    }
+}
+function pluck(arr, key) {
+    return arr.map(obj => obj[key]);
 }
 </script>
 

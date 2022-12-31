@@ -1,7 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 gap-8" v-if="form.structure===1">
-        <ui-autocomplete-publisher v-model="publisher" >
-        </ui-autocomplete-publisher>
+    <div class="grid grid-cols-1 gap-8">
         <ui-autocomplete-creator v-model="author" label="نویسنده / نویسندگان">
         </ui-autocomplete-creator>
         <ui-autocomplete-creator v-model="illustrator" label="تصویرگر / تصویرگران">
@@ -14,73 +12,49 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import {computed, onMounted} from "vue";
 
+onMounted(()=>{
+    props.form.items = {
+        authors: [],
+        illustrators: [],
+        narrators: [],
+        translators: [],
+    }
+})
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
     form: Object
 })
-const volume = computed({
-    get: () => props.form.volumes,
-    set(v) {
-        var mv = props.form
-        mv.volume = v
-        emit("update:form", mv);
-    },
-});
-const publisher = computed({
-    get: () => props.form.producers,
-    set(v) {
-        var mv = props.form
-        mv.publisher = v
-        emit("update:form", mv);
-    },
-});
 const author = computed({
-    get: () => props.form.authors,
+    get: () => props.form.items.authors,
     set(v) {
         var mv = props.form
-        mv.author = v
-        emit("update:form", mv);
-    },
-});
-const creator = computed({
-    get: () => props.form.creators,
-    set(v) {
-        var mv = props.form
-        mv.creators = v
+        mv.items.authors = v
         emit("update:form", mv);
     },
 });
 const illustrator = computed({
-    get: () => props.form.illustrators,
+    get: () => props.form.items.illustrators,
     set(v) {
         var mv = props.form
-        mv.creators = v
+        mv.items.illustrators = v
         emit("update:form", mv);
     },
 });
 const translator = computed({
-    get: () => props.form.translators,
+    get: () => props.form.items.translators,
     set(v) {
         var mv = props.form
-        mv.creators = v
+        mv.items.translators = v
         emit("update:form", mv);
     },
 });
 const narrator = computed({
-    get: () => props.form.narrators,
+    get: () => props.form.items.narrators,
     set(v) {
         var mv = props.form
-        mv.creators = v
-        emit("update:form", mv);
-    },
-});
-const category = computed({
-    get: () => props.form.categories,
-    set(v) {
-        var mv = props.form
-        mv.categories = v
+        mv.items.narrators = v
         emit("update:form", mv);
     },
 });

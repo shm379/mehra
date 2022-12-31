@@ -13,10 +13,10 @@ import { computed } from "vue"
 const emit = defineEmits(['update:modelValue'])
 const props = defineProps({ modelValue: Object, attribute: Object });
 const input = computed({
-    get: () => props.modelValue[props.attribute.slug],
+    get: () => props.modelValue,
     set(v) {
         var modelValue = props.modelValue
-        modelValue[props.attribute.slug] = v
+        modelValue = v
         emit("update:modelValue", modelValue);
     },
 });
