@@ -63,7 +63,7 @@ const collection_type = computed({
         console.log(v)
         switch(v){
             case 4:
-                pageSections.value.push({
+                sections.value.push({
                     title: "افزودن",
                     anchor: "collection-creators",
                 })
@@ -72,8 +72,8 @@ const collection_type = computed({
                 })
                 break;
             default:
-                if(pageSections.value.find(section=>section.anchor==='collection-creators')){
-                    pageSections.value.pop()
+                if(sections.value.find(section=>section.anchor==='collection-creators')){
+                    sections.value.pop()
                     Inertia.reload({
                         preserveState:true
                     })
