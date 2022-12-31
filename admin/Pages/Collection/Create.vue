@@ -19,6 +19,7 @@
         :id="item.anchor"
       >
         <component @update="handleUpdate"  :is="`ui-form-${item.anchor}`" :form="form" />
+        {{ form }}
       </ui-box>
     </ui-col>
     <ui-col>
