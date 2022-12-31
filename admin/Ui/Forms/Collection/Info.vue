@@ -29,6 +29,7 @@ const collection_type = computed({
         var modelValue = props.form
         modelValue.collection_type = v
         emit("update:form", modelValue);
+        emit("update", modelValue)
     },
 });
 </script>
