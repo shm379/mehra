@@ -82,6 +82,7 @@ const type = computed({
                 title: "فایل های صوتی",
                 anchor: "book-sounds",
             })
+
             Inertia.reload({
                 preserveState:true,
             })
