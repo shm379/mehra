@@ -10,7 +10,7 @@
             <ui-textarea
                 description="حداقل ۳۰۰ حرف و حداکثر ۱۰۰۰ حرف باید وارد کنید"
                 label="متن خلاصه گزیده کتاب"
-                :errors="error"
+                :errors="$page.props.errors"
                 v-model="form.summary"
                 error="summary"
             ></ui-textarea>

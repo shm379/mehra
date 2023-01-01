@@ -23,6 +23,9 @@ class OrderItemResource extends JsonResource
             'discount_applied'=> $this->discount_applied,
             'line_item_id'=> $this->line_item_id,
             'line_item_type'=> $this->line_item_type,
+            'structure'=> $this->whenLoaded('line_item',function (){
+                return preg_replace( "/\r|\n/", "", $this->line_item->structure);
+            }),
             'title'=> $this->whenLoaded('line_item',function (){
                 return preg_replace( "/\r|\n/", "", $this->line_item->title);
             }),

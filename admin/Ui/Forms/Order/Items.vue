@@ -21,10 +21,10 @@
                        <p>{{item.sub_title}}</p>
                     </td>
                     <td class="text-center">
-                      {{item.producer.title}}
+                      {{item.producer? item.producer.title : null}}
                     </td>
                     <td class="text-center">
-                      {{item.number}}
+                      {{item.quantity}} {{item.structure==1 ? ' جلد' : 'عدد'}}
                     </td>
                     <td class="text-center">
                       {{item.price}}

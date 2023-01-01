@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-1 gap-8">
-        <ui-input label="قیمت محصول" :errors="error" v-model="form.price" error="price"></ui-input>
-        <ui-input type="number"  maxlength="2"  min="0" max="100" label="تخفیف" :errors="error" v-model="form.sale_percent"  error="sale_percent"></ui-input>
+        <ui-input label="قیمت محصول" :errors="$page.props.errors" v-model="form.price" error="price"></ui-input>
+        <ui-input type="number"  maxlength="2"  min="0" max="100" label="تخفیف" :errors="$page.props.errors" v-model="form.sale_percent"  error="sale_percent"></ui-input>
         <ui-input label="قیمت نهایی" :value="price_with_off"  disabled></ui-input>
     </div>
 </template>

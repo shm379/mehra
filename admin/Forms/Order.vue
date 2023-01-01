@@ -3,7 +3,7 @@
       forceFormData: true,
       preserveScroll: true,
       onSuccess: () => {
-          // form.reset();
+          form.reset();
           if($page.props.flash.success!==null){
              $inertia.reload({ preserveState: true , preserveScroll: true })
           }

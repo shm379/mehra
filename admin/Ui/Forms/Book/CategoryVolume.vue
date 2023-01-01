@@ -5,7 +5,7 @@
             </ui-autocomplete-volume>
         </div>
         <div class="w-6/12">
-            <ui-input label="شماره در مجموعه" :errors="error" v-model="form.order_volume" error="title"></ui-input>
+            <ui-input label="شماره در مجموعه" :errors="$page.props.errors" v-model="form.order_volume" error="title"></ui-input>
         </div>
         <div
             style="margin: 20px 0"

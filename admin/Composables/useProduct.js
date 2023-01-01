@@ -3,6 +3,9 @@ import { useForm } from "@inertiajs/inertia-vue3";
 
 export default () => {
     const form = useForm({
+        submit_url:route('admin.products.store'),
+        is_update: false,
+        _method: 'post',
         structure: 1,
         type: 1,
         min_purchases_per_user: null,

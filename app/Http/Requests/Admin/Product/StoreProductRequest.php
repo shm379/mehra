@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests\Admin\Product;
 
+use App\Http\Requests\Admin\AdminFormRequest;
 use App\Models\CategoryTemplate;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreProductRequest extends FormRequest
+class StoreProductRequest extends AdminFormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -31,7 +34,6 @@ class StoreProductRequest extends FormRequest
                 "order_volume"=> "nullable",
                 "producer_id"=> "nullable",
                 "creator_id"=> "nullable",
-                "creator_id"=> "nullable"
             ];
         }
         return [
@@ -48,4 +50,5 @@ class StoreProductRequest extends FormRequest
             'is_active'=> 1
         ]);
     }
+
 }

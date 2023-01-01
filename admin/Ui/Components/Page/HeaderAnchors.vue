@@ -13,7 +13,7 @@
       </a>
     </nav>
   </div>
-  <ui-flush-message />
+  <ui-flash-message />
 </template>
 
 <script setup>
