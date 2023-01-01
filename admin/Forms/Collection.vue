@@ -51,38 +51,46 @@ import {Inertia} from "@inertiajs/inertia";
 const { sections, form } = useCollection()
 
 const handleUpdate = function (v){
-    if (sections.value.find(section => section.anchor === 'collection-components-creators')) {
-        sections.value.splice(sections.value.findIndex(section => section.anchor === 'collection-components-creators'))
-        Inertia.reload({
-            preserveState: true
-        })
+    if (sections.value.find(section => section.is_new === 1)) {
+        sections.value.splice(sections.value.findIndex(section => section.is_new === 1))
+
     }
-    if(v.collection_type===4) {
-        sections.value.push({
-            title: "افزودن",
-            anchor: "collection-components-creators",
-        })
-        Inertia.reload({
-            preserveState: true,
-        })
-    }
-    if(v.collection_type===1) {
-        sections.value.push({
-            title: "افزودن",
-            anchor: "collection-components-products",
-        })
-        Inertia.reload({
-            preserveState: true,
-        })
-    }
-    if(v.collection_type===3) {
-        sections.value.push({
-            title: "افزودن",
-            anchor: "collection-components-attributes",
-        })
-        Inertia.reload({
-            preserveState: true,
-        })
+    add(v.collection_type)
+    Inertia.reload({
+        preserveState: true
+    })
+}
+
+function add(v){
+    switch (v){
+        case 1:
+            sections.value.push({
+                title: "افزودن",
+                anchor: "collection-components-products",
+                is_new: 1,
+            })
+            break;
+        case 2:
+            sections.value.push({
+                title: "افزودن",
+                anchor: "collection-components-categories",
+                is_new: 1,
+            })
+            break;
+        case 3:
+            sections.value.push({
+                title: "افزودن",
+                anchor: "collection-components-attributes",
+                is_new: 1,
+            })
+            break;
+        case 4:
+            sections.value.push({
+                title: "افزودن",
+                anchor: "collection-components-creators",
+                is_new: 1,
+            })
+            break;
     }
 }
 </script>

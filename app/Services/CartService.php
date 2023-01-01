@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Enums\OrderStatus;
+use App\Enums\ProductStructure;
 use App\Models\Book;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Discount;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 
 class CartService
 {
@@ -32,7 +34,7 @@ class CartService
         try {
             return User::query()->find($this->user_id)->orders()->create([
                 'user_id' => $this->user_id,
-                'status' => OrderStatus::CART,
+                'status' => OrderStatus::CART(),
                 'total_price'=>0,
                 'total_price_without_discount'=>0,
             ]);
@@ -44,24 +46,25 @@ class CartService
     public function findCartItemByProductID($product_id)
     {
         return OrderItem::query()
-            ->where('line_item_type','product')
+            ->whereIn('line_item_type',ProductStructure::asArray())
             ->where('line_item_id',$product_id)
             ->first();
     }
 
-    private function getCartItem($item_id,$quantity,$item_type=Book::class)
+    private function getCartItem($item_type='book',$item_id,$quantity)
     {
-        $item = $item_type::query()->find($item_id);
+        $model = '\\App\\Models\\' . ucfirst($item_type);
+        $item = $model::query()->find($item_id);
         $cartItem = [];
-        if($item_type==Book::class) {
-            $cartItem['line_item_type'] = 'product';
-            $cartItem['line_item_id'] = $item_id;
-            $cartItem['price_without_discount'] = $item->price;
-            $cartItem['price'] = $item->sale_price ?? $item->price;
-            $cartItem['quantity'] = $quantity;
-            $cartItem['total_price_without_discount'] = $quantity * $cartItem['price_without_discount'];
-            $cartItem['total_price'] = $quantity * $cartItem['price'];
-        }
+        $cartItem['line_item_type'] = $item_type;
+        $cartItem['line_item_id'] = $item_id;
+        $cartItem['is_virtual'] = $item->is_virtual;
+        $cartItem['price_without_discount'] = $item->price;
+        $cartItem['price'] = $item->sale_price ?? $item->price;
+        $cartItem['quantity'] = $quantity;
+        $cartItem['total_price_without_discount'] = $quantity * $cartItem['price_without_discount'];
+        $cartItem['total_price'] = $quantity * $cartItem['price'];
+
 
         return $cartItem;
 
@@ -114,7 +117,7 @@ class CartService
         return $cart;
     }
 
-    public function addToCart($product_id,$quantity=1)
+    public function addToCart($product_structure='book',$product_id,$quantity=1,$is_virtual=0)
     {
         $cart = self::getCart();
         if(!$cart){
@@ -122,8 +125,9 @@ class CartService
         }
         $cartItem = $cart->items()->firstOrCreate([
             'line_item_id'=>$product_id,
-            'line_item_type'=> 'product'
-        ],self::getCartItem($product_id,$quantity));
+            'line_item_type'=> $product_structure,
+            'is_virtual'=>$is_virtual,
+        ],self::getCartItem($product_structure,$product_id,$quantity));
 
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
@@ -136,10 +140,11 @@ class CartService
         $cart = self::getCart();
         if($cart){
             //Get Current Cart Item
-            $item = $cart->items()->where([
+            $item = $cart->items()
+                ->where([
                 'line_item_id'=>$product_id,
-                'line_item_type'=>'product'
-            ]);
+                ])
+                ->whereIn('line_item_type',ProductStructure::asArray());
             // IF Cart Exists
             if($item->exists()){
                 $currentItem = $item->first();

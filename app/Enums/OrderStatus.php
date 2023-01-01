@@ -6,6 +6,7 @@ use BenSampo\Enum\Contracts\LocalizedEnum;
 use BenSampo\Enum\Enum;
 
 /**
+ * @method static static CART()
  * @method static static PENDING()
  * @method static static CANCELED()
  * @method static static RETURNED()
@@ -19,3 +20,5 @@ final class OrderStatus extends Enum implements LocalizedEnum
     const RETURNED = 3;
     const COMPLETED = 4;
 }
+
+

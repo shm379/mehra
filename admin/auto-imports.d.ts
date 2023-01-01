@@ -5,4 +5,5 @@ declare global {
   const useProduct: typeof import('@/Composables/useProduct.js')['default']
   const useStock: typeof import('@/Composables/useStock.js')['default']
   const useCollection: typeof import('@/Composables/useCollection.js')['default']
+  const useOrder: typeof import('@/Composables/useOrder.js')['default']
 }

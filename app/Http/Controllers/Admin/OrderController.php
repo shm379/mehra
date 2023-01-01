@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\AwardType;
 use App\Enums\OrderStatus;
 use App\Http\Controllers\Admin\Controller;
+use App\Http\Resources\Admin\OrderResource;
 use App\Models\Award;
 use App\Models\Order;
 use App\Models\Product;
@@ -54,8 +55,8 @@ class OrderController extends Controller
                     'discount' => !is_null($order->discount) ? optional($order->discount)->title : 'بدون تخفیف',
                     'total_price_without_discount' => number_format($order->total_price_without_discount) . ' تومان',
                     'total_price' => number_format($order->total_price) . ' تومان',
-                    'status' => OrderStatus::getDescription($order->status),
-                    'items' => count($order->items) ? implode('<br>',Product::query()->whereIn('id',$order->items->where('line_item_type','product')->pluck('line_item_id')->toArray())->pluck('title')->toArray()) : '',
+                    'status' => OrderStatus::getDescription((int)$order->status),
+                    'items' => count($order->items) ? implode('<br>',Product::query()->with('media')->whereIn('id',$order->items->where('line_item_type','product')->pluck('line_item_id')->toArray())->pluck('title')->toArray()) : '',
                     'notes' => count($order->notes) ? implode('<br>',optional($order->notes)->pluck('note')->toArray()) : '',
                 ];
             })
@@ -95,13 +96,8 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $orderStatuses = OrderStatus::asSelectArray();
-        $order->load(['user','discount','items'=>function ($item){
-            $item->with(['line_item'=>function ($line_item){
-                $line_item->with('producer');
-            }]);
-        },'notes']);
         return Inertia::render('Order/Show')
-            ->with(['order'=>$order,'order_status'=>$orderStatuses]);
+            ->with(['order'=>OrderResource::make($order),'order_status'=>$orderStatuses]);
     }
 
     /**
@@ -124,7 +120,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        if($request->has('status')){
+            $order->update(['status' => $request->get('status')]);
+        }
+        dd($request->all());
     }
 
     /**

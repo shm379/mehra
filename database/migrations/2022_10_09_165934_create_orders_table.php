@@ -16,18 +16,21 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedBigInteger('discount_id')->nullable();
             $table->unsignedDouble('total_price_without_discount',10)->nullable();
             $table->unsignedDouble('total_price',10);
             $table->unsignedDouble('vat',10)->nullable();
             $table->timestamp('date')->default(now());
             $table->enum('status', \App\Enums\OrderStatus::asArray());
-//            $table->enum('gateway',\App\Enums\PaymentGateway::asArray());
             $table->timestamps();
-
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('address_id')
+                ->references('id')
+                ->on('user_addresses')
                 ->onDelete('cascade');
             $table->foreign('discount_id')
                 ->references('id')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\Cart;
 
+use App\Enums\ProductStructure;
 use App\Http\Requests\Api\ApiFormRequest;
 use App\Models\Product;
 use App\Rules\AddToCartRule;
@@ -13,7 +14,7 @@ use Illuminate\Validation\Rule;
 class AddToCartRequest extends ApiFormRequest
 {
     protected $stopOnFirstFailure = true;
-
+    protected $product;
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,10 +24,10 @@ class AddToCartRequest extends ApiFormRequest
     {
         $min_purchases_per_user = 1;
         $max_purchases_per_user = 1;
-        $product = Product::query()->find($this->request->get('id'));
-        if($product) {
-            $min_purchases_per_user = $product->min_purchases_per_user ?? $min_purchases_per_user;
-            $max_purchases_per_user = $product->max_purchases_per_user ?? $max_purchases_per_user;
+        $this->product = Product::query()->find($this->request->get('id'));
+        if($this->product) {
+            $min_purchases_per_user = $this->product->min_purchases_per_user ?? $min_purchases_per_user;
+            $max_purchases_per_user = $this->product->max_purchases_per_user ?? $max_purchases_per_user;
         }
         return [
             'quantity'=> [
@@ -40,8 +41,18 @@ class AddToCartRequest extends ApiFormRequest
                 'exists:App\Models\Product,id',
 //                new AddToCartRule()
             ],
-            'extra_info'=>'nullable'
+            'extra_info'=>'nullable',
+            'structure'=>'nullable',
+            'is_virtual'=>'nullable',
         ];
+    }
+
+    protected function passedValidation()
+    {
+        $this->merge([
+            'structure' => $this->product->structure,
+            'is_virtual' => $this->product->is_virtual
+        ]);
     }
 
     public function messages()

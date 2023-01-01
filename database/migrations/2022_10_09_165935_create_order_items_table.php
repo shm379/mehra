@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('address_id')->nullable();
+            $table->boolean('is_virtual');
             $table->boolean('discount_applied')->default(0);
             $table->unsignedFloat('price_without_discount',10,0)->nullable();
             $table->unsignedFloat('price',10,0);
@@ -30,10 +30,6 @@ return new class extends Migration
             $table->foreign('order_id')
                 ->references('id')
                 ->on('orders')
-                ->onDelete('cascade');
-            $table->foreign('address_id')
-                ->references('id')
-                ->on('user_addresses')
                 ->onDelete('cascade');
         });
     }

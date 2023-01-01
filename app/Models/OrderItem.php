@@ -14,4 +14,9 @@ class OrderItem extends Model
     {
         return $this->morphTo();
     }
+
+    public function address()
+    {
+        return $this->belongsTo(UserAddress::class);
+    }
 }

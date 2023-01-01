@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Global;
 
+use App\Enums\ProductStructure;
 use App\Exceptions\Api\Cart\AddItemException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Cart\AddToCartRequest;
@@ -36,9 +37,11 @@ class CartController extends Controller {
     public function addItem(AddToCartRequest $request)
     {
         $product_id = $request->validated('id');
+        $structure = $request->input('structure') ? strtolower(ProductStructure::getKey($request->input('structure'))) : 'product';
+        $is_virtual = $request->input('is_virtual')==1;
         $quantity = $request->validated('quantity');
         try {
-            return new CartResource($this->cart->addToCart($product_id,$quantity));
+            return new CartResource($this->cart->addToCart($structure,$product_id,$quantity,$is_virtual));
         }
         catch (AddItemException $exception){}
     }
