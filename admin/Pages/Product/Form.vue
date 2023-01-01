@@ -25,7 +25,14 @@ export default {
 import {computed, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 
-const {form} = useProduct()
+const props = defineProps({
+    product: {
+        type:[Object,Boolean],
+        default:false,
+    }
+})
+const emit = defineEmits(['update:form'])
+const {form} = useProduct(props)
 
 </script>
 

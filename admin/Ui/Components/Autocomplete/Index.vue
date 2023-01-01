@@ -39,7 +39,7 @@
       >
         <p
           class="hover:bg-slate-100 rounded-lg p-2 cursor-pointer hover:border hover:shadow-inner"
-          @click="select(item)"
+          @click="select(item,i)"
           :key="i"
           v-for="(item, i) in items"
         >
@@ -62,7 +62,7 @@ const props = defineProps({
   api: "",
   modelValue: {
     type: [Array, Object],
-    default: [],
+    default: () => {},
   },
   multiselect: {
     type: Boolean,
@@ -80,7 +80,7 @@ const selectedOptions = computed({
 function remove(i) {
     if (props.multiselect) {
     var values = selectedOptions.value;
-    values.splice(i, 1);
+    delete values[i]
     selectedOptions.value = values;
   } else selectedOptions.value = null;
   items.value = null;
@@ -88,26 +88,24 @@ function remove(i) {
 watch(search, async (n, o) => {
   if (n) {
     const s = await fetch(props.api + n).then((response) => response.json());
+
         items.value = s.filter(function(value, index, arr){
-          return !pluck(selectedOptions.value,'id').includes(value.id);
+            const vv = selectedOptions.value || {}
+            console.log(vv)
+          return !Object.entries(vv).find(v => v == value)
       })
 
   }
 });
 onClickOutside(results, (event) => (items.value = null));
-function select(v) {
+function select(v,i) {
   if (props.multiselect) {
-    push(selectedOptions.value,v)
+      selectedOptions.value[i] = v
     console.log(v);
   } else selectedOptions.value = v;
 
   items.value = null;
   search.value = null;
-}
-function push(array, item) {
-    if (!array.find(({id}) => id === item.id)) {
-        array.push(item);
-    }
 }
 function pluck(arr, key) {
     return arr.map(obj => obj[key]);

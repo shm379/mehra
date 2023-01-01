@@ -81,7 +81,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Product/Create');
+        return Inertia::render('Product/Form');
     }
 
     /**
@@ -114,7 +114,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Product/Edit')
+        return Inertia::render('Product/Form')
             ->with(['product' => $product]);
     }
 

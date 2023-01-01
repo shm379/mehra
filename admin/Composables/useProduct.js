@@ -1,20 +1,25 @@
 import { ref, isRef, unref, watchEffect } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
-export default () => {
+export default (props=false) => {
+    function defaultValue(key,propsKey,defaultV=null){
+        if(props && props[propsKey])
+            return props[propsKey][key]
+        return defaultV
+    }
     const form = useForm({
         submit_url:route('admin.products.store'),
         is_update: false,
         _method: 'post',
         structure: 1,
         type: 1,
-        min_purchases_per_user: null,
-        max_purchases_per_user: null,
+        min_purchases_per_user: defaultValue('min_purchases_per_user','product'),
+        max_purchases_per_user: defaultValue('max_purchases_per_user','product'),
         is_active: null,
         is_available: null,
         price: null,
         sale_percent: 0,
-        title: "",
+        title: props && props.product ? props.product.title : null,
         sub_title: "",
         description: "",
         producers: [],

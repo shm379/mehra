@@ -1,5 +1,4 @@
 <template>
-
       <ui-page-header title="افزودن محصول">
         <ui-page-header-action to="admin.products.index"
           >مشاهده لیست محصولات</ui-page-header-action
@@ -66,14 +65,16 @@ export default {
 <script setup>
 import {computed, defineEmits, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
-const { sections, form } = useProduct()
-
+const { sections } = useProduct()
+const props = defineProps({
+    form:Object
+})
 const emit = defineEmits(['update:form'])
 const type = computed({
-    get: () => form.type,
+    get: () => props.form.type,
     set(v) {
 
-        var mv = form;
+        var mv = props.form;
 
         mv.type = v;
         // emit("update:form", mv);
@@ -100,10 +101,10 @@ const type = computed({
 });
 
 const structure = computed({
-    get: () => form.structure,
+    get: () => props.form.structure,
     set(v) {
 
-        form.structure = v;
+        props.form.structure = v;
 
     },
 });
