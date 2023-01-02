@@ -86,6 +86,8 @@ Route::prefix('/admin')
                 Route::get('/ac/products/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'products']);
                 Route::get('/ac/product-structures', [\App\Http\Controllers\Admin\AutocompleteController::class, 'productStructures']);
                 Route::get('/ac/product-types', [\App\Http\Controllers\Admin\AutocompleteController::class, 'productTypes']);
+                Route::get('/ac/media/books/{images}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'mediaBooks']);
+                Route::get('/ac/media/books', [\App\Http\Controllers\Admin\AutocompleteController::class, 'mediaBooks']);
         });
 
 require __DIR__.'/admin/auth.php';

@@ -79,6 +79,7 @@ const type = computed({
         mv.type = v;
         // emit("update:form", mv);
         if(v===2){
+          mv.is_virtual = true;
             sections.value.push({
                 title: "فایل های صوتی",
                 anchor: "book-sounds",
@@ -90,6 +91,7 @@ const type = computed({
 
         } else {
             if(sections.value.find(section=>section.anchor==='book-sounds')){
+              mv.is_virtual = false;
                 sections.value.splice(sections.value.findIndex(section=>section.anchor==='book-sounds'))
                 Inertia.reload({
                     preserveState:true
@@ -103,8 +105,9 @@ const type = computed({
 const structure = computed({
     get: () => props.form.structure,
     set(v) {
-
-        props.form.structure = v;
+      let vm = props.form;
+      vm.structure = v
+      emit('update:form',vm)
 
     },
 });

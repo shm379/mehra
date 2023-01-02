@@ -56,8 +56,16 @@ class Book extends Product
         return [
             'cover_image',
             'back_image',
-            'gallery',
+            'gallery_image',
             'excerpt',
+        ];
+    }
+    public static function getValidImages(): array
+    {
+        return [
+            'cover_image',
+            'back_image',
+            'gallery',
         ];
     }
 
@@ -65,7 +73,7 @@ class Book extends Product
     {
         $this->addMediaCollection('cover_image')->useDisk(config('media-library.disk_name'))->singleFile();
         $this->addMediaCollection('back_image')->useDisk(config('media-library.disk_name'))->singleFile();
-        $this->addMediaCollection('gallery')->useDisk(config('media-library.disk_name'));
+        $this->addMediaCollection('gallery_image')->useDisk(config('media-library.disk_name'));
         $this->addMediaCollection('excerpt')->useDisk(config('media-library.disk_name'))->singleFile();
     }
 

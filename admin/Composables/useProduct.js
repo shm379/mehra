@@ -2,7 +2,7 @@ import { ref, isRef, unref, watchEffect } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default (props=false) => {
-    function defaultValue(key,propsKey,defaultV=null){
+    function defaultValue(key,defaultV=null,propsKey='product'){
         if(props && props[propsKey])
             return props[propsKey][key]
         return defaultV
@@ -11,25 +11,30 @@ export default (props=false) => {
         submit_url:route('admin.products.store'),
         is_update: false,
         _method: 'post',
-        structure: 1,
-        type: 1,
-        min_purchases_per_user: defaultValue('min_purchases_per_user','product'),
-        max_purchases_per_user: defaultValue('max_purchases_per_user','product'),
-        is_active: null,
-        is_available: null,
-        price: null,
-        sale_percent: 0,
-        title: props && props.product ? props.product.title : null,
-        sub_title: "",
-        description: "",
-        producers: [],
-        authors: [],
-        translators: [],
-        illustrators: [],
-        narrators: [],
-        attributes:{},
-        awards: [],
-        sounds: []
+        structure: defaultValue('structure'),
+        type: defaultValue('type'),
+        min_purchases_per_user: defaultValue('min_purchases_per_user'),
+        max_purchases_per_user: defaultValue('max_purchases_per_user'),
+        is_active: defaultValue('is_active'),
+        is_available: defaultValue('is_available'),
+        is_virtual: defaultValue('is_virtual'),
+        in_stock_count: defaultValue('in_stock_count'),
+        price: defaultValue('price'),
+        sale_percent: defaultValue('sale_percent'),
+        title: defaultValue('title'),
+        sub_title: defaultValue('sub_title'),
+        summary: defaultValue('summary'),
+        excerpt: defaultValue('excerpt'),
+        description: defaultValue('description'),
+        producer: defaultValue('producer'),
+        authors: defaultValue('authors',[]),
+        translators: defaultValue('translators',[]),
+        illustrators: defaultValue('illustrators',[]),
+        narrators: defaultValue('narrators',[]),
+        attributes:defaultValue('attributes',{}),
+        awards: defaultValue('awards',[]),
+        sounds: defaultValue('sounds',[]),
+        media: defaultValue('media',[])
     }), sections = ref([
         {
             title: "مشخصات کتاب",

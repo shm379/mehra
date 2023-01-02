@@ -12,6 +12,7 @@ use App\Http\Resources\Admin\BookAttributeValueResourceCollection;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Award;
+use App\Models\Book;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Creator;
@@ -156,5 +157,12 @@ class AutocompleteController extends Controller
             $structures[] = ['label'=>ProductStructure::getDescription($i),'value'=>$i];
         }
         return $structures;
+    }
+
+    public function mediaBooks($images=null)
+    {
+        if($images)
+            return Book::getValidImages();
+        return Book::getValidCollections();
     }
 }
