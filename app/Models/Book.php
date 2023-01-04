@@ -40,7 +40,6 @@ class Book extends Product
             ->where($this->getRouteKeyName(), $value)
             ->firstOrFail();
     }
-
     public function getRouteKeyName(): string
     {
         return 'id';
@@ -60,21 +59,29 @@ class Book extends Product
             'excerpt',
         ];
     }
-    public static function getValidImages(): array
-    {
-        return [
-            'cover_image',
-            'back_image',
-            'gallery',
-        ];
-    }
-
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('cover_image')->useDisk(config('media-library.disk_name'))->singleFile();
-        $this->addMediaCollection('back_image')->useDisk(config('media-library.disk_name'))->singleFile();
-        $this->addMediaCollection('gallery_image')->useDisk(config('media-library.disk_name'));
-        $this->addMediaCollection('excerpt')->useDisk(config('media-library.disk_name'))->singleFile();
+        $this->addMediaCollection('تصویر جلد کتاب')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['images/*'])
+            ->singleFile();
+        $this->addMediaCollection('تصویر پشت کتاب')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['images/*'])
+            ->singleFile();
+        $this->addMediaCollection('گالری')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['images/*']);
+        $this->addMediaCollection('فایل خلاصه کتاب')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['application/pdf'])
+            ->singleFile();
+        $this->addMediaCollection('فایل صوتی نمونه')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['audio/*']);
+        $this->addMediaCollection('فایل صوتی اصلی')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['audio/*']);
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void

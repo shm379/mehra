@@ -82,7 +82,12 @@ class BookController extends Controller {
     public function filters()
     {
         $awards = \App\Models\Award::query()->pluck('id','title')->toArray();
-        $attributes = \App\Models\Attribute::query()->with('values')->get()->pluck('values')->flatten()->groupBy('name');
+        $attributes = \App\Models\Attribute::query()->whereIn('slug',[
+            'age',
+            'format',
+            'volume-type',
+            'language'
+        ])->with('values')->get()->pluck('values')->flatten()->groupBy('name');
         $categories = \App\Models\Category::query()->pluck('id','title')->toArray();
         $creators = \App\Models\Creator::query()->pluck('id','title')->toArray();
         $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();

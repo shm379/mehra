@@ -2,7 +2,7 @@
     <ui-label>نوع</ui-label>
     <div class="flex flex-row gap-2">
         <div
-          v-for="(type,t) in types"
+          v-for="(type,t) in options"
           class="flex flex-row gap-2 justify-start items-center group cursor-pointer hover:scale-105 duration-500 rounded-xl"
           :class="{ 'border border-red-500': selected === type.value }"
           @click="change(type.value)"
@@ -79,16 +79,10 @@
 import { ref } from "vue";
 const emit =defineEmits(['update:modelValue']);
 const props = defineProps({
-    modelValue: Number
+    modelValue: Number,
+    options: Object,
 })
-const types = ref();
 
-loadTypes();
-async function loadTypes() {
-    types.value = await fetch("/api/v1/ac/product-types").then((response) =>
-        response.json()
-    );
-}
 const selected = ref(1);
 function change(v) {
 

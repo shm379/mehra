@@ -1,8 +1,14 @@
 <template>
-    <div>
+    <div class="mb-6">
         <ui-label>{{ attribute.title }}</ui-label>
         <ui-row>
-            <ui-input v-if="attribute.children" v-for="(item,i) in attribute.children" :key="i" v-model="input[item.id]" :label="item.name"></ui-input>
+            <ui-input
+                v-if="attribute.children"
+                v-for="(item,i) in attribute.children"
+                :key="i"
+                v-model="input[item.id]"
+                :label="item.name"
+            ></ui-input>
         </ui-row>
     </div>
 </template>

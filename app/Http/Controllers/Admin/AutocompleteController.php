@@ -6,9 +6,9 @@ use App\Enums\AttributeType;
 use App\Enums\CollectionType;
 use App\Enums\ProductStructure;
 use App\Enums\ProductType;
-use App\Http\Resources\Admin\BookAttributeResourceCollection;
-use App\Http\Resources\Admin\BookAttributeValueResource;
-use App\Http\Resources\Admin\BookAttributeValueResourceCollection;
+use App\Http\Resources\Admin\ProductAttributeResourceCollection;
+use App\Http\Resources\Admin\ProductAttributeValueResource;
+use App\Http\Resources\Admin\ProductAttributeValueResourceCollection;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
 use App\Models\Award;
@@ -75,7 +75,7 @@ class AutocompleteController extends Controller
     }
     public function attributes(Request $request)
     {
-        return new BookAttributeResourceCollection(
+        return new ProductAttributeResourceCollection(
             Attribute::query()
                 ->with(['children'])
                 ->whereNull('parent_id')
@@ -103,7 +103,7 @@ class AutocompleteController extends Controller
             $attributeValue
                 ->where('value','LIKE','%'.$title.'%');
 
-        return new BookAttributeValueResourceCollection(
+        return new ProductAttributeValueResourceCollection(
             $attributeValue->get()
         );
     }

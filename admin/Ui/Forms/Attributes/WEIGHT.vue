@@ -1,7 +1,9 @@
 <template>
     <div>
         <ui-label>{{ attribute.title }}</ui-label>
-        <ui-input v-model="input"></ui-input>
+        <ui-input
+            class="bg-transparent border-gray-100 outline-1"
+            v-model="input"></ui-input>
     </div>
 </template>
 

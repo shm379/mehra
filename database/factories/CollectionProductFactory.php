@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\CollectionProduct;
+use App\Models\CollectionItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<\App\Models\CollectionProduct>
+ * @extends Factory<\App\Models\CollectionItem>
  */
 final class CollectionProductFactory extends Factory
 {
@@ -17,7 +17,7 @@ final class CollectionProductFactory extends Factory
     *
     * @var string
     */
-    protected $model = CollectionProduct::class;
+    protected $model = CollectionItem::class;
 
     /**
     * Define the model's default state.

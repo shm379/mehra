@@ -52,4 +52,18 @@ class Helpers
     {
         return is_a($model,Product::class) || is_subclass_of($model,Product::class);
     }
+
+    static function asSelectLabelValueArray($array){
+        return array_map(function($v,$k){
+            return ['label'=>$v,'value'=>$k];
+        },$array,array_keys($array));
+    }
+    static function asSelectTitleIdArray($array){
+        return array_map(function($v,$k){
+            return ['title'=>$v,'id'=>$k];
+        },$array,array_keys($array));
+    }
+    static function convertResourceToArray($resource){
+        return json_decode($resource->toJson(),true);
+    }
 }

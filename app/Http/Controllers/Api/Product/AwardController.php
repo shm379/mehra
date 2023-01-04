@@ -31,6 +31,7 @@ class AwardController extends Controller {
             ])
             ->defaultSort('created_at')
             ->allowedSorts([
+                'created_at'
             ])
             ->allowedIncludes([
             ])

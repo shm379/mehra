@@ -11,6 +11,9 @@ const compositionResolver = (name) => {
 };
 
 export default defineConfig({
+    optimizeDeps: {
+        exclude: ['class-validator']
+    },
     server: { https: false },
     plugins: [
         laravel({

@@ -1,4 +1,11 @@
 <?php return array (
+  'alexusmai/laravel-file-manager' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Alexusmai\\LaravelFileManager\\FileManagerServiceProvider',
+    ),
+  ),
   'artesaos/seotools' => 
   array (
     'providers' => 
@@ -197,6 +204,17 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
+  'php-monsters/laravel-xlog' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'PhpMonsters\\Log\\XLogServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'XLog' => 'PhpMonsters\\Log\\Facades\\XLog',
+    ),
+  ),
   'realrashid/sweet-alert' => 
   array (
     'providers' => 
@@ -275,6 +293,17 @@
       0 => 'Spatie\\Translatable\\TranslatableServiceProvider',
     ),
   ),
+  'tartan/laravel-online-payment' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'PhpMonsters\\Larapay\\LarapayServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Larapay' => 'PhpMonsters\\Larapay\\Facades\\Larapay',
+    ),
+  ),
   'tartan/laravel-xlog' => 
   array (
     'providers' => 
@@ -291,16 +320,6 @@
     'providers' => 
     array (
       0 => 'Tightenco\\Ziggy\\ZiggyServiceProvider',
-    ),
-  ),
-  'unisharp/laravel-filemanager' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'UniSharp\\LaravelFilemanager\\LaravelFilemanagerServiceProvider',
-    ),
-    'aliases' => 
-    array (
     ),
   ),
 );

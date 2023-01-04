@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import Upload from "@/Components/Upload.vue";
 
 const props = defineProps({
   form: Object,

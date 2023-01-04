@@ -1,9 +1,11 @@
 <template>
     <div class="flex gap-4 flex-row justify-start items-start" dir="rtl" lang="fa">
-        <Sidebar ></Sidebar>
+        <Sidebar class="sticky top-0" id="sidebar"></Sidebar>
         <section class="grow px-10">
             <slot />
         </section>
+        <ui-modal />
+
     </div>
 </template>
 

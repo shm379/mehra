@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1.0",
+        "alexusmai/laravel-file-manager": "^3.0",
         "artesaos/seotools": "^1.0",
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-dompdf": "^2.0",
@@ -37,8 +38,7 @@
         "symfony/cache": "^4.4 || ^5.0",
         "tartan/laravel-online-payment": "^8.1",
         "tartan/laravel-xlog": "^v1.3.2",
-        "tightenco/ziggy": "^1.5",
-        "unisharp/laravel-filemanager": "^2.5"
+        "tightenco/ziggy": "^1.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
@@ -47,7 +47,7 @@
         "laracademy/generators": "^3.6",
         "laravel/breeze": "^1.14",
         "laravel/pint": "^1.0",
-        "laravel/sail": "^1.0.1",
+        "laravel/sail": "^1.16",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",

@@ -42,16 +42,21 @@ class AuthController extends Controller
     public function sendOTP(LoginRequest $request)
     {
         try {
+            $signedBefore = true;
+            $hasPassword = false;
             /** @var  $user User */
             $mobile = Helpers::mobileNumberNormalize($request->get('mobile'));
 
             $user = $this->checkExists($mobile);
             if(!$user){
+                $signedBefore = false;
                 $user = $this->registerUser($mobile);
+            } else {
+                $hasPassword = !is_null($user->password);
             }
             $code = \App\Services\OtpService::generateOtp($mobile);
             if(config('app.env')=='production') {
-                if($code)
+                if($code && !$hasPassword)
                     $user->sendMobileVerificationNotification($code->code);
             }
             // generate token
@@ -59,7 +64,11 @@ class AuthController extends Controller
 
         } catch (SendOtpException $ex){}
 
-        return $this->successResponseWithData(['temporary_token'=>$temporaryToken->plainTextToken]);
+        return $this->successResponseWithData([
+            'temporary_token'=>$temporaryToken->plainTextToken,
+            'is_signed_before'=>$signedBefore,
+            'has_password'=> $hasPassword
+        ]);
     }
 
     public function verifyOTP(VerifyOtpRequest $request)

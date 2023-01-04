@@ -1,9 +1,9 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/Core/InputError.vue';
+import InputLabel from '@/Components/Core/InputLabel.vue';
+import PrimaryButton from '@/Components/Core/PrimaryButton.vue';
+import TextInput from '@/Components/Core/TextInput.vue';
 import { Head, useForm } from '@inertiajs/inertia-vue3';
 
 const form = useForm({
@@ -11,7 +11,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('password.confirm'), {
+    form.post(route('admin.auth.password.confirm'), {
         onFinish: () => form.reset(),
     })
 };

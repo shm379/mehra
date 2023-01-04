@@ -9,15 +9,15 @@
       </ui-page-header>
       <ui-row>
         <ui-col>
-          <ui-field-product-structure v-model="structure" />
+          <ui-field-product-structure :options="$page.props.structures" v-model="structure" />
         </ui-col>
       </ui-row>
-      <ui-row>
+      <ui-row class="mb-5">
         <ui-col full>
-          <ui-field-book-type v-if="form.structure && form.structure===1" v-model="type" />
+          <ui-field-book-type :options="$page.props.types" v-if="form.structure && form.structure===1" v-model="type" />
         </ui-col>
       </ui-row>
-      <ui-row>
+      <ui-row class="sticky top-0 bg-white z-10 ">
         <ui-col full>
           <ui-page-header-anchors v-model="sections"></ui-page-header-anchors>
         </ui-col>
@@ -30,15 +30,15 @@
             :title="item.title"
             :id="item.anchor"
           >
-            <component :is="`ui-form-${item.anchor}`" :form="form" />
+            <component :is="`components-${item.anchor}`" :form="form" />
           </ui-box>
         </ui-col>
-        <ui-col>
+        <ui-col class="sticky top-10 bg-white ">
           <ui-box title="قیمت">
-              <component :is="`ui-form-book-price`" :form="form" />
+              <component :is="`components-product-form-price`" :isUpdate="isUpdate" :form="form" />
           </ui-box>
           <ui-box title="موجودی">
-              <component :is="`ui-form-book-stock`" :form="form" />
+              <component :is="`components-product-form-stock`" :form="form" />
           </ui-box>
           <ui-box title="انتشار">
               <ui-status v-model="form.is_active"></ui-status>
@@ -47,7 +47,7 @@
                   :disabled="form.processing || !form.isDirty"
                   class="disabled:bg-slate-400 w-full space-x-5 py-2 text-center rounded-full bg-teal-500 text-white mt-10"
               >
-                  {{form.is_update===false ? 'بروزرسانی':'انتشار'}}
+                  {{isUpdate ? 'بروزرسانی':'انتشار'}}
               </button>
           </ui-box>
         </ui-col>
@@ -65,9 +65,10 @@ export default {
 <script setup>
 import {computed, defineEmits, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
-const { sections } = useProduct()
+const { sections,isUpdate } = useProduct()
 const props = defineProps({
-    form:Object
+    form:Object,
+    media:Array
 })
 const emit = defineEmits(['update:form'])
 const type = computed({
@@ -78,27 +79,15 @@ const type = computed({
 
         mv.type = v;
         // emit("update:form", mv);
-        if(v===2){
-          mv.is_virtual = true;
-            sections.value.push({
-                title: "فایل های صوتی",
-                anchor: "book-sounds",
-            })
-
-            Inertia.reload({
-                preserveState:true,
-            })
-
-        } else {
-            if(sections.value.find(section=>section.anchor==='book-sounds')){
+        if(v!==2) {
+            if(sections.value.find(section=>section.anchor==='book-form-sounds')){
               mv.is_virtual = false;
-                sections.value.splice(sections.value.findIndex(section=>section.anchor==='book-sounds'))
-                Inertia.reload({
-                    preserveState:true
-                })
+                sections.value.splice(sections.value.findIndex(section=>section.anchor==='book-form-sounds'))
             }
-
         }
+        Inertia.reload({
+            preserveState:true
+        })
     },
 });
 
@@ -107,6 +96,9 @@ const structure = computed({
     set(v) {
       let vm = props.form;
       vm.structure = v
+      if(v===1){
+
+      }
       emit('update:form',vm)
 
     },

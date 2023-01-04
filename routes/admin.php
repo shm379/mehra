@@ -4,8 +4,8 @@ use \Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        'canLogin' => Route::has('admin.auth.login'),
+        'canRegister' => Route::has('admin.auth.register'),
         'laravelVersion' => \Illuminate\Foundation\Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);

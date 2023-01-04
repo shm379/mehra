@@ -1,14 +1,24 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-4 ">
+      <div class="flex flex-row gap-2 items-stretch">
+            <div class="w-16 bg-blue-50 ">==</div>
+          <div class="grow bg-blue-100 ">a</div>
+          <div class="grow bg-blue-200 h-32 flex flex-col place-items-start">
+                <div>+</div>
+              <div>asd</div>
+              <div>asdsdasd</div>
+          </div>
+
+      </div>
     <div
-      class="flex w-full flex-row gap-2 items-center justify-between"
+      class="flex w-full  flex-row gap-2 items-center  justify-between"
       v-for="(item, i) in sliders"
       :key="i"
     >
-      <div class="w-5/12">
+      <div class="w-5/12 ">
         <ui-input label="عنوان" v-model="item.slider"></ui-input>
       </div>
-      <div class="w-6.12">
+      <div class="w-6.12 bg-blue-400 p-5">
         <ui-input label="توضیحات" v-model="item.description"></ui-input>
       </div>
       <div

@@ -9,7 +9,7 @@
 
 <script setup>
 import {ref} from "vue";
-const emit=defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 const props = defineProps({
     modelValue: {
         type: Object,
@@ -24,6 +24,10 @@ const props = defineProps({
     },
     selectLabel: String,
     label: String,
+    key: {
+        type: String,
+        default: 'id'
+    }
 })
 const select = ref()
 function update() {

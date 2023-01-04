@@ -22,8 +22,8 @@ const mehraUiAdminPanelPlugin = {
          * Other Ui Components auto import
          * =========================
          */
-        const components = import.meta.globEager("./Components/**/*.vue");
-        Object.entries(components).forEach(([path, definition]) => {
+        const uIcomponents = import.meta.globEager("./Components/**/*.vue");
+        Object.entries(uIcomponents).forEach(([path, definition]) => {
             // Get name of component, based on filename
             // "../Forms/Name.vue" will become "UiFormName"
             // "../Forms/Nestes/Comp.vue" will become "UiFormNestedComp"
@@ -45,6 +45,54 @@ const mehraUiAdminPanelPlugin = {
             // Register component on this Vue instance
             app.component(componentName, definition.default);
         });
+        /*
+         * =========================
+         * Other Ui Components auto import
+         * =========================
+         */
+        const components = import.meta.globEager("../Components/**/*.vue");
+        Object.entries(components).forEach(([path, definition]) => {
+            // Get name of component, based on filename
+            // "../Forms/Name.vue" will become "UiFormName"
+            // "../Forms/Nestes/Comp.vue" will become "UiFormNestedComp"
+            // "../Forms/Nestes/Index.vue" will become "UiFormNested"
+
+            const componentName =
+                "Components" +
+                path
+                    .split("/")
+                    .splice(2)
+                    .reduce(
+                        (accumulator, currentValue) =>
+                            accumulator + currentValue,
+                        ""
+                    )
+                    .replace("..", "")
+                    .replace("Index", "")
+                    .replace(".vue", "");
+            // Register component on this Vue instance
+            app.component(componentName, definition.default);
+        });
+
+        const modals = import.meta.globEager("../Modals/**/*.vue");
+        Object.entries(modals).forEach(([path, definition]) => {
+            const componentName =
+                "Modals" +
+                path
+                    .split("/")
+                    .splice(2)
+                    .reduce(
+                        (accumulator, currentValue) =>
+                            accumulator + currentValue,
+                        ""
+                    )
+                    .replace("..", "")
+                    .replace("Index", "")
+                    .replace(".vue", "");
+            // Register component on this Vue instance
+            app.component(componentName, definition.default);
+        });
+
 
         const formComponents = import.meta.globEager("../Pages/**/Components/*.vue");
         Object.entries(formComponents).forEach(([path, definition]) => {

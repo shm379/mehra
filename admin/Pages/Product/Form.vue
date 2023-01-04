@@ -9,8 +9,7 @@
               }
           },
       })">
-         <form-product :form="form"></form-product>
-    </form>
+         <form-product :form="form"></form-product></form>
 </template>
 
 <script>
@@ -24,15 +23,17 @@ export default {
 <script setup>
 import {computed, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
+const {modal} = useModal()
 
 const props = defineProps({
     product: {
         type:[Object,Boolean],
         default:false,
-    }
+    },
+
 })
 const emit = defineEmits(['update:form'])
-const {form} = useProduct(props)
+const {form} = useProduct(true)
 
 </script>
 

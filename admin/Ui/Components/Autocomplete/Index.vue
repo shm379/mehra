@@ -76,12 +76,23 @@ const selectedOptions = computed({
     emit("update:modelValue", v);
   },
 });
+function removeUndefined(obj) {
+    return Object.fromEntries(
+        Object.entries(obj)
+            .filter(([_, value]) => value != undefined)
+            .map(([key, value]) => [
+                key,
+                value === Object(value) ? removeUndefined(value) : value,
+            ]),
+    );
+}
+
 
 function remove(i) {
     if (props.multiselect) {
     var values = selectedOptions.value;
     delete values[i]
-    selectedOptions.value = values;
+    selectedOptions.value = removeUndefined(values);
   } else selectedOptions.value = null;
   items.value = null;
 }

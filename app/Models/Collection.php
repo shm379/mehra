@@ -33,11 +33,11 @@ class Collection extends Model implements HasMedia
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'collection_product','collection_id');
+        return $this->morphToMany(Product::class, 'collection_item','collection_id');
     }
 
     public function books()
     {
-        return $this->belongsToMany(Book::class, 'collection_product','collection_id','product_id');
+        return $this->morphToMany(Book::class, 'collection_item','collection_id','product_id');
     }
 }

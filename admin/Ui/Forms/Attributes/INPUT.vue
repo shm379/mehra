@@ -1,5 +1,8 @@
 <template>
-    <ui-input v-model="input" :label="attribute.title"></ui-input>
+    <ui-input
+        defaultClass="mb-6"
+        class="bg-transparent border-gray-100 outline-1"
+        v-model="input" :label="attribute.title"></ui-input>
 </template>
 
 <script setup>

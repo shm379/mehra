@@ -1,20 +1,25 @@
 <template>
   <div class="flex flex-col gap-4">
     <label class="text-sm text-slate-600">{{ label }}</label>
-    <textarea
-      class="bg-neutral-200/50 rounded-xl outline-0 w-full p-3 focus:shadow-inner focus:shadow-slate-200 text-slate-500"
-      :class="{ 'border-red-500 border bg-red-50': errors && errors[error] }"
-      v-model="input"
-    ></textarea>
-    <div class="text-xs text-red-600" v-if="errors && errors[error]">{{ errors[error] }}</div>
-    <div class="text-xs text-slate-300" v-else>
-        <span v-if="!description">حداقل ۳۰۰ حرف باید وارد کنید</span>
-        <span v-else>{{description}}</span>
-    </div>
+      <Editor
+          v-model="input"
+          api-key="1aobaxzog28dmqypgp85ul7s555isascx4tk44tme7vpzuni"
+          :init="{
+              language: 'fa',
+      selector: 'textarea',
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    }"
+      />
+      <div class="text-xs text-slate-300">
+          <span v-if="!description">حداقل ۳۰۰ حرف باید وارد کنید</span>
+          <span v-else>{{description}}</span>
+      </div>
   </div>
 </template>
 
 <script setup>
+import Editor from '@tinymce/tinymce-vue'
 import { computed } from "vue";
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({

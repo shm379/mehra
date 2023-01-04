@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\AttributeType;
 use App\Enums\ProducerType;
+use App\Enums\ProductStructure;
+use App\Enums\ProductType;
 use App\Helpers\Helpers;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
+use App\Http\Resources\Admin\ProductAttributeResourceCollection;
+use App\Http\Resources\Admin\BookResource;
+use App\Http\Resources\Admin\ProductResource;
+use App\Models\Attribute;
+use App\Models\Book;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use ProtoneMedia\LaravelQueryBuilderInertiaJs\InertiaTable;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -16,6 +23,26 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class ProductController extends Controller
 {
+
+    private function getFormData($form='create')
+    {
+        $data = [];
+        $data['structures'] = Helpers::asSelectLabelValueArray(ProductStructure::asSelectArray());
+        $data['types'] = Helpers::asSelectLabelValueArray(ProductType::asSelectArray());
+        $data['attributeTypes'] = array_flip(AttributeType::asArray());
+        if($form=='create') {
+            $data['attributes'] = Helpers::convertResourceToArray(
+                new ProductAttributeResourceCollection(
+                    Attribute::query()
+                        ->with(['children','values'])
+                        ->whereNull('parent_id')
+                        ->get()
+                )
+            );
+            $data['mediaCollections'] = (new Book())->getRegisteredMediaCollections();
+        }
+        return $data;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -81,7 +108,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Product/Form');
+        $formData = $this->getFormData();
+        return Inertia::render('Product/Form')
+            ->with($formData);
     }
 
     /**
@@ -110,12 +139,49 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function edit(Product $product)
     {
+        if($product->structure==ProductStructure::BOOK){
+            $book = Book::query()->with([
+                'media',
+                'volumes',
+                'producer',
+                'creators'=>function($creator){
+                    $creator->with('types','media');
+                },
+                'attributeValues'=>function($value) {
+                    $value->with('attribute');
+                }
+            ])->findOrFail($product->id);
+            $product = $book;
+        }
+        $mediaCollections = $product->getRegisteredMediaCollections();
+        $product = $product->structure == ProductStructure::BOOK ? BookResource::make($product) : ProductResource::make($product);
+        $formData = $this->getFormData('edit');
+        $attributes = Helpers::convertResourceToArray(
+            new ProductAttributeResourceCollection(
+                Attribute::query()
+                    ->whereHas('product_type',function($q) use ($product){
+                        $q->where('attribute_product_type.product_type', '=', $product->type);
+                    })
+                    ->with(['children','values'=>function($v){
+                            $v->whereHas('attribute',function($q){
+                                $q->where('attributes.type', '=', AttributeType::SINGLE_CHOICE);
+                            });
+                        }
+                    ])
+                    ->whereNull('parent_id')
+                    ->get()
+            )
+        );
         return Inertia::render('Product/Form')
-            ->with(['product' => $product]);
+            ->with(array_merge([
+                'attributes'=> $attributes,
+                'mediaCollections'=>$mediaCollections,
+                'product' => Helpers::convertResourceToArray($product)
+            ],$formData));
     }
 
     /**

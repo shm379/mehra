@@ -1,5 +1,7 @@
 <template>
-    <ui-input v-model="input" :label="attribute.title"></ui-input>
+    <div class="mb-6">
+        <ui-input v-model="input" :label="attribute.title"></ui-input>
+    </div>
 </template>
 
 <script setup>

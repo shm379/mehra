@@ -89,6 +89,7 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
     */
     Route::controller(\App\Http\Controllers\Api\Auth\AuthController::class)->group(function () {
         Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/verify', 'verifyOTP')->name('verify-otp');
+        Route::middleware(['auth:sanctum', 'abilities:verify-password'])->post('/password', 'verifyPassword')->name('verify-password');
         Route::middleware(['auth:sanctum','verifiedMobile'])->post('/refresh', 'refreshToken')->name('refresh-token');
     });
 });
@@ -107,3 +108,4 @@ Route::apiResource('creators', \App\Http\Controllers\Api\Product\CreatorControll
 Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerController::class)->only('index','show');
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
 Route::apiResource('home', \App\Http\Controllers\Api\Global\HomeController::class)->only('index');
+Route::get('search', [\App\Http\Controllers\Api\Global\SearchController::class, 'index'])->name('search.index');

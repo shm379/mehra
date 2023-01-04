@@ -1,6 +1,7 @@
 <template>
     <div>
         <ui-autocomplete-attribute
+            class="mb-6"
             :api="attribute.url"
             v-model="input"
             :label="attribute.title">

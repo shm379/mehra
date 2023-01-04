@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <table
-      class="my-10 min-w-full overflow-x-auto rounded-lg text-sm text-left text-gray-500 dark:text-gray-400"
+      class="my-10 w-full overflow-x-auto rounded-lg text-sm text-left text-gray-500 dark:text-gray-400"
     >
       <thead>
         <tr>
@@ -81,7 +81,7 @@
 <script setup>
 import { ref, watch, useSlots } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination.vue";
+import Pagination from "@/Components/Core/Pagination.vue";
 import { TableFilter } from "@protonemedia/inertiajs-tables-laravel-query-builder";
 
 const props = defineProps({

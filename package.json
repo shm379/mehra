@@ -14,13 +14,18 @@
         "@tailwindcss/forms": "^0.5.3",
         "@tailwindcss/line-clamp": "^0.4.2",
         "@tailwindcss/typography": "^0.5.8",
+        "@tinymce/tinymce-vue": "^5.0.0",
         "@vueuse/core": "^9.5.0",
         "alpinejs": "^3.10.4",
+        "chalk": "^4.1.2",
         "daisyui": "^2.39.1",
         "flowbite": "^1.5.3",
         "laravel-vite-plugin": "^0.6.1",
+        "material-icons": "^1.13.1",
         "tailwindcss-plugin-icons": "^2.0.5",
-        "vue3-persian-datetime-picker": "^1.2.2"
+        "vue3-persian-datetime-picker": "^1.2.2",
+        "vuesax": "^4.0.1-alpha.25",
+        "vuesax3": "^4.1.1"
     },
     "devDependencies": {
         "@inertiajs/inertia": "^0.11.1",

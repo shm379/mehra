@@ -75,4 +75,16 @@
         @apply grow font-bold pb-5
     }
 
+    #sidebar {
+        overflow-y:scroll
+    }
+
+    #sidebar::-webkit-scrollbar {
+        display: none;
+    }
+}
+.tox-tinymce,
+.tox-tinymce-aux,
+.tox * {
+    font-family: 'Vazirmatn' !important;
 }

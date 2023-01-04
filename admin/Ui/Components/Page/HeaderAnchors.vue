@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12">
+  <div>
     <nav class="page-header-anchor">
       <a
         @click="selected = i"
@@ -13,7 +13,7 @@
       </a>
     </nav>
   </div>
-  <ui-flash-message />
+
 </template>
 
 <script setup>

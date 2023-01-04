@@ -5,7 +5,7 @@
         v-model="attribute"
         :multiselect="props.multiselect">
                     <template #tag="{ item }">
-                        <span>{{ item.title }}</span>
+                        <span v-if="item">{{ item.title }}</span>
                     </template>
     </ui-autocomplete>
 </template>

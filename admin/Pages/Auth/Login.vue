@@ -1,10 +1,10 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
+import Checkbox from '@/Components/Core/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/Core/InputError.vue';
+import InputLabel from '@/Components/Core/InputLabel.vue';
+import PrimaryButton from '@/Components/Core/PrimaryButton.vue';
+import TextInput from '@/Components/Core/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 defineProps({
@@ -19,7 +19,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('login'), {
+    form.post(route('admin.auth.login'), {
         onFinish: () => form.reset('password'),
     });
 };
@@ -49,12 +49,12 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="mr-2 text-sm text-gray-600">مرا بخاطر بپسار</span>
+                    <span class="mr-2 text-sm text-gray-600">مرا بخاطر بسپار</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline underline-offset-8 text-sm text-gray-600 hover:text-gray-900">
+                <Link v-if="canResetPassword" :href="route('admin.auth.password.request')" class="underline underline-offset-8 text-sm text-gray-600 hover:text-gray-900">
                     فراموشی رمز عبور
                 </Link>
 

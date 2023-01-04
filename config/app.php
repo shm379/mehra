@@ -186,8 +186,8 @@ return [
          * Package Service Providers...
          */
         Kavenegar\Laravel\ServiceProvider::class,
-        Tartan\Larapay\LarapayServiceProvider::class,
-        \PhpMonsters\Log\XLogServiceProvider::class,
+        PhpMonsters\Larapay\LarapayServiceProvider::class,
+        PhpMonsters\Log\XLogServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         /*
@@ -199,7 +199,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
-        PhpMonsters\Log\XLogServiceProvider::class,
     ],
 
     /*
@@ -215,7 +214,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Kavenegar' => Kavenegar\Laravel\Facade::class,
-        'Larapay' => Tartan\Larapay\Facades\Larapay::class,
+        'Larapay' => PhpMonsters\Larapay\Facades\Larapay::class,
         'XLog'    => PhpMonsters\Log\XLogServiceProvider::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Helper' => App\Helpers\Helpers::class,

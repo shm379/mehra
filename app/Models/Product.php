@@ -17,6 +17,30 @@ class Product extends Model implements HasMedia
     protected $guarded = [''];
     protected $appends = ['main_price','max_purchases_per_user','is_liked'];
 
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this
+            ->with([
+                'media',
+                'producer',
+                'creators'=>function($creator){
+                    $creator->with('types','media');
+                },
+                'attributeValues'=>function($value) {
+                    $value->with('attribute');
+                }
+            ])
+            ->where($this->getRouteKeyName(), $value)
+            ->firstOrFail();
+    }
     public function getRouteKeyName(): string
     {
         return 'id';
@@ -32,8 +56,13 @@ class Product extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')->useDisk(config('media-library.disk_name'))->singleFile();
-        $this->addMediaCollection('gallery')->useDisk(config('media-library.disk_name'));
+        $this->addMediaCollection('main_image')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['images/*'])
+            ->singleFile();
+        $this->addMediaCollection('gallery')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['images/*']);
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
