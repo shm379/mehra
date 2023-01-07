@@ -56,14 +56,17 @@
     .page-header-anchor .selected {
         @apply border-b-4 border-b-red-500
     }
+    .page-sidebar {
+        @apply flex flex-col sticky top-0 border-b border-gray-100 text-sm font-medium;
+    }
     .page-sidebar-anchor {
-        @apply flex flex-col fixed border-b border-gray-100 text-sm font-medium;
+        @apply flex flex-col sticky top-0 text-sm font-medium;
     }
     .page-sidebar-anchor-link {
         @apply -mb-px font-bold border-current p-4
     }
     .page-sidebar-anchor .selected {
-        @apply border-b-4 border-b-red-500
+        @apply border-b-4 border-b-red-500 w-[max-content]
     }
     .box {
         @apply rounded-xl bg-gray-100 p-5 my-5

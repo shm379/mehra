@@ -28,11 +28,13 @@ class CommentController extends Controller {
     public function store(StoreCommentRequest $request, Product $product)
     {
         try {
+
             $comment = auth()->user()->comments()->create($request->validated());
             $this->saveCommentPoints($comment,$request);
             $this->saveRanks($comment,$request);
             $this->uploadMedia($comment,'gallery','media',false);
         } catch (\Exception $exception){
+            dd($exception->getMessage());
             return $this->errorResponse('خطا در انجام عملیات');
         }
         return $this->successResponse('عملیات با موفقیت انجام شد');

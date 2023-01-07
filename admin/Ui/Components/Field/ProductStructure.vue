@@ -18,7 +18,7 @@ const props = defineProps({
     modelValue: Number,
     options: Object,
 })
-const structure = ref(1)
+const structure = ref(props.modelValue)
 function update(modelValue) {
     emit('update:modelValue', modelValue)
 }

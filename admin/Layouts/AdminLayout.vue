@@ -1,7 +1,7 @@
 <template>
     <div class="flex gap-4 flex-row justify-start items-start" dir="rtl" lang="fa">
         <Sidebar class="sticky top-0" id="sidebar"></Sidebar>
-        <section class="grow px-10">
+        <section class="grow px-10 container mx-auto">
             <slot />
         </section>
         <ui-modal />

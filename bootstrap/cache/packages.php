@@ -233,6 +233,13 @@
       0 => 'Sadegh19b\\LaravelPersianValidation\\PersianValidationServiceProvider',
     ),
   ),
+  'shm379/media' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Shm379\\Media\\MediaServiceProvider',
+    ),
+  ),
   'spatie/eloquent-sortable' => 
   array (
     'providers' => 

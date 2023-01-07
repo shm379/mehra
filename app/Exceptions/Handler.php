@@ -75,11 +75,12 @@ class Handler extends ExceptionHandler
                 $response['data']['errors'] = $exception->original['errors'];
                 break;
             default:
-                $response['data']['message'] = ($statusCode == 500) ? 'خطایی در سیستم رخ داده است!' : $exception->getMessage();
+                $response['data']['message'] = ($statusCode == 500) ? 'خطایی در سیستم رخ داده است!'  : $exception->getMessage();
                 break;
         }
 
         if (config('app.debug')) {
+            $response['data']['message'] = $exception->getMessage();
             $response['data']['trace'] = $exception->getTrace();
             $response['data']['code'] = $exception->getCode();
         }

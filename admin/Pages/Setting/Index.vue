@@ -2,18 +2,21 @@
   <ui-page-header title="تنظیمات صفحه اصلی">
   </ui-page-header>
   <ui-row>
-    <ui-col>
-      <ui-page-sidebar-anchors v-model="pageSections"></ui-page-sidebar-anchors>
-      <button
-          type="submit"
-          :disabled="form.processing || !form.isDirty"
-          class="disabled:bg-slate-400 fixed bottom-[120px] p-20 space-x-5 py-2 text-center rounded-full bg-teal-500 text-white mt-10"
-      >
-        بروزرسانی
-      </button>
+    <ui-col class="bg-[#3C4043] page-sidebar rounded-[15px] text-white px-[24px]">
+      <ui-page-sidebar-anchors v-model="pageSections">
+          <button
+              type="submit"
+              :disabled="form.processing || !form.isDirty"
+              class="display-flex items-center justify-center w-[200px] h-12 bg-blue-300 rounded-full bg-teal-500 disabled:bg-slate-400 "
+          >
+              بروزرسانی
+          </button>
+      </ui-page-sidebar-anchors>
+
     </ui-col>
     <ui-col full>
       <ui-box
+          class="mt-auto"
           v-for="(item, i) in pageSections"
           :key="i"
           :title="item.title"

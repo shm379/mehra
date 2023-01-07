@@ -30,6 +30,10 @@ const col = (content) => ({
             type: Boolean,
             default: false,
         },
+        fit: {
+            type: Boolean,
+            default: false,
+        },
     },
     setup(props, { slots, emit, attrs, expose }) {
         return () =>
@@ -39,6 +43,7 @@ const col = (content) => ({
                     class: {
                         "w-1/3": !props.wide && !props.full,
                         "w-2/3": props.wide,
+                        "w-fit": props.fit,
                         "w-full": props.full,
                     },
                 },

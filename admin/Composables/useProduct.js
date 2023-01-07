@@ -78,7 +78,7 @@ export default (prepareFlag=false) => {
     const {form, onPrepare} = useForm({
         _method: isUpdate.value ? 'put' : 'post',
         structure: defaultValue('structure',1),
-        type: defaultValue('type'),
+        type: defaultValue('type',1),
         min_purchases_per_user: defaultValue('min_purchases_per_user'),
         max_purchases_per_user: defaultValue('max_purchases_per_user'),
         is_active: defaultValue('is_active'),
@@ -129,7 +129,7 @@ export default (prepareFlag=false) => {
                 },
             )
             form.summary = defaultValue('summary')
-            form.producer = defaultValue('producer')
+            form.producer = defaultValue('producer',[])
             form.authors = defaultValue('authors',[])
             form.translators = defaultValue('translators',[])
             form.illustrators = defaultValue('illustrators',[])
@@ -163,15 +163,13 @@ export default (prepareFlag=false) => {
                 }
             } else {
                 attribute_ids[attribute_id] = []
-
                 if(attributes.value[attribute].children.length>0){
                     for(let child in attributes.value[attribute].children){
                         let attribute_id = attributes.value[attribute].children[child].id
                         attribute_ids[attribute_id] = []
+
                     }
                 }
-
-
             }
         }
 

@@ -11,7 +11,11 @@
       >
        {{item.title}}
       </a>
+
     </nav>
+    <div class="flex justify-center mt-5">
+        <slot></slot>
+    </div>
   </div>
 </template>
 

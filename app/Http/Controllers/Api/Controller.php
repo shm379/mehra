@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\ModelHasMedia;
 use App\Services\Media\Media;
 use App\Traits\ApiResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -50,10 +51,27 @@ class Controller extends BaseController
                 $mediaList = [request()->file($mediaKey)];
             }
             foreach ($mediaList as $media){
-                $model
-                    ->addMedia($media) //starting method
-                    ->withResponsiveImages()
-                    ->toMediaCollection($collectionName);
+//                if(str_starts_with($media->getMimeType(),'images')){
+
+                    $media_id = $model
+                        ->addMedia($media) //starting method
+                        ->withResponsiveImages()
+                        ->toMediaCollection($collectionName);
+
+                    $medias = ModelHasMedia::query()
+                        ->where('model_type', $media_id->model_type)
+                        ->where('model_id', $media_id->model_id);
+                    if($medias->exists())
+                        $order_number = (int) $medias->max('order')+1;
+                    else
+                        $order_number = 1;
+
+                    $model->medias()->attach([
+                        $media_id->id => [
+                                'order' => $order_number
+                        ]
+                    ]);
+//                }
             }
         }
     }

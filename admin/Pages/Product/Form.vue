@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="form.post(form.submit_url,{
+    <form @submit.prevent="form.post(submitUrl,{
       forceFormData: true,
       preserveScroll: true,
           onSuccess: () => {
@@ -9,7 +9,9 @@
               }
           },
       })">
-         <form-product :form="form"></form-product></form>
+         <form-product :form="form"></form-product>
+
+    </form>
 </template>
 
 <script>
@@ -33,7 +35,7 @@ const props = defineProps({
 
 })
 const emit = defineEmits(['update:form'])
-const {form} = useProduct(true)
+const {form,submitUrl} = useProduct(true)
 
 </script>
 

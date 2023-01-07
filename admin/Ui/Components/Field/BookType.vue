@@ -83,7 +83,7 @@ const props = defineProps({
     options: Object,
 })
 
-const selected = ref(1);
+const selected = ref(props.modelValue);
 function change(v) {
 
     selected.value =  v

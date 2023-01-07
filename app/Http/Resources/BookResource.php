@@ -50,15 +50,15 @@ class BookResource extends MehraResource
             'related'=> $this->whenLoaded('productRelated',function (){
                 return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
             }),
-            'cover_image'=> $this->whenLoaded('media',function (){
+            'cover_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('cover_image'))
                     return $this->getMedia('cover_image')->first()->original_url;
             }),
-            'back_image'=> $this->whenLoaded('media',function (){
+            'back_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('back_image'))
                     return $this->getMedia('back_image')->first()->original_url;
             }),
-            'gallery'=> $this->whenLoaded('media',function (){
+            'gallery'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('gallery'))
                     return BookGalleryResource::collection($this->getMedia('gallery'));
             }),

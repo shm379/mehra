@@ -102,7 +102,6 @@ watch(search, async (n, o) => {
 
         items.value = s.filter(function(value, index, arr){
             const vv = selectedOptions.value || {}
-            console.log(vv)
           return !Object.entries(vv).find(v => v == value)
       })
 

@@ -1,14 +1,22 @@
 <template>
-    <div class="grid grid-cols-1 gap-8">
-        <ui-input label="عنوان" :errors="$page.props.errors" v-model="form.title" error="title"></ui-input>
-        <ui-input label="عنوان فرعی یا زیرعنوان" :errors="$page.props.errors" v-model="form.sub_title" error="title"></ui-input>
-        <ui-textarea label="توضیحات" :errors="$page.props.errors" v-model="form.description" error="title"></ui-textarea>
+    <div class=" bg-white rounded-[15px] p-6 grid grid-cols-1 gap-8">
+        <p>انتخاب حداقل ۱۰ و حداکثر ۲۰ محصول ویژه</p>
+        <ui-autocomplete-product v-model="product" >
+        </ui-autocomplete-product>
     </div>
 </template>
 
 <script setup>
+import {computed} from "vue";
 
-
+const product = computed({
+    get: () => props.form.products,
+    set(v) {
+        var mv = props.form
+        mv.product = v
+        emit("update:form", mv);
+    },
+});
 const props = defineProps({
     form: Object
 })

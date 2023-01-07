@@ -7,6 +7,7 @@ use App\Enums\ProducerType;
 use App\Enums\ProductStructure;
 use App\Enums\ProductType;
 use App\Helpers\Helpers;
+use App\Http\Requests\Admin\Product\ProductRequest;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
 use App\Http\Resources\Admin\ProductAttributeResourceCollection;
 use App\Http\Resources\Admin\BookResource;
@@ -14,6 +15,9 @@ use App\Http\Resources\Admin\ProductResource;
 use App\Models\Attribute;
 use App\Models\Book;
 use App\Models\Product;
+use App\Services\Admin\AdminForm;
+use App\Services\Admin\Forms\ProductForm;
+use App\Traits\AdminResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -23,26 +27,15 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class ProductController extends Controller
 {
-
-    private function getFormData($form='create')
+    /*
+     * Admin Form Service Inject
+     */
+    protected AdminForm $form;
+    public function __construct(ProductForm $form)
     {
-        $data = [];
-        $data['structures'] = Helpers::asSelectLabelValueArray(ProductStructure::asSelectArray());
-        $data['types'] = Helpers::asSelectLabelValueArray(ProductType::asSelectArray());
-        $data['attributeTypes'] = array_flip(AttributeType::asArray());
-        if($form=='create') {
-            $data['attributes'] = Helpers::convertResourceToArray(
-                new ProductAttributeResourceCollection(
-                    Attribute::query()
-                        ->with(['children','values'])
-                        ->whereNull('parent_id')
-                        ->get()
-                )
-            );
-            $data['mediaCollections'] = (new Book())->getRegisteredMediaCollections();
-        }
-        return $data;
+        $this->form = $form;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -108,7 +101,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $formData = $this->getFormData();
+        $formData = $this->form->getData(true);
         return Inertia::render('Product/Form')
             ->with($formData);
     }
@@ -121,7 +114,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+
     }
 
     /**
@@ -159,7 +152,7 @@ class ProductController extends Controller
         }
         $mediaCollections = $product->getRegisteredMediaCollections();
         $product = $product->structure == ProductStructure::BOOK ? BookResource::make($product) : ProductResource::make($product);
-        $formData = $this->getFormData('edit');
+        $formData = $this->form->getData();
         $attributes = Helpers::convertResourceToArray(
             new ProductAttributeResourceCollection(
                 Attribute::query()
@@ -191,9 +184,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        $product->update($request->validated());
+        return Inertia::render('Collection/Create')->with(['errors'=>collect('errors')]);
     }
 
     /**

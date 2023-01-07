@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 gap-8">
+    <div class="bg-white rounded-[15px] p-6 grid grid-cols-3 gap-8">
         <ui-autocomplete-publisher v-model="publisher" >
         </ui-autocomplete-publisher>
         <ui-autocomplete-creator v-model="creator" >
