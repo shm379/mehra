@@ -9,11 +9,14 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
 use App\Http\Requests\Api\Auth\UpdateMeRequest;
 use App\Http\Requests\Api\Auth\VerifyOtpRequest;
+use App\Http\Requests\Api\Auth\VerifyPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Notifications\SendVerifySMS;
 use App\Services\OtpService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken;
 use Throwable;
@@ -59,8 +62,12 @@ class AuthController extends Controller
                 if($code && !$hasPassword)
                     $user->sendMobileVerificationNotification($code->code);
             }
+            $tokenAbilities = ['verify-otp'];
             // generate token
-            $temporaryToken = $user->createToken('web',['verify-otp']);
+            if($hasPassword){
+                $tokenAbilities = ['verify-password'];
+            }
+            $temporaryToken = $user->createToken('web',$tokenAbilities);
 
         } catch (SendOtpException $ex){}
 
@@ -68,6 +75,30 @@ class AuthController extends Controller
             'temporary_token'=>$temporaryToken->plainTextToken,
             'is_signed_before'=>$signedBefore,
             'has_password'=> $hasPassword
+        ]);
+    }
+
+    public function verifyPassword(VerifyPasswordRequest $request)
+    {
+        try {
+            /** @var PersonalAccessToken personalAccessToken */
+            $temporaryToken = PersonalAccessToken::findToken($request->bearerToken());
+            /** @var mixed $user */
+            $user = $temporaryToken->tokenable;
+            $password = $request->input('password');
+            if($user) {
+                if(Hash::check($password,$user->password)){
+                    $token = $user->createToken('web');
+                } else {
+                    return $this->errorResponse('اطلاعات ورودی نا معتبر می باشد');
+                }
+            } else {
+                return $this->errorResponse('اطلاعات ورودی نا معتبر می باشد');
+            }
+
+        } catch (MehraApiException $ex){}
+        return $this->successResponseWithData([
+            'token'=> $token->plainTextToken,
         ]);
     }
 
@@ -101,7 +132,7 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
 
         return $this->successResponseWithData([
-            'access_token' => $request->user()->createToken('web', ['view-user'])->plainTextToken
+            'access_token' => $request->user()->createToken('web')->plainTextToken
         ]);
     }
 

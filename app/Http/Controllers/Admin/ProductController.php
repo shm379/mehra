@@ -30,10 +30,11 @@ class ProductController extends Controller
     /*
      * Admin Form Service Inject
      */
+    protected bool $isForCreate = false;
     protected AdminForm $form;
-    public function __construct(ProductForm $form)
+    public function __construct()
     {
-        $this->form = $form;
+        $this->form = new ProductForm($this->isForCreate);
     }
 
     /**
@@ -101,7 +102,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $formData = $this->form->getData(true);
+        $this->form->setForm(true);
+        $formData = $this->form->getData();
         return Inertia::render('Product/Form')
             ->with($formData);
     }

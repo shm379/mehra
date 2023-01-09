@@ -82,8 +82,11 @@ const type = computed({
         if(v!==2) {
             if(sections.value.find(section=>section.anchor==='book-form-sounds')){
               mv.is_virtual = false;
-                sections.value.splice(sections.value.findIndex(section=>section.anchor==='book-form-sounds'))
+              sections.value.splice(sections.value.findIndex(section=>section.anchor==='book-form-sounds'))
             }
+        } else {
+            mv.is_virtual = true;
+            sections.value.push({title:'فایل های صوتی',anchor:'book-form-sounds'})
         }
         Inertia.reload({
             preserveState:true

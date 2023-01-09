@@ -8,7 +8,7 @@ class AdminForm {
     /**
      * @return mixed
      */
-    private function getData($form='create'): mixed
+    public function getData(): mixed
     {
         return $this->form;
     }

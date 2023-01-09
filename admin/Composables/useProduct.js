@@ -140,6 +140,7 @@ export default (prepareFlag=false) => {
     }
     function prepareAttributes(){
         let attribute_ids = {}
+
         for(let attribute in attributes.value) {
             let attribute_id = attributes.value[attribute].id
             if(isUpdate.value){

@@ -77,6 +77,7 @@
 
 <script setup>
 import { ref } from "vue";
+import {usePage} from "@inertiajs/inertia-vue3";
 const emit =defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: Number,
@@ -85,7 +86,6 @@ const props = defineProps({
 
 const selected = ref(props.modelValue);
 function change(v) {
-
     selected.value =  v
     emit('update:modelValue', v)
 }

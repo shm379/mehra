@@ -13,15 +13,16 @@ use App\Services\Admin\AdminForm;
 class ProductForm extends AdminForm
 {
     protected $form;
-    public function __construct()
+    public function __construct($isForCreate)
     {
         $data['structures'] = Helpers::asSelectLabelValueArray(ProductStructure::asSelectArray());
         $data['types'] = Helpers::asSelectLabelValueArray(ProductType::asSelectArray());
         $data['attributeTypes'] = array_flip(AttributeType::asArray());
         $this->form = $data;
+        $this->setForm($isForCreate);
     }
 
-    public function getData($isForCreate=false)
+    public function setForm($isForCreate=false)
     {
         if($isForCreate) {
             $this->form['attributes'] = Helpers::convertResourceToArray(
@@ -34,6 +35,5 @@ class ProductForm extends AdminForm
             );
             $this->form['mediaCollections'] = (new Book())->getRegisteredMediaCollections();
         }
-        return $this->form;
     }
 }

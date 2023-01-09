@@ -89,5 +89,11 @@ Route::prefix('/admin')
                 Route::get('/ac/media/books/{images}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'mediaBooks']);
                 Route::get('/ac/media/books', [\App\Http\Controllers\Admin\AutocompleteController::class, 'mediaBooks']);
         });
+        Route::prefix('/api/v1/file-manager')
+            ->middleware(['auth','role:admin'])
+            ->name('admin.file-manager.')
+            ->group(function (){
+                Route::get('/', [\App\Http\Controllers\Admin\FileManagerController::class, 'browse']);
+        });
 
 require __DIR__.'/admin/auth.php';
