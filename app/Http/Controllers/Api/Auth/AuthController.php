@@ -78,6 +78,7 @@ class AuthController extends Controller
         ]);
     }
 
+
     public function verifyPassword(VerifyPasswordRequest $request)
     {
         try {
