@@ -7,6 +7,7 @@ use App\Exceptions\MehraApiException;
 use App\Helpers\Helpers;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Auth\LoginRequest;
+use App\Http\Requests\Api\Auth\SavePasswordRequest;
 use App\Http\Requests\Api\Auth\UpdateMeRequest;
 use App\Http\Requests\Api\Auth\VerifyOtpRequest;
 use App\Http\Requests\Api\Auth\VerifyPasswordRequest;
@@ -77,7 +78,45 @@ class AuthController extends Controller
             'has_password'=> $hasPassword
         ]);
     }
+    public function sendOTPForce(LoginRequest $request)
+    {
+        try {
+            /** @var  $user User */
+            $mobile = Helpers::mobileNumberNormalize($request->get('mobile'));
 
+            $user = $this->checkExists($mobile);
+            if(!$user){
+                $user = $this->registerUser($mobile);
+            }
+            $code = \App\Services\OtpService::generateOtp($mobile);
+            if(config('app.env')=='production') {
+                if($code)
+                    $user->sendMobileVerificationNotification($code->code);
+            }
+
+        } catch (SendOtpException $ex){}
+
+        return $this->successResponse('کد با موفقیت ارسال شد');
+    }
+
+    public function savePassword(SavePasswordRequest $request)
+    {
+        try {
+            /** @var PersonalAccessToken personalAccessToken */
+            $temporaryToken = PersonalAccessToken::findToken($request->bearerToken());
+            /** @var mixed $user */
+            $user = $temporaryToken->tokenable;
+            $password = $request->input('password');
+            if($user) {
+                $user->password = $password;
+                $user->save();
+            } else {
+                return $this->errorResponse('اطلاعات ورودی نا معتبر می باشد');
+            }
+
+        } catch (MehraApiException $ex){}
+        return $this->successResponse('رمز عبور با موفقیت تغییر یافت');
+    }
 
     public function verifyPassword(VerifyPasswordRequest $request)
     {

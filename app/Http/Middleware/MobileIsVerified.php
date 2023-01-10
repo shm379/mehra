@@ -24,7 +24,10 @@ class MobileIsVerified
     {
         if (! $request->user() ||
             (! $request->user()->hasVerifiedMobile())) {
-            return $this->errorResponse('لطفا شماره موبایل خود را تایید کنید');
+            return $this->errorResponseWithData([
+                'message'=>'لطفا شماره موبایل خود را تایید کنید',
+                'route'=> 'otp'
+            ]);
         }
 
         return $next($request);

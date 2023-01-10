@@ -39,5 +39,13 @@ trait ApiResponse
                 ]
             ], $code);
     }
+    protected function errorResponseWithData($data, $code= 200): JsonResponse
+    {
+        return response()->json([
+            'success' => false,
+            'data'=> $data,
+
+        ], $code);
+    }
 
 }
