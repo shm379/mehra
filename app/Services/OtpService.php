@@ -44,7 +44,6 @@ class OtpService
         $expireTime = now();
         $mobile = Helpers::mobileNumberNormalize($mobile);
         $user = User::query()->where('mobile',$mobile)->first();
-        if(is_null($user->mobile_verified_at)) {
             $otpGeneratedCode = Otp::query()
                 ->where('user_id', $user->id)
                 ->where('expired_at', '>=', $expireTime);
@@ -60,8 +59,6 @@ class OtpService
                 }
             }
             return false;
-        } else
-            return true;
     }
 
 }
