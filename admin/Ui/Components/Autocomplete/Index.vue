@@ -1,5 +1,6 @@
 <template>
   <div class="relative">
+      {{index}}
     <ui-label>{{ label }}</ui-label>
     <div
       class="w-full flex flex-nowrap gap-2 h-14 overflow-x-auto overflow-y-none rounded-xl border pr-2"
@@ -48,6 +49,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -68,6 +70,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  index: {
+    type: String,
+    default: 'id'
+  }
 });
 
 const selectedOptions = computed({
@@ -110,7 +116,7 @@ watch(search, async (n, o) => {
 onClickOutside(results, (event) => (items.value = null));
 function select(v,i) {
   if (props.multiselect) {
-      selectedOptions.value[i] = v
+      selectedOptions.value[v[props.index]] = v
     console.log(v);
   } else selectedOptions.value = v;
 

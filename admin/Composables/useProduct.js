@@ -1,74 +1,16 @@
 import {usePage} from "@inertiajs/inertia-vue3";
-import {computed, ref} from "vue";
+import {computed, watch, ref} from "vue";
+import useProductUi from "@/Composables/useProductUi";
 
 export default (prepareFlag = false) => {
     const props = usePage().props.value
     const submitUrl = ref(route('admin.products.store'))
     const isUpdate = computed(() => props.product && props.product.id);
     const attributes = ref(props.attributes);
+
     const attributeFields = ref(props.attributeTypes);
 
-
-    const sections = ref([
-        {
-            title: "مشخصات ",
-            anchor: "product-form-info",
-        },
-        {
-            title: "طبقه بندی",
-            anchor: "product-form-category",
-        },
-        {
-            title: "تصاویر",
-            anchor: "product-form-gallery",
-        },
-        {
-            title: "ویژگی‌ها",
-            anchor: "product-form-attributes",
-        },
-    ])
-    const columns = ref([
-        {
-            name: "id",
-            label: "شماره ردیف",
-            field: "id",
-            sortable: true,
-        },
-        {
-            name: "title",
-            label: "عنوان",
-            field: "title",
-            sortable: true,
-        },
-        {
-            name: "sub_title",
-            label: "زیر عنوان",
-            field: "sub_title",
-            sortable: false,
-        },
-        {
-            name: "price",
-            label: "قیمت",
-            field: "price",
-            sortable: false,
-        },
-        {
-            name: "comments_count",
-            label: "تعداد دیدگاه ها",
-            field: "comments_count",
-            sortable: false,
-        },
-        {
-            name: "actions",
-            label: "عملیات",
-            type: "action",
-        },
-    ]);
-    const actions = [
-        {title: "نمایش", route: "admin.products.show", color: "blue"},
-        {title: "ویرایش", route: "admin.products.edit", color: "orange"},
-        {title: "حذف", route: "admin.products.destroy", color: "red"},
-    ];
+    const { sections, columns,  actions } = useProductUi()
 
     function defaultValue(key, defaultV = null, propsKey = 'product') {
         if (props && props[propsKey])
@@ -96,10 +38,25 @@ export default (prepareFlag = false) => {
         media: defaultValue('media', []),
     })
 
+    watch(form, (n,o) => {
+        console.log("FORM UPDATED" ,form)
+    })
+
+
     if (prepareFlag)
         onPrepare(prepareForm)
 
 
+    /**
+     * elements that must be prepared before initializing form
+     *
+     */
+    function prepareFormMeta(type) {
+        form.type = type
+        prepareForm()
+        console.log("change type of book")
+
+    }
     /**
      * elements that must be prepared before initializing form
      *
@@ -109,10 +66,11 @@ export default (prepareFlag = false) => {
             submitUrl.value = route('admin.products.update', props.product.id);
         }
         prepareBook()
-        prepareAttributes()
+        // prepareAttributes()
     }
 
     function prepareBook() {
+
         if (form.structure === 1) {
             sections.value.push(
                 {
@@ -160,15 +118,16 @@ export default (prepareFlag = false) => {
             form.awards = defaultValue('awards', [])
             form.sounds = defaultValue('sounds', [])
         }
-        console.log(form)
 
         if (form.type === 2) {
             if (sections.value.find(section => section.anchor === 'book-form-sounds')) {
                 form.is_virtual = false;
                 sections.value.splice(sections.value.findIndex(section => section.anchor === 'book-form-sounds'))
             } else {
+
                 form.is_virtual = true;
                 sections.value.push({title: 'فایل های صوتی', anchor: 'book-form-sounds'})
+
             }
         } else {
             if (sections.value.find(section => section.anchor === 'book-form-sounds')) {
@@ -184,24 +143,7 @@ export default (prepareFlag = false) => {
         for (let attribute in attributes.value) {
             let attribute_id = attributes.value[attribute].id
             if (isUpdate.value) {
-                attribute_ids[attribute_id] = attributes.value[attribute]
-                if (attribute_ids[attribute_id].children.length > 0) {
-                    for (let child in attribute_ids[attribute_id].children) {
-                        attribute_ids[attribute_ids[attribute_id].children[child].id] = attribute_ids[attribute_id].children[child]
-                    }
-                }
-                if (form.attributes[attribute_id]) {
-                    let values = [];
-                    if (attribute_ids[attribute_id].values.length < 0) {
-                        attribute_ids[attribute_id].values = []
-                        for (let i in form.attributes[attribute_id]) {
-                            attribute_ids[attribute_id].values.push({
-                                id: form.attributes[attribute_id][i].id,
-                                title: form.attributes[attribute_id][i].value
-                            })
-                        }
-                    }
-                }
+
             } else {
                 attribute_ids[attribute_id] = []
                 if (attributes.value[attribute].children.length > 0) {
@@ -217,6 +159,7 @@ export default (prepareFlag = false) => {
     }
 
     return {
+        prepareFormMeta,
         columns,
         actions,
         form,

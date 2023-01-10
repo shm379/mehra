@@ -1,17 +1,5 @@
 <template>
-    <form @submit.prevent="form.post(submitUrl,{
-      forceFormData: true,
-      preserveScroll: true,
-          onSuccess: () => {
-              form.reset();
-              if($page.props.flash.success!==null){
-                 $inertia.reload({ preserveState: true , preserveScroll: true })
-              }
-          },
-      })">
-         <form-product @update:form="updateForm" :form="form"></form-product>
-
-    </form>
+         <form-product  />
 </template>
 
 <script>
@@ -26,7 +14,6 @@ export default {
 import {computed, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
 const {modal} = useModal()
-
 const props = defineProps({
     product: {
         type:[Object,Boolean],
@@ -35,10 +22,10 @@ const props = defineProps({
 
 })
 const emit = defineEmits(['update:form'])
-const {form,submitUrl} = useProduct(true)
+const {prepareFormMeta,form,submitUrl,sections} = useProduct(true)
 function updateForm(newForm){
 
-    emit('update:form',form)
+    prepareFormMeta(newForm.type)
 }
 </script>
 

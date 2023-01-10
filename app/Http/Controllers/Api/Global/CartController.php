@@ -7,6 +7,7 @@ use App\Exceptions\Api\Cart\AddItemException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Cart\AddToCartRequest;
 use App\Http\Requests\Api\Cart\RemoveFromCartRequest;
+use App\Http\Requests\Api\Cart\SyncCartRequest;
 use App\Http\Resources\CartResource;
 use App\Models\Product;
 use App\Services\CartService;
@@ -28,6 +29,19 @@ class CartController extends Controller {
     public function getCart()
     {
         return new CartResource($this->cart->getCart());
+    }
+
+    /*
+     * Sync Cart From Local Storage
+     */
+    public function syncCart(SyncCartRequest $request)
+    {
+        $products = $request->products;
+        foreach ($products as $product) {
+            $this->cart->addToCart($product->structurer,$product->id,$product,$is_virtual);
+        }
+        $cart = $this->cart->getCart();
+        return new CartResource($cart);
     }
 
     /*

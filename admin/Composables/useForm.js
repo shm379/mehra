@@ -14,8 +14,6 @@ export default (formObj) => {
         callBackFunc()
     }
 
-
-
     return {
         form,
         onPrepare,

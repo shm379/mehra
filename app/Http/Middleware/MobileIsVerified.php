@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Interfaces\MustVerifiedMobile;
 use App\Traits\ApiResponse;
 use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

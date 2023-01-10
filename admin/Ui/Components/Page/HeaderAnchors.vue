@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="page-header-anchor">
+    <nav class="select-none page-header-anchor">
       <a
         @click="selected = i"
         v-for="item,i in flat(anchors)"

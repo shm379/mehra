@@ -1,4 +1,14 @@
 <template>
+    <form @submit.prevent="form.post(submitUrl,{
+      forceFormData: true,
+      preserveScroll: true,
+          onSuccess: () => {
+              form.reset();
+              if($page.props.flash.success!==null){
+                 $inertia.reload({ preserveState: true , preserveScroll: true })
+              }
+          },
+      })">
       <ui-page-header title="افزودن محصول">
         <ui-page-header-action to="admin.products.index"
           >مشاهده لیست محصولات</ui-page-header-action
@@ -19,7 +29,8 @@
       </ui-row>
       <ui-row class="sticky top-0 bg-white z-10 ">
         <ui-col full>
-          <ui-page-header-anchors v-model="sections"></ui-page-header-anchors>
+            {{sections}}
+          <ui-page-header-anchors  v-model="sections"></ui-page-header-anchors>
         </ui-col>
       </ui-row>
       <ui-row>
@@ -52,6 +63,7 @@
           </ui-box>
         </ui-col>
       </ui-row>
+    </form>
 </template>
 
 <script>
@@ -65,25 +77,22 @@ export default {
 <script setup>
 import {computed, defineEmits, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
-const { sections,isUpdate } = useProduct(true)
-const props = defineProps({
-    form:Object,
-    media:Array
-})
+const { sections,isUpdate, form, submitUrl, prepareFormMeta } = useProduct(true)
+
 const emit = defineEmits(['update:form'])
 const type = computed({
-    get: () => props.form.type,
+    get: () => form.type,
     set(v) {
-        var mv = props.form;
+        var mv = form;
         mv.type = v;
-        emit("update:form", mv);
+        prepareFormMeta()
     },
 });
 
 const structure = computed({
-    get: () => props.form.structure,
+    get: () => form.structure,
     set(v) {
-      let vm = props.form;
+      let vm = form;
       vm.structure = v
       emit('update:form',vm)
 

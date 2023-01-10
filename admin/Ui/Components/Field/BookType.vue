@@ -1,6 +1,6 @@
 <template>
     <ui-label>نوع</ui-label>
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2 select-none">
         <div
           v-for="(type,t) in options"
           class="flex flex-row gap-2 justify-start items-center group cursor-pointer hover:scale-105 duration-500 rounded-xl"

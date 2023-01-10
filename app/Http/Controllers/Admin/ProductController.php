@@ -30,11 +30,10 @@ class ProductController extends Controller
     /*
      * Admin Form Service Inject
      */
-    protected bool $isForCreate = false;
     protected AdminForm $form;
-    public function __construct()
+    public function __construct(ProductForm $form)
     {
-        $this->form = new ProductForm($this->isForCreate);
+        $this->form = $form;
     }
 
     /**
@@ -102,8 +101,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->form->setForm(true);
+        $this->form->setIsForCreate(true);
         $formData = $this->form->getData();
+
         return Inertia::render('Product/Form')
             ->with($formData);
     }
@@ -164,7 +164,6 @@ class ProductController extends Controller
                             });
                         }
                     ])
-                    ->whereNull('parent_id')
                     ->get()
             )
         );

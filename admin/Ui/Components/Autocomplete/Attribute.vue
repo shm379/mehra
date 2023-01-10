@@ -3,6 +3,7 @@
         :api="props.api"
         :label="props.label"
         v-model="attribute"
+        index="id"
         :multiselect="props.multiselect">
                     <template #tag="{ item }">
                         <span v-if="item">{{ item.title }}</span>

@@ -1,7 +1,7 @@
 <?php
 namespace App\Interfaces;
 
-interface MustVerifiedMobile{
+interface MustVerifiedMobileInterface{
     public function hasVerifiedMobile();
     public function markMobileAsVerified();
     public function sendMobileVerificationNotification($code);
