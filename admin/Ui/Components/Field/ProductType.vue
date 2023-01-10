@@ -1,5 +1,6 @@
 <template>
-    <ui-switch label="نوع محصول" true-value="simple" true-title="ساده" false-value="multiple" false-title="ترکیبی"  v-model='type'/>
+    <ui-switch
+        label="نوع محصول" true-value="simple" true-title="ساده" false-value="multiple" false-title="ترکیبی"  v-model='type'/>
     {{ type }}
 </template>
 

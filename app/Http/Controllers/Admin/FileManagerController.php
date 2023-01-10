@@ -12,13 +12,10 @@ class FileManagerController extends Controller
 {
     public function browse(FileManagerBrowseRequest $request)
     {
-        if($request->has('path')){
-            $files = \Storage::disk(config('media-library.disk_name'))->allFiles($request->get('path'));
-        } else {
-            $files = \Storage::disk(config('media-library.disk_name'))->allFiles();
-        }
+        $path = $request->get('path') ?? null;
+        $files = \Storage::disk(config('media-library.disk_name'))->allFiles($path);
         if($request->has('ext')){
-
+            
         }
         // return file manager
         return new FileManagerResourceCollection($files);

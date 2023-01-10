@@ -21,6 +21,9 @@ class ProductAttributeResource extends JsonResource
             'id'=> $this->id,
             'parent_id'=> $this->parent_id,
             'children'=> $this->whenLoaded('children'),
+            'product_types'=> $this->whenLoaded('product_type',function (){
+                return $this->product_type->pluck('product_type');
+            }),
             'title'=> preg_replace( "/\r|\n/", "", $this->name ),
             'slug'=> $this->slug,
             'type'=> AttributeType::fromValue((int)$this->type)->key,

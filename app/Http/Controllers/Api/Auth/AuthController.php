@@ -65,7 +65,7 @@ class AuthController extends Controller
             $tokenAbilities = ['verify-otp'];
             // generate token
             if($hasPassword){
-                $tokenAbilities = ['verify-password'];
+                $tokenAbilities[] = 'verify-password';
             }
             $temporaryToken = $user->createToken('web',$tokenAbilities);
 

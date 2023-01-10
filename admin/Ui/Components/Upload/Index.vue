@@ -37,7 +37,7 @@
         </svg>
       </div>
     </div>
-    <components-core-modal-upload @select="log($event)" fullscreen :title="label" dir="rtl" v-model:active="open" />
+    <components-core-modal-upload v-if="open" @select="log($event)" fullscreen :title="label" dir="rtl" v-model:active="open" />
 
   </div>
 </template>

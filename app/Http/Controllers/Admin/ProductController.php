@@ -158,10 +158,7 @@ class ProductController extends Controller
         $attributes = Helpers::convertResourceToArray(
             new ProductAttributeResourceCollection(
                 Attribute::query()
-                    ->whereHas('product_type',function($q) use ($product){
-                        $q->where('attribute_product_type.product_type', '=', $product->type);
-                    })
-                    ->with(['children','values'=>function($v){
+                    ->with(['product_type','children','values'=>function($v){
                             $v->whereHas('attribute',function($q){
                                 $q->where('attributes.type', '=', AttributeType::SINGLE_CHOICE);
                             });

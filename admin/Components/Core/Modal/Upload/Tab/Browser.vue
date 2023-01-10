@@ -13,7 +13,8 @@
 import {ref} from "vue";
 const emit = defineEmits(['select'])
 const files = ref({})
-load();
+await load()
+
 async function load() {
     files.value = await fetch("/api/v1/file-manager/").then((response) =>
         response.json()

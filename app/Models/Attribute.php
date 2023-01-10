@@ -51,7 +51,7 @@ class Attribute extends Model implements HasMedia
     }
     public function product_type()
     {
-        return $this->hasOne(AttributeProductType::class);
+        return $this->hasMany(AttributeProductType::class);
     }
 
 }

@@ -29,7 +29,6 @@ class ProductForm extends AdminForm
                 new ProductAttributeResourceCollection(
                     Attribute::query()
                         ->with(['children','values'])
-                        ->whereNull('parent_id')
                         ->get()
                 )
             );

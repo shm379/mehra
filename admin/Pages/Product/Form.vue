@@ -9,7 +9,7 @@
               }
           },
       })">
-         <form-product :form="form"></form-product>
+         <form-product @update:form="updateForm" :form="form"></form-product>
 
     </form>
 </template>
@@ -36,7 +36,10 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:form'])
 const {form,submitUrl} = useProduct(true)
+function updateForm(newForm){
 
+    emit('update:form',form)
+}
 </script>
 
 <style lang="scss" scoped></style>

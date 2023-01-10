@@ -65,7 +65,7 @@ export default {
 <script setup>
 import {computed, defineEmits, ref} from "vue";
 import {Inertia} from "@inertiajs/inertia";
-const { sections,isUpdate } = useProduct()
+const { sections,isUpdate } = useProduct(true)
 const props = defineProps({
     form:Object,
     media:Array
@@ -74,23 +74,9 @@ const emit = defineEmits(['update:form'])
 const type = computed({
     get: () => props.form.type,
     set(v) {
-
         var mv = props.form;
-
         mv.type = v;
-        // emit("update:form", mv);
-        if(v!==2) {
-            if(sections.value.find(section=>section.anchor==='book-form-sounds')){
-              mv.is_virtual = false;
-              sections.value.splice(sections.value.findIndex(section=>section.anchor==='book-form-sounds'))
-            }
-        } else {
-            mv.is_virtual = true;
-            sections.value.push({title:'فایل های صوتی',anchor:'book-form-sounds'})
-        }
-        Inertia.reload({
-            preserveState:true
-        })
+        emit("update:form", mv);
     },
 });
 
@@ -99,9 +85,6 @@ const structure = computed({
     set(v) {
       let vm = props.form;
       vm.structure = v
-      if(v===1){
-
-      }
       emit('update:form',vm)
 
     },
