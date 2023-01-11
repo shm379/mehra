@@ -22,7 +22,9 @@ class UserViewResource extends MehraResource
             'title'=> $this->model->title,
             'sub_title'=> $this->model->sub_title,
             'discount'=> $this->model->sale_price,
-            'price'=> Helpers::toman($this->model->price),
+            'price'=> $this->model->price,
+            'currency'=> 'تومان',
+            'price_formatted'=> Helpers::toman($this->model->price),
             'qty'=> $this->model->max_purchases_per_user,
             'image'=> $this->whenLoaded('model',function (){
                 if($this->model->hasMedia('back_image'))

@@ -126,7 +126,7 @@ class CartService
         $cartItem = $cart->items()->firstOrCreate([
             'line_item_id'=>$product_id,
             'line_item_type'=> $product_structure,
-            'is_virtual'=>$is_virtual,
+            'is_virtual'=> $is_virtual,
         ],self::getCartItem($product_structure,$product_id,$quantity));
 
         if(!$cartItem->wasRecentlyCreated){

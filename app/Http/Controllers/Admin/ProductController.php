@@ -101,8 +101,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $this->form->setIsForCreate(true);
-        $formData = $this->form->getData();
+        $formData = $this->form->createMode()->getForm();
 
         return Inertia::render('Product/Form')
             ->with($formData);

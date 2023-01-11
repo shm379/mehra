@@ -29,7 +29,9 @@ class UserWishlistResource extends MehraResource
             'id'=> $this->model_id,
         ];
         if(Helpers::isProduct($this->model)){
-            $wishListArray['main_price'] = Helpers::toman($this->model->price);
+            $wishListArray['main_price'] = $this->model->price;
+            $wishListArray['main_price_formatted'] = $this->model->price;
+            $wishListArray['currency'] = 'تومان';
             $wishListArray['price'] = $this->model->sale_price ? Helpers::toman($this->model->sale_price) : Helpers::toman($this->model->price);
             $wishListArray['rate'] = 1;
             $wishListArray['discount'] = 10;

@@ -34,7 +34,8 @@ class CartItemResource extends MehraResource
             'producer'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->producer;
             }),
-            'price'=> Helpers::toman($this->price),
+            'price'=> $this->price,
+            'price_formatted'=> Helpers::toman($this->price),
             'discount'=> $this->discount,
             'remained_qty'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->max_purchases_per_user;

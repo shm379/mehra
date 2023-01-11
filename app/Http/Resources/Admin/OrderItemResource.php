@@ -38,7 +38,6 @@ class OrderItemResource extends JsonResource
             'price'=> Helpers::toman($this->price),
             'quantity'=> $this->quantity,
             'price_without_discount'=> Helpers::toman($this->price_without_discount),
-            'price'=> Helpers::toman($this->price),
             'total_price_without_discount'=> Helpers::toman($this->total_price_without_discount),
             'total'=> Helpers::toman($this->total_price),
             'is_auction'=> $this->discount_applied,

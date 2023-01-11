@@ -32,6 +32,11 @@ class ProductForm extends AdminForm implements AdminFormInterface
         self::$isForCreate = $isForCreate;
     }
 
+    public function createMode()
+    {
+        self::setIsForCreate(true);
+        return $this;
+    }
 
     /**
      * @return mixed
@@ -41,27 +46,25 @@ class ProductForm extends AdminForm implements AdminFormInterface
         return $this->getForm();
     }
 
-    public function __construct()
+    /**
+     * @return mixed
+     */
+    public function getForm(): mixed
     {
+        $data = array();
         $data['structures'] = Helpers::asSelectLabelValueArray(ProductStructure::asSelectArray());
         $data['types'] = Helpers::asSelectLabelValueArray(ProductType::asSelectArray());
-        $data['attributeTypes'] = array_flip(AttributeType::asArray());
-        $this->form = $data;
-
-        return $this;
-    }
-
-    public static function setForm($form)
-    {
+        $data['attributeTypes'] = array_flip(attributeType::asArray());
         if(self::isForCreate()) {
-            $form['attributes'] = Helpers::convertResourceToArray(
-                new ProductAttributeResourceCollection(
+            $data['attributes'] = Helpers::convertResourceToArray(
+                new ProductattributeResourceCollection(
                     Attribute::query()
                         ->with(['children','values'])
                         ->get()
                 )
             );
-            $form['mediaCollections'] = (new Book())->getRegisteredMediaCollections();
+            $data['mediaCollections'] = (new Book())->getRegisteredMediaCollections();
         }
+        return $data;
     }
 }
