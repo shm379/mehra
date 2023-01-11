@@ -17,10 +17,14 @@ class OrderResource extends MehraResource
     public function toArray($request)
     {
         return [
-            'code'=> $this->id,
-            'date'=> $this->date,
-            'total_items'=> count($this->items) ? $this->items->sum('quantity') : 0,
-            'total_price'=> Helpers::toman($this->total_price),
+            'id'=> $this->id,
+            'date'=> jdate($this->date)->format('Y-m-d'),
+            'total_items'=> $this->whenLoaded('items',function (){
+                return count($this->items) ? $this->items->sum('quantity') : 0;
+            }),
+            'total_price'=> $this->total_price,
+            'currency'=> 'تومان',
+            'total_price_formatted'=> Helpers::toman($this->total_price),
             'shipping_price'=> 0,
             'is_shipping_free'=> true,
             'items'=> $this->whenLoaded('items',function (){

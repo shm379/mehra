@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function __invoke()
     {
-        $orders = auth()->user()->orders()->paginate($this->perPage);
+        $orders = auth()->user()->orders()->with(['items'])->paginate($this->perPage);
         return new OrderResourceCollection($orders);
     }
 }
