@@ -90,7 +90,7 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
     */
     Route::controller(\App\Http\Controllers\Api\Auth\AuthController::class)->group(function () {
         Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/verify', 'verifyOTP')->name('verify-otp');
-        Route::middleware(['auth:sanctum', 'abilities:verify-otp'])->post('/otp/force', 'sendOTPForce')->name('force-otp');
+        Route::middleware(['auth:sanctum', 'abilities:verify-otp','throttle:OTP'])->post('/otp/force', 'sendOTPForce')->name('force-otp');
         Route::middleware(['auth:sanctum', 'abilities:verify-password'])->post('/password', 'verifyPassword')->name('verify-password');
         Route::middleware(['auth:sanctum','verifiedMobile'])->post('/password/forget', 'savePassword')->name('forget-password');
         Route::middleware(['auth:sanctum','verifiedMobile'])->post('/password/save', 'savePassword')->name('save-password');

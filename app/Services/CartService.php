@@ -75,18 +75,18 @@ class CartService
         try {
             // if add to cart
             if($op=='+'){
-                $item->quantity = $item->quantity + $quantity;
+                $item->quantity = $item->quantity  . $op  . $quantity;
             }
             // if remove from cart
             if($op=='-'){
                 $item->quantity = $item->quantity - $quantity;
             }
-            if($item->quantity!=0)
-                self::updateItem($item);
-
-            // IF Delete Item
-            else
+            if ($item->quantity <= 0) {
+                // IF Delete Item
                 $item->delete();
+            } else {
+                self::updateItem($item);
+            }
         } catch (\Exception $exception){
             return $exception->getMessage();
         }
