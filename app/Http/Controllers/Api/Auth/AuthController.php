@@ -78,23 +78,24 @@ class AuthController extends Controller
             'has_password'=> $hasPassword
         ]);
     }
-    public function sendOTPForce(LoginRequest $request)
+    public function sendOTPForce(Request $request)
     {
         try {
-            /** @var  $user User */
-            $mobile = Helpers::mobileNumberNormalize($request->get('mobile'));
-
-            $user = $this->checkExists($mobile);
-            if(!$user){
-                $user = $this->registerUser($mobile);
+            /** @var PersonalAccessToken personalAccessToken */
+            $temporaryToken = PersonalAccessToken::findToken($request->bearerToken());
+            /** @var mixed $user */
+            $user = $temporaryToken->tokenable;
+            if($user) {
+                $code = \App\Services\OtpService::generateOtp($user->mobile);
+                if(config('app.env')=='production') {
+                    if($code)
+                        $user->sendMobileVerificationNotification($code->code);
+                }
+            } else {
+                return $this->errorResponse('اطلاعات ورودی نا معتبر می باشد');
             }
-            $code = \App\Services\OtpService::generateOtp($mobile);
-            if(config('app.env')=='production') {
-                if($code)
-                    $user->sendMobileVerificationNotification($code->code);
-            }
 
-        } catch (SendOtpException $ex){}
+        } catch (MehraApiException $ex){}
 
         return $this->successResponse('کد با موفقیت ارسال شد');
     }
@@ -108,7 +109,7 @@ class AuthController extends Controller
             $user = $temporaryToken->tokenable;
             $password = $request->input('password');
             if($user) {
-                $user->password = $password;
+                $user->password = Hash::make($password);
                 $user->save();
             } else {
                 return $this->errorResponse('اطلاعات ورودی نا معتبر می باشد');
