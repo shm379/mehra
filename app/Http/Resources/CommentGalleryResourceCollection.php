@@ -7,5 +7,5 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentGalleryResourceCollection extends MehraResourceCollection
 {
-    public $with = ['media'];
+    public $with = ['medias'];
 }

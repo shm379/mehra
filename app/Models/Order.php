@@ -27,7 +27,7 @@ class Order extends Model
                 $user->with('addresses');
             },'discount','items'=>function ($item){
                 $item->with(['line_item'=>function ($line_item){
-                    $line_item->with(['producer','media']);
+                    $line_item->with(['producer','medias']);
                 }]);
             },'notes'])
             ->where($this->getRouteKeyName(), $value)

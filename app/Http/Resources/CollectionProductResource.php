@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use App\Enums\CollectionType;
 
 
-class CollectionBookResource extends MehraResource
+class CollectionProductResource extends MehraResource
 {
     /**
      * Transform the resource into an array.
@@ -20,13 +20,9 @@ class CollectionBookResource extends MehraResource
             'slug'=> $this->slug,
             'type'=> $this->item_type,
             'title'=> preg_replace( "/\r|\n/", "", $this->title ),
-            'cover_image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('cover_image'))
-                    return $this->getFirstMediaUrl('cover_image');
-            }),
-            'back_image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('back_image'))
-                    return $this->getFirstMediaUrl('back_iamge');
+            'main_image'=> $this->whenLoaded('medias',function (){
+                if($this->hasMedia('main_image'))
+                    return $this->getFirstMediaUrl('main_image');
             }),
         ];
     }

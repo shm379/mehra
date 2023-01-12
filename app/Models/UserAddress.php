@@ -40,13 +40,13 @@ class UserAddress extends Model
         $address = [];
         $address['state'] = 'استان ' . $this->state->title;
         $address['city'] = 'شهر ' . $this->city->title;
-        $hasDistrict = (bool)$this->attributes['district'];
-        if($hasDistrict)
-            $address['district'] = 'ناحیه ' . $this->attributes['district'];
-
+//        $hasDistrict = (bool)$this->attributes['district'];
+//        if($hasDistrict)
+//            $address['district'] = 'ناحیه ' . $this->attributes['district'];
+//
         $address['address'] = ' ' . $this->attributes['address'];
-        $address['unit'] = 'واحد ' . $this->attributes['unit'];
-        $address['plaque'] = 'پلاک ' . $this->attributes['plaque'];
+//        $address['unit'] = 'واحد ' . $this->attributes['unit'];
+//        $address['plaque'] = 'پلاک ' . $this->attributes['plaque'];
 
         return implode($separator,$address);
     }

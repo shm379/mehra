@@ -27,7 +27,7 @@ class CategoryController extends Controller {
         $categories = QueryBuilder::for(Category::class)
             ->with([
                 'children',
-                'media',
+                'medias',
             ])
             ->whereNull('parent_id')
             ->where('is_active',1)
@@ -47,11 +47,11 @@ class CategoryController extends Controller {
     public function show(Category $category): CategoryResource
     {
         return CategoryResource::make($category->load([
-            'media',
+            'medias',
             'parent',
             'children',
             'books'=> function ($b){
-                $b->with('media');
+                $b->with('medias');
             }
         ]));
     }

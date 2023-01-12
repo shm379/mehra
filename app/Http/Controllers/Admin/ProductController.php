@@ -139,11 +139,11 @@ class ProductController extends Controller
     {
         if($product->structure==ProductStructure::BOOK){
             $book = Book::query()->with([
-                'media',
+                'medias',
                 'volumes',
                 'producer',
                 'creators'=>function($creator){
-                    $creator->with('types','media');
+                    $creator->with('types','medias');
                 },
                 'attributeValues'=>function($value) {
                     $value->with('attribute');

@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('national_number')->nullable();
             $table->unsignedBigInteger('state_id');
             $table->unsignedBigInteger('city_id');
-            $table->string('district')->nullable();
+//            $table->string('district')->nullable();
             $table->string('address');
-            $table->string('unit');
-            $table->integer('plaque');
+//            $table->string('unit');
+//            $table->integer('plaque');
             $table->string('postal_code')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();

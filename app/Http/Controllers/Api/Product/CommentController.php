@@ -19,7 +19,7 @@ class CommentController extends Controller {
     public function index(Request $request, Product $product)
     {
         $product = $product->load(['rank_attributes','comments'=> function($c){
-                    $c->with(['points','likes','media']);
+                    $c->with(['points','likes','medias']);
                 }
             ]);
         return ProductCommentResource::make($product);

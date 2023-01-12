@@ -12,7 +12,7 @@ class ModelHasMedia extends MorphPivot
 {
 
     protected $guarded = [];
-    protected $with = ['media'];
+    protected $with = ['medias'];
     public $timestamps = false;
     public function media()
     {

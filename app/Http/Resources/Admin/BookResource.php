@@ -29,7 +29,7 @@ class BookResource extends ProductResource
             }),
             //            'max_number'=> $this->max_purchases_per_user,
             'creators'=> $this->whenLoaded('creators',function (){
-                $this->creators->load('media');
+                $this->creators->load('medias');
                 return BookCreatorResource::collection($this->creators);
             }),
             'is_liked'=> $this->is_liked,
@@ -44,7 +44,7 @@ class BookResource extends ProductResource
                 if($this->hasMedia('back_image'))
                     return $this->getFirstMediaUrl('back_image');
             }),
-            'gallery'=> $this->whenLoaded('media',function (){
+            'gallery'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('gallery'))
                     return BookGalleryResource::collection($this->getMedias('gallery'));
             }),

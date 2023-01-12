@@ -203,7 +203,7 @@ class User extends Authenticatable implements HasMedia
                 ->where('status', OrderStatus::CART())
                 ->with(['items'=>function ($i){
                         $i->with(['line_item'=>function ($l){
-                                $l->with('media');
+                                $l->with('medias');
                             }
                         ]);
                     }

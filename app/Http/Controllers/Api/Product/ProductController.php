@@ -22,7 +22,7 @@ class ProductController extends Controller {
             'volumes',
             'producer',
             'comments'=>function($comment){
-                $comment->with(['media','user','points','likes'])->where('status',1);
+                $comment->with(['medias','user','points','likes'])->where('status',1);
             },
             'creators'=>function($creator){
                 $creator->with('types');
@@ -35,7 +35,7 @@ class ProductController extends Controller {
             'attributeValues'=>function($value){
                 $value->with('attribute');
             },
-            'media'
+            'medias'
         ])->paginate($request->has('per_page') !== null ?$request->get('per_page'): 15);
         return ProductResource::collection($products);
     }
@@ -51,7 +51,7 @@ class ProductController extends Controller {
             'volumes',
             'producer',
             'comments'=>function($comment){
-                $comment->with(['media','user','points','likes'])->where('status',1);
+                $comment->with(['medias','user','points','likes'])->where('status',1);
             },
             'creators'=>function($creator){
                 $creator->with('types');
@@ -64,7 +64,7 @@ class ProductController extends Controller {
             'attributeValues'=>function($value){
                 $value->with('attribute');
             },
-            'media'
+            'medias'
         ]));
     }
 

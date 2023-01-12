@@ -43,7 +43,7 @@ class BookResource extends MehraResource
             'currency'=> 'تومان',
             'max_number'=> $this->max_purchases_per_user,
             'creators'=> $this->whenLoaded('creators',function (){
-                $this->creators->load('media');
+                $this->creators->load('medias');
                 return BookCreatorResource::collection($this->creators);
             }),
             'is_liked'=> $this->is_liked,

@@ -28,12 +28,12 @@ class CreatorController extends Controller {
         // get collections from query builder
         $creators = QueryBuilder::for(Creator::class)
             ->with([
-                'media',
+                'medias',
                 'books'=>function ($b){
-                    $b->with('media');
+                    $b->with('medias');
                 },
                 'awards'=>function ($a){
-                    $a->with('media');
+                    $a->with('medias');
                 },
             ])
             ->defaultSort('created_at')
@@ -52,12 +52,12 @@ class CreatorController extends Controller {
     public function show(Creator $creator): CreatorResource
     {
         return CreatorResource::make($creator->load([
-            'media',
+            'medias',
             'books'=> function ($b){
-                $b->with('media');
+                $b->with('medias');
             },
             'awards'=>function ($a){
-                $a->with('media');
+                $a->with('medias');
             },
         ]));
     }

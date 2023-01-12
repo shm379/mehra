@@ -29,7 +29,7 @@ class OrderResource extends MehraResource
             'is_shipping_free'=> true,
             'items'=> $this->whenLoaded('items',function (){
                 return OrderItemResource::collection($this->items->load(['line_item'=>function($line_item){
-                        $line_item->with(['producer','media']);
+                        $line_item->with(['producer','medias']);
                     }]
                 ));
             }),

@@ -27,7 +27,7 @@ class AwardController extends Controller {
         // get users from query builder
         $awards = QueryBuilder::for(Award::class)
             ->with([
-                'media'
+                'medias'
             ])
             ->defaultSort('created_at')
             ->allowedSorts([
@@ -45,7 +45,7 @@ class AwardController extends Controller {
     public function show(Award $award): AwardResource
     {
         return AwardResource::make($award->load([
-            'media'
+            'medias'
         ]));
     }
 }

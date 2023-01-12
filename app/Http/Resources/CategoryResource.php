@@ -22,10 +22,10 @@ class CategoryResource extends MehraResource
 //                return new BookResourceCollection($this->books);
 //            }),
             'children'=> $this->whenLoaded('children',function (){
-                return new CategoryResourceCollection($this->children->load('media'));
+                return new CategoryResourceCollection($this->children->load('medias'));
             }),
             'parent'=> $this->whenLoaded('parent',function (){
-                return new CategoryResource($this->parent->load('media'));
+                return new CategoryResource($this->parent->load('medias'));
             }),
             'slug'=> $this->slug,
             'description'=> $this->description,

@@ -22,7 +22,7 @@ class ProductGroupResource extends MehraResource
                     'volume',
                     'producer',
                     'comments'=>function($comment){
-                        $comment->with(['media','user','points','likes'])->where('status',1);
+                        $comment->with(['medias','user','points','likes'])->where('status',1);
                     },
                     'creators'=>function($creator){
                         $creator->with('types');
@@ -35,7 +35,7 @@ class ProductGroupResource extends MehraResource
                     'attributes'=>function($attribute){
                         $attribute->with('values');
                     },
-                    'media'
+                    'medias'
                 ])
                 );
             }),

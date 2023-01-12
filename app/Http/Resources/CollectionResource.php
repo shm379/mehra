@@ -18,10 +18,18 @@ class CollectionResource extends MehraResource
     {
         return [
             'id'=> $this->id,
-            'products'=> CollectionBookResource::collection($this->products),
-            'books'=> CollectionBookResource::collection($this->products->where('structure',ProductStructure::BOOK)),
+            'items'=> $this->whenLoaded('items',function(){
+                foreach ($this->items as $item) {
+                    if($item->item_type=='book'){
+                        return CollectionBookResource::collection($this->items->pluck('item'));
+                    }
+                    if($item->item_type=='product'){
+                        return CollectionProductResource::collection($this->items->pluck('item'));
+                    }
+                }
+            }),
             'title'=> $this->title,
-            'count'=> isset($this->products) ? count($this->products) : 0,
+            'count'=> $this->items_count,
             'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image'))
                     return $this->getFirstMediaUrl('image');

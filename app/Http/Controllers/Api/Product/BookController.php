@@ -48,7 +48,7 @@ class BookController extends Controller {
                 'attributeValues'=>function($value){
                     $value->with('attribute');
                 },
-                'media'
+                'medias'
             ])
             ->defaultSort('created_at')
             ->allowedSorts([

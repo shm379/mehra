@@ -28,9 +28,9 @@ class ProducerController extends Controller {
         // get collections from query builder
         $producers = QueryBuilder::for(Producer::class)
             ->with([
-                'media',
+                'medias',
                 'books'=>function ($b){
-                    $b->with('media');
+                    $b->with('medias');
                 },
             ])
             ->defaultSort('created_at')
@@ -49,9 +49,9 @@ class ProducerController extends Controller {
     public function show(Producer $producer): ProducerResource
     {
         return ProducerResource::make($producer->load([
-            'media',
+            'medias',
             'books'=> function ($b){
-                $b->with('media');
+                $b->with('medias');
             },
         ]));
     }

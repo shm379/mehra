@@ -29,10 +29,10 @@ class Product extends Model implements HasMedia
     {
         return $this
             ->with([
-                'media',
+                'medias',
                 'producer',
                 'creators'=>function($creator){
-                    $creator->with('types','media');
+                    $creator->with('types','medias');
                 },
                 'attributeValues'=>function($value) {
                     $value->with('attribute');

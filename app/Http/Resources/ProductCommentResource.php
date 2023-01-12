@@ -22,7 +22,7 @@ class ProductCommentResource extends MehraResource
                 return new CommentRankResourceCollection($this->rank_attributes);
             }),
             "galleries"=> $this->whenLoaded('comments',function (){
-                return new CommentGalleryResourceCollection($this->comments->pluck('media')->flatten());
+                return new CommentGalleryResourceCollection($this->comments->pluck('medias')->flatten());
             }),
             "comments"=> $this->whenLoaded('comments',function (){
                 return new CommentResourceCollection($this->comments);

@@ -19,7 +19,7 @@ class CartResource extends MehraResource
         return [
             'items'=> $this->whenLoaded('items',function (){
                 return new CartItemResourceCollection($this->items->load(['line_item'=>function($line_item) {
-                    $line_item->with(['producer', 'media']);
+                    $line_item->with(['producer', 'medias']);
                     }]
                 ));
             }),

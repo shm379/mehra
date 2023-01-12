@@ -10,17 +10,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\Book;
+use function Symfony\Component\Translation\t;
+
 class Collection extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
     protected $guarded = [];
-
-    public static function getValidCollections(): array
-    {
-        return [
-            'image',
-        ];
-    }
 
 
     /**
@@ -33,13 +28,23 @@ class Collection extends Model implements HasMedia
     public function resolveRouteBinding($value, $field = null): ?Model
     {
         return $this
+            ->withCount(['items'])
             ->with([
                 'medias',
-                'products',
+                'items.item'=>function($t){
+                    return $t->with('medias');
+                },
             ])
             ->where($this->getRouteKeyName(), $value)
             ->firstOrFail();
     }
+    public static function getValidCollections(): array
+    {
+        return [
+            'image',
+        ];
+    }
+
 
     public function registerMediaCollections(): void
     {
@@ -51,8 +56,29 @@ class Collection extends Model implements HasMedia
         return 'id';
     }
 
+    public function items()
+    {
+        return $this->hasMany(CollectionItem::class);
+    }
+
     public function products()
     {
         return $this->morphedByMany(Product::class, 'item','collection_item');
+    }
+    public function books()
+    {
+        return $this->morphedByMany(Book::class, 'item','collection_item');
+    }
+    public function creators()
+    {
+        return $this->morphedByMany(Creator::class, 'item','collection_item');
+    }
+    public function producers()
+    {
+        return $this->morphedByMany(Producer::class, 'item','collection_item');
+    }
+    public function categories()
+    {
+        return $this->morphedByMany(Category::class, 'item','collection_item');
     }
 }
