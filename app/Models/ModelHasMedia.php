@@ -13,6 +13,7 @@ class ModelHasMedia extends MorphPivot
 
     protected $guarded = [];
     protected $with = ['media'];
+    public $timestamps = false;
     public function media()
     {
         return $this->belongsTo(config('media-library.media_model'));

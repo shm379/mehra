@@ -3,6 +3,7 @@ use Inertia\Inertia;
 use \Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('admin.auth.login'),
         'canRegister' => Route::has('admin.auth.register'),
@@ -19,7 +20,33 @@ Route::prefix('/admin')
         Route::get("/", function () {
             return Inertia::render("Dashboard");
         });
+        Route::get('/convertMedia',function (){
+            $medias = \App\Models\Media::query()->get();
+            $order = 1;
+            foreach ($medias as $media) {
+                if(\App\Models\ModelHasMedia::query()
+                    ->where('media_id',$media->id)
+                    ->where('model_type',$media->model_type)
+                    ->where('model_id',$media->model_id)
+                    ->doesntExist()
+                ){
+                if($media->collection_name!='gallery'){
+                    $order = 1;
+                }
+                    $model = \App\Models\ModelHasMedia::query()->create([
+                        'media_id' => $media->id,
+                        'model_type' => $media->model_type,
+                        'model_id' => $media->model_id,
+                        'order' => $order,
+                    ]);
+                    if ($media->collection_name == 'gallery') {
+                        $order += 1;
+                    }
+                }
 
+            }
+            return 'success';
+        });
         Route::prefix('user')
             ->controller(\App\Http\Controllers\Admin\UserController::class)
             ->name('users.')
