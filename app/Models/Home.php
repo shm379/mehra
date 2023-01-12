@@ -31,13 +31,14 @@ class Home extends Setting
     public function getJsonAttribute()
     {
         if(!is_null($this->attributes['value']) && $this->attributes['value']!='') {
-            $model = (new $this->attributes['model']);
+            $modelName = config('morphmap')[$this->attributes['model']];
+            $model = (new $modelName);
             $values = null;
             foreach ((array)json_decode($this->attributes['value'],true) as $value){
                 $values[] = $model->find($value);
             }
             return [
-                $this->attributes['key'] => $values
+                $this->attributes['model'] => $values
             ];
         }
         return [];

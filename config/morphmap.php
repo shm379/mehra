@@ -2,6 +2,7 @@
 
 return [
     'media' => 'App\Models\Media',
+    'blog' => 'App\Models\Blog',
     'announcement' => 'App\Models\Announcement',
     'award' => 'App\Models\Award',
     'comment' => 'App\Models\Comment',
