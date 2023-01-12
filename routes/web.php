@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('user-datatables', function () {
     return view('admin.users.index');

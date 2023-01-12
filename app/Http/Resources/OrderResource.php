@@ -28,10 +28,7 @@ class OrderResource extends MehraResource
             'shipping_price'=> 0,
             'is_shipping_free'=> true,
             'items'=> $this->whenLoaded('items',function (){
-                return OrderItemResource::collection($this->items->load(['line_item'=>function($line_item){
-                        $line_item->with(['producer','medias']);
-                    }]
-                ));
+                return OrderItemResource::collection($this->items);
             }),
             'user'=> $this->whenLoaded('user',function (){
                 return UserResource::make($this->user->load('addresses'));

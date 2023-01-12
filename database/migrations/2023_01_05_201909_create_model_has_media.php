@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('media_id');
             $table->morphs('model');
             $table->string('tag')->nullable();
+            $table->string('collection_name');
             $table->unsignedBigInteger("order");
             $table->foreign('media_id')
                 ->references('id')
