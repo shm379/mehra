@@ -17,6 +17,7 @@ trait HasMediaTrait
             ->using(ModelHasMedia::class)
             ->withPivot([
                 'order',
+                'collection_name',
                 'tag'
             ]);
     }
@@ -30,7 +31,7 @@ trait HasMediaTrait
         if($collectionName=='default')
             return $this->medias()->get();
 
-        return $this->medias()->where('collection_name',$collectionName)->get();
+        return $this->medias()->wherePivot('collection_name',$collectionName)->get();
     }
 
     /*

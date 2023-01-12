@@ -2,6 +2,7 @@
 
 namespace App\Services\Media;
 
+use Carbon\Carbon;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
@@ -36,12 +37,14 @@ class ModelPathGenerator implements PathGenerator
      */
     protected function getBasePath(Media $media): string
     {
+        $date = jdate(now());
+
         $prefix = config('media-library.prefix', '');
 
         if ($prefix !== '') {
-            return $prefix . '/' .  $media->model_type . '/' . $media->model_id;
+            return $prefix . '/' .  $date->getYear() . '/' . $date->getMonth();
         }
 
-        return $media->model_type . '/' .$media->model_id;
+        return $date->getYear() . '/' . $date->getMonth();
     }
 }

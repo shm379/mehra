@@ -3,7 +3,6 @@ use Inertia\Inertia;
 use \Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('admin.auth.login'),
         'canRegister' => Route::has('admin.auth.register'),
@@ -37,6 +36,7 @@ Route::prefix('/admin')
                         'media_id' => $media->id,
                         'model_type' => $media->model_type,
                         'model_id' => $media->model_id,
+                        'collection_name' => $media->collection_name,
                         'order' => $order,
                     ]);
                     if ($media->collection_name == 'gallery') {

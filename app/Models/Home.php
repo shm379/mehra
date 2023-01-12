@@ -27,18 +27,26 @@ class Home extends Setting
     {
         $this->morphTo();
     }
-
+    private function jsonModelFormat(){
+        $modelName = config('morphmap')[$this->attributes['model']];
+        $model = (new $modelName);
+        $values = null;
+        foreach ((array)json_decode($this->attributes['value'],true) as $value){
+            $values[] = $model->find($value);
+        }
+        return $values;
+    }
     public function getJsonAttribute()
     {
         if(!is_null($this->attributes['value']) && $this->attributes['value']!='') {
-            $modelName = config('morphmap')[$this->attributes['model']];
-            $model = (new $modelName);
-            $values = null;
-            foreach ((array)json_decode($this->attributes['value'],true) as $value){
-                $values[] = $model->find($value);
+            if(!is_null($this->attributes['model'])){
+                $values = $this->jsonModelFormat();
+            } else {
+                $values = (array)json_decode($this->attributes['value'],true);
             }
+            $key = is_null($this->attributes['model']) ? $this->attributes['key'] : $this->attributes['model'];
             return [
-                $this->attributes['model'] => $values
+                $key => $values
             ];
         }
         return [];

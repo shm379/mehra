@@ -82,6 +82,34 @@ class MediaSeeder extends Seeder
         }
 
     }
+
+    private function convertToMedias(){
+        $medias = \App\Models\Media::query()->get();
+        $order = 1;
+        foreach ($medias as $media) {
+            if(\App\Models\ModelHasMedia::query()
+                ->where('media_id',$media->id)
+                ->where('model_type',$media->model_type)
+                ->where('model_id',$media->model_id)
+                ->doesntExist()
+            ){
+                if($media->collection_name!='gallery'){
+                    $order = 1;
+                }
+                $model = \App\Models\ModelHasMedia::query()->create([
+                    'media_id' => $media->id,
+                    'model_type' => $media->model_type,
+                    'model_id' => $media->model_id,
+                    'order' => $order,
+                    'collection_name' => $media->collection_name,
+                ]);
+                if ($media->collection_name == 'gallery') {
+                    $order += 1;
+                }
+            }
+
+        }
+    }
     /**
      * Run the database seeds.
      *
@@ -97,7 +125,8 @@ class MediaSeeder extends Seeder
             'collection',
             'creator',
             'producer',
-            'user'
+            'user',
+            'slider',
         ];
         foreach ($models as $modelName) {
             // delete folder and media
@@ -114,6 +143,7 @@ class MediaSeeder extends Seeder
                     $this->generateMedia($mediaList, $modelItem);
                 }
             }
+            $this->convertToMedias();
         }
     }
 }
