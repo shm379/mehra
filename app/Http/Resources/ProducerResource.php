@@ -27,9 +27,9 @@ class ProducerResource extends MehraResource
             'books'=> $this->whenLoaded('books', function (){
                 return BookResource::collection($this->books);
             }),
-            'logo'=> $this->whenLoaded('media',function (){
+            'logo'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('logo'))
-                    return $this->getMedia('logo')->first()->original_url;
+                    return $this->getFirstMediaUrl('logo');
             }),
         ];
     }

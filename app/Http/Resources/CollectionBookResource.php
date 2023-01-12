@@ -19,13 +19,13 @@ class CollectionBookResource extends MehraResource
             'id'=> $this->id,
             'slug'=> $this->slug,
             'title'=> preg_replace( "/\r|\n/", "", $this->title ),
-            'cover_image'=> $this->whenLoaded('media',function (){
+            'cover_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('cover_image'))
-                    return $this->getMedia('cover_image')->first()->original_url;
+                    return $this->getFirstMediaUrl('cover_image');
             }),
-            'back_image'=> $this->whenLoaded('media',function (){
+            'back_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('back_image'))
-                    return $this->getMedia('back_image')->first()->original_url;
+                    return $this->getFirstMediaUrl('back_iamge');
             }),
         ];
     }

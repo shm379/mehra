@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStructure;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
 use Spatie\MediaLibrary\HasMedia;
@@ -21,6 +22,25 @@ class Collection extends Model implements HasMedia
         ];
     }
 
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this
+            ->with([
+                'medias',
+                'products',
+            ])
+            ->where($this->getRouteKeyName(), $value)
+            ->firstOrFail();
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('image')->useDisk(config('media-library.disk_name'))->singleFile();
@@ -33,11 +53,6 @@ class Collection extends Model implements HasMedia
 
     public function products()
     {
-        return $this->morphToMany(Product::class, 'collection_item','collection_id');
-    }
-
-    public function books()
-    {
-        return $this->morphToMany(Book::class, 'collection_item','collection_id','product_id');
+        return $this->morphedByMany(Product::class, 'item','collection_item');
     }
 }

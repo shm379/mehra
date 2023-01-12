@@ -30,9 +30,9 @@ class CategoryResource extends MehraResource
             'slug'=> $this->slug,
             'description'=> $this->description,
             'category_template'=> $this->whenLoaded('category_template'),
-            'image'=> $this->whenLoaded('media',function (){
+            'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image'))
-                    return $this->getMedia('image')->first()->original_url;
+                    return $this->getFirstMediaUrl('image');
             }),
         ];
     }

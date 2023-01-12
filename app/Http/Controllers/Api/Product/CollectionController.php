@@ -45,11 +45,6 @@ class CollectionController extends Controller {
     }
     public function show(Collection $collection): CollectionResource
     {
-        return CollectionResource::make($collection->load([
-            'media',
-            'books'=> function ($b){
-                $b->with('media');
-            }
-        ]));
+        return CollectionResource::make($collection);
     }
 }

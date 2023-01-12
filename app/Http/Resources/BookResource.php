@@ -52,15 +52,15 @@ class BookResource extends MehraResource
             }),
             'cover_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('cover_image'))
-                    return $this->getMedia('cover_image')->first()->original_url;
+                    return $this->getFirstMediaUrl('cover_image');
             }),
             'back_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('back_image'))
-                    return $this->getMedia('back_image')->first()->original_url;
+                    return $this->getFirstMediaUrl('back_image');
             }),
             'gallery'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('gallery'))
-                    return BookGalleryResource::collection($this->getMedia('gallery'));
+                    return BookGalleryResource::collection($this->getMedias('gallery'));
             }),
         ];
     }

@@ -6,6 +6,8 @@ namespace App\Services\Media;
 use App\Models\ModelHasMedia;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\InteractsWithMedia as BasicHasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 trait HasMediaTrait
 {
     use BasicHasMedia;
@@ -18,10 +20,53 @@ trait HasMediaTrait
                 'tag'
             ]);
     }
-    public function main_image()
+    public function mediaModel()
     {
-        return $this->morphOne(Media::class, 'model')->where('collection_name', 'main_image');
+        return $this->morphMany(ModelHasMedia::class, 'model')->has('media');
     }
+
+    public function getMedias(string $collectionName = 'default', array|callable $filters = [])
+    {
+        if($collectionName=='default')
+            return $this->medias()->get();
+
+        return $this->medias()->where('collection_name',$collectionName)->get();
+    }
+
+    /*
+    * Determine if there is media in the given collection.
+    */
+    public function hasMedia(string $collectionName = 'default', array $filters = []): bool
+    {
+        return count($this->getMedias($collectionName, $filters)) ? true : false;
+    }
+
+    public function getFirstMedias(string $collectionName = 'default', $filters = []): ?Media
+    {
+        $media = $this->getMedias($collectionName, $filters);
+
+        return $media->first();
+    }
+
+    /*
+     * Get the url of the image for the given conversionName
+     * for first media for the given collectionName.
+     * If no profile is given, return the source's url.
+     */
+    public function getFirstMediaUrl(string $collectionName = 'default', string $conversionName = ''): string
+    {
+        $media = $this->getFirstMedias($collectionName);
+        if (! $media) {
+            return $this->getFallbackMediaUrl($collectionName, $conversionName) ?: '';
+        }
+
+        if ($conversionName !== '' && ! $media->hasGeneratedConversion($conversionName)) {
+            return $media->getUrl();
+        }
+
+        return $media->getUrl($conversionName);
+    }
+
 
     public static function isValidMediaCollection(string $collectionName): bool
     {

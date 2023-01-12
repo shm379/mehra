@@ -19,9 +19,9 @@ class BookCreatorResource extends MehraResource
         return [
             'name'=> preg_replace( "/\r|\n/", "", $this->name ),
             'role'=> $this->pivot->creator_creator_type_id->name,
-            'icon'=> $this->whenLoaded('media',function (){
+            'icon'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('avatar'))
-                    return $this->getMedia('avatar')->first()->original_url;
+                    return $this->getFirstMediaUrl('avatar');
             }),
         ];
     }

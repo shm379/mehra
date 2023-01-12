@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Enums\CollectionType;
+use App\Enums\ProductStructure;
 
 
 class CollectionResource extends MehraResource
@@ -17,12 +18,13 @@ class CollectionResource extends MehraResource
     {
         return [
             'id'=> $this->id,
-            'books'=> CollectionBookResource::collection($this->books),
+            'products'=> CollectionBookResource::collection($this->products),
+            'books'=> CollectionBookResource::collection($this->products->where('structure',ProductStructure::BOOK)),
             'title'=> $this->title,
-            'count'=> isset($this->books) ? count($this->books) : 0,
-            'image'=> $this->whenLoaded('media',function (){
+            'count'=> isset($this->products) ? count($this->products) : 0,
+            'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image'))
-                    return $this->getMedia('image')->first()->original_url;
+                    return $this->getFirstMediaUrl('image');
             }),
         ];
     }

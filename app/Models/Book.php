@@ -27,7 +27,7 @@ class Book extends Product
     {
         return $this
             ->with([
-            'media',
+            'medias',
             'volumes',
             'producer',
             'creators'=>function($creator){

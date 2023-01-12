@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Enums\ProductStructure;
 use App\Helpers\Helpers;
 
 
@@ -24,9 +25,16 @@ class OrderItemResource extends MehraResource
             'sub_title'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->sub_title;
             }),
-            'price'=> Helpers::toman($this->price),
+            'image'=> $this->whenLoaded('line_item',function (){
+                return $this->line_item->load('mediaModel');
+                return optional($this->line_item->getMedia('main_image')->first())->original_url;
+            }),
+            'price'=> $this->price,
+            'currency'=> 'تومان',
+            'price_formatted'=> $this->price,
             'number'=> $this->quantity,
-            'total'=> Helpers::toman($this->quantity*$this->price),
+            'total'=> $this->quantity*$this->price,
+            'total_formatted'=> Helpers::toman($this->quantity*$this->price),
             'is_auction'=> $this->discount,
         ];
     }
