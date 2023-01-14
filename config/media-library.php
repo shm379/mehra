@@ -52,12 +52,12 @@ return [
     /*
      * This is the class that is responsible for naming generated files.
      */
-    'file_namer' => Spatie\MediaLibrary\Support\FileNamer\DefaultFileNamer::class,
+    'file_namer' => \App\Services\Media\MehraFileNamer::class,
 
     /*
      * The class that contains the strategy for determining a media file's path.
      */
-    'path_generator' => \App\Services\Media\ModelPathGenerator::class,
+    'path_generator' => \App\Services\Media\MehraPathGenerator::class,
 
     /*
      * Here you can specify which path generator should be used for the given class.
