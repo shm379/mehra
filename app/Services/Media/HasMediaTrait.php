@@ -26,12 +26,18 @@ trait HasMediaTrait
         return $this->morphMany(ModelHasMedia::class, 'model')->has('media');
     }
 
+
+    public function getMediaRepository(): MediaRepository
+    {
+        return app(MediaRepository::class);
+    }
+
+
     public function getMedias(string $collectionName = 'default', array|callable $filters = [])
     {
-        if($collectionName=='default')
-            return $this->medias()->get();
-
-        return $this->medias()->wherePivot('collection_name',$collectionName)->get();
+        return $this->getMediaRepository()
+            ->getCollection($this, $collectionName, $filters)
+            ->collectionName($collectionName);
     }
 
     /*

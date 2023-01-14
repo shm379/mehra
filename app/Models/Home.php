@@ -29,7 +29,8 @@ class Home extends Setting
     /*
      * Convert Key TO Value With Model
      */
-    private function convertKeyToValue($key,$model){
+    private function convertKeyToValue($key,$model)
+    {
         $values = null;
         $resources = null;
         switch ($key) {
@@ -56,7 +57,8 @@ class Home extends Setting
                 break;
         }
 
-        foreach ($resources as $resource) {
+        foreach ($resources as $resourceKey=>$resource) {
+
             $values =
                 $this->convertToResource(
                     $model,
@@ -65,13 +67,13 @@ class Home extends Setting
         }
         return $values;
     }
-    private function convertToResource($model,$resource){
-
-//        dd($resource->resource);
+    private function convertToResource($model,$resource)
+    {
         return !is_null($model) ?
             $resource->resource : $this->jsonValueFormat();
     }
-    private function jsonFormat(){
+    private function jsonFormat()
+    {
         $model = null;
         if(!is_null($this->attributes['model'])) {
             $modelName = config('morphmap')[$this->attributes['model']];
@@ -79,13 +81,17 @@ class Home extends Setting
         }
         return !is_null($model) ? $this->convertKeyToValue($this->attributes['key'],$model) : $this->jsonValueFormat();
     }
-    private function jsonValueFormat(){
+    private function jsonValueFormat()
+    {
         return (array)json_decode($this->attributes['value'],true);
     }
     public function getJsonAttribute(): array
     {
         if(!is_null($this->attributes['value']) && $this->attributes['value']!='') {
             $values = $this->jsonFormat();
+            $values = $values->filter(function ($item) {
+                return $item->resource !== null;
+            });
             $key = $this->attributes['key'];
             return [
                 $key => $values

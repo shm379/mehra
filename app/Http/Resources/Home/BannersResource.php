@@ -2,13 +2,13 @@
 
 namespace App\Http\Resources\Home;
 
+use App\Enums\AnnouncementPosition;
 use App\Helpers\Helpers;
 use App\Http\Resources\MehraResource;
 
 
 class BannersResource extends MehraResource
 {
-
 
     /**
      * Transform the resource into an array.
@@ -21,6 +21,8 @@ class BannersResource extends MehraResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
+            'url'=> $this->url,
+            '_blank'=> (bool)$this->_blank,
         ];
     }
 
@@ -36,5 +38,11 @@ class BannersResource extends MehraResource
         return [
             'success' => true
         ];
+    }
+
+    public function __construct($resource)
+    {
+        if($resource->position==AnnouncementPosition::EVERYWHERE || $resource->position==AnnouncementPosition::HOME)
+           parent::__construct($resource);
     }
 }

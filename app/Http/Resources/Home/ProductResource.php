@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources\Home;
 
+use App\Enums\ProductStructure;
 use App\Helpers\Helpers;
 use App\Http\Resources\MehraResource;
+use App\Models\Book;
 
 
 class ProductResource extends MehraResource
@@ -18,13 +20,19 @@ class ProductResource extends MehraResource
      */
     public function toArray($request)
     {
+        $image = 'main_image';
+        if($this->structure) {
+            $image = $this->structure == ProductStructure::BOOK ? 'cover_image' : 'main_image';
+            if ($this->structure == ProductStructure::BOOK) {
+                $this->resource = Book::query()->with(['medias'])->find($this->id);
+            }
+        }
+        $media = $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
         return [
             'id'=> $this->id,
-            'title'=> $this->title,
-            'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('main_image'))
-                    return $this->getFirstMediaUrl('main_image');
-            })
+            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'sub_title'=> $this->sub_title,
+            'image'=> $media,
         ];
     }
 

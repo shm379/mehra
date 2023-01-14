@@ -14,3 +14,4 @@ yarn-error.log
 /public/hot
 /public/build
 /public/seeder/
+/public/seeder/*

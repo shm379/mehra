@@ -9,7 +9,6 @@ use App\Http\Resources\MehraResource;
 class ListsResource extends MehraResource
 {
 
-
     /**
      * Transform the resource into an array.
      *
@@ -21,6 +20,7 @@ class ListsResource extends MehraResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
+            'items'=> ProductResource::collection($this->products()->get())
         ];
     }
 

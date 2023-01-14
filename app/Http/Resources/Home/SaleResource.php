@@ -2,8 +2,11 @@
 
 namespace App\Http\Resources\Home;
 
+use App\Enums\ProductStructure;
 use App\Helpers\Helpers;
+use App\Http\Resources\BookResource;
 use App\Http\Resources\MehraResource;
+use App\Models\Book;
 
 
 class SaleResource extends MehraResource
@@ -18,14 +21,7 @@ class SaleResource extends MehraResource
      */
     public function toArray($request)
     {
-        return [
-            'id'=> $this->id,
-            'title'=> $this->title,
-            'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('main_image'))
-                    return $this->getFirstMediaUrl('main_image');
-            })
-        ];
+        return ProductResource::make($this);
     }
 
 

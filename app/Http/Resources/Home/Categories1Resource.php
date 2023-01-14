@@ -21,8 +21,10 @@ class Categories1Resource extends MehraResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
+            'items'=> ProductResource::collection($this->products()->get())
         ];
     }
+
 
 
     /**
