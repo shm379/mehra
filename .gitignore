@@ -13,3 +13,4 @@ yarn-error.log
 /.vscode
 /public/hot
 /public/build
+/public/seeder/
