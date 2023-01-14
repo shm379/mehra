@@ -18,29 +18,6 @@ class HomeResourceCollection extends MehraResourceCollection
         if (is_null($this->resource)) {
             return [];
         }
-        foreach ($this->resource as $model=> $item){
-
-            $modelName = config('morphmap')[$model];
-            switch ($modelName){
-
-                case Slider::class:
-                    $this->collection[$model] = SliderResource::collection($item->resource);
-                    break;
-                case Product::class:
-                    $this->collection[$model] = SliderResource::collection($item->resource);
-                    break;
-//                case Slider::class:
-//                    $this->collection[$model] = SliderResource::collection($item->resource);
-//                    break;
-//                case Slider::class:
-//                    $this->collection[$model] = SliderResource::collection($item->resource);
-//                    break;
-//                case Slider::class:
-//                    $this->collection[$model] = SliderResource::collection($item->resource);
-//                    break;
-            }
-
-        }
         return $this->collection->map->toArray($request)->all();
     }
 }
