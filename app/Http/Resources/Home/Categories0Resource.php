@@ -2,11 +2,7 @@
 
 namespace App\Http\Resources\Home;
 
-use App\Helpers\Helpers;
-use App\Http\Resources\MehraResource;
-
-
-class Categories0Resource extends MehraResource
+class Categories0Resource extends HomeResource
 {
 
 

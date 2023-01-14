@@ -2,11 +2,7 @@
 
 namespace App\Http\Resources\Home;
 
-use App\Helpers\Helpers;
-use App\Http\Resources\MehraResource;
-
-
-class NewsResource extends MehraResource
+class NewsResource extends HomeResource
 {
     /**
      * Transform the resource into an array.
@@ -22,17 +18,4 @@ class NewsResource extends MehraResource
         ];
     }
 
-
-    /**
-     * Get additional data that should be returned with the resource array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function with($request)
-    {
-        return [
-            'success' => true
-        ];
-    }
 }

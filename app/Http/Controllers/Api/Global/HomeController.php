@@ -14,7 +14,7 @@ class HomeController extends Controller {
 
     public function index()
     {
-        $home = Home::query()->get(['key','value','model'])->pluck('json')->flatMap(function ($v){
+        $home = Home::query()->get(['key','value','model','order'])->sortBy('order')->pluck('json')->flatMap(function ($v){
             return $v;
         });
         return new HomeResourceCollection($home->toArray());

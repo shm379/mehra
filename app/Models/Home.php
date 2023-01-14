@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SettingSection;
+use App\Helpers\Helpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,30 +34,11 @@ class Home extends Setting
     {
         $values = null;
         $resources = null;
-        switch ($key) {
-            case 'sliders':
-                $resources[$key] = \App\Http\Resources\Home\SliderResource::class;
-                break;
-            case 'sale':
-                $resources[$key] = \App\Http\Resources\Home\SaleResource::class;
-                break;
-            case 'categories[0]':
-                $resources[$key] = \App\Http\Resources\Home\Categories0Resource::class;
-                break;
-            case 'categories[1]':
-                $resources[$key] = \App\Http\Resources\Home\Categories1Resource::class;
-                break;
-            case 'lists':
-                $resources[$key] = \App\Http\Resources\Home\ListsResource::class;
-                break;
-            case 'banners':
-                $resources[$key] = \App\Http\Resources\Home\BannersResource::class;
-                break;
-            case 'news':
-                $resources[$key] = \App\Http\Resources\Home\NewsResource::class;
-                break;
+        $name = ucfirst($key);
+        if(str_ends_with($name,']')){
+           $name = Helpers::removeBracketFromString($name);
         }
-
+        $resources[$key] = "\App\Http\Resources\Home\\{$name}Resource";
         foreach ($resources as $resourceKey=>$resource) {
 
             $values =

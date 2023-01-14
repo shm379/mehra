@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Resources\Home;
-class Categories1Resource extends HomeResource
+
+class AuthorsResource extends HomeResource
 {
 
 
@@ -16,7 +17,8 @@ class Categories1Resource extends HomeResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            'items'=> ProductResource::collection($this->products()->get())
+            'image'=> $this->hasMedia('avatar') ? $this->getFirstMediaUrl('avatar') : null,
+//            'items'=> ProductResource::collection($this->products()->get())
         ];
     }
 

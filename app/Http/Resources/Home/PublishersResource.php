@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\Home;
 
-use App\Enums\AnnouncementPosition;
+use App\Helpers\Helpers;
 use App\Http\Resources\MehraResource;
 
 
-class BannersResource extends HomeResource
+class PublishersResource extends MehraResource
 {
 
     /**
@@ -20,15 +20,9 @@ class BannersResource extends HomeResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            'url'=> $this->url,
-            '_blank'=> (bool)$this->_blank,
+            'image'=> $this->hasMedia('logo') ? $this->getFirstMediaUrl('logo') : null,
+//            'items'=> ProductResource::collection($this->products()->get()),
         ];
     }
 
-    public function __construct($resource)
-    {
-        if($resource->position==AnnouncementPosition::EVERYWHERE || $resource->position==AnnouncementPosition::HOME)
-           parent::__construct($resource);
-
-    }
 }

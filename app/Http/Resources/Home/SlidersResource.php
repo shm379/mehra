@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources\Home;
 
-use App\Helpers\Helpers;
+use  App\Helpers\Helpers;
 use App\Http\Resources\MehraResource;
 
 
-class SliderResource extends MehraResource
+class SlidersResource extends MehraResource
 {
 
 
@@ -30,17 +30,4 @@ class SliderResource extends MehraResource
         ];
     }
 
-
-    /**
-     * Get additional data that should be returned with the resource array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function with($request)
-    {
-        return [
-            'success' => true
-        ];
-    }
 }

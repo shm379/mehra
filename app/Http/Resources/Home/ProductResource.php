@@ -32,21 +32,13 @@ class ProductResource extends MehraResource
             'id'=> $this->id,
             'title'=> preg_replace( "/\r|\n/", "", $this->title ),
             'sub_title'=> $this->sub_title,
+            'main_price'=> $this->price,
+            'price'=> $this->sale_price ?: $this->price,
+//            'sale_percent'=> $this->sale_price==0 && !isset($this->sale_price) ? 0 : (1 - ($this->price / $this->sale_price)) * 100,
+            'main_price_formatted'=> Helpers::toman($this->price),
+            'price_formatted'=> $this->sale_price ? Helpers::toman($this->sale_price) : Helpers::toman($this->price),
+            'currency'=> 'تومان',
             'image'=> $media,
-        ];
-    }
-
-
-    /**
-     * Get additional data that should be returned with the resource array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function with($request)
-    {
-        return [
-            'success' => true
         ];
     }
 }

@@ -66,4 +66,8 @@ class Helpers
     static function convertResourceToArray($resource){
         return json_decode($resource->toJson(),true);
     }
+
+    static function removeBracketFromString($string) {
+        return preg_replace("/\[|\]/", "", $string);
+    }
 }

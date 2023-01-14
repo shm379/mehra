@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Product;
 use App\Models\Slider;
-use App\Http\Resources\Home\SliderResource;
+use App\Http\Resources\Home\SlidersResource;
 class HomeResourceCollection extends MehraResourceCollection
 {
     /**

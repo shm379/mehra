@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->unique();
+            $table->string('key');
             $table->text('value')->nullable();
             $table->enum('section',\App\Enums\SettingSection::asArray());
+            $table->unsignedBigInteger('order')->default(1);
+            $table->unique(['section','order']);
             $table->string('model')->nullable();
             $table->timestamps();
         });
