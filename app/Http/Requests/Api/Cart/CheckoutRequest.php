@@ -24,12 +24,10 @@ class CheckoutRequest extends ApiFormRequest
         return [
             'first_name'=> 'required',
             'last_name'=> 'required',
-            'province_id'=> 'required',
             'state_id'=> 'required',
-            'number'=> 'required',
-            'postal_code'=> 'required',
-            'unit'=> 'required',
-            'district'=> 'required',
+            'city_id'=> 'required',
+            'postal_code'=> 'nullable',
+            'address'=> 'required',
             'phone'=>'required',
             'mobile'=> 'required',
             'gateway'=> 'required'

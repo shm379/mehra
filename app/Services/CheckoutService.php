@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\UserAddress;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
-use Tartan\Larapay\Models\Enum\Bank;
+use PhpMonsters\Larapay\Models\Enum\Bank;
 
 class CheckoutService extends CartService
 {
@@ -21,8 +21,7 @@ class CheckoutService extends CartService
     public function saveAddress($addressData)
     {
         try {
-            $addressData['user_id'] = $this->user_id;
-            return UserAddress::query()->create($addressData);
+            return User::query()->find($this->user_id)->addresses()->create($addressData);
         } catch (\Exception $exception){
             dd($exception->getMessage());
             return null;
@@ -33,13 +32,13 @@ class CheckoutService extends CartService
    {
         $cart = $this->getCart();
         if($cart->total_price!==0) {
-//            $transaction = $cart->createTransaction(Bank::ZARINPAL, $cart->total_price);
-//            $form = $transaction->generateForm();
-//            dd($form);
+            $transaction = $cart->createTransaction(Bank::ZARINPAL, $cart->total_price);
+            $form = $transaction->generateForm();
+            dd($form);
 
-//            return view('go-to-bank', [
-//                'form' => $form,
-//            ]);
+            return view('go-to-bank', [
+                'form' => $form,
+            ]);
             return true;
         }
         return false;

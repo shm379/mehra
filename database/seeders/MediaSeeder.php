@@ -134,7 +134,7 @@ class MediaSeeder extends Seeder
             $this->deleteModels($modelName);
 
             // get media list
-            $mediaList = Storage::disk(config('media-library.disk_name'))->allFiles();
+            $mediaList = Storage::disk('media_fake')->allFiles();
             // get model from model name
             $model = app("App\Models\\".Str::ucfirst($modelName));
             // generate media
