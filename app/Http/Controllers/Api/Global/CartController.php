@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Cart\AddToCartRequest;
 use App\Http\Requests\Api\Cart\RemoveFromCartRequest;
 use App\Http\Requests\Api\Cart\SyncCartRequest;
+use App\Http\Resources\CartEmptyResource;
 use App\Http\Resources\CartResource;
 use App\Models\Product;
 use App\Services\CartService;
@@ -28,7 +29,10 @@ class CartController extends Controller {
      */
     public function getCart()
     {
-        return new CartResource($this->cart->getCart());
+        if(!is_null($this->cart->getCart()))
+            return new CartResource($this->cart->getCart());
+        else
+            return new CartEmptyResource([]);
     }
 
     /*
