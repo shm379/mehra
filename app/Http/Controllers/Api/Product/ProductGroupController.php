@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\ProductGroupResource;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Api\ProductGroupResource;
+use App\Http\Resources\Api\ProductResource;
 use App\Models\ProductGroup;
 use Illuminate\Http\Request;
 

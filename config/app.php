@@ -188,6 +188,7 @@ return [
         Kavenegar\Laravel\ServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        \Matchish\ScoutElasticSearch\ElasticSearchServiceProvider::class,
         /*
          * Application Service Providers...
          */

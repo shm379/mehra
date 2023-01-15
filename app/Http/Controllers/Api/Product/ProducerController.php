@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Api\Controller;
 use App\Models\Producer;
-use App\Http\Resources\ProducerResource;
-use App\Http\Resources\ProducerResourceCollection;
+use App\Http\Resources\Api\ProducerResource;
+use App\Http\Resources\Api\ProducerResourceCollection;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;

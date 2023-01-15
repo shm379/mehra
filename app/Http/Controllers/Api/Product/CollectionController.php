@@ -2,8 +2,8 @@
 namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\CollectionResource;
-use App\Http\Resources\CollectionResourceCollection;
+use App\Http\Resources\Api\CollectionResource;
+use App\Http\Resources\Api\CollectionResourceCollection;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;

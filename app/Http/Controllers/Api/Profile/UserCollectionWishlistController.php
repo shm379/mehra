@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Profile;
 use App\Enums\ProductStructure;
 use App\Exceptions\MehraApiException;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\UserWishlistResourceCollection;
+use App\Http\Resources\Api\UserWishlistResourceCollection;
 use App\Models\Collection;
 use App\Models\Product;
 use App\Models\UserWishlist;

@@ -11,7 +11,7 @@ use App\Http\Requests\Api\Auth\SavePasswordRequest;
 use App\Http\Requests\Api\Auth\UpdateMeRequest;
 use App\Http\Requests\Api\Auth\VerifyOtpRequest;
 use App\Http\Requests\Api\Auth\VerifyPasswordRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\Api\UserResource;
 use App\Models\User;
 use App\Notifications\SendVerifySMS;
 use App\Services\OtpService;

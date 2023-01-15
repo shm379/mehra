@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\OrderResourceCollection;
+use App\Http\Resources\Api\OrderResourceCollection;
 use App\Models\Order;
 use Illuminate\Http\Request;
 

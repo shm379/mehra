@@ -154,6 +154,13 @@
       0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
+  'laravel/scout' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Scout\\ScoutServiceProvider',
+    ),
+  ),
   'laravel/socialite' => 
   array (
     'providers' => 
@@ -181,6 +188,13 @@
     'aliases' => 
     array (
       'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
+    ),
+  ),
+  'matchish/laravel-scout-elasticsearch' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Matchish\\ScoutElasticSearch\\ScoutElasticSearchServiceProvider',
     ),
   ),
   'nesbot/carbon' => 

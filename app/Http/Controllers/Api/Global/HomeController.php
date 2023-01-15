@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\HomeResource;
-use App\Http\Resources\HomeResourceCollection;
+use App\Http\Resources\Api\HomeResource;
+use App\Http\Resources\Api\HomeResourceCollection;
 use App\Models\Award;
 use App\Models\Category;
 use App\Models\Home;

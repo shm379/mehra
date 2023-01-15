@@ -26,13 +26,15 @@ class SearchController extends Controller {
             return $this->histories();
         }
         // products
-        $products = Product::query()->select(['title'])->where('title',"%$request->q%")->get();
-        $categories = Category::query()->select(['title'])->where('title',"%$request->q%")->get();
-        $producers = Producer::query()->select(['title'])->where('title',"%$request->q%")->get();
-        $creators = Creator::query()->select(['title'])->where('title',"%$request->q%")->get();
+        $products = Product::query()->select(['id','title'])->where('title','LIKE',"%$request->q%")->get(['id','title']);
+        $categories = Category::query()->select(['id','title'])->where('title','LIKE',"%$request->q%")->get();
+        $producers = Producer::query()->select(['id','title'])->where('title','LIKE',"%$request->q%")->get();
+        $creators = Creator::query()->select(['id','title'])->where('title','LIKE',"%$request->q%")->get();
         $suggestions = [];
         return [
-            'products'=>$products,
+            'products'=>$products->map(function ($q){
+                return [$q->id=>$q->title];
+            }),
             'categories' => $categories,
             'producers'=> $producers,
             'creators' => $creators,

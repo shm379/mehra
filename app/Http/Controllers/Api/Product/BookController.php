@@ -7,10 +7,10 @@ use App\Enums\AttributeType;
 use App\Enums\ProducerType;
 use App\Exceptions\MehraApiException;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\BookResource;
-use App\Http\Resources\BookResourceCollection;
-use App\Http\Resources\CreatorResourceCollection;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\Api\BookResource;
+use App\Http\Resources\Api\BookResourceCollection;
+use App\Http\Resources\Api\CreatorResourceCollection;
+use App\Http\Resources\Api\ProductResource;
 use App\Models\Book;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -25,6 +25,7 @@ class BookController extends Controller {
 
     public function index(Request $request)
     {
+//        Product::search('کتاب')->raw()['hits'];
         // global input search
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
@@ -93,6 +94,13 @@ class BookController extends Controller {
         $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();
         $producers = \App\Models\Producer::query()->pluck('id','title')->toArray();
         $filters = [
+                'title'=> [
+                    'title'=>'عنوان',
+                    'key'=> 'title',
+                    'icon'=>'',
+                    'type'=>0,
+                    'value'=> [],
+                ],
                 'attributes'=> [
                     'title'=>'ویژگی',
                     'key'=> 'attributeValues.id',

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\UserViewResourceCollection;
+use App\Http\Resources\Api\UserViewResourceCollection;
 use App\Models\UserWishlist;
 use Illuminate\Http\Request;
 

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api\Product;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\CategoryResource;
-use App\Http\Resources\CategoryResourceCollection;
+use App\Http\Resources\Api\CategoryResource;
+use App\Http\Resources\Api\CategoryResourceCollection;
 use App\Models\Category;
 use Illuminate\Http\Request;
 

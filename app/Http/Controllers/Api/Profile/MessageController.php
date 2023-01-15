@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Profile;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\NotificationResourceCollection;
+use App\Http\Resources\Api\NotificationResourceCollection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

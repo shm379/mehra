@@ -7,6 +7,7 @@ use App\Enums\ProductStructure;
 use App\Services\CartService;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
+    use Searchable;
+
     protected $guarded = [''];
     protected $appends = ['main_price','max_purchases_per_user','is_liked'];
 
@@ -191,10 +194,10 @@ class Product extends Model implements HasMedia
 
     public function getMaxPurchasesPerUserAttribute()
     {
-        $max = $this->attributes['max_purchases_per_user'];
+        $max = isset($this->attributes['max_purchases_per_user']) ? $this->attributes['max_purchases_per_user'] : 1;
         $cartService = new CartService();
         $cart = $cartService->getCart();
-        if($this->attributes['max_purchases_per_user']==0 || $this->attributes['in_stock_count']<$max){
+        if($max==0 || isset($this->attributes['in_stock_count']) && $this->attributes['in_stock_count']<$max){
             // if disable max change max to in stock count
             // if in_stock_count is smaller than max_per_user
             $max = $this->attributes['in_stock_count'];
@@ -212,7 +215,7 @@ class Product extends Model implements HasMedia
 
     public function getMainPriceAttribute()
     {
-        return $this->attributes['sale_price'] ?: $this->attributes['price'];
+        return isset($this->attributes['sale_price']) ? $this->attributes['sale_price'] : isset($this->attributes['price']) ?? $this->attributes['price'];
     }
 
     public function getTitleAttribute()
@@ -233,7 +236,9 @@ class Product extends Model implements HasMedia
 
     public function getIsLikedAttribute()
     {
-        return auth()->check() ? auth()->user()->wishlist()->where('model_type','product')->where('model_id',$this->attributes['id'])->exists() : false;
+        $id = isset($this->attributes['id']) ? $this->attributes['id'] : null;
+        if($id)
+            return auth()->check() ? auth()->user()->wishlist()->where('model_type',ProductStructure::getKeys())->where('model_id',$id)->exists() : false;
     }
 
     /**
@@ -242,5 +247,33 @@ class Product extends Model implements HasMedia
     public function home()
     {
         return $this->morphOne(Home::class, 'model');
+    }
+
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $with = [
+            'producer',
+            'creators'=>function($creator){
+                $creator->with('types');
+            },
+            'attributeValues'=>function($value) {
+                $value->with('attribute');
+            },
+            'categories',
+            'productRelated',
+            'collections',
+            'comments',
+            'rank_attributes'
+        ];
+
+        $this->loadMissing($with);
+
+        return $this->toArray();
     }
 }

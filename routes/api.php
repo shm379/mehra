@@ -101,7 +101,9 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
  * V1 Without Auth
  */
 Route::middleware(['throttle:OTP'])->post('/otp', [\App\Http\Controllers\Api\Auth\AuthController::class,'sendOTP'])->name('send-otp');
-Route::get('product/{product}/rank-attributes', [\App\Http\Controllers\Api\Product\ProductController::class,'getRanks'])->name('product.ranks');
+// reminded products
+Route::post('product/{product}/reminded/{inCart?}',[\App\Http\Controllers\Api\Product\ProductController::class, 'reminded'])->name('product.reminded');
+Route::get('product/{product}/rank-attributes', [\App\Http\Controllers\Api\Product\ProductController::class,'ranks'])->name('product.ranks');
 Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
 Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index');
 Route::get('filters/books', [\App\Http\Controllers\Api\Product\BookController::class,'filters'])->name('filters.books');

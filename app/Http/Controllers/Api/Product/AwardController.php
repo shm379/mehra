@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Product;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Resources\AwardResource;
-use App\Http\Resources\AwardResourceCollection;
+use App\Http\Resources\Api\AwardResource;
+use App\Http\Resources\Api\AwardResourceCollection;
 use App\Enums\ProductRelatedType;
 use App\Models\Award;
 use Illuminate\Http\Request;

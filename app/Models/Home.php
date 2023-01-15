@@ -38,7 +38,7 @@ class Home extends Setting
         if(str_ends_with($name,']')){
            $name = Helpers::removeBracketFromString($name);
         }
-        $resources[$key] = "\App\Http\Resources\Home\\{$name}Resource";
+        $resources[$key] = "\App\Http\Resources\Api\Home\\{$name}Resource";
         foreach ($resources as $resourceKey=>$resource) {
 
             $values =
