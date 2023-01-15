@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\OrderStatus;
+use App\Enums\ProductStructure;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Discount;
@@ -16,7 +17,7 @@ class DiscountService extends CartService
         $cart = self::getCart();
         if($cart) {
             $discount = self::getDiscount($code);
-            // if discount does not exists
+            // if discount does not exist
             if (!$discount) {
                 return false;
             }
@@ -37,18 +38,12 @@ class DiscountService extends CartService
     {
         return Discount::query()
             ->where('code',$code)
-            ->whereNull('expire_at')
-            ->whereNull('start_time')
-            ->whereNull('end_time')
-            ->orWhere('expire_at','>=', now())
-            ->orWhere('start_time','<=', now())
-            ->orWhere('end_time','>=', now())
             ->first();
     }
 
     private function setDiscount($items)
     {
-        $products = $items->where('line_item_type', 'product');
+        $products = $items->whereIn('line_item_type', ProductStructure::getKeys());
         if (count($items)>0) {
             // check product limitation
             if ($this->discount->limitProducts())
@@ -126,6 +121,7 @@ class DiscountService extends CartService
                 $discountPrice,
                 $orderItem->quantity
             );
+
             $orderItem->save();
         } catch (\Exception $exception){
 

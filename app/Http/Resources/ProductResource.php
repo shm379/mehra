@@ -32,7 +32,7 @@ class ProductResource extends MehraResource
                 }
                 return ProductResource::collection($this->volumes);
             }),
-            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'title'=> $this->title,
             'slug'=> $this->slug,
             'sub_title'=> $this->sub_title,
             'description'=> $this->description,

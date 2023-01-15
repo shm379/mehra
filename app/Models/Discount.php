@@ -20,6 +20,16 @@ class Discount extends Model
     {
         return !$this->attributes['all_products'];
     }
+    public function users()
+    {
+        return $this->belongsToMany(User::class,'user_discounts');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
 
     public function getExpireAtAttribute()
     {

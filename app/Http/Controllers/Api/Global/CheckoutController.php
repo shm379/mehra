@@ -3,18 +3,9 @@
 namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\Api\Cart\AddToCartRequest;
-use App\Http\Requests\Api\Cart\CheckoutRequest;
-use App\Http\Requests\Api\Cart\RemoveFromCartRequest;
-use App\Http\Resources\CartResource;
-use App\Models\Cart;
-use App\Models\Product;
-use App\Models\UserAddress;
-use App\Services\CartService;
+use App\Http\Requests\Api\Checkout\VerifyRequest;
+use App\Http\Requests\Api\Checkout\PayRequest;
 use App\Services\CheckoutService;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Client\Request;
-use Tartan\Larapay\Facades\Larapay;
 
 class CheckoutController extends Controller {
 
@@ -27,26 +18,14 @@ class CheckoutController extends Controller {
         $this->checkout = $checkout;
     }
 
-    public function cartToCheckout(CheckoutRequest $request)
+    public function cartToCheckout(PayRequest $request)
     {
-        $addressId = $this->checkout->saveAddress($request->except(['gateway']));
-        $process = $this->checkout->process($addressId);
-        if(!$process){
-            return $this->errorResponse('سبد خرید خالی است');
-        }
+        $addressId = $this->checkout->saveAddress($request->validated());
+        return $this->checkout->pay($addressId);
     }
 
-    public function checkoutCallback(Request $request)
+    public function verifyPayment(VerifyRequest $request)
     {
-        try{
-            $adapterConfig = [];
-            $transaction = Larapay::verifyTransaction($request, $adapterConfig);
-            $order = $transaction->model;
-            dd($order);
-            //transaction done. payment is successful
-        } catch (\Exception $e){
-            // transaction not complete!!!
-            // show error to your user
-        }
+        return $this->checkout->verify($request->validated());
     }
 }

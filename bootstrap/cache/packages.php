@@ -204,17 +204,6 @@
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-  'php-monsters/laravel-xlog' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'PhpMonsters\\Log\\XLogServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'XLog' => 'PhpMonsters\\Log\\Facades\\XLog',
-    ),
-  ),
   'realrashid/sweet-alert' => 
   array (
     'providers' => 
@@ -231,6 +220,17 @@
     'providers' => 
     array (
       0 => 'Sadegh19b\\LaravelPersianValidation\\PersianValidationServiceProvider',
+    ),
+  ),
+  'shetabit/payment' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Shetabit\\Payment\\Provider\\PaymentServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Payment' => 'Shetabit\\Payment\\Facade\\Payment',
     ),
   ),
   'shm379/media' => 
@@ -298,28 +298,6 @@
     'providers' => 
     array (
       0 => 'Spatie\\Translatable\\TranslatableServiceProvider',
-    ),
-  ),
-  'tartan/laravel-online-payment' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'PhpMonsters\\Larapay\\LarapayServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Larapay' => 'PhpMonsters\\Larapay\\Facades\\Larapay',
-    ),
-  ),
-  'tartan/laravel-xlog' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'PhpMonsters\\Log\\XLogServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'XLog' => 'PhpMonsters\\Log\\Facades\\XLog',
     ),
   ),
   'tightenco/ziggy' => 

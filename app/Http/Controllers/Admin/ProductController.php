@@ -82,7 +82,7 @@ class ProductController extends Controller
             ->through(function ($product) {
                 return [
                     'id'=> $product->id,
-                    'title'=> preg_replace( "/\r|\n/", "", $product->title ),
+                    'title'=> $product->title,
                     'sub_title'=> $product->sub_title,
                     'price'=> Helpers::toman($product->price),
                     'comments_count'=> $product->comments_count,

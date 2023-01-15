@@ -23,10 +23,18 @@ class CartService
     public function getCart()
     {
         $cart = User::GetCart($this->user_id);
+/*        if($cart->doesntExist()){
+            $this->createCart();
+            $cart = User::GetCart($this->user_id);
+            return $cart;
+        }*/
         self::updateCart($cart);
         if($cart->exists())
             return $cart;
+
         return null;
+
+
     }
 
     private function createCart()
@@ -45,8 +53,9 @@ class CartService
 
     public function findCartItemByProductID($product_id)
     {
-        return OrderItem::query()
-            ->whereIn('line_item_type',ProductStructure::asArray())
+        return $this->getCart()
+            ->items()
+            ->whereIn('line_item_type',ProductStructure::getKeys())
             ->where('line_item_id',$product_id)
             ->first();
     }
@@ -75,7 +84,7 @@ class CartService
         try {
             // if add to cart
             if($op=='+'){
-                $item->quantity = $item->quantity  . $op  . $quantity;
+                $item->quantity = $item->quantity  + $quantity;
             }
             // if remove from cart
             if($op=='-'){
@@ -132,6 +141,7 @@ class CartService
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
         }
+
         return self::getCart();
     }
 
@@ -144,7 +154,7 @@ class CartService
                 ->where([
                 'line_item_id'=>$product_id,
                 ])
-                ->whereIn('line_item_type',ProductStructure::asArray());
+                ->whereIn('line_item_type',ProductStructure::getKeys());
             // IF Cart Exists
             if($item->exists()){
                 $currentItem = $item->first();

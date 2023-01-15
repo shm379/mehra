@@ -52,7 +52,7 @@ class StockController extends Controller
             ->through(function ($stock) {
                 return [
                     'id'=> $stock->id,
-                    'title'=> preg_replace( "/\r|\n/", "", $stock->title ),
+                    'title'=> $stock->title,
                     'type'=> $stock->type,
                     'location'=> $stock->type,
                     'products_count'=> $stock->products_count,

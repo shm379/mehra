@@ -5,15 +5,17 @@ namespace App\Http\Requests\Api\Cart;
 use App\Enums\ProductStructure;
 use App\Http\Requests\Api\ApiFormRequest;
 use App\Models\Product;
+use App\Models\User;
 use App\Rules\AddToCartRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class SyncCartRequest extends ApiFormRequest
 {
-    protected $stopOnFirstFailure = true;
+    protected $stopOnFirstFailure = false;
     protected $products;
     protected int $min_purchases_per_user = 1;
     protected int $max_purchases_per_user = 1;
@@ -33,14 +35,32 @@ class SyncCartRequest extends ApiFormRequest
             'items.*.quantity'=> [
                 'required',
                 'integer',
+                'min:1',
                 function ($attribute, $value, $fail) {
                     $product = $this->products[$this->get('items')[substr($attribute, 6, -9)]['id']];
-                    return $product->min_purchases_per_user ?? 1;
+                    $quantity = $this->get('items')[substr($attribute, 6, -9)]['quantity'];
+                    if($quantity==1 && $product->max_purchases_per_user <= 0)
+                        $fail('تعداد درخواستی شما برای خرید بیشتر از حد مجاز است!');
+                    elseif($quantity>1 && $product->max_purchases_per_user - ($quantity) < 0)
+                        $fail(
+                            'تعداد درخواستی شما برای خرید بیشتر از حد مجاز است!' .
+                            ($product->max_purchases_per_user!=0 ?
+                                ' - تعداد مجاز:' . $product->max_purchases_per_user : '')
+                        );
                 },
-                function ($attribute, $value, $fail) {
-                    $product = $this->products[$this->get('items')[substr($attribute, 6, -9)]['id']];
-                    return $product->max_purchases_per_user ?? 1;
-                },
+              /*  function ($attribute, $value, $fail) {
+                    $cart = User::getCart(auth()->id());
+                    if($cart && $cart->exists()){
+                        $product = $this->products[$this->get('items')[substr($attribute, 6, -9)]['id']];
+                        if($product){
+                            $thisItem = $cart->items
+                                ->where('line_item_type',strtolower(ProductStructure::getKey($product->structure)))
+                                ->where('line_item_id',$product->id);
+                            if($thisItem->exists() && $thisItem->first()->quantity>$product->max_purchases_per_user)
+                        }
+                    }
+                    return true;
+                },*/
             ],
             'products'=>'nullable',
         ];
@@ -78,9 +98,12 @@ class SyncCartRequest extends ApiFormRequest
     private function convertItemsToProducts($items){
         $products = [];
         foreach ($items as $item){
-            if(isset($item['id']))
-                $products[(string)$item['id']] = Product::query()->find($item['id']);
-                $products[(string)$item['id']]['cart_quantity'] = Product::query()->find($item['id']);
+            if(isset($item['id'])) {
+                $product = Product::query()->find($item['id']);
+                $products[(string)$item['id']] = $product;
+
+                $products[(string)$item['id']]['sync_quantity'] = $item['quantity'];
+            }
         }
         return $products;
     }

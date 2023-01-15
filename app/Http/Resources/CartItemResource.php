@@ -17,10 +17,10 @@ class CartItemResource extends MehraResource
     public function toArray($request)
     {
         return [
-            'order_id'=> $this->order_id,
+//            'order_id'=> $this->order_id,
             'product_id'=> $this->line_item_id,
             'title'=> $this->whenLoaded('line_item',function (){
-                return preg_replace( "/\r|\n/", "", $this->line_item->title);
+                return $this->line_item->title;
             }),
             'sub_title'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->sub_title;
@@ -32,7 +32,7 @@ class CartItemResource extends MehraResource
                 return optional($this->line_item->getMedia('main_image')->first())->original_url;
             }),
             'producer'=> $this->whenLoaded('line_item',function (){
-                return $this->line_item->producer;
+                return ProducerResource::make($this->line_item->producer);
             }),
             'price'=> $this->price,
             'price_formatted'=> Helpers::toman($this->price),
@@ -44,6 +44,7 @@ class CartItemResource extends MehraResource
                 return $this->line_item->in_stock_count>0;
             }),
             'number'=> $this->quantity,
+            'deleted'=> !is_null($this->deleted_at)
         ];
     }
 }

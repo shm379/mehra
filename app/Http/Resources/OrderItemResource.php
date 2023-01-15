@@ -20,7 +20,7 @@ class OrderItemResource extends MehraResource
             'order_id'=> $this->order_id,
             'product_id'=> $this->line_item_id,
             'title'=> $this->whenLoaded('line_item',function (){
-                return preg_replace( "/\r|\n/", "", $this->line_item->title);
+                return $this->line_item->title;
             }),
             'sub_title'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->sub_title;

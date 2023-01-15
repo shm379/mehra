@@ -19,7 +19,7 @@ class CollectionBookResource extends MehraResource
             'id'=> $this->id,
             'slug'=> $this->slug,
             'type'=> $this->item_type,
-            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'title'=> $this->title,
             'cover_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('cover_image'))
                     return $this->getFirstMediaUrl('cover_image');

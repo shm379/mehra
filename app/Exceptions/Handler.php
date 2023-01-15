@@ -80,10 +80,11 @@ class Handler extends ExceptionHandler
         }
 
         if (config('app.debug')) {
-            $response['data']['message'] = $exception->getMessage();
-            $response['data']['trace'] = $exception->getTrace();
-            $response['data']['code'] = $exception->getCode();
+                $response['data']['message'] = $exception->getMessage();
+                $response['data']['trace'] = $exception->getTrace();
+                $response['data']['code'] = $exception->getCode();
         }
+
 
         $response['success'] = false;
 
@@ -100,7 +101,7 @@ class Handler extends ExceptionHandler
             $exception = $this->unauthenticated($request, $exception);
         }
 
-        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+        if (!config('app.debug') && $exception instanceof \Illuminate\Validation\ValidationException) {
             $exception = $this->convertValidationExceptionToResponse($exception, $request);
         }
 

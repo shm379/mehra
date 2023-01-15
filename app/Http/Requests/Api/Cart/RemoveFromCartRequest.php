@@ -3,9 +3,11 @@
 namespace App\Http\Requests\Api\Cart;
 
 use App\Enums\OrderStatus;
+use App\Enums\ProductStructure;
 use App\Http\Requests\Api\ApiFormRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\CartService;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -21,17 +23,22 @@ class RemoveFromCartRequest extends ApiFormRequest
      */
     public function rules()
     {
+        $item = null;
         $quantity = 1;
         // check cart quantity item
-        $cart = auth()->user()->orders()->where('status',OrderStatus::CART);
-        if($cart->exists()){
-            $item = $cart->first()->items()->where('line_item_id',$this->request->get('id'));
-            if($item->exists())
-                $quantity = $item->first()->quantity;
+        $cart = (new CartService);
+        if($cart->getCart()->exists()){
+            $item = $cart->findCartItemByProductID($this->request->get('id'));
+            if($item)
+                $quantity = $item->quantity;
         }
 
         return [
-            'id'=>'required|exists:App\Models\OrderItem,line_item_id',
+            'id'=>[
+                'required',
+                Rule::exists('order_items','line_item_id')
+                    ->where('order_id',$cart->getCart()->id)
+            ],
             'quantity'=> [
                 'required',
                 'integer',

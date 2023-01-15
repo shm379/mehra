@@ -24,7 +24,7 @@ class ProductAttributeResource extends JsonResource
             'product_types'=> $this->whenLoaded('product_type',function (){
                 return $this->product_type->pluck('product_type');
             }),
-            'title'=> preg_replace( "/\r|\n/", "", $this->name ),
+            'title'=> $this->name,
             'slug'=> $this->slug,
             'type'=> AttributeType::fromValue((int)$this->type)->key,
             'url'=> route('admin.autocomplete.attributes.show',$this->id).'/',

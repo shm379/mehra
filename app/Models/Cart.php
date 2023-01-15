@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Tartan\Larapay\Payable;
 
 class Cart extends Order
 {
@@ -17,6 +16,4 @@ class Cart extends Order
             ->whereStatus(OrderStatus::CART)
             ->where('user_id',auth()->guard('sanctum')->id());
     }
-
-
 }

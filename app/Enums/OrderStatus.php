@@ -19,6 +19,14 @@ final class OrderStatus extends Enum implements LocalizedEnum
     const CANCELED = 2;
     const RETURNED = 3;
     const COMPLETED = 4;
+
+    public static function getPaidOrderStatuses()
+    {
+        return [
+            OrderStatus::PENDING,
+            OrderStatus::COMPLETED
+        ];
+    }
 }
 
 

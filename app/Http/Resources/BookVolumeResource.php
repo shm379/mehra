@@ -13,7 +13,7 @@ class BookVolumeResource extends MehraResource
     public function toArray($request)
     {
         return [
-            'title'=> preg_replace( "/\r|\n/", "", $this->volume->title ),
+            'title'=> $this->volume->title,
             'active'=> $this->is_active_volume,
         ];
     }

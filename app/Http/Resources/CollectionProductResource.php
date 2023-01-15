@@ -19,7 +19,7 @@ class CollectionProductResource extends MehraResource
             'id'=> $this->id,
             'slug'=> $this->slug,
             'type'=> $this->item_type,
-            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'title'=> $this->title,
             'main_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('main_image'))
                     return $this->getFirstMediaUrl('main_image');

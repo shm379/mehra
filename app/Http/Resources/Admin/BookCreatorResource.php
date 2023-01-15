@@ -17,7 +17,7 @@ class BookCreatorResource extends MehraAdminResource
     public function toArray($request)
     {
         return [
-            'name'=> preg_replace( "/\r|\n/", "", $this->name ),
+            'name'=> $this->name,
             'role'=> $this->pivot->creator_creator_type_id->name,
             'icon'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('avatar'))

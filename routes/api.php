@@ -38,8 +38,8 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
     Route::prefix('/checkout')
         ->controller('App\Http\Controllers\Api\Global\CheckoutController')
         ->group(function(){
-            Route::post('/', 'cartToCheckout')->name('checkout');
-            Route::post('/callback', 'checkoutCallback')->name('checkout.callback');
+            Route::post('/', 'cartToCheckout')->name('checkout.pay');
+            Route::post('/verify', 'verifyPayment')->name('checkout.verify');
         });
 
 

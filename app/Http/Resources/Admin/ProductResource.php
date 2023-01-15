@@ -21,7 +21,7 @@ class ProductResource extends JsonResource
             'cross_sell'=> $this->whenLoaded('cross_sell'),
             'parent'=> $this->whenLoaded('parent'),
             'slug'=> $this->slug,
-            'title'=> preg_replace( "/\r|\n/", "", $this->title ),
+            'title'=> $this->title,
             'sub_title'=> $this->sub_title,
             'structure'=> $this->structure,
             'type'=> $this->type,

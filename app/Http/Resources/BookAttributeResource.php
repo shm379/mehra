@@ -16,8 +16,8 @@ class BookAttributeResource extends BookResource
     public function toArray($request)
     {
         return [
-            'title'=> preg_replace( "/\r|\n/", "", $this->attribute->name ),
-            'value'=> preg_replace( "/\r|\n/", "", $this->value ),
+            'title'=> $this->attribute->name,
+            'value'=> $this->value,
             'icon'=> $this->attribute->icon,
         ];
     }

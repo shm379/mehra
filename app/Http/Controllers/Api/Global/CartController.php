@@ -38,7 +38,12 @@ class CartController extends Controller {
     {
         $products = $request->products;
         foreach ($products as $product) {
-            $this->cart->addToCart($product->structurer,$product->id,$product,$is_virtual);
+            $this->cart->addToCart(
+                strtolower(ProductStructure::getKey($product->structure)),
+                $product->id,
+                $product->sync_quantity,
+                $product->is_virtual
+            );
         }
         $cart = $this->cart->getCart();
         return new CartResource($cart);

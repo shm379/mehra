@@ -194,10 +194,16 @@ class Product extends Model implements HasMedia
         $max = $this->attributes['max_purchases_per_user'];
         $cartService = new CartService();
         $cart = $cartService->getCart();
-        if($cart && count($cart->items)){
+        if($this->attributes['max_purchases_per_user']==0 || $this->attributes['in_stock_count']<$max){
+            // if disable max change max to in stock count
+            // if in_stock_count is smaller than max_per_user
+            $max = $this->attributes['in_stock_count'];
+        }
+        if ($cart && count($cart->items)) {
             $item = $cartService->findCartItemByProductID($this->attributes['id']);
-            if($item){
-                if($max>0)
+            if ($item) {
+                // max is set in db
+                if ($max > 0)
                     $max -= $item->quantity;
             }
         }
@@ -207,6 +213,11 @@ class Product extends Model implements HasMedia
     public function getMainPriceAttribute()
     {
         return $this->attributes['sale_price'] ?: $this->attributes['price'];
+    }
+
+    public function getTitleAttribute()
+    {
+        return preg_replace( "/\r|\n/", "", $this->attributes['title'] );
     }
 
     public function getSatisfiedNoAttribute()

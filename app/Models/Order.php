@@ -5,12 +5,10 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use PhpMonsters\Larapay\Payable;
 
 class Order extends Model
 {
     use HasFactory;
-    use Payable;
     protected $guarded = [];
     protected $table = 'orders';
     /**
@@ -56,5 +54,10 @@ class Order extends Model
     public function notes()
     {
         return $this->hasMany(OrderNote::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

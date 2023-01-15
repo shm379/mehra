@@ -25,16 +25,24 @@ class AddToCartRequest extends ApiFormRequest
         $min_purchases_per_user = 1;
         $max_purchases_per_user = 1;
         $this->product = Product::query()->find($this->request->get('id'));
-        if($this->product) {
-            $min_purchases_per_user = $this->product->min_purchases_per_user ?? $min_purchases_per_user;
-            $max_purchases_per_user = $this->product->max_purchases_per_user ?? $max_purchases_per_user;
-        }
         return [
             'quantity'=> [
                 'required',
                 'integer',
+                //check min in checkout
                 'min:'.$min_purchases_per_user,
-                'max:'.$max_purchases_per_user,
+                function ($attribute, $value, $fail) {
+                    $product = $this->product;
+                    $quantity = $value;
+                    if($quantity==1 && $product->max_purchases_per_user <= 0)
+                        $fail('تعداد درخواستی شما برای خرید بیشتر از حد مجاز است!');
+                    elseif($quantity>1 && $product->max_purchases_per_user - ($quantity) < 0)
+                        $fail(
+                            'تعداد درخواستی شما برای خرید بیشتر از حد مجاز است!' .
+                            ($product->max_purchases_per_user!=0 ?
+                                ' - تعداد مجاز:' . $product->max_purchases_per_user : '')
+                        );
+                },
             ],
             'id'=>[
                 'required',
@@ -49,6 +57,7 @@ class AddToCartRequest extends ApiFormRequest
 
     protected function passedValidation()
     {
+
         $this->merge([
             'structure' => $this->product->structure,
             'is_virtual' => $this->product->is_virtual
