@@ -5,8 +5,10 @@ namespace App\Services\Media;
 
 use App\Models\ModelHasMedia;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\InteractsWithMedia as BasicHasMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection;
+use App\Models\Media;
 
 trait HasMediaTrait
 {
@@ -40,6 +42,19 @@ trait HasMediaTrait
             ->collectionName($collectionName);
     }
 
+    public function loadMedia(string $collectionName): Collection
+    {
+        $collection = $this->exists
+            ? $this->loadMissing('medias')->medias
+            : collect($this->unAttachedMediaLibraryItems)->pluck('medias');
+
+        $collection = new MediaCollection($collection);
+
+        return $collection
+            ->filter(fn (Media $mediaItem) => $mediaItem->pivot->collection_name === $collectionName)
+            ->sortBy('pivot_order')
+            ->values();
+    }
     /*
     * Determine if there is media in the given collection.
     */
@@ -51,7 +66,6 @@ trait HasMediaTrait
     public function getFirstMedias(string $collectionName = 'default', $filters = []): ?Media
     {
         $media = $this->getMedias($collectionName, $filters);
-
         return $media->first();
     }
 

@@ -46,7 +46,6 @@ class MediaRepository
         if (is_array($filter)) {
             $filter = $this->getDefaultFilterFunction($filter);
         }
-
         return $media->filter($filter);
     }
 
