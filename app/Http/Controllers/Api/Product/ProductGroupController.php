@@ -40,7 +40,7 @@ class ProductGroupController extends Controller {
     }
     public function show(ProductGroup $productGroup): ProductGroupResource
     {
-        dd($productGroup->load([
+        return $productGroup->load([
             'products'=>function($product){
                 $product->with([
                     'related',
@@ -64,7 +64,7 @@ class ProductGroupController extends Controller {
                     'medias'
                 ]);
             }
-        ]));
+        ]);
 //        return ProductGroup::make();
     }
 }

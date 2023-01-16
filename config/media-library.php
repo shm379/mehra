@@ -63,7 +63,7 @@ return [
      * Here you can specify which path generator should be used for the given class.
      */
     'custom_path_generators' => [
-//         \App\Models\Book::class => \App\Services\Media\ModelPathGenerator::class
+         \App\Models\TemporaryUpload::class => \App\Services\Media\TemporaryUploadPathGenerator::class
     ],
 
     /*

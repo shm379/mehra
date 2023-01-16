@@ -20,12 +20,11 @@ class CheckoutService extends CartService
         parent::__construct($guard);
     }
 
-    public function saveAddress($addressData)
+    public function attachAddress($addressId)
     {
         try {
-            return User::query()->find($this->user_id)->addresses()->create($addressData);
+            return $this->getCart()->address_id = $addressId;
         } catch (Exception $exception) {
-            dd($exception->getMessage());
             return null;
         }
     }
@@ -47,7 +46,7 @@ class CheckoutService extends CartService
 
     }
 
-    public function pay($userAddressId)
+    public function pay()
     {
         $cart = $this->getCart();
         if ($this->getCartTotal() !== 0 && !is_null($this->user_id)) {

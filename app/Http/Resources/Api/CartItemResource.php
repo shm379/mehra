@@ -26,13 +26,16 @@ class CartItemResource extends MehraResource
                 return $this->line_item->sub_title;
             }),
             'image'=> $this->whenLoaded('line_item',function (){
-                if(strtoupper($this->line_item_type)==ProductStructure::fromValue(ProductStructure::BOOK)->key && $this->line_item->hasMedia('back_image'))
-                    return optional($this->line_item->getMedia('back_image')->first())->original_url;
+                if(strtoupper($this->line_item_type)==ProductStructure::fromValue(ProductStructure::BOOK)->key && $this->line_item->hasMedia('cover_image'))
+                    return $this->line_item->getFirstMediaUrl('cover_image');
 
-                return optional($this->line_item->getMedia('main_image')->first())->original_url;
+                return $this->line_item->getFirstMediaUrl('main_image');
             }),
             'producer'=> $this->whenLoaded('line_item',function (){
                 return ProducerResource::make($this->line_item->producer);
+            }),
+            'structure'=> $this->whenLoaded('line_item',function (){
+                return ProductStructure::getDescription($this->line_item->structure);
             }),
             'price'=> $this->price,
             'price_formatted'=> Helpers::toman($this->price),

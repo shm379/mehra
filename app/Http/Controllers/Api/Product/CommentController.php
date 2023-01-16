@@ -34,7 +34,6 @@ class CommentController extends Controller {
             $this->saveRanks($comment,$request);
             $this->uploadMedia($comment,'gallery','media',false);
         } catch (\Exception $exception){
-            dd($exception->getMessage());
             return $this->errorResponse('خطا در انجام عملیات');
         }
         return $this->successResponse('عملیات با موفقیت انجام شد');

@@ -18,4 +18,5 @@ return [
     'book' => 'App\Models\Book',
     'shipping' => 'App\Models\Shipping',
     'user' => 'App\Models\User',
+    'temporary_upload' => 'App\Models\TemporaryUpload',
 ];

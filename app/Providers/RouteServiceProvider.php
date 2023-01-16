@@ -56,5 +56,15 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('OTP', function (Request $request) {
             return Limit::perMinute(10)->by($request->user()?->id ?: $request->ip());
         });
+        RateLimiter::for('admin-temporary-upload', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by($request->ip()),
+            ];
+        });
+        RateLimiter::for('api-temporary-upload', function (Request $request) {
+            return [
+                Limit::perMinute(20)->by($request->ip()),
+            ];
+        });
     }
 }

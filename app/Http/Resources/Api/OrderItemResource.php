@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
 use App\Enums\ProductStructure;
 use App\Helpers\Helpers;
+use App\Models\Book;
 
 
 class OrderItemResource extends MehraResource
@@ -26,8 +27,10 @@ class OrderItemResource extends MehraResource
                 return $this->line_item->sub_title;
             }),
             'image'=> $this->whenLoaded('line_item',function (){
-                return $this->line_item->load('mediaModel');
-                return optional($this->line_item->getMedia('main_image')->first())->original_url;
+                if($this->line_item_type==ProductStructure::fromValue(ProductStructure::BOOK)->key && $this->line_item->hasMedia('cover_image'))
+                    return $this->line_item->getFirstMediaUrl('cover_image');
+
+                return $this->line_item->getFirstMediaUrl('main_image');
             }),
             'price'=> $this->price,
             'currency'=> 'تومان',

@@ -17,12 +17,8 @@ class UserAddressResource extends MehraResource
         return [
             'id'=> $this->id,
             'address'=> $this->address,
-            'full_address'=> $this->full_address,
             'state_id'=> $this->state_id,
             'city_id'=> $this->city_id,
-//            'district'=> $this->district,
-//            'unit'=> $this->unit,
-//            'plaque'=> $this->plaque,
             'postal_code'=> $this->postal_code,
             'mobile'=> $this->mobile,
             'phone'=> $this->phone,

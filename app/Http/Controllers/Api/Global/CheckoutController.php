@@ -20,8 +20,7 @@ class CheckoutController extends Controller {
 
     public function cartToCheckout(PayRequest $request)
     {
-        $addressId = $this->checkout->saveAddress($request->validated());
-        return $this->checkout->pay($addressId);
+        return $this->checkout->pay();
     }
 
     public function verifyPayment(VerifyRequest $request)
