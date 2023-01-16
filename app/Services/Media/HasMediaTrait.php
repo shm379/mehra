@@ -52,7 +52,7 @@ trait HasMediaTrait
 
         return $collection
             ->filter(fn (Media $mediaItem) => $mediaItem->pivot->collection_name === $collectionName)
-            ->sortBy('pivot_order')
+            ->sortBy('pivot.order')
             ->values();
     }
     /*
