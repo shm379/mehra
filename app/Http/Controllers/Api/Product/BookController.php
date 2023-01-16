@@ -25,7 +25,6 @@ class BookController extends Controller {
 
     public function index(Request $request)
     {
-        Product::search('کتاب')->raw()['hits'];
         // global input search
         $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
             $query->where(function ($query) use ($value) {
