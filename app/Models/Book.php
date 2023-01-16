@@ -55,7 +55,7 @@ class Book extends Product
         return [
             'cover_image',
             'back_image',
-            'gallery_image',
+            'gallery',
             'excerpt',
         ];
     }
