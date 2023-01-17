@@ -15,11 +15,17 @@ class UserViews
         'api.v1.books.show'=>'book'
     ];
     private function viewed($model){
-        if($model->count()>0) {
-            $model->first()->views()->updateOrCreate([
-                'user_id' => auth()->id(),
-            ]);
-            $model->first()->views()->update(['count' => $model->first()->views()->first('count')->count + 1]);
+        if($model) {
+            $view = $model->views->where('user_id',auth()->id())->first();
+            if($view){
+                $count = $view->count+1;
+                $view->update(['count' => $count]);
+
+            } else {
+                $model->views()->create([
+                    'user_id' => auth()->id(),
+                ]);
+            }
         }
     }
     /**
@@ -34,8 +40,10 @@ class UserViews
         if(auth()->guard('sanctum')->check()){
            if ($request->routeIs(array_keys($this->routes))) {
                foreach ($this->routes as $parameter) {
-                   if($request->route()->hasParameter($parameter))
+                   if($request->route()->hasParameter($parameter)) {
                        $this->viewed($request->route()->parameter($parameter));
+                       return;
+                   }
                }
            }
         }

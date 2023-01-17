@@ -35,6 +35,7 @@ class CartResource extends MehraResource
             'address'=> $this->whenLoaded('address',function (){
                 return UserAddressResource::make($this->address);
             }),
+            'address_id'=> $this->address_id,
             'user'=> $this->whenLoaded('user',function (){
                 return UserResource::make($this->user);
             })

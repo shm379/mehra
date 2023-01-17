@@ -72,7 +72,6 @@ class BookController extends Controller {
     public function show(Book $book)
     {
         try {
-
         } catch (ModelNotFoundException $exception){
             return $this->errorResponse('محصول مورد نظر یافت نشد',404);
         }

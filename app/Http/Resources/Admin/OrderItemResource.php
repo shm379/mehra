@@ -42,10 +42,10 @@ class OrderItemResource extends JsonResource
             'total'=> Helpers::toman($this->total_price),
             'is_auction'=> $this->discount_applied,
             'image'=> $this->whenLoaded('line_item',function (){
-                if(strtoupper($this->line_item_type)==ProductStructure::fromValue(ProductStructure::BOOK)->key && $this->line_item->hasMedia('back_image'))
-                    return optional($this->line_item->getMedia('back_image')->first())->original_url;
-
-                return optional($this->line_item->getMedia('main_image')->first())->original_url;
+                if($this->line_item->hasMedia('back_image'))
+                    return $this->line_item->getFirstMediaUrl('back_image');
+                if($this->line_item->hasMedia('main_image'))
+                    return $this->line_item->getFirstMediaUrl('main_image');
             }),
         ];
     }

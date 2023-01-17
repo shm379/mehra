@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
         ->group(function(){
             Route::post('/discount', [App\Http\Controllers\Api\Global\DiscountController::class,'setDiscount'])->name('set-discount');
             Route::get('/', [App\Http\Controllers\Api\Global\CartController::class,'getCart'])->name('get-cart');
-            Route::post('/address', [App\Http\Controllers\Api\Global\CartController::class,'setAddress'])->name('select-address-cart');
+            Route::post('/address', [App\Http\Controllers\Api\Global\ShippingController::class,'setAddress'])->name('select-address-cart');
             Route::post('/sync', [App\Http\Controllers\Api\Global\CartController::class,'syncCart'])->name('sync-cart');
             Route::post('/add', [App\Http\Controllers\Api\Global\CartController::class,'addItem'])->name('add-item');
             Route::post('/remove', [App\Http\Controllers\Api\Global\CartController::class,'removeItem'])->name('remove-item');

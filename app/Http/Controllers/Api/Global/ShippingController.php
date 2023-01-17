@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Global;
 use App\Enums\ShippingType;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
+use App\Http\Requests\Api\Cart\SelectAddressRequest;
 use App\Http\Requests\Api\RemoveFromCartRequest;
 use App\Http\Requests\Api\Shipping\CalculateShippingRequest;
 use App\Http\Resources\Api\CartResource;
@@ -46,5 +47,23 @@ class ShippingController extends Controller {
     public function getCities(State $state)
     {
         return $this->successResponseWithData($state->cities()->get());
+    }
+
+
+    /*
+     * Set Address To Cart
+     */
+    public function setAddress(SelectAddressRequest $request)
+    {
+        $address_id = $request->validated('address_id');
+        try {
+            $this->shipping->selectAddress($address_id);
+            $this->shipping->setType($request->validated('type'));
+
+            return $this->successResponseWithData($this->shipping->calculateShipping());
+        }
+        catch (\Exception $exception){
+            return $this->errorResponse('خطا در عملیات');
+        }
     }
 }

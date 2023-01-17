@@ -87,18 +87,4 @@ class CartController extends Controller {
         }
     }
 
-    /*
-     * Set Address To Cart
-     * @response CartResource $cart
-     */
-    public function setAddress(SelectAddressRequest $request)
-    {
-        $address_id = $request->validated('address_id');
-        try {
-            return new CartResource($this->cart->selectAddress($address_id));
-        }
-        catch (\Exception $exception){
-            return $this->errorResponse('خطا در عملیات');
-        }
-    }
 }

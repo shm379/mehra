@@ -188,6 +188,7 @@ class CartService
             $cart->update([
                 'address_id' => $address_id
             ]);
+
         }
 
         return self::getCart();

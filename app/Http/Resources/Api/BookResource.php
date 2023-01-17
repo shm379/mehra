@@ -18,7 +18,25 @@ class BookResource extends MehraResource
      */
     public function toArray($request)
     {
-        return [
+        $routeUrl = explode('.', request()->route()->getName());
+        $book = [];
+        if (end($routeUrl) == 'show') {
+            $book = [
+                'comments' => $this->whenLoaded('comments', function () {
+                    return new CommentResourceCollection($this->comments);
+                }),
+                'galleries' => $this->whenLoaded('comments', function () {
+                    $media = $this->comments->pluck('medias');
+                    return new CommentGalleryResourceCollection($media->flatten());
+                }),
+                "satisfied_no" => $this->satisfied_no,
+                "rate" => $this->whenLoaded('rank_attributes', function () {
+                    return new CommentRankResourceCollection($this->rank_attributes);
+                })
+            ];
+        }
+
+        return array_merge([
             'id'=> $this->id,
             'slug'=> $this->slug,
             'title'=> $this->title,
@@ -43,14 +61,13 @@ class BookResource extends MehraResource
             'currency'=> 'تومان',
             'max_number'=> $this->max_purchases_per_user,
             'creators'=> $this->whenLoaded('creators',function (){
-                $this->creators->load('medias');
                 return BookCreatorResource::collection($this->creators);
             }),
             'is_liked'=> $this->is_liked,
             'related'=> $this->whenLoaded('productRelated',function (){
                 return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
             }),
-            'cover_image'=> $this->whenLoaded('medias',function (){
+            'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('cover_image'))
                     return $this->getFirstMediaUrl('cover_image');
             }),
@@ -62,6 +79,6 @@ class BookResource extends MehraResource
                 if($this->hasMedia('gallery'))
                     return BookGalleryResource::collection($this->getMedias('gallery'));
             }),
-        ];
+        ],$book);
     }
 }

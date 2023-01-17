@@ -18,8 +18,14 @@ class CommentResource extends MehraResource
     {
         return [
             "id"=> $this->id,
-            "name"=> $this->is_anonymous ? 'ناشناس' : $this->user->name,
-            "avatar"=> $this->is_anonymous || !$this->user->hasMedia('avatar') || !file_exists($this->getFirstMediaPath('avatar')) ? $this->getDefaultAvatar() : $this->user->getFirstMediaUrl('avatar'),
+            "name"=> $this->whenLoaded('user',function () {
+                return $this->is_anonymous ? 'ناشناس' : $this->user->name;
+            }),
+            "avatar"=> $this->whenLoaded('user',function (){
+               return $this->is_anonymous || !$this->user->hasMedia('avatar') || !file_exists($this->getFirstMediaPath('avatar')) ?
+                     $this->getDefaultAvatar() : $this->user->getFirstMediaUrl('avatar');
+            }),
+
             "rate"=> $this->whenLoaded('rank_attributes',function (){
                 return new CommentRankResourceCollection($this->rank_attributes);
             }),

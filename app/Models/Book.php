@@ -27,6 +27,10 @@ class Book extends Product
     {
         return $this
             ->with([
+              'rank_attributes',
+             'comments'=>function($comment){
+                $comment->with(['medias','user'])->limit(3);
+             },
             'medias',
             'volumes',
             'producer',
@@ -43,11 +47,6 @@ class Book extends Product
     public function getRouteKeyName(): string
     {
         return 'id';
-    }
-
-    public function newQuery($excludeDeleted = true): \Illuminate\Database\Eloquent\Builder
-    {
-        return parent::newQuery()->whereStructure(ProductStructure::BOOK);
     }
 
     public static function getValidCollections(): array
@@ -95,6 +94,14 @@ class Book extends Product
 //        }
 //
 //        $conversion->nonQueued()->performOnCollections('main_image');
+    }
+
+
+    public function rank_attributes()
+    {
+        return $this->belongsToMany(RankAttribute::class, 'ranks','product_id')
+            ->using(Rank::class)
+            ->withPivot(['comment_id','user_id','rank_attribute_id','product_id','score']);
     }
 
     public function parent()
