@@ -11,6 +11,8 @@ class Announcement extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
 
+    protected $with = ['medias'];
+
     public static function getValidCollections(): array
     {
         return [

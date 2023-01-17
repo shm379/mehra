@@ -29,7 +29,10 @@ class UserAddressController extends Controller
      */
     public function index()
     {
-        $addresses = auth()->user()->addresses()->with(['state','city','user'])->paginate($this->perPage);
+        $addresses = auth()->user()->addresses()
+            ->withAggregate('state','title')
+            ->withAggregate('city','title')
+            ->with(['user'])->paginate($this->perPage);
         return new UserAddressResourceCollection($addresses);
     }
 
@@ -57,7 +60,10 @@ class UserAddressController extends Controller
     public function show($userAddressId)
     {
         try {
-            $userAddress = UserAddress::query()->where('user_id',auth()->id())->findOrFail($userAddressId);
+            $userAddress = UserAddress::query()
+                ->withAggregate('state','title')
+                ->withAggregate('city','title')
+                ->where('user_id',auth()->id())->findOrFail($userAddressId);
             return UserAddressResource::make($userAddress);
         } catch (ModelNotFoundException $exception){
             return $this->errorResponse('آدرس یافت نشد!');

@@ -21,7 +21,7 @@ class BannersResource extends HomeResource
             'title'=> $this->title,
             'url'=> $this->url,
             '_blank'=> (bool)$this->_blank,
-            'image'=> $this->whenLoaded('image',function (){
+            'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image'))
                     return $this->getFirstMediaUrl('image');
             }),
