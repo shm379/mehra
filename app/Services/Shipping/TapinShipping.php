@@ -35,7 +35,7 @@ class TapinShipping extends ShippingService
             throw new \Exception('سبد خرید شما خالی می باشد');
         }
         // check if cart address not set
-        if($cart->exists() && $cart->whereNotNull('address_id')->exists()){
+        if($cart->exists() && $cart->whereNull('address_id')->exists()){
             throw new \Exception('شما آدرس را انتخاب نکرده اید');
         }
 
