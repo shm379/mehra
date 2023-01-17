@@ -27,14 +27,10 @@ trait HasMediaTrait
     {
         return $this->morphMany(ModelHasMedia::class, 'model')->has('media');
     }
-
-
     public function getMediaRepository(): MediaRepository
     {
         return app(MediaRepository::class);
     }
-
-
     public function getMedias(string $collectionName = 'default', array|callable $filters = [])
     {
         return $this->getMediaRepository()

@@ -74,16 +74,19 @@ class Order extends Model
 
     public function getProfitAttribute()
     {
-        if(isset($this->attributes['total_price_without_shipping']) || isset($this->attributes['total_price_without_sale_price'])) {
-            $total = $this->attributes['total_price_without_shipping'] ?? $this->attributes['total_price_without_sale_price'];
+        if(isset($this->attributes['total_price_without_shipping'])) {
+            $total = $this->attributes['total_price_without_shipping'];
+        } elseif(isset($this->attributes['total_price_without_sale_price'])) {
+            $total = $this->attributes['total_price_without_sale_price'];
         } else {
-            $total = isset($this->attributes['total_price']) ?? $this->attributes['total_price'];
+            $total = $this->attributes['total_price'] ?? null;
         }
-        if(isset($this->attributes['total_price']))
+        if(!is_null($total) && isset($this->attributes['total_price']))
             return $total - $this->attributes['total_price'];
 
         return $total - 0;
     }
+
     public function getShippingPriceAttribute()
     {
         return 0;

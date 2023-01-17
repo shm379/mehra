@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests\Api\Product;
 
+use App\Http\Requests\Api\ApiFormRequest;
 use App\Rules\FileExtensionRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TemporaryUploadRequest extends FormRequest
+class TemporaryUploadRequest extends ApiFormRequest
 {
     public function rules(): array
     {
