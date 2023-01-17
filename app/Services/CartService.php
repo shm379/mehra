@@ -150,8 +150,9 @@ class CartService
         $cartItem = $cart->items()->firstOrCreate([
             'line_item_id'=>$id,
             'line_item_type'=> $type,
-            'is_virtual'=> $is_virtual,
         ],self::getCartItem($type,$id,$quantity));
+
+
 
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
