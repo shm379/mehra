@@ -47,6 +47,16 @@ class Order extends Model
         return $this->belongsTo(Discount::class);
     }
 
+    public function scopeWithItems($query)
+    {
+        return $query->with([
+            'items'=>function ($item) {
+                $item->with(['line_item' => function ($line_item) {
+                    $line_item->with(['producer', 'medias']);
+                }]);
+            }
+        ]);
+    }
     public function items()
     {
         return $this->hasMany(OrderItem::class);
@@ -67,9 +77,12 @@ class Order extends Model
         if(isset($this->attributes['total_price_without_shipping']) || isset($this->attributes['total_price_without_sale_price'])) {
             $total = $this->attributes['total_price_without_shipping'] ?? $this->attributes['total_price_without_sale_price'];
         } else {
-            $total = $this->attributes['total_price'];
+            $total = isset($this->attributes['total_price']) ?? $this->attributes['total_price'];
         }
-        return $total - $this->attributes['total_price'];
+        if(isset($this->attributes['total_price']))
+            return $total - $this->attributes['total_price'];
+
+        return $total - 0;
     }
     public function getShippingPriceAttribute()
     {

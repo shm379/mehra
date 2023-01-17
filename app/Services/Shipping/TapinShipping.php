@@ -4,6 +4,7 @@ namespace App\Services\Shipping;
 use App\Enums\ShippingType;
 use App\Exceptions\MehraApiException;
 use App\Helpers\Helpers;
+use App\Models\Shipping;
 use App\Services\ShippingService;
 
 /**
@@ -65,11 +66,16 @@ class TapinShipping extends ShippingService
         $request = $this->sendRequest();
         if($request) {
             if($request['send_price']){
-                $cart->items()->updateOrCreate([
-
-                ]);
+                $shipping = Shipping::query()->where('type',ShippingType::TAPIN)->first();
+                $price = $request['total_price'];
+//                if($shipping) {
+//                    $this->addShipping(
+//                        $shipping->id,
+//                        $price,
+//                    );
+//                }
+                return $request;
             }
-            return $request;
         }
         else
             return 0;

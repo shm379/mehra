@@ -141,17 +141,17 @@ class CartService
         return $cart;
     }
 
-    public function addToCart($product_structure='book',$product_id,$quantity=1,$is_virtual=0)
+    public function addToCart($type='book',$id,$quantity=1,$is_virtual=0)
     {
         $cart = self::getCart();
         if(!$cart){
             $cart = self::createCart();
         }
         $cartItem = $cart->items()->firstOrCreate([
-            'line_item_id'=>$product_id,
-            'line_item_type'=> $product_structure,
+            'line_item_id'=>$id,
+            'line_item_type'=> $type,
             'is_virtual'=> $is_virtual,
-        ],self::getCartItem($product_structure,$product_id,$quantity));
+        ],self::getCartItem($type,$id,$quantity));
 
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
@@ -202,5 +202,28 @@ class CartService
     public function getSumQuantities()
     {
         return (int)self::getCart()->items()->sum('quantity');
+    }
+
+    public function addShipping($shipping_id,$price)
+    {
+        $cart = self::getCart();
+        if(!$cart){
+            $cart = self::createCart();
+        }
+        $cartItem = $cart->items()->firstOrCreate([
+            'line_item_id'=>$shipping_id,
+            'line_item_type'=> 'shipping',
+            'is_virtual'=> false,
+            'price'=> $price,
+            'total_price'=> $price,
+            'quantity' => 1,
+
+        ],self::getCartItem('shipping',$shipping_id,1));
+
+        if(!$cartItem->wasRecentlyCreated){
+            self::calculateItem($cartItem,1,'+');
+        }
+
+        return self::getCart();
     }
 }

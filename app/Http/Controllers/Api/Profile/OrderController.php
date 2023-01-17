@@ -17,7 +17,6 @@ class OrderController extends Controller
     public function __invoke()
     {
         $orders = auth()->user()->orders();
-
         $orders = $orders->with(['items'=>function($i) {
                 $i->with([
                         'line_item' => function ($line_item) {
@@ -26,6 +25,7 @@ class OrderController extends Controller
                     ]);
             }
         ]);
+
         if(\request()->has('status')){
             $orders = $orders->where('status',\request()->get('status'));
         }

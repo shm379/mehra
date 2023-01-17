@@ -6,6 +6,7 @@ use App\Enums\ShippingType;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
 use App\Http\Requests\Api\RemoveFromCartRequest;
+use App\Http\Requests\Api\Shipping\CalculateShippingRequest;
 use App\Http\Resources\Api\CartResource;
 use App\Models\Product;
 use App\Models\City;
@@ -21,14 +22,14 @@ class ShippingController extends Controller {
      * Shipping Service Inject
      */
     protected ShippingService $shipping;
-    public function __construct(ShippingService $shipping,$type=ShippingType::TAPIN)
+    public function __construct(ShippingService $shipping)
     {
         $this->shipping = $shipping;
-        $this->shipping->setType($type);
     }
 
-    public function calculate()
+    public function calculate(CalculateShippingRequest $request)
     {
+        $this->shipping->setType($request->validated('type'));
         return $this->successResponseWithData($this->shipping->calculateShipping());
     }
     /*
