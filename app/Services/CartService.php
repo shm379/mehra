@@ -152,8 +152,6 @@ class CartService
             'line_item_type'=> $type,
         ],self::getCartItem($type,$id,$quantity));
 
-
-
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
         }

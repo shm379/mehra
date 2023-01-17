@@ -45,7 +45,7 @@ class CartController extends Controller {
         $products = $request->products;
         foreach ($products as $product) {
             $this->cart->addToCart(
-                strtolower(ProductStructure::getKey($product->structure)),
+                strtolower(ProductStructure::fromValue((int)$product->structure)->key),
                 $product->id,
                 $product->sync_quantity,
                 $product->is_virtual
