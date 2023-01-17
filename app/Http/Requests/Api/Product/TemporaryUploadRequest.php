@@ -15,12 +15,12 @@ class TemporaryUploadRequest extends ApiFormRequest
         $allowedExtensions = $configuredAllowedExtensions ?? \App\Services\Media\DefaultAllowedExtensions::all();
 
         $allowedExtensionsString = implode(',', $allowedExtensions);
-
         return [
             'uuid' => "unique:{$this->getDatabaseConnection()}{$this->getMediaTableName()}",
             'name' => '',
             'custom_properties' => '',
             'file' => [
+                'required',
                 'max:' . config('media-library.max_file_size') / 1024,
                 "mimes:" . $allowedExtensionsString,
                 new FileExtensionRule($allowedExtensions),

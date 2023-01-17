@@ -24,7 +24,7 @@ class FileExtensionRule implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        return in_array(
+        return $value->getClientOriginalExtension() !== null && in_array(
             strtolower($value->getClientOriginalExtension()),
             $this->validExtensions,
             strict: true,
@@ -33,7 +33,7 @@ class FileExtensionRule implements Rule
 
     public function message(): string
     {
-        return trans('media-library::validation.mime', [
+        return trans('validation.media.mime', [
             'mimes' => implode(', ', $this->validExtensions),
         ]);
     }

@@ -53,6 +53,25 @@ trait HasMediaTrait
             ->values();
     }
     /*
+     * Get the url of the image for the given conversionName
+     * for first media for the given collectionName.
+     * If no profile is given, return the source's url.
+     */
+    public function getFirstMediaPath(string $collectionName = 'default', string $conversionName = ''): string
+    {
+        $media = $this->getFirstMedias($collectionName);
+
+        if (! $media) {
+            return $this->getFallbackMediaPath($collectionName, $conversionName) ?: '';
+        }
+
+        if ($conversionName !== '' && ! $media->hasGeneratedConversion($conversionName)) {
+            return $media->getPath();
+        }
+
+        return $media->getPath($conversionName);
+    }
+    /*
     * Determine if there is media in the given collection.
     */
     public function hasMedia(string $collectionName = 'default', array $filters = []): bool
