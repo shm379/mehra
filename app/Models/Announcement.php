@@ -14,12 +14,12 @@ class Announcement extends Model implements HasMedia
     public static function getValidCollections(): array
     {
         return [
-            'main_image',
+            'image',
         ];
     }
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')->singleFile();
+        $this->addMediaCollection('image')->singleFile();
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
