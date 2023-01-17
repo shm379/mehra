@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Checkout;
+namespace App\Http\Requests\Api\Shipping;
 
 use App\Http\Requests\Api\ApiFormRequest;
 use App\Models\Payment;

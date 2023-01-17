@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Global;
 
 use App\Http\Controllers\Api\Controller;
+use App\Http\Requests\Api\Checkout\PayRequest;
 use App\Http\Requests\Api\Checkout\VerifyRequest;
-use App\Http\Requests\Api\Checkout\CalculateShippingRequest;
 use App\Services\CheckoutService;
 
 class CheckoutController extends Controller {
@@ -18,7 +18,7 @@ class CheckoutController extends Controller {
         $this->checkout = $checkout;
     }
 
-    public function cartToCheckout(CalculateShippingRequest $request)
+    public function cartToCheckout(PayRequest $request)
     {
         return $this->checkout->pay();
     }
