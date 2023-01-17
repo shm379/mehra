@@ -10,7 +10,7 @@ use App\Services\CheckoutService;
 class CheckoutController extends Controller {
 
     /*
-     * Cart Service Inject
+     * Checkout Service Inject
      */
     protected CheckoutService $checkout;
     public function __construct(CheckoutService $checkout)

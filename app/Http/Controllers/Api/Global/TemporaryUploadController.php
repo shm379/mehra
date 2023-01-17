@@ -19,7 +19,7 @@ class TemporaryUploadController extends Controller {
         try {
             $temporaryUpload = $temporaryUploadModelClass::createForFile(
                 $request->file,
-                session()->getId(),
+                $request->bearerToken(),
                 $request->uuid,
                 $request->name ?? '',
             );
@@ -36,7 +36,7 @@ class TemporaryUploadController extends Controller {
 
         /** @var \Spatie\MediaLibrary\MediaCollections\Models\Media $media */
         $media = $temporaryUpload->getFirstMedias();
-        return response()->json($this->responseFields($media, $temporaryUpload));
+        return $this->successResponseWithData($this->responseFields($media, $temporaryUpload));
     }
 
     protected function responseFields(Media $media, TemporaryUpload $temporaryUpload): array
@@ -46,7 +46,7 @@ class TemporaryUploadController extends Controller {
             'name' => $media->name,
             'preview_url' => config('media-library.generate_thumbnails_for_temporary_uploads')
                 ? $temporaryUpload->getFirstMediaUrl('default', 'preview')
-                : '',
+                : $temporaryUpload->getFirstMediaUrl(),
             'size' => $media->size,
             'mime_type' => $media->mime_type,
             'extension' => $media->extension,

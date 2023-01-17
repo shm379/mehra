@@ -201,7 +201,9 @@ class User extends Authenticatable implements HasMedia
         if($user_id) {
             $order = $query->find($user_id)->orders()
                 ->where('status', OrderStatus::CART())
-                ->with(['items'=>function ($i){
+                ->with(['address','user'=>function ($u){
+                    $u->with(['addresses']);
+                },'items'=>function ($i){
                         $i->with(['line_item'=>function ($l){
                                 $l->with('medias');
                             }

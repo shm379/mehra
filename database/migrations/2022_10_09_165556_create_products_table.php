@@ -32,12 +32,16 @@ return new class extends Migration
             $table->enum('type',\App\Enums\ProductType::asArray());
             $table->unsignedBigInteger('order')->nullable();
             $table->unsignedBigInteger('order_volume')->nullable();
-            $table->integer('min_purchases_per_user')->default(1);
-            $table->integer('max_purchases_per_user')->default(1);
+            $table->unsignedInteger('min_purchases_per_user')->default(1);
+            $table->unsignedInteger('max_purchases_per_user')->default(1);
             $table->boolean('is_virtual')->default(0);
             $table->boolean('is_available');
             $table->unsignedInteger('in_stock_count')->default(1);
             $table->boolean('is_active');
+            $table->unsignedInteger('weight')->nullable();
+            $table->unsignedInteger('length')->nullable();
+            $table->unsignedInteger('width')->nullable();
+            $table->unsignedInteger('height')->nullable();
             $table->timestamps();
             $table->unique(['order_volume','volume_id']);
             $table->foreign('producer_id')

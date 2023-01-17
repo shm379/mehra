@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('temporary_uploads', function (Blueprint $table) {
             $table->id();
-            $table->string('session_id');
+            $table->string('token');
             $table->timestamps();
         });
     }

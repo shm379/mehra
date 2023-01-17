@@ -20,7 +20,7 @@ abstract class MediaItemRule implements Rule
     {
         $temporaryUploadModelClass = config('media-library.temporary_upload_model');
 
-        $temporaryUpload = $temporaryUploadModelClass::findByMediaUuidInCurrentSession($this->value['uuid']);
+        $temporaryUpload = $temporaryUploadModelClass::findByMediaUuidInCurrentToken($this->value['uuid']);
 
         if (! $temporaryUpload) {
             return null;

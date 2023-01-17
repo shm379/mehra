@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class CouldNotAddUpload extends Exception
+class CouldNotAddUpload extends MehraApiException
 {
     public static function uuidAlreadyExists()
     {

@@ -9,17 +9,17 @@ class TemporaryUploadPathGenerator implements PathGenerator
 {
     public function getPath(Media $media): string
     {
-        return $this->getBasePath($media). '/' . md5($media->id . $media->uuid . 'original') . '/';
+        return $this->getBasePath($media).'/';
     }
 
     public function getPathForConversions(Media $media): string
     {
-        return $this->getBasePath($media). '/' . md5($media->id . $media->uuid . 'conversion');
+        return $this->getBasePath($media).'/conversions/';
     }
 
     public function getPathForResponsiveImages(Media $media): string
     {
-        return $this->getBasePath($media). '/' . md5($media->id . $media->uuid . 'responsive');
+        return $this->getBasePath($media).'/responsive-images/';
     }
 
     /*
@@ -34,9 +34,9 @@ class TemporaryUploadPathGenerator implements PathGenerator
         $key = md5($media->uuid . $media->getKey());
 
         if ($prefix !== '') {
-            return $date->getYear() . '/' . $date->getMonth() . '/temp_dir/' . $prefix . '/' . $key;
+            return $date->getYear() . '/' . $date->getMonth() . '/temp/' . $prefix . '/' . $key;
         }
 
-        return $date->getYear() . '/' . $date->getMonth() . '/temp_dir/' .$key;
+        return $date->getYear() . '/' . $date->getMonth() . '/temp/' .$key;
     }
 }

@@ -86,7 +86,8 @@ class AttributeSeeder extends Seeder
                     'رقعی',
                 ]
             ],
-            'Weight' => [
+            // transfer to products table
+            /*'Weight' => [
                 'name'=>'وزن',
                 'slug'=> Str::slug('weight'),
                 'type'=> AttributeType::WEIGHT,
@@ -94,7 +95,7 @@ class AttributeSeeder extends Seeder
                     '1300',
                     '30',
                 ]
-            ],
+            ],*/
             'Printing Time' => [
                 'name'=>'نوبت چاپ',
                 'slug'=> Str::slug('printing time'),
@@ -104,7 +105,8 @@ class AttributeSeeder extends Seeder
                     '20',
                 ]
             ],
-            'Dimensions' => [
+            // transfer to products table
+            /*'Dimensions' => [
                 'name'=>'ابعاد',
                 'slug'=> Str::slug('dimensions'),
                 'type'=> AttributeType::DIMENSIONS,
@@ -137,7 +139,7 @@ class AttributeSeeder extends Seeder
                         ]
                     ],
                 ],
-            ],
+            ],*/
 //            'Book excerpt' => [
 //                'name'=>'گزیده متن کتاب',
 //                'slug'=> Str::slug('book excerpt'),

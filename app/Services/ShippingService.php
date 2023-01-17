@@ -3,22 +3,29 @@
 namespace App\Services;
 
 use App\Enums\OrderStatus;
+use App\Enums\ShippingType;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\UserAddress;
+use App\Services\Shipping\TapinShipping;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 
 class ShippingService extends CheckoutService
 {
     /**
-     * Free shipping if order total is grater than free fee
+     * Check Price Url For Tapin Or Another
      *
-     * @var string
+     * @var string|int
      */
-    public string $free_fee = '';
-
+    public string $url = '';
+    /**
+     * Form Data Send To Tapin Or Another
+     *
+     * @var string|int
+     */
+    public array $form_data = [];
     /**
      * Cart total
      *
@@ -33,69 +40,57 @@ class ShippingService extends CheckoutService
      */
     public string|int $cart_weight = 0;
 
-    public function isAvailable( $package ): bool {
+    private int $type = 2;
+    private bool $is_cod = false;
+    private bool $is_pishtaz = false;
 
-        $available = $this->is_enabled() && $this->is_available;
-
-        if ( empty( $package ) ) {
-            $available = false;
-        }
-
-        if ( $package['destination']['country'] != 'IR' ) {
-            $available = false;
-        }
-
-        if ( is_null( PWS()->get_state( $package['destination']['state'] ) ) ) {
-            $available = false;
-        }
-
-        if ( is_null( PWS()->get_city( $package['destination']['city'] ) ) ) {
-            $available = false;
-        }
-
-        if ( $this->minimum_fee > $this->cart_total ) {
-            $available = false;
-        }
-
-        $available = apply_filters( 'woocommerce_shipping_pws_methods_is_available', $available, $package, $this );
-
-        return apply_filters( 'woocommerce_shipping_' . $this->id . '_is_available', $available, $package, $this );
+    /**
+     * @return bool
+     */
+    public function getIsCod(): bool
+    {
+        return $this->is_cod;
     }
 
-    public function freeShipping( $package = [] ): bool {
+    /**
+     * @param bool $is_cod
+     */
+    public function setIsCod(bool $is_cod): void
+    {
+        $this->is_cod = $is_cod;
+    }
 
-        $has_free_shipping = $this->free_fee !== '' && $this->free_fee <= $this->cart_total;
-        $has_free_shipping = apply_filters( 'pws_has_free_shipping', $has_free_shipping, $package, $this );
+    /**
+     * @return int
+     */
+    public function getType(): int
+    {
+        return $this->type;
+    }
 
-        if ( $has_free_shipping ) {
+    /**
+     * @param int $type
+     */
+    public function setType(int $type): void
+    {
+        $this->type = $type;
+    }
 
-            $this->add_rate_cost( 0, $package );
+    public function isAvailable(): bool {
 
-            return true;
-        }
+        return true;
+
+    }
+
+    public function freeShipping(): bool {
 
         return false;
     }
 
-    public function addRateCost( $cost, $package ) {
-
-        $rate = apply_filters( 'pws_add_rate', [
-            'id'    => $this->get_rate_id(),
-            'label' => $this->title,
-            'cost'  => $cost,
-        ], $package, $this );
-
-        $this->add_rate( $rate );
+    public function calculateShipping()
+    {
+        if($this->getType()==ShippingType::TAPIN)
+            return (new TapinShipping())->calculateShipping();
     }
-
-    public function getDestination( array $package ) {
-
-        if ( ! isset( $package['destination']['district'] ) || empty( $package['destination']['district'] ) ) {
-            return $package['destination']['city'];
-        }
-
-        return intval( $package['destination']['district'] );
-    }
-
 
 }

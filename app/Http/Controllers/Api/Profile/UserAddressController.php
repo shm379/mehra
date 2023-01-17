@@ -29,7 +29,7 @@ class UserAddressController extends Controller
      */
     public function index()
     {
-        $addresses = auth()->user()->addresses()->paginate($this->perPage);
+        $addresses = auth()->user()->addresses()->with(['state','city','user'])->paginate($this->perPage);
         return new UserAddressResourceCollection($addresses);
     }
 

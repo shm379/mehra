@@ -19,7 +19,7 @@ class CommentResource extends MehraResource
         return [
             "id"=> $this->id,
             "name"=> $this->is_anonymous ? 'ناشناس' : $this->user->name,
-            "avatar"=> $this->is_anonymous || !$this->user->hasMedia('avatar') ? $this->getDefaultAvatar() : $this->user->getMedia('avatar')->first()->getUrl('thumbnail'),
+            "avatar"=> $this->is_anonymous || !$this->user->hasMedia('avatar') ? $this->getDefaultAvatar() : $this->user->getFirstMediaUrl('avatar'),
             "rate"=> $this->whenLoaded('rank_attributes',function (){
                 return new CommentRankResourceCollection($this->rank_attributes);
             }),
@@ -35,6 +35,9 @@ class CommentResource extends MehraResource
             }),
             "disadvantages"=> $this->whenLoaded('points',function (){
                 return CommentPointResource::collection($this->points->where('status',CommentPointStatus::NEGATIVE));
+            }),
+            'media'=> $this->whenLoaded('medias',function (){
+                return new CommentGalleryResourceCollection($this->medias);
             }),
         ];
     }

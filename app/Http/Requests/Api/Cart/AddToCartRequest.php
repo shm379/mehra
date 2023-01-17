@@ -57,11 +57,9 @@ class AddToCartRequest extends ApiFormRequest
 
     protected function passedValidation()
     {
-
-        
         $this->merge([
-            'structure' => $this->product->structure,
-            'is_virtual' => $this->product->is_virtual
+            'structure' => (int)$this->product->structure,
+            'is_virtual' => (bool)$this->product->is_virtual
         ]);
     }
 

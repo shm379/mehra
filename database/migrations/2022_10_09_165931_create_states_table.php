@@ -13,16 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cities', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->unique();
-            $table->unsignedBigInteger('state_id');
+        Schema::create('states', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
             $table->boolean('is_available')->default(1);
-
-            $table->foreign('state_id')
-                ->references('id')
-                ->on('states')
-                ->onDelete('cascade');
         });
     }
 
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipping_cities');
+        Schema::dropIfExists('states');
     }
 };

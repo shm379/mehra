@@ -31,6 +31,11 @@ return new class extends Migration
         'product_groups',
         'messages',
         'settings',
+        'shippings',
+        'shipping_product',
+        'shipping_product_type',
+        'shipping_city',
+        'orders',
     ];
     /**
      * Run the migrations.

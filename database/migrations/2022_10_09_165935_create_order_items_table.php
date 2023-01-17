@@ -18,11 +18,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->boolean('is_virtual');
+            $table->boolean('is_cod')->default(0);
             $table->boolean('discount_applied')->default(0);
             $table->unsignedFloat('price_without_discount',10,0)->nullable();
+            $table->unsignedFloat('price_without_sale_price',10,0)->nullable();
             $table->unsignedFloat('price',10,0);
             $table->unsignedInteger('quantity');
             $table->unsignedDouble('total_price_without_discount',10,0)->nullable();
+            $table->unsignedDouble('total_price_without_sale_price',10,0)->nullable();
             $table->unsignedDouble('total_price',10,0);
             $table->morphs('line_item');
             $table->unique(['order_id','line_item_id','line_item_type']);
@@ -41,6 +44,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_products');
+        Schema::dropIfExists('order_items');
     }
 };

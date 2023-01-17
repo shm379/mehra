@@ -37,7 +37,7 @@ class BookResource extends MehraResource
             'description'=> $this->description,
             'main_price'=> $this->price,
             'price'=> $this->sale_price ?: $this->price,
-            'sale_percent'=> $this->sale_price==0 && !isset($this->sale_price) ? 0 : (1 - ($this->price / $this->sale_price)) * 100,
+            'sale_percent'=> $this->sale_percent,
             'main_price_formatted'=> Helpers::toman($this->price),
             'price_formatted'=> $this->sale_price ? Helpers::toman($this->sale_price) : Helpers::toman($this->price),
             'currency'=> 'تومان',

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware(['auth.mehra'])->group(function (){
 Route::middleware(['auth:sanctum','verifiedMobile'])->group(function (){
+    Route::post("/me/upload", \App\Http\Controllers\Api\Global\TemporaryUploadController::class)
+        ->middleware(['throttle:api-temporary-upload']);
     Route::get('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'getMe'])->name('get-me');
     Route::post('/me', [\App\Http\Controllers\Api\Auth\AuthController::class,'updateMe'])->name('update-me');
 });
@@ -29,6 +31,7 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
         ->group(function(){
             Route::post('/discount', [App\Http\Controllers\Api\Global\DiscountController::class,'setDiscount'])->name('set-discount');
             Route::get('/', [App\Http\Controllers\Api\Global\CartController::class,'getCart'])->name('get-cart');
+            Route::post('/address', [App\Http\Controllers\Api\Global\CartController::class,'setAddress'])->name('select-address-cart');
             Route::post('/sync', [App\Http\Controllers\Api\Global\CartController::class,'syncCart'])->name('sync-cart');
             Route::post('/add', [App\Http\Controllers\Api\Global\CartController::class,'addItem'])->name('add-item');
             Route::post('/remove', [App\Http\Controllers\Api\Global\CartController::class,'removeItem'])->name('remove-item');
@@ -41,14 +44,11 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
             Route::post('/', 'cartToCheckout')->name('checkout.pay');
             Route::post('/verify', 'verifyPayment')->name('checkout.verify');
         });
-
-
-    //shipping - tapin
-    Route::prefix('/states')
+    //shipping
+    Route::prefix('/shipping')
         ->controller('App\Http\Controllers\Api\Global\ShippingController')
         ->group(function(){
-            Route::post('/', 'getStates')->name('get-states');
-            Route::post('/{state}', 'getCities')->name('get-cities');
+            Route::post('/price', 'calculate')->name('shipping.calculate');
         });
 
     //profile
@@ -83,8 +83,8 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
     // send comment
     Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('store');
     Route::post("product/{product}/comments/upload", \App\Http\Controllers\Api\Global\TemporaryUploadController::class)
-        ->name('media-library-uploads')
         ->middleware(['throttle:api-temporary-upload']);
+
 
 });
 
@@ -118,3 +118,9 @@ Route::apiResource('producers', \App\Http\Controllers\Api\Product\ProducerContro
 Route::apiResource('product-groups', \App\Http\Controllers\Api\Product\ProductGroupController::class)->only('index', 'show');
 Route::apiResource('home', \App\Http\Controllers\Api\Global\HomeController::class)->only('index');
 Route::get('search', [\App\Http\Controllers\Api\Global\SearchController::class, 'index'])->name('search.index');
+Route::prefix('/states')
+    ->controller('App\Http\Controllers\Api\Global\ShippingController')
+    ->group(function(){
+        Route::post('/', 'getStates')->name('get-states');
+        Route::post('/{state}', 'getCities')->name('get-cities');
+    });

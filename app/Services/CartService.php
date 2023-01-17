@@ -33,8 +33,23 @@ class CartService
             return $cart;
 
         return null;
+    }
 
+    public function cartExists()
+    {
+        $cart = $this->getCart();
+        if($cart && $cart->exists())
+            return true;
 
+        return false;
+    }
+    public function getCartItems()
+    {
+        $cart = $this->getCart();
+        if($cart && $cart->exists())
+            return $cart->items;
+
+        return [];
     }
 
     private function createCart()
@@ -163,6 +178,17 @@ class CartService
                     $cart->delete();
                 }
             }
+        }
+
+        return self::getCart();
+    }
+    public function selectAddress($address_id)
+    {
+        $cart = self::getCart();
+        if($cart){
+            $cart->update([
+                'address_id' => $address_id
+            ]);
         }
 
         return self::getCart();

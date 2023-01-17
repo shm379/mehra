@@ -33,6 +33,7 @@ return new class extends Migration
             $table->boolean('is_active');
             $table->boolean('first_buy')->default(0);
             $table->boolean('limit_users')->default(0);
+            $table->boolean('shipping_to_free')->default(0);
             $table->timestamp('expire_at');
             $table->timestamps();
         });

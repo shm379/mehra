@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Exceptions\CouldNotAddUpload;
-use App\Exceptions\TemporaryUploadDoesNotBelongToCurrentSession;
+use App\Exceptions\TemporaryUploadDoesNotBelongToCurrentToken;
 
 class TemporaryUpload extends Model implements HasMedia
 {
@@ -99,14 +99,13 @@ class TemporaryUpload extends Model implements HasMedia
         return $temporaryUpload;
     }
 
-    public static function findByMediaUuidInCurrentSession(?string $mediaUuid): ?TemporaryUpload
+    public static function findByMediaUuidInCurrentToken(?string $mediaUuid): ?TemporaryUpload
     {
         if (! $temporaryUpload = static::findByMediaUuid($mediaUuid)) {
             return null;
         }
-
         if (config('media-library.enable_temporary_uploads_session_affinity', true)) {
-            if ($temporaryUpload->session_id !== session()->getId()) {
+            if ($temporaryUpload->token !== request()->bearerToken()) {
                 return null;
             }
         }
@@ -116,13 +115,13 @@ class TemporaryUpload extends Model implements HasMedia
 
     public static function createForFile(
         UploadedFile $file,
-        string $sessionId,
+        string $token,
         string $uuid,
         string $name
     ): self {
         /** @var \App\Models\TemporaryUpload $temporaryUpload */
         $temporaryUpload = static::create([
-            'session_id' => $sessionId,
+            'token' => $token,
         ]);
 
         if (static::findByMediaUuid($uuid)) {
@@ -147,39 +146,46 @@ class TemporaryUpload extends Model implements HasMedia
 
     public static function createForRemoteFile(
         string $file,
-        string $sessionId,
+        string $token,
         string $uuid,
         string $name,
         string $diskName
     ): self {
         /** @var \Spatie\MediaLibraryPro\Models\TemporaryUpload $temporaryUpload */
         $temporaryUpload = static::create([
-            'session_id' => $sessionId,
+            'token' => $token,
         ]);
 
         if (static::findByMediaUuid($uuid)) {
             throw CouldNotAddUpload::uuidAlreadyExists();
         }
 
-        $temporaryUpload
+        $media = $temporaryUpload
             ->addMediaFromDisk($file, $diskName)
             ->setName($name)
             ->usingFileName($name)
             ->withProperties(['uuid' => $uuid])
             ->toMediaCollection('default', static::getDiskName());
 
+        ModelHasMedia::query()->create([
+            'media_id'=> $media->id,
+            'model_id'=> $media->model_id,
+            'model_type'=> $media->model_type,
+            'collection_name'=> 'default',
+            'order'=>1
+        ]);
         return $temporaryUpload->fresh();
     }
 
-    public function moveMedia(HasMedia $toModel, string $collectionName, string $diskName, string $fileName): Media
+    public function moveMedia(HasMedia $toModel, string $collectionName, string $diskName='', string $fileName=''): Media
     {
-//        if (config('media-library.enable_temporary_uploads_session_affinity', true)) {
-//            if ($this->session_id !== session()->getId()) {
-//                throw TemporaryUploadDoesNotBelongToCurrentSession::create();
-//            }
-//        }
+        if (config('media-library.enable_temporary_uploads_session_affinity', true)) {
+            if ($this->token !== request()->bearerToken()) {
+                throw TemporaryUploadDoesNotBelongToCurrentToken::create();
+            }
+        }
 
-        $media = $this->getFirstMedia();
+        $media = $this->getFirstMedias();
 
         $temporaryUploadModel = $media->model;
         $uuid = $media->uuid;
@@ -187,6 +193,14 @@ class TemporaryUpload extends Model implements HasMedia
         $newMedia = $media->move($toModel, $collectionName, $diskName, $fileName);
 
         $temporaryUploadModel->delete();
+
+        ModelHasMedia::query()->create([
+            'media_id'=> $newMedia->id,
+            'model_id'=> $newMedia->model_id,
+            'model_type'=> $newMedia->model_type,
+            'collection_name'=> $collectionName,
+            'order'=>1
+        ]);
 
         $newMedia->update(compact('uuid'));
 

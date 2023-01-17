@@ -11,6 +11,7 @@ class UserAddress extends Model
 {
     protected $table = 'user_addresses';
     protected $guarded = ['user_id'];
+    protected $with = ['user','state','city'];
     protected $appends = ['full_address'];
     use SoftDeletes;
 
@@ -34,6 +35,22 @@ class UserAddress extends Model
         return $this->belongsTo(City::class);
     }
 
+    public function getFirstNameAttribute()
+    {
+        return $this->for_me ? $this->user->first_name : $this->attributes['first_name'];
+    }
+    public function getLastNameAttribute()
+    {
+        return $this->for_me ? $this->user->last_name : $this->attributes['last_name'];
+    }
+    public function getPhoneNumberAttribute()
+    {
+        return $this->for_me ? $this->user->phone_number : $this->attributes['phone_number'];
+    }
+    public function getMobileAttribute()
+    {
+        return $this->for_me ? $this->user->mobile : $this->attributes['mobile'];
+    }
     public function getFullAddressAttribute()
     {
         $separator = '-';
@@ -44,7 +61,7 @@ class UserAddress extends Model
 //        if($hasDistrict)
 //            $address['district'] = 'ناحیه ' . $this->attributes['district'];
 //
-        $address['address'] = ' ' . $this->attributes['address'];
+        $address['address'] = $this->attributes['address'];
 //        $address['unit'] = 'واحد ' . $this->attributes['unit'];
 //        $address['plaque'] = 'پلاک ' . $this->attributes['plaque'];
 

@@ -18,28 +18,23 @@ class CommentController extends Controller {
 
     public function index(Request $request, Product $product)
     {
-        $product = $product->load(['rank_attributes','comments'=> function($c){
-                    $c->with(['points','likes','medias']);
-                }
-            ]);
         return ProductCommentResource::make($product);
     }
 
     public function store(StoreCommentRequest $request, Product $product)
     {
         try {
-
             $comment = auth()->user()->comments()->create($request->validated());
             $this->saveCommentPoints($comment,$request);
             $this->saveRanks($comment,$request);
-            $this->uploadMedia($comment,'gallery','media',false);
+            $this->uploadMedia($comment);
         } catch (\Exception $exception){
             return $this->errorResponse('خطا در انجام عملیات');
         }
         return $this->successResponse('عملیات با موفقیت انجام شد');
     }
 
-    private function  saveCommentPoints($comment,$request)
+    private function saveCommentPoints($comment,$request)
     {
         if ($request->has('advantages'))
             foreach ($request->validated(['advantages']) as $advantages)
@@ -49,7 +44,7 @@ class CommentController extends Controller {
                 $comment->disadvantages()->create($disadvantages);
     }
 
-    private function  saveRanks($comment,$request)
+    private function saveRanks($comment,$request)
     {
         if($request->has('features')) {
             foreach ($request->validated(['features']) as $feature) {

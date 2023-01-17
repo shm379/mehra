@@ -25,8 +25,9 @@ class OrderResource extends MehraResource
             'total_price'=> $this->total_price,
             'currency'=> 'تومان',
             'total_price_formatted'=> Helpers::toman($this->total_price),
-            'shipping_price'=> 0,
-            'is_shipping_free'=> true,
+            'shipping_price'=> $this->shipping_price,
+            'shipping_price_formatted'=> Helpers::toman($this->shipping_price),
+            'is_shipping_free'=> $this->shipping_price==0,
             'items'=> $this->whenLoaded('items',function (){
                 return OrderItemResource::collection($this->items);
             }),

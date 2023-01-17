@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api;
 use App\Helpers\Helpers;
 
 
-class CartEmptyResource extends MehraResource
+class CartEmptyResource extends CartResource
 {
 
     /**
@@ -21,9 +21,14 @@ class CartEmptyResource extends MehraResource
             'total_items'=> 0,
             'total_price'=> 0,
             'total_price_formatted'=> Helpers::toman(0),
+            'currency'=> 'تومان',
+            'profit'=> 0,
+            'profit_formatted'=> Helpers::toman(0),
             'shipping_price'=> 0,
+            'shipping_price_formatted'=> Helpers::toman(0),
             'is_shipping_free'=> false,
-            'user'=> UserResource::make(auth()->user())
+            'address'=> UserAddressResource::make([]),
+            'user'=> UserResource::make(auth()->user()),
         ];
     }
 

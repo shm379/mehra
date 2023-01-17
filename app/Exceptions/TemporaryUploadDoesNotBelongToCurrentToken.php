@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class TemporaryUploadDoesNotBelongToCurrentSession extends Exception
+class TemporaryUploadDoesNotBelongToCurrentToken extends MehraApiException
 {
     public static function create(): self
     {

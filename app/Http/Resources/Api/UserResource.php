@@ -32,9 +32,12 @@ class UserResource extends MehraResource
             'gender'=> !is_null($this->gender) ? UserGender::getDescription((int)$this->gender) : $this->gender,
             'city'=> optional($this->city)->title,
             'state'=> optional($this->state)->title,
-            'addresses'=> $this->whenLoaded('addresses'),
+            'addresses'=> $this->whenLoaded('addresses',function (){
+                return new UserAddressResourceCollection($this->addresses);
+            }),
             'histories'=> $this->whenLoaded('search_histories'),
-            'wallet_balance'=> !is_null($this->wallet) ? Helpers::toman($this->wallet->balance) : Helpers::toman(0),
+            'wallet_balance'=> !is_null($this->wallet) ? $this->wallet->balance : 0,
+            'wallet_balance_formatted'=> !is_null($this->wallet) ? Helpers::toman($this->wallet->balance) : Helpers::toman(0),
             'views'=> $this->whenLoaded('views'),
             'discounts'=> $this->whenLoaded('discounts'),
             'followers'=> $this->whenLoaded('follows',function (){

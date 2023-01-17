@@ -12,12 +12,15 @@ class Helpers
      * @param $number
      * @return string
      */
-    static function mobileNumberNormalize($number,$withCountry=true)
+    static function mobileNumberNormalize($number,$withCountry=true,$withZero=false)
     {
         preg_match("/^(\+98|0)?(?<number>[0-9]+)$/", $number, $match);
         if (isset($match['number']) && $match['number'] != '') {
             if($withCountry){
                 return '+98'.$match['number'];
+            }
+            if($withZero) {
+                return '0' . $match['number'];
             }
             return $match['number'];
         }

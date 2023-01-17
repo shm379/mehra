@@ -32,6 +32,10 @@ class Product extends Model implements HasMedia
     {
         return $this
             ->with([
+                'rank_attributes',
+                'comments'=>function($c){
+                    $c->with(['user','points','likes','medias']);
+                },
                 'medias',
                 'producer',
                 'creators'=>function($creator){
@@ -216,6 +220,11 @@ class Product extends Model implements HasMedia
     public function getMainPriceAttribute()
     {
         return isset($this->attributes['sale_price']) ? $this->attributes['sale_price'] : isset($this->attributes['price']) ?? $this->attributes['price'];
+    }
+
+    public function getSalePercentAttribute()
+    {
+        return isset($this->attributes['sale_price']) ? (($this->attributes['price'] - $this->attributes['sale_price']) / $this->attributes['price'])*100 : 0;
     }
 
     public function getTitleAttribute()

@@ -16,13 +16,13 @@ class MehraFileNamer extends FileNamer
     }
     public function conversionFileName(string $fileName, Conversion $conversion): string
     {
-        $strippedFileName = $this->getFileName($fileName);
+        $strippedFileName = pathinfo($fileName, PATHINFO_FILENAME);
 
         return "{$strippedFileName}-{$conversion->getName()}";
     }
 
     public function responsiveFileName(string $fileName): string
     {
-        return $this->getFileName($fileName);
+        return pathinfo($fileName, PATHINFO_FILENAME);
     }
 }

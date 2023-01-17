@@ -7,6 +7,7 @@ use App\Exceptions\Api\Cart\AddItemException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Requests\Api\Cart\AddToCartRequest;
 use App\Http\Requests\Api\Cart\RemoveFromCartRequest;
+use App\Http\Requests\Api\Cart\SelectAddressRequest;
 use App\Http\Requests\Api\Cart\SyncCartRequest;
 use App\Http\Resources\Api\CartEmptyResource;
 use App\Http\Resources\Api\CartResource;
@@ -80,6 +81,21 @@ class CartController extends Controller {
         $quantity = $request->validated('quantity');
         try {
             return new CartResource($this->cart->removeFromCart($product_id,$quantity));
+        }
+        catch (\Exception $exception){
+            return $this->errorResponse('خطا در عملیات');
+        }
+    }
+
+    /*
+     * Set Address To Cart
+     * @response CartResource $cart
+     */
+    public function setAddress(SelectAddressRequest $request)
+    {
+        $address_id = $request->validated('address_id');
+        try {
+            return new CartResource($this->cart->selectAddress($address_id));
         }
         catch (\Exception $exception){
             return $this->errorResponse('خطا در عملیات');

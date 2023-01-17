@@ -10,6 +10,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = ['profit','shipping_price'];
     protected $table = 'orders';
     /**
      * Retrieve the model for a bound value.
@@ -59,5 +60,19 @@ class Order extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function getProfitAttribute()
+    {
+        if(isset($this->attributes['total_price_without_shipping']) || isset($this->attributes['total_price_without_sale_price'])) {
+            $total = $this->attributes['total_price_without_shipping'] ?? $this->attributes['total_price_without_sale_price'];
+        } else {
+            $total = $this->attributes['total_price'];
+        }
+        return $total - $this->attributes['total_price'];
+    }
+    public function getShippingPriceAttribute()
+    {
+        return 0;
     }
 }

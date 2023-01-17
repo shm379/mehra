@@ -36,6 +36,8 @@ class Media extends BaseMedia
 
         $this->forceDelete();
 
+
+
         return $newMedia;
     }
 

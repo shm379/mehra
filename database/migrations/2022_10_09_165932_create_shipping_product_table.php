@@ -13,10 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('shipping_products', function (Blueprint $table) {
+        Schema::create('shipping_product', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('shipping_id');
             $table->unsignedBigInteger('product_id');
-            $table->unique(['product_id','shipping_id']);
+            $table->unsignedFloat('price_per_mg')->nullable();
+            $table->unsignedBigInteger('order')->default(1);
+            $table->unsignedFloat('free_free',10,0)->nullable();
+            $table->boolean('is_free')->default(0);
+            $table->boolean('is_active')->default(1);
+            $table->unique(['product_id','shipping_id','order']);
 
             $table->foreign('product_id')
                 ->references('id')

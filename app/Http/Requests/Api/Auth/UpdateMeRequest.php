@@ -50,7 +50,7 @@ class UpdateMeRequest extends ApiFormRequest
             "gender"=> [
                 'nullable',
             ],
-            "avatar"=> 'nullable|nullable|file|mimes:mp4,jpg,jpeg,png,webp,heic|max:1000',
+            "avatar"=> 'nullable|exists:App\Models\Media,uuid|',
         ];
     }
     /**

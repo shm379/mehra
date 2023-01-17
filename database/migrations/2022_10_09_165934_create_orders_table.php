@@ -18,9 +18,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedBigInteger('discount_id')->nullable();
-            $table->unsignedDouble('total_price_without_discount',10)->nullable();
-            $table->unsignedDouble('total_price',10);
-            $table->unsignedDouble('vat',10)->nullable();
+            $table->unsignedDouble('total_price_without_discount',10,0)->nullable();
+            $table->unsignedDouble('total_price_without_sale_price',10,0)->nullable();
+            $table->unsignedDouble('total_price_without_shipping',10,0)->nullable();
+            $table->unsignedDouble('total_price',10,0);
+            $table->unsignedDouble('vat',10,0)->nullable();
             $table->timestamp('date')->default(now());
             $table->enum('status', \App\Enums\OrderStatus::asArray());
             $table->timestamps();
