@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Profile;
 use App\Enums\ProductStructure;
 use App\Exceptions\MehraApiException;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\Api\UserCollectionResourceCollection;
 use App\Http\Resources\Api\UserWishlistResourceCollection;
 use App\Models\Collection;
 use App\Models\Product;
@@ -21,7 +22,7 @@ class UserCollectionWishlistController extends Controller
     public function index()
     {
         $wishlist = auth()->user()->wishlist()->where('model_type','collection')->with('model')->paginate($this->perPage);
-        return new UserWishlistResourceCollection($wishlist);
+        return new UserCollectionResourceCollection($wishlist);
     }
 
     /**

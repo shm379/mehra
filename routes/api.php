@@ -59,9 +59,9 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
             // user orders
             Route::get('orders',\App\Http\Controllers\Api\Profile\OrderController::class);
             // user wishlist
-            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserWishlistController::class)->only(['index']);
-            // user collection with wishlist
-            Route::get('collections/wishlist',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class,'index'])->name('collections.wishlist.index');
+            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserProductWishlistController::class)->only(['index']);
+            // user collections with wishlist
+            Route::get('collections/me',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class,'index'])->name('collections.wishlist.index');
            // user messages
             Route::get('messages',\App\Http\Controllers\Api\Profile\MessageController::class);
            // user views
@@ -69,9 +69,9 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
         });
 
     // user like product
-    Route::post('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'store'])->name('product.like');
+    Route::post('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserProductWishlistController::class, 'store'])->name('product.like');
     // user unlike product
-    Route::delete('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserWishlistController::class, 'destroy'])->name('product.unlike');
+    Route::delete('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserProductWishlistController::class, 'destroy'])->name('product.unlike');
     // user like collection
     Route::post('/collection/{collection}/like',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class, 'store'])->name('collection.like');
     // user unlike collection

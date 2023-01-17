@@ -24,7 +24,7 @@ class BookResource extends MehraResource
             'title'=> $this->title,
             'sub_title'=> $this->sub_title,
             'attributes'=> $this->whenLoaded('attributeValues',function (){
-                return BookAttributeResource::collection($this->attributeValues);
+                return new BookAttributeResourceCollection($this->attributeValues);
             }),
             'volumes'=> $this->whenLoaded('volumes',function (){
                 foreach ($this->volumes as $key=> $volume){

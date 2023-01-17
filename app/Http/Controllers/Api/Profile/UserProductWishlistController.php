@@ -11,7 +11,7 @@ use App\Models\Product;
 use App\Models\UserWishlist;
 use Illuminate\Http\Request;
 
-class UserWishlistController extends Controller
+class UserProductWishlistController extends Controller
 {
     /**
      * Display a listing of the resource.
