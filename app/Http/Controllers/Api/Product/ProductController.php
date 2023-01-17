@@ -96,4 +96,9 @@ class ProductController extends Controller {
 
         return $this->successResponseWithData($response);
     }
+
+    public function importJson(Request $request)
+    {
+        
+    }
 }
