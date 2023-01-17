@@ -31,6 +31,7 @@ trait HasMediaTrait
     {
         return app(MediaRepository::class);
     }
+
     public function getMedias(string $collectionName = 'default', array|callable $filters = [])
     {
         return $this->getMediaRepository()
