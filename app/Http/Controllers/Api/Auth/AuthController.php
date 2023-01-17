@@ -139,7 +139,9 @@ class AuthController extends Controller
 
         } catch (MehraApiException $ex){}
         return $this->successResponseWithData([
-            'token'=> $token->plainTextToken,
+            'token'=>$token->plainTextToken,
+            'refresh_token'=>route('api.v1.refresh-token'),
+            'user'=> UserResource::make($user)
         ]);
     }
 
