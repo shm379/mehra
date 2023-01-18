@@ -14,6 +14,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UpdateMeRequest extends ApiFormRequest
@@ -38,8 +39,6 @@ class UpdateMeRequest extends ApiFormRequest
         return [
             "first_name"=> ['nullable','persian_alpha'],
             "last_name"=> ['nullable','persian_alpha'],
-            "state_id"=> ['nullable','exists:App\Models\State,id'],
-            "city_id"=> ['nullable','exists:App\Models\City,id'],
             "national_number"=> ['nullable','ir_national_code','unique:App\Models\User,national_number'],
             "email"=> ['nullable','email:rfc,dns','unique:App\Models\User,email'],
             "mobile"=> ['nullable','ir_mobile','unique:App\Models\User,mobile'],
@@ -50,7 +49,10 @@ class UpdateMeRequest extends ApiFormRequest
             "gender"=> [
                 'nullable',
             ],
-            "avatar"=> 'nullable|exists:App\Models\Media,uuid|',
+            "avatar"=> [
+                'nullable',
+                Rule::exists('media','uuid')->where('model_type','temporary_upload')
+            ],
         ];
     }
     /**
