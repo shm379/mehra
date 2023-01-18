@@ -29,6 +29,7 @@ class UpdateMeRequest extends ApiFormRequest
         return auth()->check();
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
