@@ -8,5 +8,4 @@ use App\Models\Slider;
 
 class HomeResource extends MehraResource
 {
-
 }
