@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('order')->default(1);
             $table->unique(['section','order']);
             $table->string('model')->nullable();
+            $table->text('where')->nullable();
+            $table->text('with')->nullable();
             $table->timestamps();
         });
     }

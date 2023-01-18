@@ -3,11 +3,10 @@
 namespace App\Http\Resources\Api\Home;
 
 use App\Http\Resources\Api\CategoryResourceCollection;
+use Illuminate\Http\Resources\Json\ResourceResponse;
 
 class Categories0Resource extends HomeResource
 {
-
-    public $resource = AuthorsResource::class;
     /**
      * Transform the resource into an array.
      *
@@ -17,17 +16,13 @@ class Categories0Resource extends HomeResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->parent_id,
-            'title'=> $this->parent_title,
-            'items'=>[
-                'id'=> $this->id,
-                'title'=> $this->title,
-                'slug'=> $this->slug,
-                'image'=> $this->whenLoaded('medias',function (){
-                    if($this->hasMedia('image'))
-                        return $this->getFirstMediaUrl('image');
-                }),
-            ]
+            'id'=> $this->id,
+            'title'=> $this->title,
+            'slug'=> $this->slug,
+            'image'=> $this->whenLoaded('medias',function (){
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
+            }),
         ];
     }
 

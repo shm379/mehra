@@ -14,13 +14,14 @@ class HomeController extends Controller {
 
     public function index()
     {
-        if(!cache()->has('home')){
-            $home = Home::query()->get(['key','value','model','order'])->sortBy('order')->pluck('json')->flatMap(function ($v){
-                return $v;
-            });
-            cache()->set('home',$home,5);
-        }
-        $home = cache()->get('home');
-        return new HomeResourceCollection($home->toArray());
+        $home = Home::query()->get(['key','value','model','order','where','with'])->sortBy('order')->pluck('json')->flatMap(function ($v){
+            return $v;
+        });
+//        if(!cache()->has('home')){
+//            cache()->set('home',$home,5);
+//        }
+//        $home = cache()->get('home');
+//        dd($home->toArray());
+        return response()->json($home->toArray());
     }
 }

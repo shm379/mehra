@@ -11,6 +11,9 @@ class Home extends Setting
 {
     protected $table = 'settings';
     protected $appends = ['json'];
+    protected $casts = [
+      'where'=>'json'
+    ];
     use HasFactory;
     /**
      * The attributes that aren't mass assignable.
@@ -38,13 +41,13 @@ class Home extends Setting
         if(str_ends_with($name,']')){
            $name = Helpers::removeBracketFromString($name);
         }
-        $resources[$key] = "\App\Http\Resources\Api\Home\\{$name}Resource";
+        $resources[$key] = "\App\Http\Resources\Api\Home\\{$name}ResourceCollection";
         foreach ($resources as $resourceKey=>$resource) {
 
             $values =
                 $this->convertToResource(
                     $model,
-                    $resource::collection($model->find($this->jsonValueFormat()))
+                    new $resource($model->find($this->jsonValueFormat()))
                 );
         }
         return $values;
@@ -52,7 +55,7 @@ class Home extends Setting
     private function convertToResource($model,$resource)
     {
         return !is_null($model) ?
-            $resource->resource : $this->jsonValueFormat();
+            $resource : $this->jsonValueFormat();
     }
     private function jsonFormat()
     {
@@ -60,6 +63,12 @@ class Home extends Setting
         if(!is_null($this->attributes['model'])) {
             $modelName = config('morphmap')[$this->attributes['model']];
             $model = (new $modelName);
+            if(!is_null($this->attributes['with'])){
+                $model = $model->with(json_decode($this->attributes['with'],  true));
+            }
+            if(!is_null($this->attributes['where'])){
+                $model = $model->where(json_decode($this->attributes['where'],  true));
+            }
         }
         return !is_null($model) ? $this->convertKeyToValue($this->attributes['key'],$model) : $this->jsonValueFormat();
     }
@@ -71,9 +80,7 @@ class Home extends Setting
     {
         if(!is_null($this->attributes['value']) && $this->attributes['value']!='') {
             $values = $this->jsonFormat();
-            $values = $values->filter(function ($item) {
-                return $item->resource !== null;
-            });
+
             $key = $this->attributes['key'];
             return [
                 $key => $values

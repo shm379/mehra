@@ -97,8 +97,13 @@ class ProductController extends Controller {
         return $this->successResponseWithData($response);
     }
 
-    public function importJson(Request $request)
+    public function importJson()
     {
-        
+        $url = 'http://mehrak.ir/wp-json/wc/v3/products?context=view&context=view';
+
+        $request = \Http::withHeaders([
+            'authorization'=>'Basic '. base64_encode('ck_dee9c9d5e1f6b424833dd8bbdae643728827a2b3:cs_97b550bd12d8ca9078b3336ac125e657a3e7d00f')
+        ])->withoutVerifying()->get($url);
+        dd($request->body());
     }
 }

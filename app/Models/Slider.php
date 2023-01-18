@@ -10,7 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 class Slider extends Model implements HasMedia
 {
     use HasFactory, HasMediaTrait;
-    protected $with = ['medias'];
+//    protected $with = ['medias'];
     public static function getValidCollections(): array
     {
         return [

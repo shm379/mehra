@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/import',[\App\Http\Controllers\Api\Product\ProductController::class,'importJson']);
 Route::get('/', function () {
     return view('welcome');
 });

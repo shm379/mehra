@@ -27,11 +27,4 @@ class BannersResource extends HomeResource
             }),
         ];
     }
-
-    public function __construct($resource)
-    {
-        if($resource->position==AnnouncementPosition::EVERYWHERE || $resource->position==AnnouncementPosition::HOME)
-           parent::__construct($resource);
-
-    }
 }
