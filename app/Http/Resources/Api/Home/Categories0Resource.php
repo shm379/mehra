@@ -7,7 +7,7 @@ use App\Http\Resources\Api\CategoryResourceCollection;
 class Categories0Resource extends HomeResource
 {
 
-
+    public $resource = AuthorsResource::class;
     /**
      * Transform the resource into an array.
      *
@@ -17,13 +17,12 @@ class Categories0Resource extends HomeResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'title'=> $this->title,
+            'id'=> $this->parent_id,
+            'title'=> $this->parent_title,
             'items'=>[
                 'id'=> $this->id,
                 'title'=> $this->title,
                 'slug'=> $this->slug,
-                'category_template'=> $this->whenLoaded('category_template'),
                 'image'=> $this->whenLoaded('medias',function (){
                     if($this->hasMedia('image'))
                         return $this->getFirstMediaUrl('image');

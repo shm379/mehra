@@ -75,6 +75,10 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
+    }
 
     public static function getValidCollections(): array
     {

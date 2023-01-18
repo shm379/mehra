@@ -18,7 +18,6 @@ class AuthorsResource extends HomeResource
             'id'=> $this->id,
             'title'=> $this->title,
             'image'=> $this->hasMedia('avatar') ? $this->getFirstMediaUrl('avatar') : null,
-//            'items'=> ProductResource::collection($this->products()->get())
         ];
     }
 
