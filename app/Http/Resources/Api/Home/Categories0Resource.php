@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Api\Home;
 
+use App\Http\Resources\Api\CategoryResourceCollection;
+
 class Categories0Resource extends HomeResource
 {
 
@@ -17,7 +19,12 @@ class Categories0Resource extends HomeResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            'items'=> ProductResource::collection($this->products()->get())
+            'slug'=> $this->slug,
+            'category_template'=> $this->whenLoaded('category_template'),
+            'image'=> $this->whenLoaded('medias',function (){
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
+            }),
         ];
     }
 
