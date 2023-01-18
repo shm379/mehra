@@ -41,8 +41,16 @@ class UpdateMeRequest extends ApiFormRequest
             "first_name"=> ['nullable','persian_alpha'],
             "last_name"=> ['nullable','persian_alpha'],
             "national_number"=> ['nullable','ir_national_code','unique:App\Models\User,national_number'],
-            "email"=> ['nullable','email:rfc,dns','unique:App\Models\User,email'],
-            "mobile"=> ['nullable','ir_mobile','unique:App\Models\User,mobile'],
+            "email"=> [
+                'nullable',
+                'email:rfc,dns',
+                Rule::unique('users','email')->ignore(\auth()->id(),'id')
+            ],
+            "mobile"=> [
+                'nullable',
+                'ir_mobile',
+                Rule::unique('users','mobile')->ignore(\auth()->id(),'id')
+            ],
             "password" => ['nullable'],
             "type"=> [
                 'nullable',
