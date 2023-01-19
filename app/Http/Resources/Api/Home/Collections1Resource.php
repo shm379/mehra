@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources\Api\Home;
 
-class Categories1Resource extends HomeResource
+class Collections1Resource extends HomeResource
 {
-
 
     /**
      * Transform the resource into an array.
@@ -21,18 +20,4 @@ class Categories1Resource extends HomeResource
         ];
     }
 
-
-
-    /**
-     * Get additional data that should be returned with the resource array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array
-     */
-    public function with($request)
-    {
-        return [
-            'success' => true
-        ];
-    }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\Api\Home;
 use App\Enums\AnnouncementPosition;
 
 
-class BannersResource extends HomeResource
+class Banners0Resource extends HomeResource
 {
 
     /**

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('collection_id');
             $table->morphs('item');
             $table->unique(['collection_id','item_id','item_type']);
+            $table->unique(['collection_id','order']);
+            $table->unsignedBigInteger('order')->nullable();
             $table->foreign('collection_id')
                 ->references('id')
                 ->on('collections')

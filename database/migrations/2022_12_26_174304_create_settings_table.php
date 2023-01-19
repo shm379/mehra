@@ -18,11 +18,19 @@ return new class extends Migration
             $table->string('key');
             $table->text('value')->nullable();
             $table->enum('section',\App\Enums\SettingSection::asArray());
+            $table->string('title')->nullable();
             $table->unsignedBigInteger('order')->default(1);
-            $table->unique(['section','order']);
             $table->string('model')->nullable();
             $table->text('where')->nullable();
             $table->text('with')->nullable();
+            $table->string('color')->nullable();
+            $table->boolean('multiselect')->nullable()->default(0);
+            $table->unsignedSmallInteger('limit_number')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->unique(['section','order']);
+            $table->string('admin_title')->nullable();
+            $table->string('admin_sub_title')->nullable();
+            $table->enum('type',\App\Enums\SettingType::asArray());
             $table->timestamps();
         });
     }

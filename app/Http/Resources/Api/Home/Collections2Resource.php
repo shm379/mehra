@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\Home;
 
-class ListsResource extends HomeResource
+class Collections2Resource extends HomeResource
 {
 
     /**
@@ -16,7 +16,7 @@ class ListsResource extends HomeResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            'items'=> ProductResource::collection($this->products()->get())
+            'items'=> ProductImageResource::collection($this->products()->get())
         ];
     }
 

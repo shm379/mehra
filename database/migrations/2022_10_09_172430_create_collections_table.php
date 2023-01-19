@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('type');
             $table->boolean('is_private');
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('order')->unique()->nullable();
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
