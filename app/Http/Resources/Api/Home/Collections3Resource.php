@@ -20,4 +20,5 @@ class Collections3Resource extends HomeResource
         ];
     }
 
+
 }
