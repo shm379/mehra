@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Api\Home;
 
-class Collections3Resource extends HomeResource
+class Banners3Resource extends HomeResource
 {
 
     /**
@@ -16,9 +16,12 @@ class Collections3Resource extends HomeResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            'items'=> ProductImageResource::collection($this->products()->get())
+            'url'=> $this->url,
+            '_blank'=> (bool)$this->_blank,
+            'image'=> $this->whenLoaded('medias',function (){
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
+            }),
         ];
     }
-
-
 }
