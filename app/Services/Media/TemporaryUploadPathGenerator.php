@@ -27,7 +27,11 @@ class TemporaryUploadPathGenerator implements PathGenerator
     */
     protected function getBasePath(Media $media): string
     {
-        $date = jdate(now());
+        if($media){
+            $date = jdate($media->created_at);
+        } else {
+            $date = jdate(now());
+        }
 
         $prefix = config('media-library.prefix', '');
 

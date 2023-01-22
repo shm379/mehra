@@ -26,7 +26,7 @@ class UserResource extends MehraResource
             'national_number'=> $this->national_number,
             'email'=> $this->email,
             'email_verified_at'=> $this->email_verified_at ? jdate($this->email_verified_at)->format('Y-m-d') : $this->email_verified_at,
-            'mobile'=> $this->mobile,
+            'mobile'=> Helpers::mobileNumberNormalize($this->mobile,false,true),
             'mobile_verified_at'=> $this->mobile_verified_at ? jdate($this->mobile_verified_at)->format('Y-m-d') : $this->mobile_verified_at,
             'type'=> !is_null($this->type) ? UserType::getDescription((int)$this->type) : $this->type,
             'gender'=> !is_null($this->gender) ? UserGender::getDescription((int)$this->gender) : $this->gender,
