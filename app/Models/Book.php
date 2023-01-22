@@ -34,6 +34,7 @@ class Book extends Product
             'medias',
             'volumes',
             'producer',
+            'productRelated',
             'creators'=>function($creator){
                 $creator->with('types','medias');
             },

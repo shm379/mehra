@@ -61,7 +61,7 @@ class ProductResource extends MehraResource
                 return CommentResource::collection($this->comments->load(['points','likes']));
             }),
             'creators'=> $this->whenLoaded('creators'),
-            'main_image'=> $this->whenLoaded('medias',function (){
+            'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('main_image'))
                     return $this->getFirstMediaUrl('main_image');
             }),

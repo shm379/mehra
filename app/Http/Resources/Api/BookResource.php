@@ -32,7 +32,16 @@ class BookResource extends MehraResource
                 "satisfied_no" => $this->satisfied_no,
                 "rate" => $this->whenLoaded('rank_attributes', function () {
                     return new CommentRankResourceCollection($this->rank_attributes);
-                })
+                }),
+                'related'=> $this->whenLoaded('productRelated',function (){
+                    return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
+                }),
+                'upsell'=> $this->whenLoaded('productRelated',function (){
+                    return BookResource::collection($this->productRelated->where('type',ProductRelatedType::UPSELL));
+                }),
+                'cross_sell'=> $this->whenLoaded('productRelated',function (){
+                    return BookResource::collection($this->productRelated->where('type',ProductRelatedType::CROSS_SELL));
+                }),
             ];
         }
 
@@ -64,12 +73,11 @@ class BookResource extends MehraResource
                 return BookCreatorResource::collection($this->creators);
             }),
             'is_liked'=> $this->is_liked,
-            'related'=> $this->whenLoaded('productRelated',function (){
-                return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
-            }),
             'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('cover_image'))
                     return $this->getFirstMediaUrl('cover_image');
+                if($this->hasMedia('main_image'))
+                    return $this->getFirstMediaUrl('main_image');
             }),
             'back_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('back_image'))
@@ -79,6 +87,7 @@ class BookResource extends MehraResource
                 if($this->hasMedia('gallery'))
                     return BookGalleryResource::collection($this->getMedias('gallery'));
             }),
+
         ],$book);
     }
 }
