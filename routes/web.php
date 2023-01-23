@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/import',[\App\Http\Controllers\Api\Product\ProductController::class,'importJson']);
+Route::get('/import/woo',[\App\Http\Controllers\Admin\ImportController::class,'importFromWoocommerce']);
 Route::get('/', function () {
     return view('welcome');
 });

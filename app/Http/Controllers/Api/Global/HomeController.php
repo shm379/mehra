@@ -22,7 +22,7 @@ class HomeController extends Controller {
                 ->flatMap(function ($v){
                     return $v;
                 });
-            cache()->set('home',$home,5);
+            cache()->set('home',$home,500);
         }
         $home = cache()->get('home');
         return new HomeResource($home);

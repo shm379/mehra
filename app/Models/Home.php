@@ -62,7 +62,8 @@ class Home extends Setting
         $model = null;
         if(!is_null($this->attributes['model'])) {
             $modelName = config('morphmap')[$this->attributes['model']];
-            $model = (new $modelName);
+            $model = is_array($modelName) ? (new $modelName[0]) : (new $modelName);
+
             if(!is_null($this->attributes['with'])){
                 $model = $model->with(json_decode($this->attributes['with'],  true));
             }
