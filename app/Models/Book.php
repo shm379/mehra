@@ -27,20 +27,22 @@ class Book extends Product
     {
         return $this
             ->with([
-              'rank_attributes',
-             'comments'=>function($comment){
-                $comment->with(['medias','user'])->limit(3);
-             },
-            'medias',
-            'volumes',
-            'producer',
-            'productRelated',
-            'creators'=>function($creator){
-                $creator->with('types','medias');
-            },
-            'attributeValues'=>function($value) {
-                $value->with('attribute');
-            }
+                 'rank_attributes',
+                 'comments'=>function($comment){
+                    $comment->with(['medias','user'])->limit(3);
+                 },
+                'medias',
+                'volumes',
+                'producer',
+                'productRelated'=>function($related){
+                    $related->with(['medias']);
+                },
+                'creators'=>function($creator){
+                    $creator->with('types','medias');
+                },
+                'attributeValues'=>function($value) {
+                    $value->with('attribute');
+                }
             ])
             ->where($this->getRouteKeyName(), $value)
             ->firstOrFail();

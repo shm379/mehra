@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Book;
 use App\Models\Product;
 use App\Services\CartService;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,16 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
-
+        Relation::enforceMorphMap([
+            'product'=>[
+                Product::class,
+                Book::class
+            ],
+            'book'=>[
+                Product::class,
+                Book::class
+            ]
+        ]);
     }
 
     /**
@@ -35,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
         Relation::morphMap(config('morphmap'));
         if($this->app->environment('production')) {
             $this->app['request']->server->set('HTTPS','on');

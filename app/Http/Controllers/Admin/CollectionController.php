@@ -62,7 +62,7 @@ class CollectionController extends Controller
                     'slug'=> $collection->slug,
                     'type'=> CollectionType::getDescription($collection->type),
                     'is_private'=> (bool)$collection->is_private,
-                    'user'=> $collection->admin_id ? $collection->admin->name : $collection->user->name,
+                    'user'=> '',
                 ];
             })
             ->withQueryString();

@@ -44,8 +44,11 @@
             <component :is="`components-${item.anchor}`" :form="form" />
           </ui-box>
         </ui-col>
+
         <ui-col class="sticky top-10 bg-white ">
-          <ui-box title="قیمت">
+            {{form}}
+
+            <ui-box title="قیمت">
               <component :is="`components-product-form-price`" :isUpdate="isUpdate" :form="form" />
           </ui-box>
           <ui-box title="موجودی">

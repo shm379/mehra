@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('creator_product', function (Blueprint $table) {
             $table->unsignedBigInteger('creator_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('creator_creator_type_id')->unique();
-            $table->unique(['creator_id','product_id']);
+            $table->unsignedBigInteger('creator_creator_type_id');
+            $table->unique(['creator_id','product_id','creator_creator_type_id'],'creator_product_id');
             $table->foreign('creator_id')
                 ->references('id')
                 ->on('creators')

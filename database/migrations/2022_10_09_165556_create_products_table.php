@@ -33,11 +33,12 @@ return new class extends Migration
             $table->unsignedBigInteger('order')->nullable();
             $table->unsignedBigInteger('order_volume')->nullable();
             $table->unsignedInteger('min_purchases_per_user')->default(1);
-            $table->unsignedInteger('max_purchases_per_user')->default(1);
+            $table->unsignedInteger('max_purchases_per_user')->nullable();
             $table->boolean('is_virtual')->default(0);
             $table->boolean('is_available');
             $table->unsignedInteger('in_stock_count')->default(1);
             $table->boolean('is_active');
+            $table->boolean('is_featured')->nullable();
             $table->unsignedInteger('weight')->nullable();
             $table->unsignedInteger('length')->nullable();
             $table->unsignedInteger('width')->nullable();

@@ -3,8 +3,8 @@
 namespace App\Http\Resources\Admin;
 
 use App\Helpers\Helpers;
-use App\Http\Resources\UserAddressResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\Api\UserAddressResource;
+use App\Http\Resources\Api\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 

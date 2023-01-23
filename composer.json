@@ -11,6 +11,7 @@
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.0",
+        "codexshaper/laravel-woocommerce": "^3.0",
         "composer/installers": "*",
         "cviebrock/eloquent-sluggable": "^9.0",
         "ghaninia/shipping": "^2.2",

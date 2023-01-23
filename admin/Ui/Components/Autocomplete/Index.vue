@@ -1,6 +1,5 @@
 <template>
   <div class="relative">
-      {{index}}
     <ui-label>{{ label }}</ui-label>
     <div
       class="w-full flex flex-nowrap gap-2 h-14 overflow-x-auto overflow-y-none rounded-xl border pr-2"

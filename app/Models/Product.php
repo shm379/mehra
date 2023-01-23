@@ -14,13 +14,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model implements HasMedia
 {
+    public function getMorphClass()
+    {
+        return array_search(get_class($this), config('morphmap'));
+    }
     use HasFactory, HasMediaTrait;
-    use Searchable;
+//    use Searchable;
 
     protected $guarded = [''];
-    protected $appends = ['main_price','max_purchases_per_user','is_liked'];
+    protected $appends = ['title_formatted','main_price','max_purchases_per_user','is_liked'];
 
-
+    public function getTitleFormattedAttribute()
+    {
+        return $this->attributes['title'] . $this->attributes['sub_title'];
+    }
     /**
      * Retrieve the model for a bound value.
      *
@@ -140,7 +147,12 @@ class Product extends Model implements HasMedia
 
     public function collections()
     {
-        return $this->belongsToMany(Collection::class , 'collection_product', 'product_id');
+        return $this->morphToMany(Collection::class , 'item','collection_item');
+    }
+
+    public function import()
+    {
+        return $this->morphMany(Product::class , 'model')->withPivot(['wp_id']);
     }
 
     public function categories()
