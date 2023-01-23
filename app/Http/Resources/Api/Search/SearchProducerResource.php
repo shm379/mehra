@@ -19,10 +19,8 @@ class SearchProducerResource extends MehraResource
             'id'=> $this->id,
             'title'=> $this->title,
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('cover_image'))
-                    return $this->getFirstMediaUrl('cover_image');
-                if($this->hasMedia('main_image'))
-                    return $this->getFirstMediaUrl('main_image');
+                if($this->hasMedia('logo'))
+                    return $this->getFirstMediaUrl('logo');
             }),
         ]);
     }

@@ -14,10 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model implements HasMedia
 {
-    public function getMorphClass()
-    {
-        return array_search(get_class($this), config('morphmap'));
-    }
+
     use HasFactory, HasMediaTrait;
 //    use Searchable;
 

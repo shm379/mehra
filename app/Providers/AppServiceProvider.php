@@ -26,16 +26,6 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
-        Relation::enforceMorphMap([
-            'product'=>[
-                Product::class,
-                Book::class
-            ],
-            'book'=>[
-                Product::class,
-                Book::class
-            ]
-        ]);
     }
 
     /**
