@@ -109,6 +109,7 @@ Route::post('product/{product}/reminded/{inCart?}',[\App\Http\Controllers\Api\Pr
 Route::get('product/{product}/rank-attributes', [\App\Http\Controllers\Api\Product\ProductController::class,'ranks'])->name('product.ranks');
 Route::apiResource('books', \App\Http\Controllers\Api\Product\BookController::class)->only('index','show');
 Route::apiResource('product.comments', \App\Http\Controllers\Api\Product\CommentController::class)->only('index');
+Route::get('filters/products', [\App\Http\Controllers\Api\Product\BookController::class,'filtersProduct'])->name('filters.products');
 Route::get('filters/books', [\App\Http\Controllers\Api\Product\BookController::class,'filters'])->name('filters.books');
 Route::apiResource('awards', \App\Http\Controllers\Api\Product\AwardController::class)->only('index','show');
 Route::apiResource('categories', \App\Http\Controllers\Api\Product\CategoryController::class)->only('index','show');

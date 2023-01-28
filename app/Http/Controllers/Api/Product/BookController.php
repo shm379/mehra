@@ -149,4 +149,89 @@ class BookController extends Controller {
 
         return $this->successResponseWithData($filters);
     }
+    public function filtersProduct()
+    {
+        $awards = \App\Models\Award::query()->pluck('id','title')->toArray();
+        $attributes = \App\Models\Attribute::query()->whereIn('slug',[
+            'age',
+            'format',
+            'volume-type',
+            'language'
+        ])->with('values')->get()->pluck('values')->flatten()->groupBy('name');
+        $categories = \App\Models\Category::query()->pluck('id','title')->toArray();
+        $creators = \App\Models\Creator::query()->pluck('id','title')->toArray();
+        $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();
+        $producers = \App\Models\Producer::query()->pluck('id','title')->toArray();
+        $filters = [
+                [
+                    'title'=>'عنوان',
+                    "name" => "title",
+                    "multiple" => false,
+                    'key'=> 'title',
+                    'icon'=>'',
+                    'type'=>0,
+                    'value'=> [],
+                ],
+                [
+                    'title'=>'ویژگی',
+                    "name" => "attributes",
+                    "multiple" => true,
+                    'key'=> 'attributeValues.id',
+                    'icon'=>'',
+                    'value'=> $attributes,
+                ],
+                [
+                    'title'=>'جایزه/افتخار',
+                    "name" => "awards",
+                    "multiple" => true,
+                    'key'=> 'awards.id',
+                    'icon'=>'',
+                    'value'=> $awards,
+                ],
+                [
+                    'title'=>'پدیدآورنده',
+                    "name" => "creators",
+                    "multiple" => true,
+                    'key'=> 'creators.id',
+                    'icon'=>'',
+                    'value'=> $creators,
+                ],
+                [
+                    'title'=>'دسته‌بندی',
+                    "name" => "categories",
+                    "multiple" => true,
+                    'key'=> 'categories.id',
+                    'icon'=>'',
+                    'value'=> $categories,
+                ],
+                [
+                    'title'=>'مجموعه',
+                    "name" => "collections",
+                    "multiple" => true,
+                    'key'=> 'collections.id',
+                    'icon'=>'',
+                    'value'=> $collections,
+                ],
+                [
+                    'title'=>'ناشر',
+                    "name" => "producers",
+                    "multiple" => true,
+                    'key'=> 'producer_id',
+                    'icon'=>'',
+                    'value'=> $producers,
+                ]
+        ];
+        foreach ($filters as $filter){
+            foreach ($attributes as $key=> $attribute){
+                $en_name = \Str::slug($attribute->first()->attribute->en_name);
+                $filters[$en_name]['key'] = 'attributeValues.id';
+                $filters[$en_name]['title'] = $key;
+                $filters[$en_name]['icon'] = $attribute->first()->attribute->icon;
+                $filters[$en_name]['value'] = $attribute->flatten()->pluck('id','value')->all();
+            }
+        }
+        unset($filters['attributes']);
+
+        return $this->successResponseWithData($filters);
+    }
 }
