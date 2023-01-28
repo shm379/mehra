@@ -25,6 +25,28 @@ class Category extends Model implements HasMedia
         $this->addMediaCollection('image')->singleFile();
     }
 
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @param  string|null  $field
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value, $field = null): ?Model
+    {
+        return $this
+            ->with([
+                'medias',
+                'parent',
+                'children',
+                'collections'=>function($collection){
+                    $collection->with(['products']);
+                }
+            ])
+            ->where($this->getRouteKeyName(), $value)
+            ->firstOrFail();
+    }
+
     public function getRouteKeyName(): string
     {
         return 'id';
@@ -52,7 +74,6 @@ class Category extends Model implements HasMedia
             ->using(CategoryProduct::class);
     }
 
-
     public function books()
     {
         return $this->belongsToMany(
@@ -64,6 +85,15 @@ class Category extends Model implements HasMedia
             ->using(CategoryProduct::class);
     }
 
+    public function collections()
+    {
+        return $this->morphedByMany(Category::class, 'item','collection_item','item_id')->with('products');
+    }
+
+    public function collection_products()
+    {
+        return $this->morphToMany(Collection::class, 'item','collection_item');
+    }
 
 
 }

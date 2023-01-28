@@ -18,9 +18,9 @@ class CategoryResource extends MehraResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-//            'books'=> $this->whenLoaded('books',function (){
-//                return new BookResourceCollection($this->books);
-//            }),
+            'collections'=> $this->whenLoaded('collections',function (){
+                return new CollectionCategoryProductResourceCollection($this->collections);
+            }),
             'children'=> $this->whenLoaded('children',function (){
                 return new CategoryResourceCollection($this->children->load('medias'));
             }),

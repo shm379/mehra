@@ -28,6 +28,7 @@ class CategoryController extends Controller {
             ->with([
                 'children',
                 'medias',
+                'collections'
             ])
             ->whereNull('parent_id')
             ->where('is_active',1)
@@ -46,13 +47,6 @@ class CategoryController extends Controller {
     }
     public function show(Category $category): CategoryResource
     {
-        return CategoryResource::make($category->load([
-            'medias',
-            'parent',
-            'children',
-            'books'=> function ($b){
-                $b->with('medias');
-            }
-        ]));
+        return CategoryResource::make($category);
     }
 }
