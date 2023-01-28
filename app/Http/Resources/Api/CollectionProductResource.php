@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api;
 
 use App\Enums\CollectionType;
+use App\Enums\ProductStructure;
 
 
 class CollectionProductResource extends MehraResource
@@ -20,9 +21,12 @@ class CollectionProductResource extends MehraResource
             'slug'=> $this->slug,
             'type'=> $this->item_type,
             'title'=> $this->title,
-            'main_image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('main_image'))
-                    return $this->getFirstMediaUrl('main_image');
+            'image'=> $this->whenLoaded('medias',function (){
+                $image = 'main_image';
+                if($this->structure) {
+                    $image = $this->structure == ProductStructure::BOOK ? 'cover_image' : 'main_image';
+                }
+                return $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
             }),
         ];
     }

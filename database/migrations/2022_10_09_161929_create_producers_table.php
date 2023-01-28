@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('sub_title')->nullable();
             $table->string('slug')->unique();
-            $table->string('description');
+            $table->text('description');
             $table->string('site_url')->nullable();
             $table->enum('type', \App\Enums\ProducerType::asArray());
             $table->boolean('is_active');

@@ -26,9 +26,7 @@ class CollectionController extends Controller {
         $collections = QueryBuilder::for(Collection::class)
             ->with([
                 'medias',
-                'books'=>function ($b){
-                    $b->with('medias');
-                }
+                'items',
             ])
             ->defaultSort('created_at')
             ->allowedSorts([

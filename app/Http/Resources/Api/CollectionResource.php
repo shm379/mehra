@@ -19,14 +19,7 @@ class CollectionResource extends MehraResource
         return [
             'id'=> $this->id,
             'items'=> $this->whenLoaded('items',function(){
-                foreach ($this->items as $item) {
-                    if($item->item_type=='book'){
-                        return CollectionBookResource::collection($this->items->pluck('item'));
-                    }
-                    if($item->item_type=='product'){
-                        return CollectionProductResource::collection($this->items->pluck('item'));
-                    }
-                }
+                return CollectionProductResource::collection($this->items);
             }),
             'title'=> $this->title,
             'count'=> $this->items_count,

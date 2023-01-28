@@ -10,7 +10,8 @@ use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\Api\BookResource;
 use App\Http\Resources\Api\BookResourceCollection;
 use App\Http\Resources\Api\CreatorResourceCollection;
-use App\Http\Resources\Api\ProductResource;
+use App\Http\Resources\Api\ProductFilterAttributeResource;
+use App\Http\Resources\Api\ProductFilterItemResource;
 use App\Models\Book;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -151,17 +152,17 @@ class BookController extends Controller {
     }
     public function filtersProduct()
     {
-        $awards = \App\Models\Award::query()->pluck('id','title')->toArray();
+        $awards = \App\Models\Award::query()->get(['id','title']);
         $attributes = \App\Models\Attribute::query()->whereIn('slug',[
             'age',
             'format',
             'volume-type',
             'language'
-        ])->with('values')->get()->pluck('values')->flatten()->groupBy('name');
-        $categories = \App\Models\Category::query()->pluck('id','title')->toArray();
-        $creators = \App\Models\Creator::query()->pluck('id','title')->toArray();
-        $collections = \App\Models\Collection::query()->pluck('id','title')->toArray();
-        $producers = \App\Models\Producer::query()->pluck('id','title')->toArray();
+        ])->with('values')->get()->pluck('values');
+        $categories = \App\Models\Category::query()->get(['id','title']);
+        $creators = \App\Models\Creator::query()->get(['id','title']);
+        $collections = \App\Models\Collection::query()->get(['id','title']);
+        $producers = \App\Models\Producer::query()->get(['id','title']);
         $filters = [
                 [
                     'title'=>'عنوان',
@@ -173,20 +174,12 @@ class BookController extends Controller {
                     'value'=> [],
                 ],
                 [
-                    'title'=>'ویژگی',
-                    "name" => "attributes",
-                    "multiple" => true,
-                    'key'=> 'attributeValues.id',
-                    'icon'=>'',
-                    'value'=> $attributes,
-                ],
-                [
                     'title'=>'جایزه/افتخار',
                     "name" => "awards",
                     "multiple" => true,
                     'key'=> 'awards.id',
                     'icon'=>'',
-                    'value'=> $awards,
+                    'value'=> ProductFilterItemResource::collection($awards),
                 ],
                 [
                     'title'=>'پدیدآورنده',
@@ -194,7 +187,7 @@ class BookController extends Controller {
                     "multiple" => true,
                     'key'=> 'creators.id',
                     'icon'=>'',
-                    'value'=> $creators,
+                    'value'=> ProductFilterItemResource::collection($creators),
                 ],
                 [
                     'title'=>'دسته‌بندی',
@@ -202,7 +195,7 @@ class BookController extends Controller {
                     "multiple" => true,
                     'key'=> 'categories.id',
                     'icon'=>'',
-                    'value'=> $categories,
+                    'value'=> ProductFilterItemResource::collection($categories),
                 ],
                 [
                     'title'=>'مجموعه',
@@ -210,7 +203,7 @@ class BookController extends Controller {
                     "multiple" => true,
                     'key'=> 'collections.id',
                     'icon'=>'',
-                    'value'=> $collections,
+                    'value'=> ProductFilterItemResource::collection($collections),
                 ],
                 [
                     'title'=>'ناشر',
@@ -218,19 +211,20 @@ class BookController extends Controller {
                     "multiple" => true,
                     'key'=> 'producer_id',
                     'icon'=>'',
-                    'value'=> $producers,
+                    'value'=> ProductFilterItemResource::collection($producers),
                 ]
         ];
-        foreach ($filters as $filter){
-            foreach ($attributes as $key=> $attribute){
-                $en_name = \Str::slug($attribute->first()->attribute->en_name);
-                $filters[$en_name]['key'] = 'attributeValues.id';
-                $filters[$en_name]['title'] = $key;
-                $filters[$en_name]['icon'] = $attribute->first()->attribute->icon;
-                $filters[$en_name]['value'] = $attribute->flatten()->pluck('id','value')->all();
-            }
+
+        foreach ($attributes as $key=> $attribute){
+            $attributeItem = [];
+            $en_name = \Str::slug($attribute->first()->attribute->en_name);
+            $attributeItem['name'] = $en_name;
+            $attributeItem['key'] = 'attributeValues.id';
+            $attributeItem['title'] = $key;
+            $attributeItem['icon'] = $attribute->first()->attribute->icon;
+            $attributeItem['value'] = ProductFilterAttributeResource::collection($attribute->flatten());
+            $filters[] = $attributeItem;
         }
-        unset($filters['attributes']);
 
         return $this->successResponseWithData($filters);
     }
