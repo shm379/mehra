@@ -23,9 +23,6 @@ class ProductResource extends MehraResource
         $image = 'main_image';
         if($this->structure) {
             $image = $this->structure == ProductStructure::BOOK ? 'cover_image' : 'main_image';
-            if ($this->structure == ProductStructure::BOOK) {
-                $this->resource = Book::query()->with(['medias'])->find($this->id);
-            }
         }
         $media = $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
         return [
@@ -38,7 +35,7 @@ class ProductResource extends MehraResource
             'main_price_formatted'=> Helpers::toman($this->price),
             'price_formatted'=> $this->sale_price ? Helpers::toman($this->sale_price) : Helpers::toman($this->price),
             'currency'=> 'تومان',
-            'image'=> $media,
+            'image'=> $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null,
         ];
     }
 }

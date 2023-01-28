@@ -23,9 +23,7 @@ class ProductImageResource extends MehraResource
         $image = 'main_image';
         if($this->structure) {
             $image = $this->structure == ProductStructure::BOOK ? 'cover_image' : 'main_image';
-            if ($this->structure == ProductStructure::BOOK) {
-                $this->resource = Book::query()->with(['medias'])->find($this->id);
-            }
+
         }
         $media = $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
         return [
