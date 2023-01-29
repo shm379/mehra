@@ -18,11 +18,12 @@ class CollectionResource extends MehraResource
     {
         return [
             'id'=> $this->id,
-            'items'=> $this->whenLoaded('items',function(){
-                return CollectionProductResource::collection($this->items);
-            }),
+
             'title'=> $this->title,
-            'count'=> $this->items_count,
+//            'count'=> $this->collection_items_count,
+            'items'=> $this->whenLoaded('products',function(){
+                return CollectionProductResource::collection($this->products);
+            }),
             'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image'))
                     return $this->getFirstMediaUrl('image');

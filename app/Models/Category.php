@@ -87,7 +87,10 @@ class Category extends Model implements HasMedia
 
     public function collections()
     {
-        return $this->morphedByMany(Category::class, 'item','collection_item','item_id')->with('products');
+        return $this->morphedByMany(Category::class, 'item','collection_item','item_id')
+            ->with('products')
+            ->withPivot('collection_id')
+            ->using(CollectionItem::class);
     }
 
     public function collection_products()

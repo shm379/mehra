@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CollectionType;
 use App\Enums\ProductStructure;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
@@ -17,7 +18,6 @@ class Collection extends Model implements HasMedia
     use HasFactory, HasMediaTrait;
     protected $guarded = [];
 
-
     /**
      * Retrieve the model for a bound value.
      *
@@ -28,10 +28,9 @@ class Collection extends Model implements HasMedia
     public function resolveRouteBinding($value, $field = null): ?Model
     {
         return $this
-            ->withCount(['items'])
             ->with([
                 'medias',
-                'items.item'=>function($t){
+                'products'=>function($t){
                     return $t->with('medias');
                 },
             ])
@@ -58,7 +57,19 @@ class Collection extends Model implements HasMedia
 
     public function items()
     {
-        return $this->hasMany(CollectionItem::class);
+        return $this->belongsToMany(CollectionItem::class,'collection_item','item_id','collection_id')
+            ->when($this->type == CollectionType::PRODUCT, function ($query) {
+                return $query->whereType('product');
+            })
+            ->when($this->type == CollectionType::CATEGORY, function ($query) {
+                return $query->whereType('category');
+            })
+            ->when($this->type == CollectionType::ATTRIBUTE, function ($query) {
+                return $query->whereType('attribute');
+            })
+            ->when($this->type == CollectionType::CREATOR, function ($query) {
+                return $query->whereType('creator');
+            });
     }
 
     public function products()
@@ -80,5 +91,9 @@ class Collection extends Model implements HasMedia
     public function categories()
     {
         return $this->morphedByMany(Category::class, 'item','collection_item');
+    }
+    public function attributeValues()
+    {
+        return $this->morphedByMany(AttributeValue::class, 'item','collection_item');
     }
 }

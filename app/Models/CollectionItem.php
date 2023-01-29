@@ -11,6 +11,10 @@ class CollectionItem extends MorphPivot
     use HasFactory;
     protected $table = 'collection_item';
 
+    public function collection()
+    {
+        return $this->belongsTo(Collection::class);
+    }
     public function item()
     {
         return $this->morphTo();

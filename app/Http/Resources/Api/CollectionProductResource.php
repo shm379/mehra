@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api;
 
 use App\Enums\CollectionType;
 use App\Enums\ProductStructure;
+use App\Enums\ProductType;
 
 
 class CollectionProductResource extends MehraResource
@@ -19,7 +20,7 @@ class CollectionProductResource extends MehraResource
         return [
             'id'=> $this->id,
             'slug'=> $this->slug,
-            'type'=> $this->item_type,
+            'type'=> ProductType::getDescription($this->type),
             'title'=> $this->title,
             'image'=> $this->whenLoaded('medias',function (){
                 $image = 'main_image';

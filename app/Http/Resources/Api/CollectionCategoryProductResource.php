@@ -16,6 +16,12 @@ class CollectionCategoryProductResource extends MehraResource
      */
     public function toArray($request)
     {
-        return new ProductResourceCollection($this->products);
+        return [
+            'id'=> $this->pivot->collection->id,
+            'title'=> $this->pivot->collection->title,
+            'items'=> $this->whenLoaded('products',function (){
+                return new ProductResourceCollection($this->products->take(4));
+            })
+        ];
     }
 }
