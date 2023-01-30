@@ -220,7 +220,7 @@ class BookController extends Controller {
             $en_name = \Str::slug($attribute->first()->attribute->en_name);
             $attributeItem['name'] = $en_name;
             $attributeItem['key'] = 'attributeValues.id';
-            $attributeItem['title'] = $key;
+            $attributeItem['title'] = $attribute->first()->attribute->name;
             $attributeItem['icon'] = $attribute->first()->attribute->icon;
             $attributeItem['value'] = ProductFilterAttributeResource::collection($attribute->flatten());
             $filters[] = $attributeItem;
