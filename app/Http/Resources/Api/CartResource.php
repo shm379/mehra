@@ -26,8 +26,8 @@ class CartResource extends MehraResource
             'currency'=> 'تومان',
             'profit'=> $this->profit,
             'profit_formatted'=> Helpers::toman($this->profit),
-            'shipping_price'=> $this->shipping_price,
-            'shipping_price_formatted'=> Helpers::toman($this->shipping_price),
+            'shipping_price'=> $this->total_shipping_price,
+            'shipping_price_formatted'=> Helpers::toman($this->total_shipping_price),
             'is_shipping_free'=> false,
             'address'=> $this->whenLoaded('address',function (){
                 return UserAddressResource::make($this->address);

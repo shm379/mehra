@@ -39,9 +39,10 @@ class CartItemResource extends MehraResource
             }),
             'price'=> $this->price,
             'price_formatted'=> Helpers::toman($this->price),
-            'total_price'=> $this->total_price,
-            'total_price_formatted'=> Helpers::toman($this->total_price),
-            'discount'=> $this->discount,
+            'total_price'=> $this->total_final_price,
+            'total_price_formatted'=> Helpers::toman($this->total_final_price),
+            'discount'=> $this->discount_amount,
+            'total_discount'=> $this->total_discount_amount,
             'remained_qty'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->max_purchases_per_user;
             }),

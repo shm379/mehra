@@ -229,9 +229,9 @@ class CartService
     {
             return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->sum('quantity');
     }
-    public function getNotDiscountedQuantities()
+    public function getNotDiscountedQuantities($discount)
     {
-            return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->where('discount_applied','!=',1)->sum('quantity');
+        return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->where('discount_applied','!=',1)->sum('quantity');
     }
     public function getShippingItem($shipping_id)
     {

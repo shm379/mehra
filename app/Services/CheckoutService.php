@@ -65,7 +65,7 @@ class CheckoutService extends CartService
                     $payment = Payment::purchase($invoice, function ($driver, $transactionId) use ($cart) {
                         $gateway = isset(config('payment.drivers')[strtolower(class_basename($driver))]) ? strtolower(class_basename($driver)) : '';
                         $cart->payments()->create([
-                            'amount' => $cart->total_price,
+                            'amount' => $cart->total_final_price,
                             'transaction_id' => $transactionId,
                             'gateway' => $gateway
                         ]);
