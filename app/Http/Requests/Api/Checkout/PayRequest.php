@@ -4,6 +4,7 @@ namespace App\Http\Requests\Api\Checkout;
 
 use App\Enums\ProductStructure;
 use App\Enums\ProductType;
+use App\Helpers\Helpers;
 use App\Http\Requests\Api\ApiFormRequest;
 use App\Models\Cart;
 use App\Services\CartService;
@@ -42,12 +43,7 @@ class PayRequest extends ApiFormRequest
             foreach ($this->cart->items as $item){
                 if($item->line_item->type==ProductType::PRINTED_BOOK || $item->line_item->type==ProductType::CD){
                     if(is_null($this->cart->address_id)) {
-                        $this->rules = [
-                            'address_id' => [
-                                'required',
-                                Rule::exists('user_addresses', 'id')->where('user_id', auth()->id()),
-                            ],
-                        ];
+                        throw ValidationException::withMessages(['address_not_selected' => 'لطفا آدرس را انتخاب کنید']);
                     }
                 }
             }
