@@ -41,12 +41,14 @@ class PayRequest extends ApiFormRequest
         if($this->cart->exists()){
             foreach ($this->cart->items as $item){
                 if($item->line_item->type==ProductType::PRINTED_BOOK || $item->line_item->type==ProductType::CD){
-                    $this->rules = [
-                        'address_id'=> [
-                            'required',
-                            Rule::exists('user_addresses','id')->where('user_id',auth()->id()),
-                        ],
-                    ];
+                    if(is_null($this->cart->address_id)) {
+                        $this->rules = [
+                            'address_id' => [
+                                'required',
+                                Rule::exists('user_addresses', 'id')->where('user_id', auth()->id()),
+                            ],
+                        ];
+                    }
                 }
             }
         }
@@ -57,9 +59,9 @@ class PayRequest extends ApiFormRequest
 
     protected function passedValidation()
     {
-        if($this->cart && $this->cart->exists() && $this->request->has('address_id'))
-        {
-            $this->cart->update(['address_id' =>$this->request->get('address_id')]);
-        }
+//        if($this->cart && $this->cart->exists() && $this->request->has('address_id'))
+//        {
+//            $this->cart->update(['address_id' =>$this->request->get('address_id')]);
+//        }
     }
 }
