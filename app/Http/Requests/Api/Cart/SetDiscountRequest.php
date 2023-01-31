@@ -53,6 +53,9 @@ class SetDiscountRequest extends ApiFormRequest
             }
             $discount = Discount::query()->where('code', $this->request->get('code'));
             if ($discount->exists() && $discount->first()->is_active) {
+                if ($discount->where('all_products', '=', 1)->doesntExist()) {
+//                    throw ValidationException::withMessages(['expired' => 'کدتخفیف برای برخی محصولات فعال نیست']);
+                }
                 if ($discount->where('expire_at', '>', now())->doesntExist()) {
                     throw ValidationException::withMessages(['expired' => 'کد تخفیف شما منقضی شده است!']);
                 }

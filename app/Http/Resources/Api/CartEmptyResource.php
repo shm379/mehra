@@ -27,7 +27,7 @@ class CartEmptyResource extends CartResource
             'shipping_price'=> 0,
             'shipping_price_formatted'=> Helpers::toman(0),
             'is_shipping_free'=> false,
-            'address'=> UserAddressResource::make([]),
+            'address'=> [],
             'user'=> UserResource::make(auth()->user()),
         ];
     }

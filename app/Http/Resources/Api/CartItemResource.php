@@ -25,13 +25,13 @@ class CartItemResource extends MehraResource
             'sub_title'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->sub_title;
             }),
-            'image'=> $this->whenLoaded('line_item',function (){
+            'image'=> $this->whenLoaded('line_item.medias',function (){
                 if($this->line_item->hasMedia('cover_image'))
                     return $this->line_item->getFirstMediaUrl('cover_image');
 
                 return $this->line_item->getFirstMediaUrl('main_image');
             }),
-            'producer'=> $this->whenLoaded('line_item',function (){
+            'producer'=> $this->whenLoaded('line_item.producer',function (){
                 return ProducerResource::make($this->line_item->producer);
             }),
             'structure'=> $this->whenLoaded('line_item',function (){
@@ -39,6 +39,8 @@ class CartItemResource extends MehraResource
             }),
             'price'=> $this->price,
             'price_formatted'=> Helpers::toman($this->price),
+            'total_price'=> $this->total_price,
+            'total_price_formatted'=> Helpers::toman($this->total_price),
             'discount'=> $this->discount,
             'remained_qty'=> $this->whenLoaded('line_item',function (){
                 return $this->line_item->max_purchases_per_user;

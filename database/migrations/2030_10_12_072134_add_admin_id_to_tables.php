@@ -36,6 +36,7 @@ return new class extends Migration
         'shipping_product_type',
         'shipping_city',
         'orders',
+        'order_items',
     ];
     /**
      * Run the migrations.

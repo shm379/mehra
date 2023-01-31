@@ -194,22 +194,23 @@ class User extends Authenticatable implements HasMedia
 
     public function scopeGetOrders($query,$user_id): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        $order = $this->orders()->with(['items'])->find($user_id);
-        $order->total_price = $order->items()->sum('total_price');
-        $order->total_price_without_discount = $order->items()->sum('total_price_without_discount');
         return $this->orders()->with('items');
     }
 
-    public function scopeGetCart($query,$user_id)
+    public function scopeGetCart($query,$user_id,$withoutShipping=true)
     {
         if($user_id) {
             $order = $query->find($user_id)->orders()
                 ->where('status', OrderStatus::CART())
                 ->with(['address','user'=>function ($u){
                     $u->with(['addresses']);
-                },'items'=>function ($i){
-                        $i->with(['line_item'=>function ($l){
-                                $l->with('medias');
+                },'items'=>function ($i) use ($withoutShipping){
+                    if($withoutShipping) {
+                        $i->where('line_item_type', '!=', 'shipping');
+                    }
+                    $i->with(['line_item'=>function ($l) use($withoutShipping){
+                                if($withoutShipping)
+                                    $l->with(['medias','producer']);
                             }
                         ]);
                     }

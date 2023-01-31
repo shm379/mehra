@@ -54,7 +54,7 @@ class OrderController extends Controller
                     'id' => $order->id,
                     'discount' => !is_null($order->discount) ? optional($order->discount)->title : 'بدون تخفیف',
                     'total_price_without_discount' => number_format($order->total_price_without_discount) . ' تومان',
-                    'total_price' => number_format($order->total_price) . ' تومان',
+                    'total_final_price' => number_format($order->total_final_price) . ' تومان',
                     'status' => OrderStatus::getDescription((int)$order->status),
                     'items' => count($order->items) ? implode('<br>',Product::query()->with('medias')->whereIn('id',$order->items->where('line_item_type','product')->pluck('line_item_id')->toArray())->pluck('title')->toArray()) : '',
                     'notes' => count($order->notes) ? implode('<br>',optional($order->notes)->pluck('note')->toArray()) : '',

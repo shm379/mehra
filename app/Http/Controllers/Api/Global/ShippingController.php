@@ -56,14 +56,11 @@ class ShippingController extends Controller {
     public function setAddress(SelectAddressRequest $request)
     {
         $address_id = $request->validated('address_id');
-        try {
+        \DB::transaction(function () use ($address_id,$request){
             $this->shipping->selectAddress($address_id);
             $this->shipping->setType($request->validated('type'));
-
-            return $this->successResponseWithData($this->shipping->calculateShipping());
-        }
-        catch (\Exception $exception){
-            return $this->errorResponse('خطا در عملیات');
-        }
+            $this->shipping->calculateShipping();
+        });
+        return CartResource::make($this->shipping->getCart());
     }
 }

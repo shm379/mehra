@@ -22,6 +22,9 @@ class SelectAddressRequest extends ApiFormRequest
                 Rule::exists('user_addresses','id')
                     ->where('user_id',auth()->id())
             ],
+            'type'=> [
+                'required'
+            ]
         ];
     }
 

@@ -18,14 +18,11 @@ class CartResource extends MehraResource
     {
         return [
             'items'=> $this->whenLoaded('items',function (){
-                return new CartItemResourceCollection($this->items->load(['line_item'=>function($line_item) {
-                    $line_item->with(['producer', 'medias']);
-                    }]
-                ));
+                return new CartItemResourceCollection($this->items);
             }),
             'total_items'=> $this->items && count($this->items) ? $this->items->sum('quantity') : 0,
-            'total_price'=> $this->total_price,
-            'total_price_formatted'=> Helpers::toman($this->total_price),
+            'total_price'=> $this->total_final_price,
+            'total_price_formatted'=> Helpers::toman($this->total_final_price),
             'currency'=> 'تومان',
             'profit'=> $this->profit,
             'profit_formatted'=> Helpers::toman($this->profit),

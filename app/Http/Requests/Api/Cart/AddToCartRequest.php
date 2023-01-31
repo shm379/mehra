@@ -50,7 +50,6 @@ class AddToCartRequest extends ApiFormRequest
 //                new AddToCartRule()
             ],
             'extra_info'=>'nullable',
-            'structure'=>'nullable',
             'is_virtual'=>'nullable',
         ];
     }
@@ -58,7 +57,6 @@ class AddToCartRequest extends ApiFormRequest
     protected function passedValidation()
     {
         $this->merge([
-            'structure' => (int)$this->product->structure,
             'is_virtual' => (bool)$this->product->is_virtual
         ]);
     }

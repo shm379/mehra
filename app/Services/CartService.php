@@ -14,24 +14,25 @@ use Illuminate\Support\Facades\App;
 class CartService
 {
     public $user_id;
-
+    public $cart = null;
     public function __construct($guard='sanctum')
     {
         $this->user_id = auth($guard)->id();
     }
 
-    public function getCart()
+    public function getCart($withoutShipping=true)
     {
-        $cart = User::GetCart($this->user_id);
+        $cart = User::GetCart($this->user_id,$withoutShipping);
 /*        if($cart->doesntExist()){
             $this->createCart();
             $cart = User::GetCart($this->user_id);
             return $cart;
         }*/
         self::updateCart($cart);
-        if($cart->exists())
+        if($cart->exists()) {
+            $this->cart = $cart;
             return $cart;
-
+        }
         return null;
     }
 
@@ -59,7 +60,7 @@ class CartService
                 'user_id' => $this->user_id,
                 'status' => OrderStatus::CART(),
                 'total_price'=>0,
-                'total_price_without_discount'=>0,
+                'total_final_price'=>0,
             ]);
         } catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
@@ -70,12 +71,12 @@ class CartService
     {
         return $this->getCart()
             ->items()
-            ->whereIn('line_item_type',ProductStructure::getKeys())
+            ->where('line_item_type','!=','shipping')
             ->where('line_item_id',$product_id)
             ->first();
     }
 
-    private function getCartItem($item_type='book',$item_id,$quantity)
+    private function getCartItem($item_type='product',$item_id,$quantity)
     {
         $model = '\\App\\Models\\' . ucfirst($item_type);
         $item = $model::query()->find($item_id);
@@ -83,11 +84,13 @@ class CartService
         $cartItem['line_item_type'] = $item_type;
         $cartItem['line_item_id'] = $item_id;
         $cartItem['is_virtual'] = $item->is_virtual;
-        $cartItem['price_without_discount'] = $item->price;
+        $cartItem['main_price'] = $item->price;
         $cartItem['price'] = $item->sale_price ?? $item->price;
         $cartItem['quantity'] = $quantity;
-        $cartItem['total_price_without_discount'] = $quantity * $cartItem['price_without_discount'];
+        $cartItem['total_main_price'] = $quantity * $cartItem['main_price'];
         $cartItem['total_price'] = $quantity * $cartItem['price'];
+        // if has discount need to change
+        $cartItem['total_final_price'] = $quantity * $cartItem['price'];
 
 
         return $cartItem;
@@ -121,7 +124,12 @@ class CartService
     {
         try {
             $item->total_price = $item->quantity * $item->price;
-            $item->total_price_without_discount = $item->quantity * $item->price_without_discount;
+            $item->total_main_price = $item->quantity * $item->main_price;
+            $item->total_final_price = $item->quantity * $item->price;
+            // how i can update if cart has discount
+            if($item->discount_applied==1){
+
+            }
             $item->save();
         } catch (\Exception $exception){
             return $exception->getMessage();
@@ -132,8 +140,22 @@ class CartService
     private function updateCart($cart)
     {
         try {
-            $cart->total_price = $cart->items()->sum('total_price');
-            $cart->total_price_without_discount = $cart->items()->sum('total_price_without_discount');
+            $cart->total_price = $cart->items()->where('line_item_type','!=','shipping')->sum('total_price');
+            // if cart has main price
+            if($cart->items()->where('line_item_type','!=','shipping')->whereNotNull('total_main_price')->exists()){
+                $cart->total_main_price = $cart->items()->where('line_item_type','!=','shipping')->sum('total_main_price');
+            }
+            $cart->total_final_price = $cart->items()->where('line_item_type','!=','shipping')->sum('total_final_price');
+
+            if($cart->total_after_discount!==0 && $cart->total_after_discount!==null){
+                $cart->total_final_price = $cart->total_after_discount;
+            }
+            if($cart->total_shipping_price!==0 && $cart->total_shipping_price !== null){
+                if($cart->total_final_price + $cart->total_shipping_price != $cart->total_final_price){
+                    $cart->total_final_price += $cart->total_shipping_price;
+                }
+            }
+            // after shipping selected final price increased
             $cart->save();
         } catch (\Exception $exception){
             return $exception->getMessage();
@@ -141,7 +163,7 @@ class CartService
         return $cart;
     }
 
-    public function addToCart($type='book',$id,$quantity=1,$is_virtual=0)
+    public function addToCart($id,$quantity=1,$is_virtual=0)
     {
         $cart = self::getCart();
         if(!$cart){
@@ -149,8 +171,8 @@ class CartService
         }
         $cartItem = $cart->items()->firstOrCreate([
             'line_item_id'=>$id,
-            'line_item_type'=> $type,
-        ],self::getCartItem($type,$id,$quantity));
+            'line_item_type'=> 'product',
+        ],self::getCartItem('product',$id,$quantity));
 
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
@@ -167,8 +189,8 @@ class CartService
             $item = $cart->items()
                 ->where([
                 'line_item_id'=>$product_id,
-                ])
-                ->whereIn('line_item_type',ProductStructure::getKeys());
+                'line_item_type'=> 'product'
+                ]);
             // IF Cart Exists
             if($item->exists()){
                 $currentItem = $item->first();
@@ -188,7 +210,6 @@ class CartService
             $cart->update([
                 'address_id' => $address_id
             ]);
-
         }
 
         return self::getCart();
@@ -196,34 +217,59 @@ class CartService
 
     public function getCartTotal()
     {
-        return self::getCart()->total_price;
+        return self::getCart()->total_final_price;
     }
 
-    public function getSumQuantities()
-    {
-        return (int)self::getCart()->items()->sum('quantity');
-    }
-
-    public function addShipping($shipping_id,$price)
+    public function getCartTotalWithoutShipping()
     {
         $cart = self::getCart();
-        if(!$cart){
-            $cart = self::createCart();
+        return $cart->total_final_price - $cart->total_discount_amount;
+    }
+    public function getSumQuantities()
+    {
+            return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->sum('quantity');
+    }
+    public function getNotDiscountedQuantities()
+    {
+            return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->where('discount_applied','!=',1)->sum('quantity');
+    }
+    public function getShippingItem($shipping_id)
+    {
+        $shippingItem = self::getCartItem('shipping',$shipping_id,1);
+        $shippingItem['is_virtual']= false;
+        $shippingItem['price']= false;
+        $shippingItem['total_price']= false;
+        return $shippingItem;
+    }
+
+    public function addShipping($shipping_id,$shipping_price)
+    {
+        $cart = self::getCart(false);
+        $shippingItem = $cart->items()->where('line_item_type','shipping');
+        if($shippingItem->exists()){
+            $shippingItem->update([
+                'line_item_id'=>$shipping_id,
+                'line_item_type'=> 'shipping',
+                'is_virtual'=> false,
+                'price'=> $shipping_price,
+                'total_price'=> $shipping_price,
+                'total_final_price'=> $shipping_price,
+            ]);
+        } else {
+            $shippingItem->create([
+                'line_item_id'=>$shipping_id,
+                'line_item_type'=> 'shipping',
+                'is_virtual'=> false,
+                'price'=> $shipping_price,
+                'total_price'=> $shipping_price,
+                'total_final_price'=> $shipping_price,
+                'quantity' => 1,
+            ]);
         }
-        $cartItem = $cart->items()->firstOrCreate([
-            'line_item_id'=>$shipping_id,
-            'line_item_type'=> 'shipping',
-            'is_virtual'=> false,
-            'price'=> $price,
-            'total_price'=> $price,
-            'quantity' => 1,
-
-        ],self::getCartItem('shipping',$shipping_id,1));
-
-        if(!$cartItem->wasRecentlyCreated){
-            self::calculateItem($cartItem,1,'+');
-        }
-
-        return self::getCart();
+        $cart = self::getCart();
+        $cart->update([
+            'total_shipping_price'=> $shipping_price,
+        ]);
+        return $cart;
     }
 }

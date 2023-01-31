@@ -17,18 +17,25 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('address_id')->nullable();
+            $table->unsignedBigInteger('shipping_id')->nullable();
             $table->unsignedBigInteger('discount_id')->nullable();
-            $table->unsignedDouble('total_price_without_discount',10,0)->nullable();
-            $table->unsignedDouble('total_price_without_sale_price',10,0)->nullable();
-            $table->unsignedDouble('total_price_without_shipping',10,0)->nullable();
-            $table->unsignedDouble('total_price',10,0);
-            $table->unsignedDouble('vat',10,0)->nullable();
+            $table->unsignedDouble('total_discount_amount',10,0)->nullable();
+            $table->unsignedDouble('total_main_price',10,0)->nullable(); // (sum of all order items main prices)
+            $table->unsignedDouble('total_price',10,0); // (sum of all order items prices)
+            $table->unsignedDouble('total_shipping_price',10,0)->nullable();
+            $table->unsignedDouble('total_after_discount',10,0)->nullable(); // (total_price - discount_amount)
+            $table->unsignedDouble('total_final_price',10,0); // (total_after_discount + shipping_price) Or (total_price + shipping_price)
+            $table->unsignedDouble('total_vat',10,0)->nullable();
             $table->timestamp('date')->default(now());
             $table->enum('status', \App\Enums\OrderStatus::asArray());
             $table->timestamps();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('shipping_id')
+                ->references('id')
+                ->on('shippings')
                 ->onDelete('cascade');
             $table->foreign('address_id')
                 ->references('id')

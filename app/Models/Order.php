@@ -10,7 +10,7 @@ class Order extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['profit','shipping_price'];
+    protected $appends = ['profit'];
     protected $table = 'orders';
     /**
      * Retrieve the model for a bound value.
@@ -25,7 +25,7 @@ class Order extends Model
             ->with(['address','user'=>function($user){
                 $user->with('addresses');
             },'discount','items'=>function ($item){
-                $item->with(['line_item'=>function ($line_item){
+                $item->where('line_item_type','!=','shipping')->with(['line_item'=>function ($line_item){
                     $line_item->with(['producer','medias']);
                 }]);
             },'notes'])
@@ -61,6 +61,29 @@ class Order extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+    public function products()
+    {
+        return $this
+            ->morphedByMany(Product::class,'line_item','order_items')
+            ->withPivot([
+                'deleted_at',
+                'quantity',
+                'is_virtual',
+                'discount_applied',
+                'discount_amount',
+                'main_price',
+                'price',
+                'total_discount_amount',
+                'total_main_price',
+                'total_price',
+                'line_item_type',
+                'line_item_id',
+            ]);
+    }
+    public function shipping()
+    {
+        return $this->morphedByMany(Shipping::class,'line_item','order_items');
+    }
 
     public function notes()
     {
@@ -74,21 +97,7 @@ class Order extends Model
 
     public function getProfitAttribute()
     {
-        if(isset($this->attributes['total_price_without_shipping'])) {
-            $total = $this->attributes['total_price_without_shipping'];
-        } elseif(isset($this->attributes['total_price_without_sale_price'])) {
-            $total = $this->attributes['total_price_without_sale_price'];
-        } else {
-            $total = $this->attributes['total_price'] ?? null;
-        }
-        if(!is_null($total) && isset($this->attributes['total_price']))
-            return $total - $this->attributes['total_price'];
-
-        return $total - 0;
-    }
-
-    public function getShippingPriceAttribute()
-    {
-        return 0;
+        $discount_amount = $this->attributes['total_main_price'] ?? 0;
+        return $this->attributes['total_final_price'] - $discount_amount;
     }
 }

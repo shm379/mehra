@@ -10,6 +10,7 @@ class Cart extends Order
 {
     protected $table = 'orders';
 
+
     public function newQuery($excludeDeleted = true): \Illuminate\Database\Eloquent\Builder
     {
         return parent::newQuery()

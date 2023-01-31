@@ -63,8 +63,8 @@ class TapinShipping extends ShippingService
                 "weight"=> $item->line_item->weight,
                 "product_id"=> null
             ];
-
         }
+
         $this->setOrderType();
 
         $request = $this->sendRequest();
@@ -72,25 +72,31 @@ class TapinShipping extends ShippingService
             if($request['send_price']){
                 $shipping = Shipping::query()->where('type',ShippingType::TAPIN)->first();
                 $price = $request['total_price'];
-//                if($shipping) {
-//                    $this->addShipping(
-//                        $shipping->id,
-//                        $price,
-//                    );
-//                }
+                if(config('shipping.types.type.'.ShippingType::TAPIN.'.is_rial')){
+                    $price = round($price/10);
+                }
+                if($shipping) {
+                    $this->addShipping(
+                        $shipping->id,
+                        $price,
+                    );
+                }
                 return $request;
             }
         }
         else
-            return 0;
+            return ['message'=>'خطایی در انتخاب آدرس به وجود آمده است ٬ لطفا مجددا تلاش فرمایید'];
     }
 
     public function sendRequest()
     {
         try {
-            $request = \Http::withHeaders([
+            $request = \Http::withoutVerifying()
+                ->withHeaders([
                 'Authorization'=> config('shipping.types.type.'.ShippingType::TAPIN.'.token')
-            ])->post($this->url,$this->form_data);
+            ])
+                ->withOptions(["verify"=>false])
+                ->post($this->url,$this->form_data);
             if($request->ok()){
                 $body = $request->json();
                 if($body['returns']['status']==200)

@@ -32,7 +32,7 @@ class CartController extends Controller {
     {
         $cart = $this->cart->getCart();
         if(!is_null($cart) && $cart->exists())
-            return new CartResource($this->cart->getCart());
+            return new CartResource($cart);
         else
             return new CartEmptyResource([]);
     }
@@ -62,11 +62,10 @@ class CartController extends Controller {
     public function addItem(AddToCartRequest $request)
     {
         $product_id = $request->validated('id');
-        $structure = $request->input('structure') ? strtolower(ProductStructure::getKey($request->input('structure'))) : 'product';
         $is_virtual = $request->input('is_virtual')==1;
         $quantity = $request->validated('quantity');
         try {
-            return new CartResource($this->cart->addToCart($structure,$product_id,$quantity,$is_virtual));
+            return new CartResource($this->cart->addToCart($product_id,$quantity,$is_virtual));
         }
         catch (AddItemException $exception){}
     }

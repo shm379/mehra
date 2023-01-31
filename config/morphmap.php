@@ -38,9 +38,6 @@ return [
     'user' => User::class,
     'temporary_upload' => TemporaryUpload::class,
     'order' => Order::class,
-    'product'=> [
-        Product::class,
-        Book::class,
-    ],
+    'product'=> Product::class,
     'book'=> Book::class
 ];
