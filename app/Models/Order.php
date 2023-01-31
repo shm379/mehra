@@ -97,7 +97,7 @@ class Order extends Model
 
     public function getProfitAttribute()
     {
-        $discount_amount = $this->attributes['total_main_price'] ?? 0;
-        return $this->attributes['total_price'] - $discount_amount;
+        $discount_amount = $this->attributes['total_price'] ?? 0;
+        return $this->attributes['total_main_price'] - $discount_amount;
     }
 }
