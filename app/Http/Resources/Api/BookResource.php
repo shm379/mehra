@@ -34,13 +34,13 @@ class BookResource extends MehraResource
                     return new CommentRankResourceCollection($this->rank_attributes);
                 }),
                 'related'=> $this->whenLoaded('productRelated',function (){
-                    return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
+                    return new ProductRelatedResourceCollection($this->productRelated->where('type',ProductRelatedType::RELATED));
                 }),
                 'upsell'=> $this->whenLoaded('productRelated',function (){
-                    return BookResource::collection($this->productRelated->where('type',ProductRelatedType::UPSELL));
+                    return new ProductRelatedResourceCollection($this->productRelated->where('type',ProductRelatedType::UPSELL));
                 }),
                 'cross_sell'=> $this->whenLoaded('productRelated',function (){
-                    return BookResource::collection($this->productRelated->where('type',ProductRelatedType::CROSS_SELL));
+                    return new ProductRelatedResourceCollection($this->productRelated->where('type',ProductRelatedType::CROSS_SELL));
                 }),
             ];
         }

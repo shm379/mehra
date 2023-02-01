@@ -101,7 +101,7 @@ class DiscountService extends CartService
             // get price of discount
             $discountAmount = $this->getDiscountAmount($cart->total_price);
             // set discount to items in cart for items not applied discount
-            if($this->getNotDiscountedQuantities()!==0) {
+            if($this->getNotDiscountedQuantities() !==0) {
                 $discountAmountPerItem = $discountAmount / $this->getNotDiscountedQuantities();
                 $this->updateCartItemsDiscount($discountAmountPerItem);
                 // update cart with discount price

@@ -95,7 +95,7 @@ class Product extends Model implements HasMedia
 
     public function productRelated(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Product::class,'product_related', 'product_id')
+        return $this->belongsToMany(Product::class,'product_related', 'product_id','related_id')
             ->using(ProductRelated::class)
             ->withPivot(['order','type']);
     }
