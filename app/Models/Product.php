@@ -59,20 +59,38 @@ class Product extends Model implements HasMedia
     public static function getValidCollections(): array
     {
         return [
-            'main_image',
-            'gallery',
+            'تصویرشاخص',
+            'تصویر پشت کتاب',
+            'گالری',
+            'فایل خلاصه کتاب',
+            'فایل صوتی نمونه',
+            'فایل صوتی اصلی',
         ];
     }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')
+        $this->addMediaCollection('تصویرشاخص')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['images/*'])
             ->singleFile();
-        $this->addMediaCollection('gallery')
+        $this->addMediaCollection('تصویر پشت کتاب')
             ->useDisk(config('media-library.disk_name'))
-            ->acceptsMimeTypes(['images/*']);
+            ->acceptsMimeTypes(['images/*'])
+            ->singleFile();
+        $this->addMediaCollection('گالری')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['images/*','videos/*']);
+        $this->addMediaCollection('فایل خلاصه کتاب')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['application/pdf'])
+            ->singleFile();
+        $this->addMediaCollection('فایل صوتی نمونه')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['audio/*']);
+        $this->addMediaCollection('فایل صوتی اصلی')
+            ->useDisk(config('media-library.disk_name'))
+            ->acceptsMimeTypes(['audio/*']);
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void

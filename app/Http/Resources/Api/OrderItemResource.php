@@ -27,10 +27,8 @@ class OrderItemResource extends MehraResource
                 return $this->line_item->sub_title;
             }),
             'image'=> $this->whenLoaded('line_item',function (){
-                if($this->line_item_type==ProductStructure::fromValue(ProductStructure::BOOK)->key && $this->line_item->hasMedia('cover_image'))
-                    return $this->line_item->getFirstMediaUrl('cover_image');
-
-                return $this->line_item->getFirstMediaUrl('main_image');
+                if($this->line_item->hasMedia('تصویر اصلی'))
+                    return $this->line_item->getFirstMediaUrl('تصویر اصلی');
             }),
             'price'=> $this->price,
             'currency'=> 'تومان',

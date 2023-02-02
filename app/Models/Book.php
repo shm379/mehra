@@ -55,10 +55,12 @@ class Book extends Product
     public static function getValidCollections(): array
     {
         return [
-            'cover_image',
-            'back_image',
-            'gallery',
-            'excerpt',
+            'تصویرشاخص',
+            'تصویر پشت کتاب',
+            'گالری',
+            'فایل خلاصه کتاب',
+            'فایل صوتی نمونه',
+            'فایل صوتی اصلی',
         ];
     }
     public function registerMediaCollections(): void

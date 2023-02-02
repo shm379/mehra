@@ -20,11 +20,7 @@ class ProductImageResource extends MehraResource
      */
     public function toArray($request)
     {
-        $image = 'main_image';
-        if($this->structure) {
-            $image = $this->structure == ProductStructure::BOOK ? 'cover_image' : 'main_image';
-
-        }
+        $image = 'تصویرشاخص';
         $media = $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
         return [
             'id'=> $this->id,

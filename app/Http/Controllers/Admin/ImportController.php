@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Creator;
 use App\Models\Import;
+use App\Models\Product;
 use App\Services\Admin\Import\WoocommerceService;
 use App\Services\Admin\ImportService;
 use Illuminate\Http\Request;
@@ -33,8 +34,12 @@ class ImportController extends Controller
      */
     public function importFromWoocommerce()
     {
-        // Get Creator Types
-        $this->import->importCreatorTypes();
+        // Get And Import Creator Types
+//        $this->import->importCreatorTypes();
+        // Get And Import Creators
+//        $this->import->importCreators();
+        // Get And Import Products
+        $this->import->importProducts();
         // Get Products
         $products = collect([]);
         for($i=1;$i<=1;$i++){
@@ -62,7 +67,7 @@ class ImportController extends Controller
                     'max_purchases_per_user' => null,
                     'weight' => $product->weight
                 ];
-                $newProduct = Product::query()->create($newItem);
+                $newProduct = \App\Models\Product::query()->create($newItem);
                 Import::query()->create([
                     'model_id' => $newProduct->id,
                     'model_type' => 'product',

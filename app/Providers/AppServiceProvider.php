@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Model::preventLazyLoading(! app()->isProduction());
+//        Model::preventLazyLoading(! app()->isProduction());
 //        $this->app->register(MediaServiceProvider::class);
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);

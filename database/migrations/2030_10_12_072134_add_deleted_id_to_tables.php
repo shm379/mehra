@@ -37,6 +37,7 @@ return new class extends Migration
         'messages',
         'stocks',
         'otps',
+        'creators'
     ];
     /**
      * Run the migrations.

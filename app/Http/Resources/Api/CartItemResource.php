@@ -26,10 +26,8 @@ class CartItemResource extends MehraResource
                 return $this->line_item->sub_title;
             }),
             'image'=> $this->whenLoaded('line_item.medias',function (){
-                if($this->line_item->hasMedia('cover_image'))
-                    return $this->line_item->getFirstMediaUrl('cover_image');
-
-                return $this->line_item->getFirstMediaUrl('main_image');
+                if($this->line_item->hasMedia('image'))
+                    return $this->line_item->getFirstMediaUrl('image');
             }),
             'producer'=> $this->whenLoaded('line_item.producer',function (){
                 return ProducerResource::make($this->line_item->producer);

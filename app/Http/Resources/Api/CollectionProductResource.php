@@ -23,11 +23,9 @@ class CollectionProductResource extends MehraResource
             'type'=> ProductType::getDescription($this->type),
             'title'=> $this->title,
             'image'=> $this->whenLoaded('medias',function (){
-                $image = 'main_image';
-                if($this->structure) {
-                    $image = $this->structure == ProductStructure::BOOK ? 'cover_image' : 'main_image';
+                if($this->hasMedia('تصویرشاخص')) {
+                    $this->getFirstMediaUrl('تصویرشاخص');
                 }
-                return $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
             }),
         ];
     }

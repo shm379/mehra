@@ -9,4 +9,5 @@ class CreatorType extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
 }

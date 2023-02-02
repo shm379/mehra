@@ -16,10 +16,6 @@ class UserCollectionResource extends MehraResource
     {
         return [
             'image'=> $this->whenLoaded('model',function (){
-                if($this->model->hasMedia('cover_image'))
-                    return $this->model->getFirstMediaUrl('cover_image');
-                if($this->model->hasMedia('main_image'))
-                    return $this->model->getFirstMediaUrl('main_image');
                 if($this->model->hasMedia('image'))
                     return $this->model->getFirstMediaUrl('image');
             }),

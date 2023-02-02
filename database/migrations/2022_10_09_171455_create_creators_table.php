@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('creators', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->text('description');
-            $table->unsignedSmallInteger('birthday');
+            $table->string('title')->nullable();
+            $table->string('slug')->unique()->nullable();
+            $table->string('name');
+            $table->enum('gender',\App\Enums\CreatorGender::asArray())->nullable();
+            $table->text('description')->nullable();
+            $table->unsignedSmallInteger('birthday')->nullable();
             $table->string('nickname')->nullable();
             $table->timestamps();
         });
