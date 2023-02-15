@@ -20,7 +20,7 @@ class ProductImageResource extends MehraResource
      */
     public function toArray($request)
     {
-        $image = 'تصویرشاخص';
+        $image = 'image';
         $media = $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
         return [
             'id'=> $this->id,

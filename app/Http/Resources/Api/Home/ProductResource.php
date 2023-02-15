@@ -21,7 +21,6 @@ class ProductResource extends MehraResource
     public function toArray($request)
     {
         $image = 'image';
-        $media = $this->hasMedia($image) ? $this->getFirstMediaUrl($image) : null;
         return [
             'id'=> $this->id,
             'title'=> preg_replace( "/\r|\n/", "", $this->title ),

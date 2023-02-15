@@ -16,7 +16,7 @@ class Collections0Resource extends HomeResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            'items'=> ProductImageResource::collection($this->products()->get())
+            'items'=> ProductImageResource::collection($this->products()->with(['medias'])->get())
         ];
     }
 
