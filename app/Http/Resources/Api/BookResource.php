@@ -74,8 +74,8 @@ class BookResource extends MehraResource
             }),
             'is_liked'=> $this->is_liked,
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('تصویرشاخص'))
-                    return $this->getFirstMediaUrl('تصویرشاخص');
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
             }),
             'back_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('back_image'))

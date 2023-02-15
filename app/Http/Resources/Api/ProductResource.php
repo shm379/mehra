@@ -62,8 +62,8 @@ class ProductResource extends MehraResource
             }),
             'creators'=> $this->whenLoaded('creators'),
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('تصویرشاخص'))
-                    return $this->getFirstMediaUrl('تصویرشاخص');
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
             }),
             'gallery'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('gallery'))

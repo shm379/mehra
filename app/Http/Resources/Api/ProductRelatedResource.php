@@ -32,8 +32,8 @@ class ProductRelatedResource extends MehraResource
             'max_number'=> $this->max_purchases_per_user,
             'is_liked'=> $this->is_liked,
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('تصویرشاخص'))
-                    return $this->getFirstMediaUrl('تصویرشاخص');
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
             }),
 
         ];

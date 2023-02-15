@@ -37,8 +37,8 @@ class BookResource extends ProductResource
                 return BookResource::collection($this->productRelated->where('type',ProductRelatedType::RELATED));
             }),
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('تصویرشاخص'))
-                    return $this->getFirstMediaUrl('تصویرشاخص');
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
             }),
             'back_image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('back_image'))

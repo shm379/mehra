@@ -23,8 +23,8 @@ class CollectionProductResource extends MehraResource
             'type'=> ProductType::getDescription($this->type),
             'title'=> $this->title,
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('تصویرشاخص')) {
-                    $this->getFirstMediaUrl('تصویرشاخص');
+                if($this->hasMedia('image')) {
+                    $this->getFirstMediaUrl('image');
                 }
             }),
         ];
