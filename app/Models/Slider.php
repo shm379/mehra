@@ -14,13 +14,13 @@ class Slider extends Model implements HasMedia
     public static function getValidCollections(): array
     {
         return [
-            'main_image',
+            'image',
         ];
     }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main_image')->useDisk(config('media-library.disk_name'))->singleFile();
+        $this->addMediaCollection('image')->useDisk(config('media-library.disk_name'))->singleFile();
     }
 
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void

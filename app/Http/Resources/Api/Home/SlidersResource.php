@@ -23,8 +23,8 @@ class SlidersResource extends MehraResource
             'link'=> $this->link,
             'color'=> $this->color,
             'image'=> $this->whenLoaded('medias',function (){
-                if($this->hasMedia('main_image'))
-                    return $this->getFirstMediaUrl('main_image');
+                if($this->hasMedia('image'))
+                    return $this->getFirstMediaUrl('image');
             })
         ];
     }

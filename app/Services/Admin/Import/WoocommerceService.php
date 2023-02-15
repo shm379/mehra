@@ -105,7 +105,7 @@ class WoocommerceService extends ImportService
             'applications',
             'book-genre',
         ];
-        $relateds = [];
+        $related_items = [];
         foreach ($products as $product){
             $newItem = [
                 'title' => $product->name,
@@ -124,18 +124,22 @@ class WoocommerceService extends ImportService
                 'weight' => $product->weight,
             ];
             if(! $this->isImportedBefore($product->id,'product')) {
-                dd(collect($product->creators)->flatten()->groupBy('ID'));
+                dd($product->Author_Books);
+
+                dd($product->Cover_Desiger_Book); // [426]
+                dd($product->Illustrator_Book);// [212,426]
+                dd($product->Graphic_Designer_Book); // [3125]
                 $creators = $this->getFromImported(collect($product->creators)->flatten()->pluck('ID')->toArray(),'creator');
 
                 $description = $product->content;
                 $created_id = Product::query()->create($newItem);
 //                $created_id->creators()->attach($creators,['creator_creator_type_id'=>]);
-                $relateds[$created_id->id] = $product->related_ids;
+                $related_items[$created_id->id] = $product->related_ids;
 
                 $this->imported($product->ID, $created_id->id, 'product');
             }
         }
-        $this->importRelatedProducts($relateds);
+        $this->importRelatedProducts($related_items);
     }
 
 }
