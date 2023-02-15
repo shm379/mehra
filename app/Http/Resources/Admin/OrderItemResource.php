@@ -44,8 +44,8 @@ class OrderItemResource extends JsonResource
             'image'=> $this->whenLoaded('line_item',function (){
                 if($this->line_item->hasMedia('back_image'))
                     return $this->line_item->getFirstMediaUrl('back_image');
-                if($this->line_item->hasMedia('main_image'))
-                    return $this->line_item->getFirstMediaUrl('main_image');
+                if($this->line_item->hasMedia('image'))
+                    return $this->line_item->getFirstMediaUrl('image');
             }),
         ];
     }

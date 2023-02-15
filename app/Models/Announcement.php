@@ -34,6 +34,6 @@ class Announcement extends Model implements HasMedia
             $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
         }
 
-        $conversion->nonQueued()->performOnCollections('main_image');
+        $conversion->nonQueued()->performOnCollections('image');
     }
 }

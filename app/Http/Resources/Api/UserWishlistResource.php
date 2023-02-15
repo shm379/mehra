@@ -22,8 +22,8 @@ class UserWishlistResource extends MehraResource
             'image'=> $this->whenLoaded('model',function (){
                 if($this->model->hasMedia('back_image'))
                     return $this->model->getFirstMediaUrl('back_image');
-                if($this->model->hasMedia('main_image'))
-                    return $this->model->getFirstMediaUrl('main_image');
+                if($this->model->hasMedia('image'))
+                    return $this->model->getFirstMediaUrl('image');
             }),
             'title'=> $this->model->title,
             'id'=> $this->model_id,

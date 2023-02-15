@@ -7,7 +7,7 @@ export default () => {
         description: null,
         is_active: null,
         cover_image: null,
-        main_image: null,
+        image: null,
         collection_type: null,
         items: {},
     }), sections = ref([
