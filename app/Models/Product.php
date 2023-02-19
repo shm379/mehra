@@ -36,10 +36,12 @@ class Product extends Model implements HasMedia
         return $this
             ->with([
                 'rank_attributes',
-                'comments'=>function($c){
-                    $c->with(['user','points','likes','medias']);
-                },
                 'medias',
+                'volumes',
+                'producer',
+                'productRelated'=>function($related){
+                    $related->with(['medias']);
+                },
                 'producer',
                 'creators'=>function($creator){
                     $creator->with('types','medias');
