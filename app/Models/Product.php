@@ -38,7 +38,6 @@ class Product extends Model implements HasMedia
                 'rank_attributes',
                 'medias',
                 'volumes',
-                'producer',
                 'productRelated'=>function($related){
                     $related->with(['medias']);
                 },
@@ -312,5 +311,22 @@ class Product extends Model implements HasMedia
         $this->loadMissing($with);
 
         return $this->toArray();
+    }
+
+    public function volume()
+    {
+        return $this->belongsTo(Volume::class);
+    }
+
+    public function volumes()
+    {
+        return $this->hasMany(Book::class,'volume_id')->with('volume')->orderBy('order_volume');
+    }
+
+    public function scopeVolumeTitle($query, $title)
+    {
+        return Book::whereHas('volume', function ($query) use ($title) {
+            $query->where('title', 'like', '%'.$title.'%');
+        });
     }
 }
