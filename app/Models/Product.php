@@ -312,7 +312,6 @@ class Product extends Model implements HasMedia
 
         return $this->toArray();
     }
-
     public function volume()
     {
         return $this->belongsTo(Volume::class);
