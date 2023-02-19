@@ -36,7 +36,7 @@ class BookController extends Controller {
             });
         });
         // get users from query builder
-        $books = QueryBuilder::for(Book::class)
+        $books = QueryBuilder::for(Product::class)
             ->with([
                 'productRelated',
                 'categories',
@@ -70,7 +70,7 @@ class BookController extends Controller {
             ->withQueryString();
         return new BookResourceCollection($books);
     }
-    public function show(Book $book)
+    public function show(Product $book)
     {
         try {
         } catch (ModelNotFoundException $exception){
