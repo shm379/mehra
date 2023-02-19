@@ -4,6 +4,7 @@ namespace App\Services\Admin\Import;
 use App\Enums\ProductStructure;
 use App\Enums\ProductType;
 use App\Models\Creator;
+use App\Models\CreatorProduct;
 use App\Models\CreatorType;
 use App\Models\Import;
 use App\Models\Product;
@@ -83,6 +84,7 @@ class WoocommerceService extends ImportService
                 $name = $creator->title;
                 $types = $this->getFromImported($creator->taxonomies->pluck('term_taxonomy_id')->toArray(), 'creator_type');
                 $description = $creator->content;
+                dd($creator->ID);
                 $created_id = Creator::query()->create([
                     'name' => $name,
                     'gender' => $gender,
@@ -124,19 +126,36 @@ class WoocommerceService extends ImportService
                 'weight' => $product->weight,
             ];
             if(! $this->isImportedBefore($product->id,'product')) {
+                $created_id = Product::query()->create($newItem);
+                $related_items[$created_id->id] = $product->related_ids;
+
+                // import author books
+                $author_books = (array)$product->Author_Books;
+                if(is_array($author_books)){
+                    foreach ($author_books as $author_Book) {
+                      $real_id = Import::query()->where('wp_id',$author_Book->ID)->where('model_type','creator')->first();
+                      dd($real_id->model_id);
+                      if($real_id &&
+                          CreatorProduct::query()->where('creator_id',$real_id->model_id)->where('product_id',$created_id->id)->exists()
+                      ) {
+                          dd($real_id->model_id);
+                          CreatorProduct::query()->create([
+                              'product_id' => $created_id->id,
+                              'creator_id'=>$real_id->model_id,
+                              'creator_creator_type_id'=>$author_Book->types[0]
+                          ]);
+                      }
+                    }
+                }
                 dd($product->Author_Books);
+                $this->imported($product->id, $created_id->id, 'product');
 
                 dd($product->Cover_Desiger_Book); // [426]
                 dd($product->Illustrator_Book);// [212,426]
                 dd($product->Graphic_Designer_Book); // [3125]
                 $creators = $this->getFromImported(collect($product->creators)->flatten()->pluck('ID')->toArray(),'creator');
 
-                $description = $product->content;
-                $created_id = Product::query()->create($newItem);
-//                $created_id->creators()->attach($creators,['creator_creator_type_id'=>]);
-                $related_items[$created_id->id] = $product->related_ids;
 
-                $this->imported($product->ID, $created_id->id, 'product');
             }
         }
         $this->importRelatedProducts($related_items);

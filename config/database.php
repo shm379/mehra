@@ -96,10 +96,10 @@ return [
         'corcel' => [
             // for WordPress database (used by Corcel)
             'driver'    => 'mysql',
-            'host'      => 'alfie.iran.liara.ir:34833',
-            'database'  => 'gallant_fermat',
+            'host'      => 'alfie.iran.liara.ir:30236',
+            'database'  => 'suspicious_driscoll',
             'username'  => 'root',
-            'password'  => '6Xoeidf3Q7UqLRi89XDZmR0H',
+            'password'  => 'dEIkl1CxKn4gBhy38vxWmgqA',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => 'wp_',

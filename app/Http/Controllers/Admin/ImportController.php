@@ -37,7 +37,7 @@ class ImportController extends Controller
         // Get And Import Creator Types
 //        $this->import->importCreatorTypes();
         // Get And Import Creators
-//        $this->import->importCreators();
+        $this->import->importCreators();
         // Get And Import Products
         $this->import->importProducts();
 

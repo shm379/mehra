@@ -17,6 +17,7 @@ class BookCreatorResource extends MehraResource
     public function toArray($request)
     {
         return [
+            'id'=> $this->id,
             'name'=> $this->name,
             'role'=> $this->pivot->creator_creator_type_id->name,
             'icon'=> $this->whenLoaded('medias',function (){
