@@ -301,6 +301,7 @@ class Product extends Model implements HasMedia
             'attributeValues'=>function($value) {
                 $value->with('attribute');
             },
+            'volumes',
             'categories',
             'productRelated',
             'collections',
