@@ -42,10 +42,6 @@ class Creator extends Model implements HasMedia
 //        $conversion->nonQueued()->performOnCollections('image');
     }
 
-    public function getNameAttribute()
-    {
-        return $this->attributes['first_name'].' '.$this->attributes['last_name'];
-    }
     public function products()
     {
         return $this->belongsToMany(Product::class);
