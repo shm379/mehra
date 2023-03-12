@@ -12,3 +12,6 @@
         </vs-tab>
     </vs-tabs>
 </template>
+<script>
+
+</script>

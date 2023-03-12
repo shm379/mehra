@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\AttributeType;
 use App\Enums\CollectionType;
+use App\Enums\ProducerType;
 use App\Enums\ProductStructure;
 use App\Enums\ProductType;
 use App\Http\Resources\Admin\ProductAttributeResourceCollection;
@@ -119,6 +120,15 @@ class AutocompleteController extends Controller
             $collection_types[] = ['label'=>CollectionType::getDescription($i),'value'=>$i];
         }
         return $collection_types;
+    }
+    public function producerTypes(Request $request)
+    {
+        $producer_types = [];
+        $producerTypes = array_flip(ProducerType::asArray());
+        foreach ($producerTypes as $i=> $producerType){
+            $producer_types[] = ['label'=>ProducerType::getDescription($i),'value'=>$i];
+        }
+        return $producer_types;
     }
     public function award($q, Request $request)
     {

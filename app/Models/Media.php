@@ -17,9 +17,16 @@ use Spatie\MediaLibrary\Support\TemporaryDirectory;
 
 class Media extends BaseMedia
 {
+    protected $with = ['medias'];
     public function medias()
     {
-        return $this->morphedByMany(Media::class, 'model','model_has_media');
+        return $this->morphToMany(config('media-library.media_model'), 'model','model_has_media')
+            ->using(ModelHasMedia::class)
+            ->withPivot([
+                'order',
+                'collection_name',
+                'tag'
+            ]);
     }
     public function users()
     {

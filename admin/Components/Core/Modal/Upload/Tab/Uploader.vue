@@ -1,6 +1,6 @@
 <template>
     <div>
-upload
+        <vs-upload></vs-upload>
 
     </div>
 </template>

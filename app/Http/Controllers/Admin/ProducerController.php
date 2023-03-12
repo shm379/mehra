@@ -76,7 +76,8 @@ class ProducerController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Producer/Form')
+            ->with([]);
     }
 
     /**
@@ -87,7 +88,7 @@ class ProducerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

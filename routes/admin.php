@@ -103,6 +103,7 @@ Route::prefix('/admin')
                 Route::get('/ac/illustrators/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'illustrators']);
                 Route::get('/ac/categories/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'categories']);
                 Route::get('/ac/collection-types', [\App\Http\Controllers\Admin\AutocompleteController::class, 'collectionTypes']);
+                Route::get('/ac/producer-types', [\App\Http\Controllers\Admin\AutocompleteController::class, 'producerTypes']);
                 Route::get('/ac/collections/{q}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'collections']);
                 Route::get('/ac/attributes/{attribute}/{title?}', [\App\Http\Controllers\Admin\AutocompleteController::class, 'attributeValuesById'])->name('attributes.show');
                 Route::get('/ac/attributes', [\App\Http\Controllers\Admin\AutocompleteController::class, 'attributes']);

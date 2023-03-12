@@ -66,7 +66,7 @@ export default (prepareFlag = false) => {
             submitUrl.value = route('admin.products.update', props.product.id);
         }
         prepareBook()
-        // prepareAttributes()
+        prepareAttributes()
     }
 
     function prepareBook() {

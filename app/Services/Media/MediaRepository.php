@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Collection as DbCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Models\Media;
 
 class MediaRepository
 {
@@ -56,6 +56,7 @@ class MediaRepository
 
     public function getByModelType(string $modelType): DbCollection
     {
+        dd($this->query()->get()->pluck('medias'));
         return $this->query()->wherePivot('model_type', $modelType)->get();
     }
 

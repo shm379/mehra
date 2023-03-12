@@ -5,6 +5,7 @@ namespace App\Http\Resources\Admin;
 use App\Enums\ProductType;
 use App\Enums\ProductRelatedType;
 use App\Helpers\Helpers;
+use App\Services\Media\Media;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FileManagerResource extends MehraAdminResource
@@ -18,13 +19,12 @@ class FileManagerResource extends MehraAdminResource
      */
     public function toArray($request)
     {
-        $file = explode('.', $this->resource);
-        $directory = explode('/',$file[array_key_last($file)-1]);
         return [
-          'src'=> $this->resource,
-          'name'=> end($directory),
-          'directory'=> $directory,
-          'ext'=> end($file)
+          'url'=> $this->resource->original_url,
+          'name'=> $this->resource->name,
+          'size'=> $this->resource->humanReadableSize,
+          'type'=> $this->resource->type,
+          'ext'=> $this->resource->extension
         ];
     }
 }

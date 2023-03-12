@@ -8,6 +8,8 @@ use App\Services\CartService;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
 use Laravel\Scout\Searchable;
+use Spatie\Image\Exceptions\InvalidManipulation;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -63,51 +65,59 @@ class Product extends Model implements HasMedia
     public static function getValidCollections(): array
     {
         return [
-            'تصویرشاخص',
-            'تصویر پشت کتاب',
-            'گالری',
-            'فایل خلاصه کتاب',
-            'فایل صوتی نمونه',
-            'فایل صوتی اصلی',
+            'image',
+            'back_image',
+            'gallery',
+            'excerpt',
+            'sample_sound',
+            'sound',
         ];
     }
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('تصویرشاخص')
+        $this->addMediaCollection('image')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['images/*'])
             ->singleFile();
-        $this->addMediaCollection('تصویر پشت کتاب')
+        $this->addMediaCollection('back_image')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['images/*'])
             ->singleFile();
-        $this->addMediaCollection('گالری')
+        $this->addMediaCollection('gallery')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['images/*','videos/*']);
-        $this->addMediaCollection('فایل خلاصه کتاب')
+        $this->addMediaCollection('excerpt')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['application/pdf'])
             ->singleFile();
-        $this->addMediaCollection('فایل صوتی نمونه')
+        $this->addMediaCollection('sample_sound')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['audio/*']);
-        $this->addMediaCollection('فایل صوتی اصلی')
+        $this->addMediaCollection('sound')
             ->useDisk(config('media-library.disk_name'))
             ->acceptsMimeTypes(['audio/*']);
     }
 
+    /**
+     * @throws InvalidManipulation
+     */
     public function registerMediaConversions(\Spatie\MediaLibrary\MediaCollections\Models\Media $media = null): void
     {
-//        $conversion = $this->addMediaConversion('thumbnail');
-//
-//        $crop = $media->getCustomProperty('crop');
-//
-//        if (!empty($crop)) {
-//            $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
-//        }
-//
-//        $conversion->nonQueued()->performOnCollections('image');
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Manipulations::FIT_CROP, 300, 300)
+            ->nonQueued();
+
+        $conversion = $this->addMediaConversion('thumbnail');
+
+        $crop = $media->getCustomProperty('crop');
+
+        if (!empty($crop)) {
+            $conversion->manualCrop($crop['width'], $crop['height'], $crop['left'], $crop['top']);
+        }
+
+        $conversion->nonQueued()->performOnCollections('image');
     }
 
     public function parent()

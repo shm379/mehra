@@ -29,7 +29,6 @@
       </ui-row>
       <ui-row class="sticky top-0 bg-white z-10 ">
         <ui-col full>
-            {{sections}}
           <ui-page-header-anchors  v-model="sections"></ui-page-header-anchors>
         </ui-col>
       </ui-row>
@@ -46,7 +45,6 @@
         </ui-col>
 
         <ui-col class="sticky top-10 bg-white ">
-            {{form}}
 
             <ui-box title="قیمت">
               <component :is="`components-product-form-price`" :isUpdate="isUpdate" :form="form" />
