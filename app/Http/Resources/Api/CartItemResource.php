@@ -33,7 +33,7 @@ class CartItemResource extends MehraResource
                 return ProducerResource::make($this->line_item->producer);
             }),
             'structure'=> $this->whenLoaded('line_item',function (){
-                return ProductStructure::getDescription($this->line_item->structure);
+                return ProductStructure::getDescription((int)$this->line_item->structure);
             }),
             'price'=> $this->price,
             'price_formatted'=> Helpers::toman($this->price),
