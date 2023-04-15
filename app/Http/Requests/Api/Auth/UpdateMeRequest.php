@@ -42,6 +42,14 @@ class UpdateMeRequest extends ApiFormRequest
             "first_name"=> ['nullable','persian_alpha'],
             "last_name"=> ['nullable','persian_alpha'],
             "national_number"=> ['nullable','ir_national_code','unique:App\Models\User,national_number'],
+            "state_id"=> [
+                'nullable',
+                'exists:App\Models\State,id'
+            ],
+            "city_id"=> [
+                'nullable',
+                'exists:App\Models\City,id'
+            ],
             "email"=> [
                 'nullable',
                 'email:rfc,dns',
@@ -75,6 +83,7 @@ class UpdateMeRequest extends ApiFormRequest
     {
         return [
             "national_number"=> 'کد ملی نامعتبر است',
+            'city_id' => 'شهر انتخابی صحیح نمیباشد',
         ];
     }
 
