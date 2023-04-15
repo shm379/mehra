@@ -48,7 +48,7 @@ class UserResource extends MehraResource
                 return $this->following()->get();
             }),
             'following_count'=> $this->following()->count(),
-            'image'=> $this->hasMedia('avatar') && file_exists($this->getFirstMediaPath('avatar','thumbnail')) ? $this->getFirstMediaUrl('avatar','thumbnail') : $this->getDefaultAvatar() ,
+            'image'=> $this->hasMedia('avatar') ? $this->getFirstMediaUrl('avatar','thumbnail') : $this->getDefaultAvatar() ,
         ];
     }
 }
