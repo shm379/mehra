@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Api;
 
+use App\Enums\OrderStatus;
 use App\Helpers\Helpers;
 
 
@@ -24,6 +25,8 @@ class OrderResource extends MehraResource
             }),
             'total_price'=> $this->total_price,
             'currency'=> 'تومان',
+            'status'=> (int)$this->status,
+            'status_formatted'=> OrderStatus::getDescription($this->status),
             'total_price_formatted'=> Helpers::toman($this->total_price),
             'shipping_price'=> $this->shipping_price,
             'shipping_price_formatted'=> Helpers::toman($this->shipping_price),
