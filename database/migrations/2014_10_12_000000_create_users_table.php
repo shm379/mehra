@@ -30,6 +30,7 @@ return new class extends Migration
             $table->enum('type',\App\Enums\UserType::asArray())->default(\App\Enums\UserType::PERSON)->nullable();
             $table->enum('gender',\App\Enums\UserGender::asArray())->nullable();
             $table->timestamps();
+            $table->foreign('state_id')->references('id')->on('states');
             $table->foreign('city_id')->references('id')->on('cities');
         });
     }
