@@ -12,7 +12,7 @@ class UserViews
 {
     private $routes = [
         'api.v1.pages.show'=>'page',
-        'api.v1.books.show'=>'book'
+        'api.v1.books.show'=>'book',
     ];
     private function viewed($model){
         if($model) {
@@ -42,7 +42,7 @@ class UserViews
                foreach ($this->routes as $parameter) {
                    if($request->route()->hasParameter($parameter)) {
                        $this->viewed($request->route()->parameter($parameter));
-                       return;
+                       return $next($request);
                    }
                }
            }
