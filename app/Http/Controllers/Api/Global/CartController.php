@@ -84,4 +84,18 @@ class CartController extends Controller {
         }
     }
 
+    /*
+     * Empty All Items From Cart With Cart Service
+     * @response CartResource $cart
+     */
+    public function emptyCart()
+    {
+        try {
+            return new CartResource($this->cart->emptyCary());
+        }
+        catch (\Exception $exception){
+            return $this->errorResponse('خطا در عملیات');
+        }
+    }
+
 }
