@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('notifier_id');
             $table->unsignedBigInteger('actor_id');
+            $table->unsignedBigInteger('message_id');
             $table->unsignedBigInteger('object_id');
             $table->string('object_type', 31);
             $table->enum('activity_type', \App\Enums\NotificationActivityType::asArray());
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->index(['object_id', 'object_type']);
             $table->foreign('actor_id')->references('id')->on('users');
             $table->foreign('notifier_id')->references('id')->on('users');
+            $table->foreign('message_id')->references('id')->on('messages');
         });
     }
 

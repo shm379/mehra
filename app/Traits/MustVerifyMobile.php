@@ -4,7 +4,7 @@ namespace App\Traits;
 use App\Helpers\Helpers;
 use App\Notifications\SendVerifySMS;
 
-trait MustVerifyMobile {
+trait MustVerifyMobile  {
     public function hasVerifiedMobile(): bool
     {
         return ! is_null($this->mobile_verified_at);

@@ -48,6 +48,7 @@ class ProductController extends Controller {
     }
     public function show(Product $product): ProductResource
     {
+
         return ProductResource::make($product->load([
             'related',
             'upsell',

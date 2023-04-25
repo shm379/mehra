@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
 use App\Models\UserView;
 use App\Observers\UserViewObserver;
 use Illuminate\Auth\Events\Registered;
@@ -32,7 +33,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $observers = [
-        UserView::class => [UserViewObserver::class],
+//        Product::class => [ProductObserver::class],
     ];
 
     /**

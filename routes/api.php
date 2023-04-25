@@ -35,6 +35,8 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
             Route::post('/sync', [App\Http\Controllers\Api\Global\CartController::class,'syncCart'])->name('sync-cart');
             Route::post('/add', [App\Http\Controllers\Api\Global\CartController::class,'addItem'])->name('add-item');
             Route::post('/remove', [App\Http\Controllers\Api\Global\CartController::class,'removeItem'])->name('remove-item');
+            Route::post('/empty', [App\Http\Controllers\Api\Global\CartController::class,'emptyCart'])->name('empty-cart');
+
         });
 
     //checkout

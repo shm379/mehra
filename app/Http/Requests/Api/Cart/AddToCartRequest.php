@@ -26,6 +26,11 @@ class AddToCartRequest extends ApiFormRequest
         $max_purchases_per_user = 1;
         $this->product = Product::query()->find($this->request->get('id'));
         return [
+            'id'=> [
+                'required',
+                'exists:App\Models\Product,id',
+                //new AddToCartRule()
+            ],
             'quantity'=> [
                 'required',
                 'integer',
@@ -44,11 +49,7 @@ class AddToCartRequest extends ApiFormRequest
                         );
                 },
             ],
-            'id'=>[
-                'required',
-                'exists:App\Models\Product,id',
-//                new AddToCartRule()
-            ],
+
             'extra_info'=>'nullable',
             'is_virtual'=>'nullable',
         ];
