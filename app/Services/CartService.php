@@ -203,6 +203,23 @@ class CartService
 
         return self::getCart();
     }
+
+    public function emptyCary()
+    {
+        $cart = $this->getCart(false);
+        if($cart){
+            $cart->items()->delete();
+            $cart->total_price = 0;
+            $cart->total_main_price = 0;
+            $cart->total_final_price = 0;
+            $cart->total_shipping_price = null;
+            $cart->total_discount_amount = null;
+            $cart->total_after_discount = null;
+            $cart->save();
+        }
+
+        return self::getCart();
+    }
     public function selectAddress($address_id)
     {
         $cart = self::getCart();
