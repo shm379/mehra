@@ -15,6 +15,7 @@ class Notification extends Model
         "object_type",
         "activity_type",
         "message_id",
+        "body",
         "sent_at",
         'read_at',
     ];
@@ -72,7 +73,7 @@ class Notification extends Model
 
     public function messageModel()
     {
-        return $this->belongsTo(Message::class,'object_id');
+        return $this->belongsTo(Message::class,'message_id');
     }
 
     public function getIsReadAttribute(): int

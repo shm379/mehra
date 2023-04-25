@@ -12,10 +12,20 @@ use App\Http\Resources\Api\ProductCommentResourceCollection;
 use App\Http\Resources\Api\ProductResource;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class CommentLikeController extends Controller {
+
+    /*
+ * Cart Service Inject
+ */
+    protected NotificationService $notificationService;
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -26,7 +36,8 @@ class CommentLikeController extends Controller {
     public function store(Comment $comment)
     {
         try {
-            $comment->likes()->firstOrCreate(['user_id'=>$this->user_id]);
+            $comment->likes()->firstOrCreate(['user_id'=>auth()->id()]);
+            $this->notificationService->commentLike($comment,auth()->id());
         } catch (\Exception $exception){
             return $this->errorResponse('خطا در انجام عملیات');
         }

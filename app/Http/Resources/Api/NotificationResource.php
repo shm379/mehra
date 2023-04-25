@@ -17,9 +17,9 @@ class NotificationResource extends MehraResource
     {
         return [
             'id'=> $this->id,
-            'discount'=> $this->discount,
+            'discount'=> $this->whenLoaded('discount'),
             'type'=> $this->activity_type,
-            'body'=> $this->message,
+            'body'=>  $this->body,
             'date'=> $this->sent_at,
             'is_readed'=> !is_null($this->read_at),
             'read_at'=> $this->read_at,

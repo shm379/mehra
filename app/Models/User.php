@@ -121,7 +121,7 @@ class User extends Authenticatable implements HasMedia
 
     public function messages()
     {
-        return $this->hasMany(Notification::class,'actor_id');
+        return $this->hasMany(Notification::class,'notifier_id');
     }
 
     public function followers()
