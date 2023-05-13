@@ -28,4 +28,19 @@ class NotificationService
             'body'=> $actor->name.' کامنت شما را لایک کرد'
         ]);
     }
+    public function commentReply($comment, $actor_id)
+    {
+        $user = User::query()->find($comment->user_id);
+        $actor = User::query()->find($actor_id);
+        $body = $actor->name . ' روی کامنت شما پاسخ داد: "' . $comment->body . '"';
+        $user->messages()->create([
+            'notifier_id' => $comment->user_id,
+            'actor_id' => $actor_id,
+            'object_id' => $comment->id,
+            'object_type' => 'comment',
+            'activity_type' => NotificationActivityType::COMMENT_REPLY,
+            'sent_at' => now(),
+            'body' => $body
+        ]);
+    }
 }
