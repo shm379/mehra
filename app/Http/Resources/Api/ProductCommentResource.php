@@ -25,8 +25,9 @@ class ProductCommentResource extends MehraResource
                 return new CommentGalleryResourceCollection($this->comments->pluck('medias')->flatten());
             }),
             "comments"=> $this->whenLoaded('comments',function (){
-                return new CommentResourceCollection($this->comments);
-            })
+                return new CommentResourceCollection($this->comments->whereNull('parent_id'));
+            }),
+
         ];
     }
 }

@@ -30,7 +30,7 @@ class UserProductWishlistController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Product $product)
+    public function store(App\Request\Api\Profile\UserProductWishlistStore $product)
     {
         try {
             $wishlist = auth()->user()->wishlist();

@@ -34,6 +34,8 @@ class CollectionController extends Controller {
             ->allowedIncludes([
             ])
             ->allowedFilters([
+                AllowedFilter::exact('tags.id'),
+                AllowedFilter::exact('tags.name'),
                 'title',
                 $globalSearch])
             ->paginate($request->has('per_page') !== null ?$request->get('per_page'): 15)

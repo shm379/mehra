@@ -6,10 +6,11 @@ use App\Services\Media\HasMediaTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
+use Spatie\Tags\HasTags;
 
 class Creator extends Model implements HasMedia
 {
-    use HasFactory , HasMediaTrait;
+    use HasFactory , HasMediaTrait, HasTags;
     protected $guarded = [];
 
     public function getRouteKeyName(): string

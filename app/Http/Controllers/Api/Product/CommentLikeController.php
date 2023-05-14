@@ -19,8 +19,8 @@ use Illuminate\Support\Collection;
 class CommentLikeController extends Controller {
 
     /*
- * Cart Service Inject
- */
+     * Notification Service Inject
+     */
     protected NotificationService $notificationService;
     public function __construct(NotificationService $notificationService)
     {
@@ -58,9 +58,7 @@ class CommentLikeController extends Controller {
         } catch (MehraApiException $exception){
             return $this->errorResponse('خطا در انجام عملیات');
         }
-
         return $this->successResponse('عملیات با موفقیت انجام شد');
-
     }
 
 }

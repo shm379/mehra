@@ -44,6 +44,9 @@ class CommentResource extends MehraResource
             'media'=> $this->whenLoaded('medias',function (){
                 return new CommentGalleryResourceCollection($this->medias);
             },[]),
+            'replies' => $this->whenLoaded('replies',function (){
+                return $this->replies;
+            },[])
         ];
     }
 }

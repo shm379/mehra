@@ -27,7 +27,7 @@ class RemoveFromCartRequest extends ApiFormRequest
         $quantity = 1;
         // check cart quantity item
         $cart = (new CartService);
-        if($cart->getCart()->exists()){
+        if($cart->getCart()!==null && $cart->getCart()->exists()){
             $item = $cart->findCartItemByProductID($this->request->get('id'));
             if($item)
                 $quantity = $item->quantity;

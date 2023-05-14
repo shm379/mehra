@@ -80,4 +80,16 @@ class Comment extends Model implements HasMedia
     {
         return $this->hasMany(CommentLike::class);
     }
+
+    // Define the relationship to itself
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
+    }
+
+    // Define the inverse relationship to itself
+    public function parentComment()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
 }

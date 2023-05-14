@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\Book;
+use Spatie\Tags\HasTags;
 use function Symfony\Component\Translation\t;
 
 class Collection extends Model implements HasMedia
 {
-    use HasFactory, HasMediaTrait;
+    use HasFactory, HasMediaTrait , HasTags;
     protected $guarded = [];
 
     /**

@@ -150,6 +150,13 @@
       0 => 'KitLoong\\MigrationsGenerator\\MigrationsGeneratorServiceProvider',
     ),
   ),
+  'knuckleswtf/scribe' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Knuckles\\Scribe\\ScribeServiceProvider',
+    ),
+  ),
   'laracademy/generators' => 
   array (
     'providers' => 
@@ -251,6 +258,13 @@
     'aliases' => 
     array (
       'Alert' => 'RealRashid\\SweetAlert\\Facades\\Alert',
+    ),
+  ),
+  'ronasit/laravel-swagger' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'RonasIT\\Support\\AutoDoc\\AutoDocServiceProvider',
     ),
   ),
   'sadegh19b/laravel-persian-validation' => 

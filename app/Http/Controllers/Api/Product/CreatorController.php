@@ -28,6 +28,7 @@ class CreatorController extends Controller {
         // get collections from query builder
         $creators = QueryBuilder::for(Creator::class)
             ->with([
+                'tags',
                 'medias',
                 'books'=>function ($b){
                     $b->with('medias');
@@ -42,6 +43,8 @@ class CreatorController extends Controller {
             ->allowedIncludes([
             ])
             ->allowedFilters([
+                AllowedFilter::exact('tags.id'),
+                AllowedFilter::exact('tags.name'),
                 'title',
                 $globalSearch])
             ->paginate($request->has('per_page') !== null ?$request->get('per_page'): 15)
