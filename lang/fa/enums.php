@@ -4,4 +4,5 @@ return [
     'PUBLISHER' => 'ناشر',
     'BRAND' => 'برند',
     'PRODUCER' => 'تولیدکننده',
+
 ];
