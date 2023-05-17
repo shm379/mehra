@@ -24,7 +24,7 @@ class CollectionProductResource extends MehraResource
             'title'=> $this->title,
             'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image')) {
-                    $this->getFirstMediaUrl('image');
+                    return $this->getFirstMediaUrl('image');
                 }
             }),
         ];

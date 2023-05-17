@@ -58,7 +58,9 @@ class CommentLikeController extends Controller {
         } catch (MehraApiException $exception){
             return $this->errorResponse('خطا در انجام عملیات');
         }
+
         return $this->successResponse('عملیات با موفقیت انجام شد');
+
     }
 
 }
