@@ -54,39 +54,35 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
         });
 
     //profile
-    Route::prefix('/profile')->group(function (){
-        // user address
-        Route::apiResource('addresses',\App\Http\Controllers\Api\Profile\UserAddressController::class);
-        // user orders
-        Route::get('orders',\App\Http\Controllers\Api\Profile\OrderController::class);
-        // user wishlist
-        Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserProductWishlistController::class)->only(['index']);
-        // user collections with wishlist
-        Route::get('collections/me',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class,'index'])->name('collections.wishlist.index');
-       // user messages
-        Route::get('messages',[\App\Http\Controllers\Api\Profile\MessageController::class,'index'])->name('messages');
-        Route::post('messages/{message}',[\App\Http\Controllers\Api\Profile\MessageController::class,'store'])->name('messages.store');
-       // user views
-        Route::get('last-visits',\App\Http\Controllers\Api\Profile\UserViewController::class);
-    });
+    Route::prefix('/profile')
+        ->group(function (){
+            // user address
+            Route::apiResource('addresses',\App\Http\Controllers\Api\Profile\UserAddressController::class);
+            // user orders
+            Route::get('orders',\App\Http\Controllers\Api\Profile\OrderController::class);
+            // user wishlist
+            Route::apiResource('wishlist',\App\Http\Controllers\Api\Profile\UserProductWishlistController::class)->only(['index']);
+            // user collections with wishlist
+            Route::get('collections/me',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class,'index'])->name('collections.wishlist.index');
+           // user messages
+            Route::get('messages',[\App\Http\Controllers\Api\Profile\MessageController::class,'index'])->name('messages');
+            Route::post('messages/{message}',[\App\Http\Controllers\Api\Profile\MessageController::class,'store'])->name('messages.store');
+           // user views
+            Route::get('last-visits',\App\Http\Controllers\Api\Profile\UserViewController::class);
+        });
 
     // user like product
     Route::post('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserProductWishlistController::class, 'store'])->name('product.like');
-
     // user unlike product
     Route::delete('/product/{product}/like',[\App\Http\Controllers\Api\Profile\UserProductWishlistController::class, 'destroy'])->name('product.unlike');
-
     // user like collection
     Route::post('/collection/{collection}/like',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class, 'store'])->name('collection.like');
-
     // user unlike collection
     Route::delete('/collection/{collection}/like',[\App\Http\Controllers\Api\Profile\UserCollectionWishlistController::class, 'destroy'])->name('collection.unlike');
-
     //comment like
     Route::post('/comment/{comment}/like',[\App\Http\Controllers\Api\Product\CommentLikeController::class, 'store'])->name('comment.like');
     // comment unlike
     Route::delete('/comment/{comment}/like',[\App\Http\Controllers\Api\Product\CommentLikeController::class, 'destroy'])->name('comment.unlike');
-
     // send comment
     Route::post('product/{product}/comments/{comment}', [\App\Http\Controllers\Api\Product\CommentController::class,'store'])->name('comments.store');
     Route::post("product/{product}/comments/upload", \App\Http\Controllers\Api\Global\TemporaryUploadController::class)->middleware(['throttle:api-temporary-upload']);
