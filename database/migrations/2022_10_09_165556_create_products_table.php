@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('sku')->unique()->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedBigInteger('volume_id')->nullable();
+            $table->unsignedBigInteger('featured_product_id')->nullable();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('sub_title')->nullable();

@@ -22,7 +22,7 @@ class CollectionResource extends MehraResource
             'title'=> $this->title,
 //            'count'=> $this->collection_items_count,
             'items'=> $this->whenLoaded('products',function(){
-                return CollectionProductResource::collection($this->products);
+                return CollectionProductResource::collection($this->products->load(['medias']));
             }),
             'image'=> $this->whenLoaded('medias',function (){
                 if($this->hasMedia('image'))

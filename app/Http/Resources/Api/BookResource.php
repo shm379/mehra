@@ -6,6 +6,8 @@ use App\Enums\ProductType;
 use App\Enums\ProductRelatedType;
 use App\Helpers\Helpers;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\API\FeaturedProductResource;
+
 
 class BookResource extends MehraResource
 {
@@ -85,6 +87,9 @@ class BookResource extends MehraResource
                 if($this->hasMedia('gallery'))
                     return BookGalleryResource::collection($this->getMedias('gallery'));
             }),
+            'featured'=> $this->whenLoaded('featured_products',function (){
+                return FeaturedProductResource::collection($this->featured_products);
+            })
 
         ],$book);
     }
