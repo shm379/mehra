@@ -8,9 +8,9 @@
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    @routes
-    @vite(['admin/admin.js', "admin/Pages/{$page['component']}.vue"])
-    @inertiaHead
+{{--    @routes--}}
+{{--    @vite(['admin/admin.js', "admin/Pages/{$page['component']}.vue"])--}}
+{{--    @inertiaHead--}}
 </head>
 
 <body class="font-vazirmatn antialiased">

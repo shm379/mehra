@@ -64,6 +64,7 @@ class BookController extends Controller {
                 AllowedFilter::exact('collections.id'),
                 AllowedFilter::exact('awards.id'),
                 AllowedFilter::exact('attributeValues.id'),
+                AllowedFilter::exact('is_featured'),
                 'title',
                 $globalSearch])
             ->paginate($this->perPage)

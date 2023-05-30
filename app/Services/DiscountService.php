@@ -25,16 +25,15 @@ class DiscountService extends CartService
         // get discount amount
         if ($total !== 0 && $quantities !== 0) {
             if ($this->discount->is_percent) {
-                $amount = (($total * 100) / $this->discount->amount) / $quantities;
+                $amount = (($this->discount->amount / 100) * $total );
             }
             else
-                $amount = $this->discount->amount / $quantities;
-
+                $amount = $this->discount->amount;
         }
         return $total-$amount;
     }
 
-    private function updateCartItemsDiscount($discountAmount)
+    private function updateCartItemsDiscount($percent)
     {
 
         if($this->cart){
@@ -44,22 +43,13 @@ class DiscountService extends CartService
         }
 
         foreach ($cart->items->where('line_item_type','!=','shipping')->where('discount_applied','!=',1) as $item){
-            //if bigger than total price
-            if($discountAmount>$item->total_price){
-                $discountAmount = $item->price;
-                $totalDiscountAmount = $item->total_price;
-            } else {
-                $totalDiscountAmount = round($discountAmount) * $item->quantity;
-            }
-            if($item->total_price<$totalDiscountAmount){
-                $totalAfterDiscount = 0;
-            } else {
-                $totalAfterDiscount = $item->total_price - $totalDiscountAmount;
-            }
+
+            $discountAmount = (($percent / 100) * $item->total_price );
+            $totalAfterDiscount = $item->total_price - $discountAmount;
             $item->update([
                 'discount_applied'=>1,
-                'discount_amount'=> round($discountAmount),
-                'total_discount_amount'=> $totalDiscountAmount,
+                'discount_amount'=> $discountAmount / $item->quantity,
+                'total_discount_amount'=> $discountAmount,
                 'total_after_discount'=> $totalAfterDiscount,
                 'total_final_price'=> $totalAfterDiscount
             ]);
@@ -85,6 +75,11 @@ class DiscountService extends CartService
         ]);
     }
 
+    public function applyDiscountFromID($id)
+    {
+        $discount = Discount::query()->find($id);
+        return $this->applyDiscount($discount->code);
+    }
     public function applyDiscount($code)
     {
         try {
@@ -100,18 +95,16 @@ class DiscountService extends CartService
             $cart = self::getCart();
             // get price of discount
             $discountAmount = $this->getDiscountAmount($cart->total_price);
+            $percent = ($discountAmount / $cart->total_price) * 100;
+
             // set discount to items in cart for items not applied discount
-            if($this->getNotDiscountedQuantities() !==0) {
-                $discountAmountPerItem = $discountAmount / $this->getNotDiscountedQuantities();
-                $this->updateCartItemsDiscount($discountAmountPerItem);
-                // update cart with discount price
-                $this->updateCartDiscount();
-            }
+            $this->updateCartItemsDiscount($percent);
+            // update cart with discount price
+            $this->updateCartDiscount();
             return true;
         } catch (MehraApiException $exception){
 
         }
-
     }
 
     /*public function applyDiscount($code)

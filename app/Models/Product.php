@@ -7,6 +7,7 @@ use App\Enums\ProductStructure;
 use App\Services\CartService;
 use App\Services\Media\HasMediaTrait;
 use App\Services\Media\Media;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Scout\Searchable;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Image\Manipulations;
@@ -341,5 +342,10 @@ class Product extends Model implements HasMedia
         return Book::whereHas('volume', function ($query) use ($title) {
             $query->where('title', 'like', '%'.$title.'%');
         });
+    }
+
+    public function featuredProduct(): HasOne
+    {
+        return $this->hasOne(FeaturedProduct::class);
     }
 }

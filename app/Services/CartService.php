@@ -15,6 +15,14 @@ class CartService
 {
     public $user_id;
     public $cart = null;
+
+    protected function applyDiscountToCart($cart, $discountService, $discountCode)
+    {
+        // اعمال تخفیف به سبد خرید
+
+        $discountService->applyDiscount($discountCode); // فراخوانی تابع applyDiscount از کلاس DiscountService
+    }
+
     public function __construct($guard='sanctum')
     {
         $this->user_id = auth($guard)->id();
@@ -155,6 +163,13 @@ class CartService
                     $cart->total_final_price += $cart->total_shipping_price;
                 }
             }
+
+            // if cart has discount : remove or add to cart change discounts
+//            if ($cart->discount_id !== null) {
+//                $discountService = new DiscountService(); // ایجاد نمونه از کلاس DiscountService
+//                $this->applyDiscountToCart($cart, $discountService, $cart->discount_id);
+//            }
+
             // after shipping selected final price increased
             $cart->save();
         } catch (\Exception $exception){
@@ -162,6 +177,7 @@ class CartService
         }
         return $cart;
     }
+
 
     public function addToCart($id,$quantity=1,$is_virtual=0)
     {
@@ -177,6 +193,7 @@ class CartService
         if(!$cartItem->wasRecentlyCreated){
             self::calculateItem($cartItem,$quantity,'+');
         }
+        self::removeDiscount();
 
         return self::getCart();
     }
@@ -199,6 +216,41 @@ class CartService
                     $cart->delete();
                 }
             }
+            if ($cart->discount_id !== null) {
+                self::removeDiscount();
+            }
+        }
+
+        return self::getCart();
+    }
+
+    public function removeDiscount()
+    {
+        $cart = self::getCart();
+        if($cart){
+            //Get Current Cart Item
+            $item = $cart->items()
+                ->where([
+                'discount_applied'=> 1
+                ]);
+            // IF Cart Exists
+            if($item->exists()){
+                foreach ($item->get() as $value){
+                    $item->update([
+                        'discount_applied' => 0,
+                        'discount_amount'=> null,
+                        'total_discount_amount'=>null,
+                        'total_after_discount'=> null,
+                    ]);
+                    self::updateItem($value);
+                }
+            }
+            $cart->update([
+                'discount_id'=> null,
+                'total_discount_amount'=> null,
+                'total_after_discount'=> null,
+            ]);
+            self::updateCart($cart);
         }
 
         return self::getCart();
@@ -246,7 +298,7 @@ class CartService
     {
             return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->sum('quantity');
     }
-    public function getNotDiscountedQuantities($discount)
+    public function getNotDiscountedQuantities()
     {
         return (int)self::getCart()->items()->where('line_item_type','!=','shipping')->where('discount_applied','!=',1)->sum('quantity');
     }

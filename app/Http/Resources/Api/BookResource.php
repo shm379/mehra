@@ -87,10 +87,11 @@ class BookResource extends MehraResource
                 if($this->hasMedia('gallery'))
                     return BookGalleryResource::collection($this->getMedias('gallery'));
             }),
-            'featured'=> $this->whenLoaded('featured_products',function (){
-                return FeaturedProductResource::collection($this->featured_products);
-            })
-
+            'featured' => $this->is_featured ?[
+                'is_featured'=>$this->is_featured,
+                'start_date'=>$this->sale_date_start,
+                'end_date'=>$this->sale_date_end
+            ]: 'null',
         ],$book);
     }
 }
