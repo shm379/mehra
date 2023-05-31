@@ -84,8 +84,8 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
     // comment unlike
     Route::delete('/comment/{comment}/like',[\App\Http\Controllers\Api\Product\CommentLikeController::class, 'destroy'])->name('comment.unlike');
     // send comment
-    Route::post('product/{product}/comments/{comment}', [\App\Http\Controllers\Api\Product\CommentController::class,'store'])->name('comments.store');
     Route::post("product/{product}/comments/upload", \App\Http\Controllers\Api\Global\TemporaryUploadController::class)->middleware(['throttle:api-temporary-upload']);
+    Route::post('product/{product}/comments', [\App\Http\Controllers\Api\Product\CommentController::class,'store'])->name('comments.store');
 
     // reply comment
     Route::post("product/{product}/comments/reply/{comment}", [\App\Http\Controllers\Api\Product\CommentController::class,'reply'])->name('comments.reply');

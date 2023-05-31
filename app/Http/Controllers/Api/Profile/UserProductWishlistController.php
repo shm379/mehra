@@ -30,13 +30,13 @@ class UserProductWishlistController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(App\Request\Api\Profile\UserProductWishlistStore $product)
+    public function store($product)
     {
         try {
             $wishlist = auth()->user()->wishlist();
-            if(!$wishlist->whereIn('model_type',['product'])->where('model_id',$product->id)->exists()) {
+            if(!$wishlist->whereIn('model_type',['product'])->where('model_id',$product)->exists()) {
                 $wishlist->create([
-                    'model_id' => $product->id,
+                    'model_id' => $product,
                     'model_type' => 'product',
                     'user_id' => $this->user_id,
                 ]);
