@@ -14,8 +14,8 @@ class AddressRequest extends ApiFormRequest
     public function rules()
     {
         return [
-            'first_name'=>'nullable',
-            'last_name'=>'required',
+            'first_name'=>'required_if:for_me,0',
+            'last_name'=>'required_if:for_me,0',
             'address'=>'required',
 //            'district'=>'nullable',
             'national_number'=>'nullable|ir_national_code|unique:App\Models\UserAddress,national_number',
@@ -28,4 +28,16 @@ class AddressRequest extends ApiFormRequest
             'phone'=>'nullable|ir_phone_with_code',
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        if($this->for_me==1) {
+            $this->merge([
+                'first_name' => $this->user() ? $this->user()->first_name : '',
+                'last_name' => $this->user() ? $this->user()->last_name : '',
+            ]);
+        }
+    }
+
+
 }
