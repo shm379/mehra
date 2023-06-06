@@ -36,9 +36,12 @@ class CommentLikeController extends Controller {
     public function store(Comment $comment)
     {
         try {
-            $comment->likes()->firstOrCreate(['user_id'=>auth()->id()]);
-            $this->notificationService->commentLike($comment,auth()->id());
+            $like = $comment->likes()->firstOrCreate(['user_id'=>auth()->id()]);
+            if($like->exists){
+                $this->notificationService->commentLike($comment,auth()->id());
+            }
         } catch (\Exception $exception){
+            return $exception->getMessage();
             return $this->errorResponse('خطا در انجام عملیات');
         }
         return $this->successResponse('عملیات با موفقیت انجام شد');
