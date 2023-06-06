@@ -149,7 +149,7 @@ class User extends Authenticatable implements HasMedia
     }
     public function histories()
     {
-        return $this->belongsToMany(UserSearchHistory::class);
+        return $this->hasMany(UserSearchHistory::class);
     }
 
     public function views()

@@ -19,9 +19,13 @@ class SearchController extends Controller {
 
     public function histories()
     {
+        if(!auth()->check()){
+            return $this->errorResponse('شما وارد نشدید!');
+        }
+        $user_search_histories = UserSearchHistory::query();
         return [
-            'search_histories' => auth()->user()->histories(),
-            'popular_searches'=> UserSearchHistory::query()->groupBy('title')->selectRaw('count(*) as count')->orderBy('count')
+            'search_histories' => $user_search_histories->where('user_id',auth()->id())->get(),
+            'popular_searches'=> $user_search_histories->groupBy('title')->selectRaw('count(*) as count')->orderBy('count')->get()
         ];
     }
 
@@ -37,6 +41,9 @@ class SearchController extends Controller {
         $creators = Creator::query()->select(['id','title'])->with(['types','medias'])->where('title','LIKE',"%$request->q%")->get();
         $creatorTypes = CreatorType::query()->get();
         $suggestions = [];
+        if(auth()->check()){
+            UserSearchHistory::query()->create(['title'=>$request->q,'user_id'=>auth()->id()]);
+        }
         return [
             'products'=> SearchProductResource::collection($products),
             'categories' => SearchCategoryResource::collection($categories),
