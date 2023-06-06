@@ -111,7 +111,7 @@ class User extends Authenticatable implements HasMedia
                 ->nonOptimized();
 //        }
 
-        $conversion->queued()->performOnCollections('avatar');
+        $conversion->nonQueued()->performOnCollections('avatar');
     }
 
     public function follows()
