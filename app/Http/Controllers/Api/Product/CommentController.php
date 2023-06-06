@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Enums\AttributeType;
 use App\Http\Controllers\Api\Controller;
-use App\Http\Requests\api\product\ReplyCommentRequest;
+use App\Http\Requests\Api\Product\ReplyCommentRequest;
 use App\Http\Requests\Api\Product\StoreCommentRequest;
 use App\Http\Resources\Api\CommentResourceCollection;
 use App\Http\Resources\Api\ProductCommentResource;
@@ -46,7 +46,7 @@ class CommentController extends Controller {
     /**
      * Reply To Comment
      *
-     * @param StoreCommentRequest $request
+     * @param ReplyCommentRequest $request
      * @param Product $product
      * @param Comment $comment
      * @return \Illuminate\Http\JsonResponse
