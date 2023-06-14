@@ -11,18 +11,20 @@ class Discount extends Model
     protected $appends = [
         'expire_at'
     ];
+
     public function products()
     {
-        return $this->belongsToMany(Product::class,'product_discounts');
+        return $this->belongsToMany(Product::class, 'product_discounts');
     }
 
     public function scopeLimitProducts($query)
     {
         return !$this->attributes['all_products'];
     }
+
     public function users()
     {
-        return $this->belongsToMany(User::class,'user_discounts');
+        return $this->belongsToMany(User::class, 'user_discounts');
     }
 
     public function orders()
@@ -30,11 +32,20 @@ class Discount extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function getDescription()
+    {
+        return $this->attributes['description'] ?? null;
+    }
+
+    public function getName()
+    {
+        return $this->attributes['code'] ?? null;
+    }
 
     public function getExpireAtAttribute()
     {
         return !is_null($this->attributes['end_time']) ?
             $this->attributes['end_time'] :
-            $this->attributes['expire_at'] ;
+            $this->attributes['expire_at'];
     }
 }

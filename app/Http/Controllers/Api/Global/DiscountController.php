@@ -14,6 +14,7 @@ class DiscountController extends Controller
      * Discount Service Inject
      */
     protected DiscountService $discount;
+
     public function __construct(DiscountService $discount)
     {
         $this->discount = $discount;
