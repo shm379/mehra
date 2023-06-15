@@ -15,7 +15,6 @@ class CartResource extends MehraResource
      */
     public function toArray($request)
     {
-        dd($this->items);
         $discount = $this->discount;
         $discountDescription = $discount ? $discount->getDescription() : null;
         $discountName = $discount ? $discount->getName() : null;
