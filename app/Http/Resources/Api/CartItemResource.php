@@ -19,6 +19,7 @@ class CartItemResource extends MehraResource
     {
         $bookResource = new BookResource($this->whenLoaded('line_item'));
         $bookData = $bookResource->toArray($request);
+        $bookData['quantity'] = $this->quantity;
         return $bookData;
     }
 
