@@ -9,6 +9,12 @@ use App\Http\Resources\Api\BookResource;
 
 class CartItemResource extends MehraResource
 {
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
     public function toArray($request)
     {
         $bookResource = new BookResource($this->whenLoaded('line_item'));
@@ -16,14 +22,6 @@ class CartItemResource extends MehraResource
         return $bookData;
     }
 
-
-
-//    /**
-//     * Transform the resource into an array.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-//     */
 //    public function toArray($request)
 //    {
 //        return [

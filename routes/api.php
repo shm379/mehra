@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum','verifiedMobile'])->group(function () {
         ->group(function(){
             Route::post('/', 'cartToCheckout')->name('checkout.pay');
             Route::post('/verify', 'verifyPayment')->name('checkout.verify');
-            Route::get('/factor/{order_id}',[\App\Http\Controllers\Api\profile\Factor::class,'show']);
+            Route::get('/factor/{order_id}',[\App\Http\Controllers\Api\Profile\Factor::class,'show']);
         });
 
     //shipping
