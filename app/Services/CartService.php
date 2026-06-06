@@ -175,6 +175,8 @@ class CartService
         } catch (\Exception $exception){
             return $exception->getMessage();
         }
+        (new DiscountService())->applyDiscount($cart->discount_id);
+
         return $cart;
     }
 
